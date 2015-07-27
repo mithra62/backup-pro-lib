@@ -46,7 +46,7 @@ class Settings extends m62Settings
         'allow_duplicates' => '0',
         
         'enable_cron' => '0',
-        'cron_notify_emails' => '',
+        'cron_notify_emails' => array(),
         'cron_notify_email_subject' => '',
         'cron_notify_email_message' => '',
         'cron_notify_email_mailtype' => 'html',
@@ -54,7 +54,7 @@ class Settings extends m62Settings
         'storage_details' => array(),
         
         'working_directory' => '',
-        'backup_file_location' => '',
+        'backup_file_location' => array(),
         
         'gcs_access_key' => '',
         'gcs_secret_key' => '',
@@ -103,12 +103,6 @@ class Settings extends m62Settings
     protected $serialized = array(
         'cron_notify_emails',
         'backup_missed_schedule_notify_member_ids',
-        'exclude_paths',
-        'backup_file_location',
-        'db_backup_execute_pre_sql',
-        'db_backup_execute_post_sql',
-        'db_backup_archive_pre_sql',
-        'db_backup_archive_post_sql',
         'db_backup_ignore_tables',
         'db_backup_ignore_table_data',
         'storage_details'
@@ -178,25 +172,6 @@ class Settings extends m62Settings
     {
         parent::__construct($db, $lang);
         $this->setTable($this->table);
-        
-        if(isset($_SERVER['DOCUMENT_ROOT']) && $_SERVER['DOCUMENT_ROOT'] != '')
-        {
-            $this->_defaults['backup_file_location'] = realpath($_SERVER['DOCUMENT_ROOT']);
-        }
-        else //stupid IIS fucking things up for us again.
-        {
-            if(isset($_SERVER['SCRIPT_FILENAME']))
-            {
-                $path = str_replace( '\\', '/', substr($_SERVER['SCRIPT_FILENAME'], 0, 0-strlen($_SERVER['PHP_SELF'])));
-            }
-            elseif(isset($_SERVER['PATH_TRANSLATED']))
-            {
-                $path = str_replace( '\\', '/', substr(str_replace('\\\\', '\\', $_SERVER['PATH_TRANSLATED']), 0, 0-strlen($_SERVER['PHP_SELF'])));
-            }
-        
-            $this->_defaults['backup_file_location'] = realpath($path);
-        }
-        
         $this->_defaults['working_directory'] = realpath(dirname(realpath(__FILE__)).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'backups');
         $this->_defaults['cron_notify_email_message'] = $this->lang->__('default_cron_message');
         $this->_defaults['cron_notify_email_subject'] = $this->lang->__('default_cron_subject');
@@ -276,16 +251,9 @@ class Settings extends m62Settings
         
         $this->settings['max_file_backups'] = (int)$this->settings['max_file_backups'];
         $this->settings['max_db_backups'] = (int)$this->settings['max_db_backups'];
-        $this->settings['cron_notify_emails'] = ( !is_array($this->settings['cron_notify_emails']) ? explode("\n", $this->settings['cron_notify_emails']) : $this->settings['cron_notify_emails'] );
-        $this->settings['backup_file_location'] = ( !is_array($this->settings['backup_file_location']) ? explode("\n", $this->settings['backup_file_location']) : $this->settings['backup_file_location'] );
-        
-        foreach($this->settings['cron_notify_emails'] AS $key => $value)
-        {
-            if( $value == '')
-            {
-                unset($this->settings['cron_notify_emails'][$key]);
-            }
-        }
+        //$this->settings['cron_notify_emails'] = ( !is_array($this->settings['cron_notify_emails']) ? explode("\n", $this->settings['cron_notify_emails']) : $this->settings['cron_notify_emails'] );
+        //$this->settings['backup_file_location'] = ( !is_array($this->settings['backup_file_location']) ? explode("\n", $this->settings['backup_file_location']) : $this->settings['backup_file_location'] );
+
         
         return $this->settings;
     }    

@@ -11,7 +11,7 @@
  
 namespace mithra62\BackupPro;
 
-use mithra62\Bootstrap AS m62Boostrap;
+use mithra62\Bootstrap AS m62Boostrap; 
 use mithra62\BackupPro\Settings;
 use mithra62\BackupPro\Backups;
 use mithra62\BackupPro\Backup;
