@@ -180,6 +180,8 @@ class Files extends AbstractBackup
         $path = $this->backup->startTimer()->getStorage()->getFileBackupNamePath($file_name);
         $backup_paths = $this->getBackupPaths();
         
+        print_r($backup_paths);
+        exit;
         $progress = $this->backup->getProgress();
         $progress->writeLog('backup_progress_bar_start_file_list', 'na', 1);
         $backup_files = array();
