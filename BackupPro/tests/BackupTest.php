@@ -15,7 +15,6 @@ namespace mithra62\BackupPro\tests;
 use mithra62\BackupPro\Backup;
 use mithra62\Db;
 use mithra62\tests\TestFixture;
-use Pimple\Container;
 
 class BackupTest extends TestFixture
 {

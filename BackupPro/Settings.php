@@ -113,14 +113,6 @@ class Settings extends m62Settings
 	 * @var array
 	 */
 	protected $encrypted = array(
-		'ftp_username',
-		'ftp_password',
-		's3_access_key',
-		's3_secret_key',
-		'cf_username',
-		'cf_api',
-		'gcs_access_key',
-		'gcs_secret_key',
 	    'storage_details'
 	);	
 
