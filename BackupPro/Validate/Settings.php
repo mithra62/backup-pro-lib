@@ -145,23 +145,31 @@ class Settings extends Validate
      */
     public function backupFileLocation($paths)
     {
-        if( !is_array($paths) )
+        if($paths == '')
         {
-            $paths = explode("\n", $paths);
+
+            $this->rule('required', 'backup_file_location')->message('{field} is required');
         }
-        
-        foreach($paths AS $path)
+        else 
         {
-            $path = trim($path);
-            if( !file_exists($path) )
+            if( !is_array($paths) )
             {
-                $this->rule('false', 'backup_file_location')->message('"'.$path.'" doesn\'t appear to exist...');
-                //break;
+                $paths = explode("\n", $paths);
             }
             
-            elseif( !is_readable($path) )
+            foreach($paths AS $path)
             {
-                $this->rule('false', 'backup_file_location')->message('"'.$path.'" isn\'t readable by PHP.');
+                $path = trim($path);
+                if( !file_exists($path) )
+                {
+                    $this->rule('false', 'backup_file_location')->message('"'.$path.'" doesn\'t appear to exist...');
+                    //break;
+                }
+                
+                elseif( !is_readable($path) )
+                {
+                    $this->rule('false', 'backup_file_location')->message('"'.$path.'" isn\'t readable by PHP.');
+                }
             }
         }
         

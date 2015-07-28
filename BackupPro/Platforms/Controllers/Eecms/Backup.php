@@ -57,7 +57,7 @@ trait Backup
         }
         else
         {
-            ee()->session->set_flashdata('message_error', $error->getError());
+            ee()->session->set_flashdata('message_error', $this->services['lang']->__($error->getError()));
             ee()->functions->redirect($this->url_base.'db_backups');
         }
     
@@ -72,7 +72,9 @@ trait Backup
         @session_write_close();
         $error = $this->services['errors'];
         $backup = $this->services['backup']->setStoragePath($this->settings['working_directory']);
-        $errors = $error->clearErrors()->checkStorageLocations($this->settings['storage_details'])->checkBackupDirs($backup->getStorage())->getErrors();
+        $error->clearErrors()->checkStorageLocations($this->settings['storage_details'])
+              ->checkBackupDirs($backup->getStorage())
+              ->checkFileBackupLocations($this->settings['backup_file_location']);
         if( $error->totalErrors() == '0' )
         {
             ini_set('memory_limit', -1);
@@ -96,8 +98,14 @@ trait Backup
         }
         else
         {
-            ee()->session->set_flashdata('message_error', $error->getError());
-            ee()->functions->redirect($this->url_base.'db_backups');
+            $url = $this->url_base.'file_backups';
+            if( $error->getError() == 'no_backup_file_location' )
+            {
+                $url = $this->url_base.'settings&section=files';
+            }
+            
+            ee()->session->set_flashdata('message_error', $this->services['lang']->__($error->getError()));
+            ee()->functions->redirect($url);
         }
     }    
     

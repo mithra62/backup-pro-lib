@@ -39,6 +39,21 @@ class Errors extends m62Errors
     }
     
     /**
+     * Verifies the file backup locations exist
+     * @param array $locations
+     * @return \mithra62\BackupPro\Errors
+     */
+    public function checkFileBackupLocations(array $locations)
+    {
+        if( count($locations) == 0 )
+        {
+            $this->setError('no_backup_file_location', 'no_backup_file_location');
+        }
+        
+        return $this;
+    }
+    
+    /**
      * Runs the tests to make sure the backup directories exist and are writable
      * @param \mithra62\BackupPro\Backup\Storage $storage
      * @return \mithra62\BackupPro\Errors

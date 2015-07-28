@@ -274,6 +274,10 @@ Please don\'t respond to this email; all emails are automatically deleted. ',
 'restore_double_speak' => 'Unless you took a seperate backup and then restore that one if something goes wrong here I guess... Yeah, that could actually work... hmmm...',
 'allow_duplicates' => 'Allow Duplicate Backups',
 'allow_duplicates_instructions' => 'If an exact duplicate of a backup already exists (through md5 hash check) you\'re basically wasting space so Backup Pro will remove old duplicates. If you want to keep duplicates though just enable this.',
+'working_dir_not_setup' => 'Working Directory must be setup before backups can be taken',
+'setting' => 'Setting',
+'no_storage_locations_setup' => 'No Storage Locations have been setup yet.',
+'no_backup_file_location' => 'No File Backup Locations have been configured. ',
 ''=>''
 		
 		

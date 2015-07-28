@@ -25,6 +25,12 @@ trait Dashboard
      */
     public function index()
     {
+        if( empty($this->settings['working_directory']) )
+        {
+            ee()->session->set_flashdata('message_error', $this->services['lang']->__('working_dir_not_setup'));
+            ee()->functions->redirect($this->url_base.'settings');
+        }
+        
         $backup = $this->services['backups'];
         $backups = $backup->setBackupPath($this->settings['working_directory'])->getAllBackups($this->settings['storage_details']);
     
