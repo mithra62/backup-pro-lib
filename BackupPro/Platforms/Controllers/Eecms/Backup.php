@@ -32,7 +32,8 @@ trait Backup
         @session_write_close();
         $error = $this->services['errors'];
         $backup = $this->services['backup']->setStoragePath($this->settings['working_directory']);
-        $errors = $error->clearErrors()->checkStorageLocations($this->settings['storage_details'])->checkBackupDirs($backup->getStorage())->getErrors();
+        $error->clearErrors()->checkStorageLocations($this->settings['storage_details'])
+              ->checkBackupDirs($backup->getStorage());
         if( $error->totalErrors() == '0' )
         {
             ini_set('memory_limit', -1);
@@ -75,14 +76,14 @@ trait Backup
         $error->clearErrors()->checkStorageLocations($this->settings['storage_details'])
               ->checkBackupDirs($backup->getStorage())
               ->checkFileBackupLocations($this->settings['backup_file_location']);
-        if( $error->totalErrors() == '0' )
+        if( $error->totalErrors() == 0 )
         {
             ini_set('memory_limit', -1);
             set_time_limit(0);
             if( $backup->files($this->settings, $this->services['files'], $this->services['regex']) )
             {
                 $backups = $this->services['backups']->setBackupPath($this->settings['working_directory'])
-                ->getAllBackups($this->settings['storage_details']);
+                                ->getAllBackups($this->settings['storage_details']);
     
                 $backup->getStorage()->getCleanup()->setStorageDetails($this->settings['storage_details'])
                                      ->setBackups($backups)

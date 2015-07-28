@@ -161,6 +161,7 @@ trait Storage
         $variables['menu_data'] = ee()->backup_pro->get_settings_view_menu();
         $variables['section'] = 'storage';
         $variables['storage_id'] = $storage_id;
+        ee()->view->cp_page_title = $this->services['lang']->__('storage_bp_settings_menu');
         return ee()->load->view('storage/edit', $variables, true);
     }
     
@@ -217,6 +218,7 @@ trait Storage
         $variables['menu_data'] = ee()->backup_pro->get_settings_view_menu();
         $variables['section'] = 'storage';
         $variables['storage_id'] = $storage_id;
+        ee()->view->cp_page_title = $this->services['lang']->__('storage_bp_settings_menu');
         return ee()->load->view('storage/remove', $variables, true);
     }
 }
