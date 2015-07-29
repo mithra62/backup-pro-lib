@@ -75,7 +75,7 @@ class SettingsTest extends TestFixture
         'db_backup_alert_threshold' => '1',
         'file_backup_alert_threshold' => '7',
     
-        'backup_state_notify_member_ids' => array(), //the member_ids we're going send notifications to on backup state issues
+        'backup_missed_schedule_notify_emails' => '',
         'backup_state_notify_email_subject' => '',
         'backup_state_notify_email_message' => '',
         'backup_state_notify_email_mailtype' => 'html',
@@ -147,6 +147,7 @@ class SettingsTest extends TestFixture
         'db_backup_execute_post_sql',
         'db_backup_archive_pre_sql',
         'db_backup_archive_post_sql',
+        'backup_missed_schedule_notify_emails'
     );
     
     /**

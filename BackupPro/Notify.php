@@ -136,17 +136,20 @@ class Notify
 		        $path_parts = pathinfo($backup);
 		        if( !empty($path_parts['dirname']) && !empty($path_parts['basename']) && !empty($path_parts['filename']) && !empty($path_parts['extension']) )
 		        {
-		            $backup_details[] = $this->backup->getDetails()->getDetails($path_parts['basename'], $path_parts['dirname']);
+		            $backup_details = $this->backup->getDetails()->getDetails($path_parts['basename'], $path_parts['dirname']);
 		        }
 		    }
 		    
-		    $vars = array_merge($backup_paths, $backup_details, array('backup_type' => $backup_type, 'message_body' => $this->settings['cron_notify_email_message']));
+		    $vars = array(
+		        'backup_paths' => $backup_paths,
+		        'backup_details' => $backup_details,
+		        'backup_type' => $backup_type
+		    );
+		    
 		    $email = $this->getMail()->setSubject($this->settings['cron_notify_email_subject'])
                 		  ->setMessage($this->settings['cron_notify_email_message'])
-                		  ->setViewOptions('email/backup-cron', $vars)
                 		  ->setTo($emails)
-                		  ->setMailtype($this->settings['cron_notify_email_mailtype']);		
-		    $email->getView()->setViewDir($this->getViewPath());
+                		  ->setMailtype($this->settings['cron_notify_email_mailtype']);
 		    $email->send($vars);
 		}
 		catch(EmailException $e)

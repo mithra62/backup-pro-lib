@@ -40,6 +40,12 @@ class Backups
     private $details = null; 
     
     /**
+     * An instance of the Integrity object
+     * @var \mithra62\BackupPro\Backup\Integrity
+     */
+    private $integrity = null;
+    
+    /**
      * The full system path to where all the backups are stored
      * @var string
      */
@@ -149,6 +155,20 @@ class Backups
         }
         
         return $this->storage;
+    }
+    
+    /**
+     * Returns an instance of the Integrity object
+     * @return \mithra62\BackupPro\Backup\Integrity
+     */
+    public function getIntegrity()
+    {
+        if( is_null($this->integrity) )
+        {
+            $this->integrity = new Backup\Integrity();
+        }
+        
+        return $this->integrity;
     }
     
     /**

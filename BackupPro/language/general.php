@@ -220,8 +220,8 @@ A {backup_type} backup hasn\'t been completed on {site_name} since {last_backup_
 {site_url}<br /><br />
 
 Please don\'t respond to this email; all emails are automatically deleted. ',
-'backup_missed_schedule_notify_member_ids' => 'Notification Members',
-'backup_missed_schedule_notify_member_ids_instructions' => 'The members who should recieve a notification upon when the backup schedule isn\'t followed.',
+'backup_missed_schedule_notify_emails' => 'Notification Emails',
+'backup_missed_schedule_notify_emails_instructions' => 'The email addresses for who should recieve a notification upon when the backup schedule isn\'t followed.',
 'backup_missed_schedule_notify_email_mailtype' => 'Email Format',
 'backup_missed_schedule_notify_email_mailtype_instructions' => 'Type of mail email message the Missed Backup Schedule email should be sent in. If you send HTML email you must send it as a complete web page. Make sure you don\'t have any relative links or relative image paths otherwise they will not work.',
 'backup_missed_schedule_notify_email_subject' => 'Missed Backup Schedule Email Subject',
