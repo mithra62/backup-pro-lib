@@ -238,7 +238,7 @@ Please don\'t respond to this email; all emails are automatically deleted. ',
 //cron
 'configure_cron_email_attachment' => 'Configure Email Attachments',
 'configure_cron_notification' => 'Configure Email Notification',
-'default_cron_subject' => '{site_name} - Backup Pro Cron Notification ({backup_type})',
+'default_cron_subject' => '{{ site_name }} - Backup Pro Cron Notification ({{ backup_type }})',
 'cron_notify_email_subject' => 'Cron Complete Notification Email Subject',
 'cron_notify_email_subject_instructions' => 'The subject you want the Cron Completion Notification email to have. You can use global template tags but nothing fancy.',
 'cron_notify_email_message' => 'Cron Complete Notification Email Message',
@@ -249,10 +249,10 @@ Please don\'t respond to this email; all emails are automatically deleted. ',
 
 Your backup has ran successfully.<br /><br />
 
-Filesize: {file_size}<br /><br />
+Filesize: {{ file_size }}<br /><br />
 
-{site_name}<br />
-{site_url}<br /><br />
+{{ site_name }}<br />
+{{ site_url }}<br /><br />
 
 Please don\'t respond to this email; all emails are automatically deleted. ',
 'backup_type' => 'Backup Type',

@@ -394,7 +394,7 @@ class Backup
     /**
      * Returns the Serivices array
      */
-    protected function getServices()
+    public function getServices()
     {
         return $this->services;
     }    
