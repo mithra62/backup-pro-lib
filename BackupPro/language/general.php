@@ -245,16 +245,23 @@ Please don\'t respond to this email; all emails are automatically deleted. ',
 'cron_notify_email_message_instructions' => 'The email message that gets sent when a backup finishes. You can use global template tags only.',
 'cron_notify_email_mailtype' => 'Email Format',
 'cron_notify_email_mailtype_instructions' => 'Type of mail email message the Backup Completion email should be sent in. If you send HTML email you must send it as a complete web page. Make sure you don\'t have any relative links or relative image paths otherwise they will not work.',
-'default_cron_message' => 'Hello,<br /><br />
+'default_cron_message' => '{{%FILTERS}}
+
+Hello,<br /><br />
 
 Your backup has ran successfully.<br /><br />
 
-Filesize: {{ file_size }}<br /><br />
-
+Backup Type: {{ backup_details.backup_type }}<br />
+Total Items: {{ backup_details.item_count }}<br />
+Archive Filesize: {{ backup_details.file_size | m62.file_size }}<br />
+Extracted Filsize: {{ backup_details.uncompressed_size | m62.file_size }}<br />
+Memory Used: {{ backup_details.max_memory | m62.file_size }}<br />
+Filename: {{ backup_details.file_name }}<br /><br />
+    
 {{ site_name }}<br />
 {{ site_url }}<br /><br />
 
-Please don\'t respond to this email; all emails are automatically deleted. ',
+Please don\'t respond to this email; all emails are automatically deleted.',
 'backup_type' => 'Backup Type',
 'cron_commands' => 'Cron Commands',
 'test' => 'Test',

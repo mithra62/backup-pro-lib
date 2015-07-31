@@ -70,5 +70,8 @@ class Eecms
                                                  ->getErrors();
         
         $this->view_helper = new EecmsView($this->services['lang'], $this->services['files'], $this->services['settings'], $this->services['encrypt'], $this->platform);
+        $this->m62->setService('view_helpers', function($c) {
+            return $this->view_helper;
+        });
     }
 }

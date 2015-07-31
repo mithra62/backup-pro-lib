@@ -147,7 +147,7 @@ class Notify
 		        'backup_details' => $backup_details,
 		        'backup_type' => $backup_type,
 		        'site_name' => $services['platform']->getSiteName(),
-		        'site_url' => '',
+		        'site_url' => $services['platform']->getSiteUrl(),
 		    );
 		    
 		    $email = $this->getMail()->setSubject($this->settings['cron_notify_email_subject'])
