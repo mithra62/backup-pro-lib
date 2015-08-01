@@ -77,7 +77,7 @@ class Settings extends m62Settings
         'db_backup_alert_threshold' => '1',
         'file_backup_alert_threshold' => '7',
     
-        'backup_missed_schedule_notify_emails' => '',
+        'backup_missed_schedule_notify_emails' => array(),
         'backup_state_notify_email_subject' => '',
         'backup_state_notify_email_message' => '',
         'backup_state_notify_email_mailtype' => 'html',

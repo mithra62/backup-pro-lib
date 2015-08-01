@@ -130,6 +130,9 @@ class Integrity
     
     /**
      * Checks the existing backups on the system and ensure's things are kosher
+     * @param array $backup_meta
+     * @param array $settings
+     * @return multitype:boolean
      */
     public function monitorBackupState(array $backup_meta, array $settings)
     {
@@ -211,25 +214,6 @@ class Integrity
          
         return true;
     }
-    
-    public function getCronCommands($module_name)
-    {
-        $action_id = $this->getCronAction($module_name);
-        $url = ee()->config->config['site_url'].'?ACT='.$action_id;
-        return array(
-            'verify_backup_stability' => array('url' => $url, 'cmd' => '0 * * * * * curl "'.$url.'"')
-        );
-    }
-    
-    public function getCronAction($module_name)
-    {
-        ee()->load->dbforge();
-        ee()->db->select('action_id');
-        $query = ee()->db->get_where('actions', array('class' => $module_name, 'method' => 'integrity_cron'));
-        return $query->row('action_id');
-    }
-    
-
 
     /**
      * Sets an instance of the calling object

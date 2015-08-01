@@ -211,15 +211,15 @@ $lang = array(
 'db_verification_db_name' => 'Verification Temp Database',
 'db_verification_db_name_instructions' => 'To ensure your database backups are stable Backup Pro can import your backups into a temporary database. Ensure the database user for the site has full MySQL privledges for the input one.',
 'configure_integrity_agent_backup_missed_schedule' => 'Configure Missed Backup Email',
-'default_backup_missed_schedule_notify_email_subject' => '{site_name} - Backup State Notification',
+'default_backup_missed_schedule_notify_email_subject' => '{{ site_name }} - Backup State Notification',
 'default_backup_missed_schedule_notify_email_message' => 'Hello,<br /><br />
 
-A {backup_type} backup hasn\'t been completed on {site_name} since {last_backup_date}. A {backup_type} backup is expected to run every {backup_frequency} day(s) so something is clearly wrong; you should investigate ASAP<br /><br />
+A {{ backup_type }} backup hasn\'t been completed on {{ site_name }} since {{ last_backup_date }}. A {{ backup_type }} backup is expected to run every {{ backup_frequency }} day(s) so something is clearly wrong; you should investigate ASAP<br /><br />
 
-{site_name}<br />
-{site_url}<br /><br />
+{{ site_name }}<br />
+{{ site_url }}<br /><br />
 
-Please don\'t respond to this email; all emails are automatically deleted. ',
+Please don\'t respond to this email; all emails are automatically deleted.',
 'backup_missed_schedule_notify_emails' => 'Notification Emails',
 'backup_missed_schedule_notify_emails_instructions' => 'The email addresses for who should recieve a notification upon when the backup schedule isn\'t followed.',
 'backup_missed_schedule_notify_email_mailtype' => 'Email Format',

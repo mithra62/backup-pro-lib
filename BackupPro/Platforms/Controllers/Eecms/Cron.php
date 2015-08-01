@@ -96,12 +96,62 @@ trait Cron
     /**
      * The Integrity Agent Cron
      */
-    public function actionIntegrityAgent()
+    public function integrity()
     {
         ini_set('memory_limit', -1);
         set_time_limit(0); //limit the time to 1 hours
-    
-        echo __METHOD__;
-        exit;
+
+        $backup = $this->services['backups']->setBackupPath($this->settings['working_directory']);
+        
+        
+		ee()->backup_pro->set_db_info($this->db_conf);
+		ee()->load->library('Backup_pro_integrity_agent', null, 'integrity_agent');
+		if( !empty($this->settings['db_verification_db_name']) )
+		{
+			$this->db_conf['db_name'] = $this->settings['db_verification_db_name'];
+			ee()->integrity_agent->set_db_conf($this->db_conf);
+		}
+		
+		//first, check the backup state
+		ee()->integrity_agent->monitor_backup_state();
+		
+		//now check the backups and ensure they're all valid
+		$backups = ee()->backup_pro->get_backups();
+		$type = ($this->settings['last_verification_type'] == 'database' ? 'files' : 'database') ;
+		
+		//ok, this is a little bash over the head to FUCING ENSURE we're NOT using the production db for database testing!
+		//THAT WOULD BE BAD. So... bad... uh... coooooodddddddde... 
+		if($type == 'database' && !ee()->integrity_agent->get_db_conf())
+		{
+			$type = 'files';
+		}
+		
+		$total = 0;
+		foreach($backups[$type] AS $backup)
+		{
+			if( empty($backup['details']['verified']) || $backup['details']['verified'] == '0')
+			{
+				if( ee()->integrity_agent->check_backup($backup, $type) )
+				{
+					$status = 'success';
+					$total++;
+				}
+				else 
+				{
+					$status = 'fail';
+				}
+				
+				$details_path = ee()->backup_pro->backup_dir.DIRECTORY_SEPARATOR.$type;
+				ee()->backup_details->add_details($backup['file_name'], $details_path, array('verified' => $status));
+			}
+			
+			if( $total >= $this->settings['total_verifications_per_execution'])
+			{
+				break;
+			}
+		}
+		
+		ee()->backup_pro_settings->update_setting('last_verification_type', $type);
+		ee()->backup_pro_settings->update_setting('last_verification_time', time());
     }
 }

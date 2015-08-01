@@ -147,7 +147,6 @@ class Settings extends Validate
     {
         if($paths == '')
         {
-
             $this->rule('required', 'backup_file_location')->message('{field} is required');
         }
         else 
@@ -231,6 +230,33 @@ class Settings extends Validate
         $this->rule('numeric', 'max_file_backups')->message('{field} must be a number');
         return $this;
     }
+    
+    /**
+     * Validates the file backup location setting
+     * @param string $emails
+     * @return \mithra62\BackupPro\Validate\Settings
+     */
+    public function cronNotifyEmails($emails)
+    {
+        if($emails != '')
+        {
+            if( !is_array($emails) )
+            {
+                $emails = explode("\n", $emails);
+            }
+            
+            foreach($emails AS $email)
+            {
+                if( !filter_var($email, FILTER_VALIDATE_EMAIL) )
+                {
+                    $this->rule('false', 'cron_notify_emails')->message('"'.$email.'" isn\'t a valid email');
+                    //break;
+                }
+            }
+        }
+        
+        return $this;
+    }
 
     /**
      * Checks the entire settings array for issues
@@ -307,6 +333,11 @@ class Settings extends Validate
         if( isset($data['license_number']) )
         {
             $this->licenseNumber($data);
+        }
+        
+        if( isset($data['cron_notify_emails']) )
+        {
+            $this->cronNotifyEmails($data['cron_notify_emails']);
         }
     
         $this->val($data);

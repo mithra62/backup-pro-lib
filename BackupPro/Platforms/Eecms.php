@@ -42,6 +42,6 @@ class Eecms extends m62Eecms implements PlatformInterface
     public function getIaCronCommands()
     {
 		ee()->load->library('backup_pro_lib', null, 'backup_pro');
-        return ee()->backup_pro->get_cron_commands();
+        return ee()->backup_pro->get_ia_cron_commands();
     }
 }
