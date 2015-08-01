@@ -257,6 +257,22 @@ class Settings extends Validate
         
         return $this;
     }
+    
+    public function cronNotifyEmailSubject($subject)
+    {
+        if($subject == '')
+        {
+            $this->rule('required', 'cron_notify_email_subject')->message('{field} is required');
+        }
+    }
+    
+    public function cronNotifyEmailMessage($message)
+    {
+        if($message == '')
+        {
+            $this->rule('required', 'cron_notify_email_message')->message('{field} is required');
+        }
+    }
 
     /**
      * Checks the entire settings array for issues
@@ -338,6 +354,16 @@ class Settings extends Validate
         if( isset($data['cron_notify_emails']) )
         {
             $this->cronNotifyEmails($data['cron_notify_emails']);
+        }
+        
+        if( isset($data['cron_notify_email_subject']) )
+        {
+            $this->cronNotifyEmailSubject($data['cron_notify_email_subject']);
+        }
+        
+        if( isset($data['cron_notify_email_message']) )
+        {
+            $this->cronNotifyEmailMessage($data['cron_notify_email_message']);
         }
     
         $this->val($data);
