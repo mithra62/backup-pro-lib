@@ -101,7 +101,6 @@ class Settings extends m62Settings
      * @var array
      */
     protected $serialized = array(
-        'backup_missed_schedule_notify_member_ids',
         'db_backup_ignore_tables',
         'db_backup_ignore_table_data',
         'storage_details'

@@ -34,6 +34,9 @@ trait Settings
         $variables['form_data']['db_backup_archive_post_sql'] = implode(PHP_EOL, $this->settings['db_backup_archive_post_sql']);
         $variables['form_data']['db_backup_execute_pre_sql'] = implode(PHP_EOL, $this->settings['db_backup_execute_pre_sql']);
         $variables['form_data']['db_backup_execute_post_sql'] = implode(PHP_EOL, $this->settings['db_backup_execute_post_sql']);
+        $variables['form_data']['backup_missed_schedule_notify_emails'] = implode(PHP_EOL, $this->settings['backup_missed_schedule_notify_emails']);
+        
+        
         if( ee()->input->server('REQUEST_METHOD') == 'POST' )
         {
             $data = array();

@@ -73,9 +73,9 @@ trait Cron
                                                ->duplicates($this->settings['allow_duplicates']);            
     
             //now send the notifications (if any)
-            if(count($backup_paths) >= 1 && count($this->settings['cron_notify_emails']) >= 1)
+            if(count($backup_paths) >= 1 && (is_array($this->settings['cron_notify_emails']) && count($this->settings['cron_notify_emails']) >= 1))
             {
-                $notify = $this->services['notify'];
+                $notify = $this->services['notify']; 
                 $notify->getMail()->setConfig($this->platform->getEmailConfig());
                 foreach($backup_paths As $type => $path)
                 {

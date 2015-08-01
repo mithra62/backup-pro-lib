@@ -165,7 +165,8 @@ class Backups
     {
         if( is_null($this->integrity) )
         {
-            $this->integrity = new Backup\Integrity();
+            $this->integrity = new Backup\Integrity($this->backup_dir);
+            $this->integrity->setContext($this);
         }
         
         return $this->integrity;

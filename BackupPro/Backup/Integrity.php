@@ -10,6 +10,7 @@
  */
  
 namespace mithra62\BackupPro\Backup;
+use mithra62\Traits\DateTime;
 
 /**
  * Backup Pro - Integrity Agent Object
@@ -21,6 +22,8 @@ namespace mithra62\BackupPro\Backup;
  */
 class Integrity
 {
+    use DateTime;
+    
     /**
      * The database connection info
      * @var array
@@ -32,7 +35,7 @@ class Integrity
     */
     public function __construct()
     {
-        $this->settings = ee()->backup_pro->get_settings();
+        
     }
     
     /**
@@ -128,22 +131,35 @@ class Integrity
     /**
      * Checks the existing backups on the system and ensure's things are kosher
      */
-    public function monitorBackupState()
+    public function monitorBackupState(array $backup_meta, array $settings)
     {
-        $errors = ee()->backup_pro->error_check();
-        if(isset($errors['backup_state_db_backups']) || isset($errors['backup_state_files_backups']))
+        $errors = array();
+        //now let's check to see if we have a backup for each configured timeframe
+        if( $settings['db_backup_alert_threshold'] >= 1 )
         {
-            //we have a winner! start the notification process
-            ee()->load->library('Backup_pro_notify', null, 'notify');
-            $last_notified = $this->settings['backup_missed_schedule_notify_email_last_sent'];
-            $next_notified = mktime(date('G', $last_notified)+$this->settings['backup_missed_schedule_notify_email_interval'], date('i', $last_notified), 0, date('n', $last_notified), date('j', $last_notified), date('Y', $last_notified));
-            	
-            if(time() > $next_notified)
+            if( !empty($backup_meta['database']['newest_backup_taken_raw']) )
             {
-                ee()->notify->send_backup_state($errors);
-                ee()->backup_pro_settings->update_setting('backup_missed_schedule_notify_email_last_sent', time());
+                $db_check_hours = mktime(0,0,0,date('m'), date('d')-$settings['db_backup_alert_threshold'], date('Y'));
+                if($backup_meta['database']['newest_backup_taken_raw'] < $db_check_hours)
+                {
+                    $errors['backup_state_db_backups'] = TRUE;
+                }
             }
         }
+        
+        if( $settings['file_backup_alert_threshold'] >= 1 )
+        {
+            if( !empty($backup_meta['files']['newest_backup_taken_raw']) )
+            {
+                $file_check_hours = mktime(0,0,0,date('m'), date('d')-$settings['file_backup_alert_threshold'], date('Y'));
+                if($backup_meta['files']['newest_backup_taken_raw'] < $file_check_hours)
+                {
+                    $errors['backup_state_files_backups'] = TRUE; 
+                }
+            }
+        }
+        
+        return $errors;
     }
     
     /**
@@ -211,5 +227,27 @@ class Integrity
         ee()->db->select('action_id');
         $query = ee()->db->get_where('actions', array('class' => $module_name, 'method' => 'integrity_cron'));
         return $query->row('action_id');
+    }
+    
+
+
+    /**
+     * Sets an instance of the calling object
+     * @param object $context
+     * @return \mithra62\BackupPro\Backups
+     */
+    public function setContext(\mithra62\BackupPro\Backups $context)
+    {
+        $this->context = $context;
+        return $this;
+    }
+    
+    /**
+     * Returns an instance of the Storage object
+     * @return \mithra62\BackupPro\Backups
+     */
+    public function getContext()
+    {
+        return $this->context;
     }
 }

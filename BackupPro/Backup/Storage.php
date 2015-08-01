@@ -11,7 +11,6 @@
  
 namespace mithra62\BackupPro\Backup;
 
-use mithra62\Traits\DateTime;
 use mithra62\BackupPro\Exceptions\Backup\StorageException;
 
 /**

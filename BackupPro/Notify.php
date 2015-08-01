@@ -166,4 +166,30 @@ class Notify
 		    throw new \Exception($e->getMessage());
 		}
 	}
+
+	public function sendBackupState(array $emails, array $backup_meta, array $errors)
+	{
+	    $type = 'files';
+	    $frequency = $this->settings['file_backup_alert_threshold'];
+	    if( isset($errors['backup_state_db_backups']) )
+	    {
+	        $type = 'database';
+	        $frequency = $this->settings['db_backup_alert_threshold'];
+	    }
+	
+	    $services = $this->backup->getServices();
+	    $vars = array(
+	        'last_backup_date' => $backup_meta[$type]['newest_backup_taken'], 
+	        'backup_frequency' => $frequency, 
+	        'backup_type' => $type,
+	        'site_name' => $services['platform']->getSiteName(),
+	        'site_url' => $services['platform']->getSiteUrl(),
+	    );
+	    
+	    $email = $this->getMail()->setSubject($this->settings['backup_missed_schedule_notify_email_subject'])
+            	      ->setMessage($this->settings['backup_missed_schedule_notify_email_message'])
+            	      ->setTo($emails)
+            	      ->setMailtype($this->settings['backup_missed_schedule_notify_email_mailtype']);
+	    $email->send($vars);
+	}
 }
