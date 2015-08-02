@@ -179,9 +179,6 @@ class Files extends AbstractBackup
     {
         $path = $this->backup->startTimer()->getStorage()->getFileBackupNamePath($file_name);
         $backup_paths = $this->getBackupPaths();
-        
-        print_r($backup_paths);
-        exit;
         $progress = $this->backup->getProgress();
         $progress->writeLog('backup_progress_bar_start_file_list', 'na', 1);
         $backup_files = array();
@@ -204,7 +201,13 @@ class Files extends AbstractBackup
                     foreach($this->getExcludePaths() AS $exclude)
                     {
                         $exclude = trim($exclude);
+                        if( empty($exclude) )
+                        {
+                            continue;
+                        }
+                        
                         $length = strlen($exclude);
+                        
                         if( substr(trim($filePath), 0, $length) == $exclude)
                         {
                             $should_exclude = true;
@@ -230,6 +233,7 @@ class Files extends AbstractBackup
         
         $progress->writeLog('backup_progress_bar_stop_file_list', count($backup_files), 2);
         $compress->create($path);
+        
         foreach ($backup_files AS $file)
         {
             $compress->add($file['path'], $file['rel']);

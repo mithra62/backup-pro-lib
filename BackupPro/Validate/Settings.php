@@ -273,7 +273,70 @@ class Settings extends Validate
             $this->rule('required', 'cron_notify_email_message')->message('{field} is required');
         }
     }
-
+    
+    /**
+     * Validates the file backup location setting
+     * @param string $emails
+     * @return \mithra62\BackupPro\Validate\Settings
+     */
+    public function backupMissedScheduleNotifyEmail($emails)
+    {
+        if($emails != '')
+        {
+            if( !is_array($emails) )
+            {
+                $emails = explode("\n", $emails);
+            }
+            
+            foreach($emails AS $email)
+            {
+                if( !filter_var($email, FILTER_VALIDATE_EMAIL) )
+                {
+                    $this->rule('false', 'backup_missed_schedule_notify_emails')->message('"'.$email.'" isn\'t a valid email');
+                    //break;
+                }
+            }
+        }
+        
+        return $this;
+    }
+    
+    public function backupMissedScheduleNotifyEmailSubject($subject)
+    {
+        if($subject == '')
+        {
+            $this->rule('required', 'backup_missed_schedule_notify_email_subject')->message('{field} is required');
+        }
+    }
+    
+    public function backupMissedScheduleNotifyEmailMessage($message)
+    {
+        if($message == '')
+        {
+            $this->rule('required', 'backup_missed_schedule_notify_email_message')->message('{field} is required');
+        }
+    }
+    
+    public function totalVerificationsPerExecution($total)
+    {
+        if($total == '')
+        {
+            $this->rule('required', 'total_verifications_per_execution')->message('{field} is required');
+        }
+        
+        $this->rule('integer', 'total_verifications_per_execution')->message('{field} must be a whole number');
+    }
+    
+    public function backupMissedScheduleNotifyEmailInterval($total)
+    {
+        if($total == '')
+        {
+            $this->rule('required', 'backup_missed_schedule_notify_email_interval')->message('{field} is required');
+        }
+        
+        $this->rule('integer', 'backup_missed_schedule_notify_email_interval')->message('{field} must be a whole number');
+    }
+   
     /**
      * Checks the entire settings array for issues
      * @param array $data
@@ -364,6 +427,31 @@ class Settings extends Validate
         if( isset($data['cron_notify_email_message']) )
         {
             $this->cronNotifyEmailMessage($data['cron_notify_email_message']);
+        }
+        
+        if( isset($data['backup_missed_schedule_notify_emails']) )
+        {
+            $this->backupMissedScheduleNotifyEmail($data['backup_missed_schedule_notify_emails']);
+        }
+        
+        if( isset($data['backup_missed_schedule_notify_email_subject']) )
+        {
+            $this->backupMissedScheduleNotifyEmailSubject($data['backup_missed_schedule_notify_email_subject']);
+        }
+        
+        if( isset($data['backup_missed_schedule_notify_email_message']) )
+        {
+            $this->backupMissedScheduleNotifyEmailMessage($data['backup_missed_schedule_notify_email_message']);
+        }
+        
+        if( isset($data['total_verifications_per_execution']) )
+        {
+            $this->totalVerificationsPerExecution($data['total_verifications_per_execution']);
+        }
+        
+        if( isset($data['backup_missed_schedule_notify_email_interval']) )
+        {
+            $this->backupMissedScheduleNotifyEmailInterval($data['backup_missed_schedule_notify_email_interval']);
         }
     
         $this->val($data);
