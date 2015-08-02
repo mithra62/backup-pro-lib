@@ -207,7 +207,6 @@ class Files extends AbstractBackup
                         }
                         
                         $length = strlen($exclude);
-                        
                         if( substr(trim($filePath), 0, $length) == $exclude)
                         {
                             $should_exclude = true;
@@ -230,6 +229,11 @@ class Files extends AbstractBackup
                 }
             }
         }   
+        
+        if( count($backup_files) == 0 )
+        {
+            throw new FilesException("Nothing to backup. No files. Nothing... Lame... Check your Exclude Paths since they matched all files...");
+        }
         
         $progress->writeLog('backup_progress_bar_stop_file_list', count($backup_files), 2);
         $compress->create($path);

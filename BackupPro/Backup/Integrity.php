@@ -46,18 +46,30 @@ class Integrity
      */
     public function checkBackup(array $backup_info, $type = 'database')
     {
-        $path = $backup_info['file_name'];
-        switch($type)
+
+        foreach($backup_info['storage_locations'] AS  $location)
         {
-            case 'database':
-                $path = realpath(rtrim(ee()->backup_pro->backup_db_dir, '/').'/'.$path);
-                return $this->checkDatabaseBackup($path);
-                break;
-                	
-            case 'files':
-                $path = realpath(rtrim(ee()->backup_pro->backup_files_dir, '/').'/'.$path);
-                return $this->checkFilesBackup($path);
-                break;
+            if( $location['obj']->canDownload() )
+            {
+                $settings = $location['obj']->getSettings();
+                print_r($settings);
+                exit;
+                echo $path = $location['obj']->getFilePath($backup_info['file_name'], $type);
+                exit;
+                if( file_exists($path) && is_readable($path) )
+                {
+                    switch($type)
+                    {
+                        case 'database':
+                            return $this->checkDatabaseBackup($path);
+                            break;
+                            	
+                        case 'files':
+                            return $this->checkFilesBackup($path);
+                            break;
+                    }
+                }
+            }
         }
     }
     
@@ -104,8 +116,12 @@ class Integrity
      */
     public function checkFilesBackup($path)
     {
+        echo $path;
+        exit;
         if(file_exists($path))
         {
+            echo 'f';
+            exit;
             $cache_path = rtrim(APPPATH, '/').'/cache';
             $success = false;
             if( is_dir($cache_path) && is_writable($cache_path) && is_readable($cache_path) )

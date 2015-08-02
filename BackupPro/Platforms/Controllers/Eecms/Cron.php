@@ -102,36 +102,27 @@ trait Cron
         set_time_limit(0); //limit the time to 1 hours
 
         $backup = $this->services['backups']->setBackupPath($this->settings['working_directory']);
-        
-        
-		ee()->backup_pro->set_db_info($this->db_conf);
-		ee()->load->library('Backup_pro_integrity_agent', null, 'integrity_agent');
-		if( !empty($this->settings['db_verification_db_name']) )
-		{
-			$this->db_conf['db_name'] = $this->settings['db_verification_db_name'];
-			ee()->integrity_agent->set_db_conf($this->db_conf);
-		}
 		
 		//first, check the backup state
-		ee()->integrity_agent->monitor_backup_state();
+		//ee()->integrity_agent->monitor_backup_state();
 		
 		//now check the backups and ensure they're all valid
-		$backups = ee()->backup_pro->get_backups();
+		$backups = $backup->getAllBackups($this->settings['storage_details']);
 		$type = ($this->settings['last_verification_type'] == 'database' ? 'files' : 'database') ;
 		
 		//ok, this is a little bash over the head to FUCING ENSURE we're NOT using the production db for database testing!
 		//THAT WOULD BE BAD. So... bad... uh... coooooodddddddde... 
-		if($type == 'database' && !ee()->integrity_agent->get_db_conf())
+		if( $type == 'database' && empty($this->settings['db_verification_db_name']) )
 		{
 			$type = 'files';
 		}
 		
 		$total = 0;
-		foreach($backups[$type] AS $backup)
+		foreach($backups[$type] AS $details)
 		{
-			if( empty($backup['details']['verified']) || $backup['details']['verified'] == '0')
+			if( empty($details['details']['verified']) || $details['details']['verified'] == '0')
 			{
-				if( ee()->integrity_agent->check_backup($backup, $type) )
+				if( $backup->getIntegrity()->checkBackup($details, $type) )
 				{
 					$status = 'success';
 					$total++;
