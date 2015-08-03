@@ -47,7 +47,8 @@ trait Settings
             $backup = $this->services['backups'];
             $backups = $backup->setBackupPath($this->settings['working_directory'])->getAllBackups($this->settings['storage_details']);
             $data['meta'] = $backup->getBackupMeta($backups);
-            $settings_errors = $this->services['settings']->validate($data);
+            $extra = array('db_creds' => $this->platform->getDbCredentials());
+            $settings_errors = $this->services['settings']->validate($data, $extra);
             if( !$settings_errors )
             {
                 if( $this->services['settings']->update($data) )

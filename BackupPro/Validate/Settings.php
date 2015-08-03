@@ -336,13 +336,29 @@ class Settings extends Validate
         
         $this->rule('integer', 'backup_missed_schedule_notify_email_interval')->message('{field} must be a whole number');
     }
+    
+    public function dbVerificationDbName($name, array $credentials)
+    {
+        if( $name != '' )
+        {
+            $link = @mysqli_connect($credentials['host'], $credentials['user'], $credentials['password'], $name);
+            if( !$link )
+            {
+                $this->rule('false', 'db_verification_db_name')->message('"'.$name.'" isn\'t available to your configured database connection');
+            }
+            else 
+            {
+                mysqli_close($link);
+            }
+        }
+    }
    
     /**
      * Checks the entire settings array for issues
      * @param array $data
      * @return bool
      */
-    public function check(array $data)
+    public function check(array $data, array $extra = array())
     {
         if( isset($data['working_directory']) )
         {
@@ -452,6 +468,11 @@ class Settings extends Validate
         if( isset($data['backup_missed_schedule_notify_email_interval']) )
         {
             $this->backupMissedScheduleNotifyEmailInterval($data['backup_missed_schedule_notify_email_interval']);
+        }
+        
+        if( isset($data['db_verification_db_name']) )
+        {
+            $this->dbVerificationDbName( $data['db_verification_db_name'], $extra['db_creds'] );
         }
     
         $this->val($data);

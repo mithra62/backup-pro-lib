@@ -187,10 +187,10 @@ class Settings extends m62Settings
      * @ignore
      * @see \mithra62\Settings::validate()
      */
-    public function validate(array $data)
+    public function validate(array $data, array $extra = array())
     {
         $errors = array();
-        if( !$this->getValidate()->check($data) )
+        if( !$this->getValidate()->check($data, $extra) )
         {
             $errors = $this->getValidate()->getErrorMessages();
         }
