@@ -51,7 +51,7 @@ class Php extends DbAbstract
      */
     public function restore($database, $restore_file)
     {
-        $db = $this->getContext()->getRestore()->getDb();
+        $db = $this->getContext()->getRestore()->getDb()->setDbName($database);
         $file = fopen($restore_file, "r") ;
          
         if ($file === FALSE)

@@ -50,7 +50,7 @@ class Mysql extends DbAbstract
         $db_info = $this->getContext()->getRestore()->getDbInfo();
         $cnf = $this->createMyCnf($db_info, $path_info['dirname']);
     	
-        $command = $this->getEngineCmd()." --defaults-extra-file=\"$cnf\" ".$db_info['database']." < $restore_file";
+        $command = $this->getEngineCmd()." --defaults-extra-file=\"$cnf\" ".$database." < $restore_file";
         if( !$this->getShell(true)->setCommand($command)->execute() )
         {
             $this->logDebug($this->getShell()->getError());

@@ -28,6 +28,15 @@ class Integrity
     
     protected $compress = null;
     
+    protected $restore = null;
+    
+    protected $shell = null;
+    
+    protected $test_db_name = false;
+    
+    protected $backup_info = array();
+    protected $settings = array();
+    
     /**
      * The Files object
      * @var \mithra62\Files
@@ -46,6 +55,77 @@ class Integrity
     public function __construct()
     {
         
+    }
+
+    /**
+     * Sets the database connection info for verifying database backups
+     * @param array $db_info
+     */
+    public function setDbConf(array $db_conf)
+    {
+        $this->db_conf = $db_conf;
+        return $this;
+    }
+    
+    /**
+     * Returns the database connection details for verifying the database.
+     * Also runs checks to ensure we're NOT using the main database
+     * @return array
+     */
+    public function getDbConf()
+    {
+        return $this->db_conf;
+    }
+
+    /**
+     * Sets the database connection info for verifying database backups
+     * @param array $db_info
+     */
+    public function setSettings(array $settings)
+    {
+        $this->settings = $settings;
+        return $this;
+    }
+    
+    /**
+     * Returns the database connection details for verifying the database.
+     * Also runs checks to ensure we're NOT using the main database
+     * @return array
+     */
+    public function getSettings()
+    {
+        return $this->settings;
+    }
+
+    /**
+     * Sets the database connection info for verifying database backups
+     * @param array $db_info
+     */
+    public function setBackupInfo(array $backup_info)
+    {
+        $this->backup_info = $backup_info;
+        return $this;
+    }
+    
+    /**
+     * Returns the database connection details for verifying the database.
+     * Also runs checks to ensure we're NOT using the main database
+     * @return array
+     */
+    public function getBackupInfo()
+    {
+        return $this->backup_info;
+    }
+    
+    public function setTestDbName($name)
+    {
+        $this->test_db_name = $name;
+        return $this;
+    }
+    
+    public function getTestDbName()
+    {
+        return $this->test_db_name;
     }
     
     /**
@@ -99,6 +179,58 @@ class Integrity
     }
     
     /**
+     * Sets an instance of the Storage object
+     * @param Storage $storage
+     * @return \mithra62\BackupPro\Backup\Integrity
+     */
+    public function setShell(\mithra62\Shell $shell)
+    {
+        $this->shell = $shell;
+        return $this;
+    }
+    
+    public function getShell()
+    {
+        return $this->shell;
+    }
+
+    /**
+     * Sets an instance of the Storage object
+     * @param Storage $storage
+     * @return \mithra62\BackupPro\Backup\Integrity
+     */
+    public function setRestore(\mithra62\BackupPro\Restore $storage)
+    {
+        $this->restore = $storage;
+        return $this;
+    }
+    
+    public function getRestore()
+    {
+        return $this->restore;
+    }
+
+    /**
+     * Sets an instance of the calling object
+     * @param object $context
+     * @return \mithra62\BackupPro\Backups
+     */
+    public function setContext(\mithra62\BackupPro\Backups $context)
+    {
+        $this->context = $context;
+        return $this;
+    }
+    
+    /**
+     * Returns an instance of the Storage object
+     * @return \mithra62\BackupPro\Backups
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+    
+    /**
      * Checks the integrity of the backup in $path
      * @param string $path
      * @param string $type
@@ -136,30 +268,14 @@ class Integrity
     {
         if(file_exists($path) && $this->getDbConf())
         {
-            //we have to check if we can even USE the damn db for testing the database
-            $db = FactoryDB::factory($this->db_conf['user'], $this->db_conf['pass'], $this->db_conf['db_name'], $this->db_conf['host'], dmDB_MySQL) ;
-            $db->connect();
-            if($db->hasErrors())
-            {
-                $db->showErrors();
-                exit;
-            }
-            	
-            $temp = $this->settings['backup_store_location'].'/database/tmp';
-            if(!file_exists($temp))
-            {
-                mkdir($temp);
-            }
-            	
             $success = false;
-            	
-            $path = ee()->backup_pro->unzip_db_backup($path, $temp);
-            if(ee()->backup_pro_sql_backup->restore($path, $this->getDbConf()))
+            if( $this->getRestore()->setDbInfo($this->getDbConf())
+                                      ->setBackupInfo($this->getBackupInfo())
+                                      ->database($this->getTestDbName(), $path, $this->getSettings(), $this->getShell()) )
             {
                 $this->clearTestDb();
                 $success = true;
             }
-            ee()->backup_pro->delete_dir($temp);
             return $success;
         }
     }
@@ -233,72 +349,19 @@ class Integrity
     }
     
     /**
-     * Sets the database connection info for verifying database backups
-     * @param array $db_info
-     */
-    public function setDbConf(array $db_conf)
-    {
-        $this->db_conf = $db_conf;
-    }
-    
-    /**
-     * Returns the database connection details for verifying the database.
-     * Also runs checks to ensure we're NOT using the main database
-     * @return array
-     */
-    public function getDbConf()
-    {
-        if( !empty($this->db_conf['db_name']) && $this->db_conf['db_name'] != ee()->db->database)
-        {
-            return $this->db_conf;
-        }
-    
-        return array();
-    }
-    
-    /**
      * Clears all the tables from the testing database
      * @return boolean
      */
     private function clearTestDb()
     {
-        $db = FactoryDB::factory($this->db_conf['user'], $this->db_conf['pass'], $this->db_conf['db_name'], $this->db_conf['host'], dmDB_MySQL) ;
-        $db->connect();
-        if($db->hasErrors())
+        $tables = $this->getRestore()->getDb()->setDbName($this->getTestDbName())->getTables();
+        foreach($tables AS $table)
         {
-            $db->showErrors();
-            exit;
+            $this->getRestore()->getDb()->query(sprintf("DROP TABLE IF EXISTS `%s`; \n", $table));
         }
-    
-        $sql = "SHOW TABLE STATUS ";
-        $db->queryConstant($sql) ;
-    
-        while ($theDataRow =& $db->fetchAssoc())
-        {
-            $drop_db = FactoryDB::factory($this->db_conf['user'], $this->db_conf['pass'], $this->db_conf['db_name'], $this->db_conf['host'], dmDB_MySQL) ;
-            $drop_db->queryConstant(sprintf("DROP TABLE IF EXISTS `%s`; \n", $theDataRow['Name'])) ;
-        }
-         
+        
+        $config = $this->getDbConf();
+        $this->getRestore()->getDb()->setDbName($config['database']);
         return true;
-    }
-
-    /**
-     * Sets an instance of the calling object
-     * @param object $context
-     * @return \mithra62\BackupPro\Backups
-     */
-    public function setContext(\mithra62\BackupPro\Backups $context)
-    {
-        $this->context = $context;
-        return $this;
-    }
-    
-    /**
-     * Returns an instance of the Storage object
-     * @return \mithra62\BackupPro\Backups
-     */
-    public function getContext()
-    {
-        return $this->context;
     }
 }

@@ -26,15 +26,6 @@ trait Cron
     use Log;
     
     /**
-     * The methods anyone can access
-     * @var array
-     */
-    protected $allowAnonymous = array(
-        'actionBackup',
-        'actionIntegrityAgent'
-    );
-    
-    /**
      * The Backup Cron
     */
     public function cron()
@@ -119,11 +110,10 @@ trait Cron
 		{
 			$type = 'files';
 		}
-		
 		$total = 0;
 		foreach($backups[$type] AS $details)
 		{
-			if( empty($details['verified']) || $details['verified'] == '0')
+			//if( empty($details['verified']) || $details['verified'] == '0')
 			{
 			    if($type == 'files')
 			    {
@@ -132,6 +122,13 @@ trait Cron
 			    else
 			    {
 			        $file = $storage->getStorage()->getDbBackupNamePath($details['details_file_name']);
+                    $backup->getIntegrity()->setDbConf($this->platform->getDbCredentials())
+                                           ->setTestDbName($this->settings['db_verification_db_name'])
+                                           ->setShell($this->services['shell'])
+                                           ->setSettings($this->settings)
+                                           ->setBackupInfo($details)
+                                           ->setRestore($this->services['restore']);
+                    
 			    }
 			    
 			    $backup_info = $this->services['backups']->setLocations($this->settings['storage_details'])->getBackupData($file);
