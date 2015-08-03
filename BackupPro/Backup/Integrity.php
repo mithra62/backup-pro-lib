@@ -17,12 +17,22 @@ use mithra62\Traits\DateTime;
  *
  * Performs checks against backups to ensure they're stable and able to restore
  *
- * @package 	Backup\IntegrityAgent
+ * @package 	Backup
  * @author		Eric Lamb <eric@mithra62.com>
  */
 class Integrity
 {
     use DateTime;
+    
+    protected $storage = null;
+    
+    protected $compress = null;
+    
+    /**
+     * The Files object
+     * @var \mithra62\Files
+     */
+    protected $file = null;
     
     /**
      * The database connection info
@@ -39,6 +49,56 @@ class Integrity
     }
     
     /**
+     * Sets the Files instances
+     * @param \mithra62\Files $file
+     * @return \mithra62\BackupPro\Backup\Integrity
+     */
+    public function setFile(\mithra62\Files $file)
+    {
+        $this->file = $file;
+        return $this;
+    }
+    
+    /**
+     * Returns an instance of the Files object
+     * @return \mithra62\Files
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+    
+    /**
+     * Returns an instance of the Compress object
+     * @return \mithra62\Compress
+     */
+    public function getCompress()
+    {
+        if( is_null($this->compress) )
+        {
+            $this->compress = new \mithra62\Compress;
+        }
+        
+        return $this->compress;
+    }
+    
+    /**
+     * Sets an instance of the Storage object
+     * @param Storage $storage
+     * @return \mithra62\BackupPro\Backup\Integrity
+     */
+    public function setStorage(Storage $storage)
+    {
+        $this->storage = $storage;
+        return $this;
+    }
+    
+    public function getStorage()
+    {
+        return $this->storage;
+    }
+    
+    /**
      * Checks the integrity of the backup in $path
      * @param string $path
      * @param string $type
@@ -46,16 +106,11 @@ class Integrity
      */
     public function checkBackup(array $backup_info, $type = 'database')
     {
-
         foreach($backup_info['storage_locations'] AS  $location)
         {
             if( $location['obj']->canDownload() )
             {
-                $settings = $location['obj']->getSettings();
-                print_r($settings);
-                exit;
-                echo $path = $location['obj']->getFilePath($backup_info['file_name'], $type);
-                exit;
+                $path = $location['obj']->getFilePath($backup_info['file_name'], $backup_info['backup_type']);
                 if( file_exists($path) && is_readable($path) )
                 {
                     switch($type)
@@ -116,31 +171,27 @@ class Integrity
      */
     public function checkFilesBackup($path)
     {
-        echo $path;
-        exit;
         if(file_exists($path))
         {
-            echo 'f';
-            exit;
-            $cache_path = rtrim(APPPATH, '/').'/cache';
+            $storage = $this->getStorage();
+            $working_dir = $storage->getBackupDir();
             $success = false;
-            if( is_dir($cache_path) && is_writable($cache_path) && is_readable($cache_path) )
+            $compress = $this->getCompress();
+            if( is_dir($working_dir) && is_writable($working_dir) && is_readable($working_dir) )
             {
                 $folder = 'bp_'.md5(microtime(true));
-                $temp = $cache_path.'/'.$folder;
+                $temp = $working_dir.'/'.$folder;
                 mkdir($temp);
-                $zip = new ZipArchive;
-                $backup_archive = $zip->open($path);
-                if($backup_archive === true)
+                
+                $backup_archive = $compress->extract($path, $temp);
+                if( $backup_archive === true )
                 {
-                    $zip->extractTo($temp);
-                    $zip->close();
                     $success = true;
                 }
     
-                ee()->backup_pro->delete_dir($temp);
-                return $success;
+                $this->getFile()->deleteDir($temp, true);
             }
+            return $success;
         }
     }
     

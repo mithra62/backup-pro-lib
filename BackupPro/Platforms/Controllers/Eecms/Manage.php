@@ -38,6 +38,7 @@ trait Manage
             $file = $storage->getStorage()->getDbBackupNamePath($file_name);
         }
     
+        
         $backup_info = $this->services['backups']->setLocations($this->settings['storage_details'])->getBackupData($file);
         $download_file_path = false;
         foreach($backup_info['storage_locations'] AS $storage_location)

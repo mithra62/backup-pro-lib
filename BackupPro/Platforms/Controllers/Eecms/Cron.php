@@ -101,8 +101,11 @@ trait Cron
         ini_set('memory_limit', -1);
         set_time_limit(0); //limit the time to 1 hours
 
-        $backup = $this->services['backups']->setBackupPath($this->settings['working_directory']);
-		
+        //grab the backup and storage objects and set them up
+        $backup = $this->services['backups']->setLocations($this->settings['storage_details'])
+                                            ->setBackupPath($this->settings['working_directory']);
+        $storage = $this->services['backup']->setStoragePath($this->settings['working_directory']);
+        $backup->getIntegrity()->setFile($this->services['files'])->setStorage($storage->getStorage());
 		//first, check the backup state
 		//ee()->integrity_agent->monitor_backup_state();
 		
@@ -120,9 +123,19 @@ trait Cron
 		$total = 0;
 		foreach($backups[$type] AS $details)
 		{
-			if( empty($details['details']['verified']) || $details['details']['verified'] == '0')
+			if( empty($details['verified']) || $details['verified'] == '0')
 			{
-				if( $backup->getIntegrity()->checkBackup($details, $type) )
+			    if($type == 'files')
+			    {
+			        $file = $storage->getStorage()->getFileBackupNamePath($details['details_file_name']);
+			    }
+			    else
+			    {
+			        $file = $storage->getStorage()->getDbBackupNamePath($details['details_file_name']);
+			    }
+			    
+			    $backup_info = $this->services['backups']->setLocations($this->settings['storage_details'])->getBackupData($file);
+				if( $backup->getIntegrity()->checkBackup($backup_info, $type) )
 				{
 					$status = 'success';
 					$total++;
@@ -132,8 +145,8 @@ trait Cron
 					$status = 'fail';
 				}
 				
-				$details_path = ee()->backup_pro->backup_dir.DIRECTORY_SEPARATOR.$type;
-				ee()->backup_details->add_details($backup['file_name'], $details_path, array('verified' => $status));
+				$path = rtrim($this->settings['working_directory'], DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$type;
+				$this->services['backup']->getDetails()->addDetails($details['file_name'], $path, array('verified' => $status));
 			}
 			
 			if( $total >= $this->settings['total_verifications_per_execution'])
@@ -142,7 +155,10 @@ trait Cron
 			}
 		}
 		
-		ee()->backup_pro_settings->update_setting('last_verification_type', $type);
-		ee()->backup_pro_settings->update_setting('last_verification_time', time());
+		$data = array(
+		    'last_verification_type' => $type,
+		    'last_verification_time' => time()
+		);
+		$this->services['settings']->update($data);
     }
 }
