@@ -113,7 +113,7 @@ trait Cron
 		$total = 0;
 		foreach($backups[$type] AS $details)
 		{
-			//if( empty($details['verified']) || $details['verified'] == '0')
+			if( empty($details['verified']) || $details['verified'] == '0')
 			{
 			    if($type == 'files')
 			    {
