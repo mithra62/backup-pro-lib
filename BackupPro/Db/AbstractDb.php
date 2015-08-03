@@ -128,7 +128,7 @@ class AbstractDb
      * @access     public
      */
 
-    public function abstractDb($dblogin, $dbpass, $dbname, $dbhost = null)
+    public function __construct($dblogin, $dbpass, $dbname, $dbhost = null)
     {
         $this->setDbLogin($dblogin);
         $this->setDbPass($dbpass);

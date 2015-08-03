@@ -162,6 +162,8 @@ class Cleanup
         }
         
         $backups = $this->getBackups();
+        
+        
         foreach( $backups AS $type => $_backups )
         {
             if( count($_backups) <= '1' )
@@ -181,11 +183,6 @@ class Cleanup
                 {
                     $hashes[$backup['hash']] = $backup['hash'];
                 }
-            }
-            
-            if( count($duplicates) == '0' )
-            {
-                return $this;
             }
             
             foreach($duplicates AS $hashed_time => $check)

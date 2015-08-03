@@ -6,7 +6,7 @@ class Mysql extends AbstractDb
 
     public function __construct($dblogin, $dbpass, $dbname, $dbhost = null)
     {
-        $this->abstractDb($dblogin, $dbpass, $dbname, $dbhost) ;
+        parent::__construct($dblogin, $dbpass, $dbname, $dbhost) ;
     }
 
     /**
