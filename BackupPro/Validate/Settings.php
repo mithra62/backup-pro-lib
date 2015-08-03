@@ -341,14 +341,21 @@ class Settings extends Validate
     {
         if( $name != '' )
         {
-            $link = @mysqli_connect($credentials['host'], $credentials['user'], $credentials['password'], $name);
-            if( !$link )
+            if( $name == $credentials['database'] )
             {
-                $this->rule('false', 'db_verification_db_name')->message('"'.$name.'" isn\'t available to your configured database connection');
+                $this->rule('false', 'db_verification_db_name')->message('"'.$name.'" is the site db; you can\'t use that for verification');
             }
-            else 
+            else
             {
-                mysqli_close($link);
+                $link = @mysqli_connect($credentials['host'], $credentials['user'], $credentials['password'], $name);
+                if( !$link )
+                {
+                    $this->rule('false', 'db_verification_db_name')->message('"'.$name.'" isn\'t available to your configured database connection');
+                }
+                else 
+                {
+                    @mysqli_close($link);
+                }
             }
         }
     }
