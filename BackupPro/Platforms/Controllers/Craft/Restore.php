@@ -5,17 +5,17 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Controllers/Eecms/Restore.php
+ * @filesource 	./mithra62/BackupPro/Controllers/Craft/Restore.php
  */
  
-namespace mithra62\BackupPro\Platforms\Controllers\Eecms;
+namespace mithra62\BackupPro\Platforms\Controllers\Craft;
 
 /**
- * Backup Pro - Eecms Restore Backup Controller
+ * Backup Pro - Craft Restore Backup Controller
  *
- * Contains the Restore Backup Controller Actions for ExpressionEngine
+ * Contains the Restore Backup Controller Actions for Craft
  *
- * @package 	BackupPro\Eecms\Controllers
+ * @package 	BackupPro\Craft\Controllers
  * @author		Eric Lamb <eric@mithra62.com>
  */
 trait Restore
@@ -26,21 +26,19 @@ trait Restore
     public function restore_confirm()
     {
         $encrypt = $this->services['encrypt'];
-        $file_name = $encrypt->decode(ee()->input->get_post('id'));
+        $file_name = $encrypt->decode(\Craft\craft()->request->getParam('id'));
         $storage = $this->services['backup']->setStoragePath($this->settings['working_directory']);
-    
+        
         $file = $storage->getStorage()->getDbBackupNamePath($file_name);
         $backup_info = $this->services['backups']->setLocations($this->settings['storage_details'])->getBackupData($file);
         $variables = array(
             'settings' => $this->settings,
             'backup' => $backup_info,
-            'errors' => $this->errors,
-            'menu_data' => ee()->backup_pro->get_dashboard_view_menu(),
-            'method' => ee()->input->get_post('method'),
+            'errors' => $this->errors
         );
-    
-        ee()->view->cp_page_title = $this->services['lang']->__('restore_db');
-        return ee()->load->view('restore_confirm', $variables, true);
+        
+        $template = 'backuppro/restore_confirm';
+        $this->renderTemplate($template, $variables);
     }
     
     /**
@@ -49,9 +47,9 @@ trait Restore
     public function restore_database()
     {
         $encrypt = $this->services['encrypt'];
-        $file_name = $encrypt->decode(ee()->input->get_post('id'));
+        $file_name = $encrypt->decode(\Craft\craft()->request->getParam('id'));
         $storage = $this->services['backup']->setStoragePath($this->settings['working_directory']);
-    
+        
         $file = $storage->getStorage()->getDbBackupNamePath($file_name);
         $backup_info = $this->services['backups']->setLocations($this->settings['storage_details'])->getBackupData($file);
         $restore_file_path = false;
@@ -63,20 +61,21 @@ trait Restore
                 break;
             }
         }
-    
+        
         if($restore_file_path && file_exists($restore_file_path))
         {
             $db_info = $this->platform->getDbCredentials();
             if( $this->services['restore']->setDbInfo($db_info)->setBackupInfo($backup_info)->database($db_info['database'], $restore_file_path, $this->settings, $this->services['shell']) )
             {
-                ee()->session->set_flashdata('message_success', $this->services['lang']->__('database_restored'));
-                ee()->functions->redirect($this->url_base.'db_backups');
+                \Craft\craft()->userSession->setFlash('notice', $this->services['lang']->__('database_restored'));
+                $this->redirect('backuppro/database_backups');
             }
         }
         else
         {
-            ee()->session->set_flashdata('message_error', $this->services['lang']->__('db_backup_not_found'));
-            ee()->functions->redirect($this->url_base.'db_backups');
+            \Craft\craft()->userSession->setFlash('error', $this->services['lang']->__('db_backup_not_found'));
+            $this->redirect('backuppro');
+            exit;
         }
     }
 }
