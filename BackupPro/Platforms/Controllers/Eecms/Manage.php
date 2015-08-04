@@ -41,12 +41,15 @@ trait Manage
         
         $backup_info = $this->services['backups']->setLocations($this->settings['storage_details'])->getBackupData($file);
         $download_file_path = false;
-        foreach($backup_info['storage_locations'] AS $storage_location)
+        if( !empty($backup_info['storage_locations']) && is_array($backup_info['storage_locations']) )
         {
-            if( $storage_location['obj']->canDownload() )
+            foreach($backup_info['storage_locations'] AS $storage_location)
             {
-                $download_file_path = $storage_location['obj']->getFilePath($backup_info['file_name'], $backup_info['backup_type']); //next, get file path
-                break;
+                if( $storage_location['obj']->canDownload() )
+                {
+                    $download_file_path = $storage_location['obj']->getFilePath($backup_info['file_name'], $backup_info['backup_type']); //next, get file path
+                    break;
+                }
             }
         }
     

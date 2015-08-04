@@ -57,7 +57,7 @@ trait Dashboard
             $backups = $filtered_backups;
         }
     
-        ee()->jquery->tablesorter('#backups table', '{headers: {8: {sorter: false}, 0: {sorter: false}, 1: {sorter: false}}, widgets: ["zebra"], sortList: [[3,1]]}');
+        ee()->jquery->tablesorter('#backups table', '{headers: {8: {sorter: false}, 0: {sorter: false}, 1: {sorter: false}, 2: {sorter: false}}, widgets: ["zebra"], sortList: [[3,1]]}');
         ee()->javascript->compile();
     
         $variables = array(
@@ -93,7 +93,7 @@ trait Dashboard
         );
          
         ee()->view->cp_page_title = ee()->lang->line('database_backups');
-        ee()->jquery->tablesorter('#database_backups table', '{headers: {1: {sorter: false}, 0: {sorter: false}, 8: {sorter: false}, 7: {sorter: false}}, widgets: ["zebra"], sortList: [[4,1]]}');
+        ee()->jquery->tablesorter('#database_backups table', '{headers: {8: {sorter: false}, 0: {sorter: false}, 1: {sorter: false}, 2: {sorter: false}, 3: {sorter: false}}, widgets: ["zebra"], sortList: [[4,1]]}');
         ee()->javascript->compile();
     
         ee()->view->cp_page_title = $this->services['lang']->__('database_backups');
@@ -118,8 +118,8 @@ trait Dashboard
             'menu_data' => ee()->backup_pro->get_dashboard_view_menu(),
             'method' => ee()->input->get_post('method')
         );
-    
-        ee()->jquery->tablesorter('#file_backups table', '{headers: {7: {sorter: false}, 1: {sorter: false}, 0: {sorter: false}, 8: {sorter: false}}, widgets: ["zebra"], sortList: [[4,1]]}');
+
+        ee()->jquery->tablesorter('#file_backups table', '{headers: {8: {sorter: false}, 0: {sorter: false}, 1: {sorter: false}, 2: {sorter: false}, 3: {sorter: false}}, widgets: ["zebra"], sortList: [[4,1]]}');
         ee()->javascript->compile();
     
         ee()->view->cp_page_title = $this->services['lang']->__('file_backups');
