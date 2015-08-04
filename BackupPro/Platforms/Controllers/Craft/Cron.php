@@ -8,9 +8,8 @@
  * @filesource 	./mithra62/BackupPro/Controllers/Eecms/Cron.php
  */
  
-namespace mithra62\BackupPro\Platforms\Controllers\Craft;
+namespace mithra62\BackupPro\Platforms\Controllers\Eecms;
 
-use mithra62\Traits\Log;
 use mithra62\BackupPro\Exceptions\BackupException;
 
 /**
@@ -23,24 +22,22 @@ use mithra62\BackupPro\Exceptions\BackupException;
  */
 trait Cron
 {
-    use Log;
-    
     /**
      * The Backup Cron
-    */
+     */
     public function cron()
     {
         @session_write_close();
         $error = $this->services['errors'];
         $backup = $this->services['backup']->setStoragePath($this->settings['working_directory']);
         $errors = $error->clearErrors()->checkStorageLocations($this->settings['storage_details'])->checkBackupDirs($backup->getStorage())->getErrors();
-    
+        
         if( $error->totalErrors() == '0' )
         {
             ini_set('memory_limit', -1);
             set_time_limit(0);
-    
-            $backup_type = ee()->input->get_post('type');
+        
+            $backup_type = craft()->request->getParam('type');
             $backup_paths = array();
             switch($backup_type)
             {
@@ -48,25 +45,26 @@ trait Cron
                     $db_info = $this->platform->getDbCredentials();
                     $backup_paths['database'] = $backup->setDbInfo($db_info)->database($db_info['database'], $this->settings, $this->services['shell']);
                     break;
-    
+        
                 case 'file':
                     $backup_paths['files'] = $backup->files($this->settings, $this->services['files'], $this->services['regex']);
                     break;
             }
-            
+        
+        
             $backups = $this->services['backups']->setBackupPath($this->settings['working_directory'])
-                                                 ->getAllBackups($this->settings['storage_details']);
+                            ->getAllBackups($this->settings['storage_details']);
             $backup->getStorage()->getCleanup()->setStorageDetails($this->settings['storage_details'])
-                                               ->setBackups($backups)
-                                               ->setDetails($this->services['backups']->getDetails())
-                                               ->autoThreshold($this->settings['auto_threshold'])
-                                               ->counts($this->settings['max_file_backups'], 'files')
-                                               ->duplicates($this->settings['allow_duplicates']);            
-    
+                                 ->setBackups($backups)
+                                 ->setDetails($this->services['backups']->getDetails())
+                                 ->autoThreshold($this->settings['auto_threshold'])
+                                 ->counts($this->settings['max_file_backups'], 'files')
+                                 ->duplicates($this->settings['allow_duplicates']);
+        
             //now send the notifications (if any)
-            if(count($backup_paths) >= 1 && (is_array($this->settings['cron_notify_emails']) && count($this->settings['cron_notify_emails']) >= 1))
+            if(count($backup_paths) >= 1 && count($this->settings['cron_notify_emails']) >= 1)
             {
-                $notify = $this->services['notify']; 
+                $notify = $this->services['notify'];
                 $notify->getMail()->setConfig($this->platform->getEmailConfig());
                 foreach($backup_paths As $type => $path)
                 {
@@ -80,7 +78,7 @@ trait Cron
             $this->logDebug($error->getError());
             throw new BackupException($error->getError());
         }
-    
+        
         exit;
     }
     

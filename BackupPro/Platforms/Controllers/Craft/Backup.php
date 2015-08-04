@@ -67,7 +67,7 @@ trait Backup
     {
         $error = $this->services['errors'];
         $backup = $this->services['backup']->setStoragePath($this->settings['working_directory']);
-        $errors = $error->clearErrors()->checkStorageLocations($this->settings['storage_details'])->checkBackupDirs($backup->getStorage())->getErrors();
+        $errors = $error->clearErrors()->checkStorageLocations($this->settings['storage_details'])->checkBackupDirs($backup->getStorage())->checkFileBackupLocations($this->settings['backup_file_location'])->getErrors();
         if( $error->totalErrors() == '0' )
         {
             @session_write_close();
