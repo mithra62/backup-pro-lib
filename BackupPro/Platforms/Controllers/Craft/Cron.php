@@ -5,19 +5,19 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Controllers/Eecms/Cron.php
+ * @filesource 	./mithra62/BackupPro/Controllers/Craft/Cron.php
  */
  
-namespace mithra62\BackupPro\Platforms\Controllers\Eecms;
+namespace mithra62\BackupPro\Platforms\Controllers\Craft;
 
 use mithra62\BackupPro\Exceptions\BackupException;
 
 /**
- * Backup Pro - Eecms Cron Controller
+ * Backup Pro - Craft Cron Controller
  *
- * Contains the Cron Controller Actions for ExpressionEngine
+ * Contains the Cron Controller Actions for Craft
  *
- * @package 	BackupPro\Eecms\Controllers
+ * @package 	BackupPro\Craft\Controllers
  * @author		Eric Lamb <eric@mithra62.com>
  */
 trait Cron

@@ -27,14 +27,14 @@ trait Settings
     {
         $section = ( ee()->input->get_post('section') != '' ? ee()->input->get_post('section') : 'general' );
         $variables = array('form_data' => $this->settings, 'form_errors' => $this->returnEmpty($this->settings));
-        $variables['form_data']['cron_notify_emails'] = implode(PHP_EOL, $this->settings['cron_notify_emails']);
-        $variables['form_data']['exclude_paths'] = implode(PHP_EOL, $this->settings['exclude_paths']);
-        $variables['form_data']['backup_file_location'] = implode(PHP_EOL, $this->settings['backup_file_location']);
-        $variables['form_data']['db_backup_archive_pre_sql'] = implode(PHP_EOL, $this->settings['db_backup_archive_pre_sql']);
-        $variables['form_data']['db_backup_archive_post_sql'] = implode(PHP_EOL, $this->settings['db_backup_archive_post_sql']);
-        $variables['form_data']['db_backup_execute_pre_sql'] = implode(PHP_EOL, $this->settings['db_backup_execute_pre_sql']);
-        $variables['form_data']['db_backup_execute_post_sql'] = implode(PHP_EOL, $this->settings['db_backup_execute_post_sql']);
-        $variables['form_data']['backup_missed_schedule_notify_emails'] = implode(PHP_EOL, $this->settings['backup_missed_schedule_notify_emails']);
+        $variables['form_data']['cron_notify_emails'] = implode("\n", $this->settings['cron_notify_emails']);
+        $variables['form_data']['exclude_paths'] = implode("\n", $this->settings['exclude_paths']);
+        $variables['form_data']['backup_file_location'] = implode("\n", $this->settings['backup_file_location']);
+        $variables['form_data']['db_backup_archive_pre_sql'] = implode("\n", $this->settings['db_backup_archive_pre_sql']);
+        $variables['form_data']['db_backup_archive_post_sql'] = implode("\n", $this->settings['db_backup_archive_post_sql']);
+        $variables['form_data']['db_backup_execute_pre_sql'] = implode("\n", $this->settings['db_backup_execute_pre_sql']);
+        $variables['form_data']['db_backup_execute_post_sql'] = implode("\n", $this->settings['db_backup_execute_post_sql']);
+        $variables['form_data']['backup_missed_schedule_notify_emails'] = implode("\n", $this->settings['backup_missed_schedule_notify_emails']);
         
         if( ee()->input->server('REQUEST_METHOD') == 'POST' )
         {
