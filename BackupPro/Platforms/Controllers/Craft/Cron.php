@@ -37,7 +37,7 @@ trait Cron
             ini_set('memory_limit', -1);
             set_time_limit(0);
         
-            $backup_type = craft()->request->getParam('type');
+            $backup_type = \Craft\craft()->request->getParam('type');
             $backup_paths = array();
             switch($backup_type)
             {
