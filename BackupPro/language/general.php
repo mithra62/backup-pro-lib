@@ -206,6 +206,7 @@ $lang = array(
 
 //integrity agent
 'verify_backup_stability' => 'Verify Backup Stability',
+'console_verify_backup_stability' => 'Verify Backup Stability (Console)',
 'integrity_agent_cron' => 'Integrity Agent Cron Command',
 'configure_integrity_agent_verification' => 'Configure Verification Options',
 'db_verification_db_name' => 'Verification Temp Database',

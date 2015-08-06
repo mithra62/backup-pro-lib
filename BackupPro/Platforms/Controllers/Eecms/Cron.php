@@ -157,5 +157,6 @@ trait Cron
 		    'last_verification_time' => time()
 		);
 		$this->services['settings']->update($data);
+		exit;
     }
 }

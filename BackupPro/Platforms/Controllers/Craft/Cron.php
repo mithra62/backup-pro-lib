@@ -87,8 +87,8 @@ trait Cron
      */
     public function integrity()
     {
-        ini_set('memory_limit', -1);
-        set_time_limit(0); //limit the time to 1 hours
+        @ini_set('memory_limit', -1);
+        @set_time_limit(0); //limit the time to 1 hours
 
         //grab the backup and storage objects and set them up
         $backup = $this->services['backups']->setLocations($this->settings['storage_details'])

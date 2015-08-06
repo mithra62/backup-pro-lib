@@ -37,8 +37,8 @@ class Craft extends m62Craft implements PlatformInterface
 		return array(
 			 'file_backup' => array('url' => $url.'?type=file', 'cmd' => 'curl "'.$url.'?type=file"', 'type' => 'curl'),
 			 'db_backup' => array('url' => $url.'?type=db', 'cmd' => 'curl "'.$url.'?type=db"', 'type' => 'curl'),
-			 'console_file_backup' => array('url' => '', 'cmd' => 'php <app>yii.php backup file [--notify="yes"]', 'type' => 'console'),
-			 'console_db_backup' => array('url' => '', 'cmd' => 'php <app>yii.php backup database [--notify="yes"]', 'type' => 'console')
+			 'console_file_backup' => array('url' => '', 'cmd' => 'php craft/app/etc/console/yiic.php backup file [--notify="yes"]', 'type' => 'console'),
+			 'console_db_backup' => array('url' => '', 'cmd' => 'php craft/app/etc/console/yiic.php backup database [--notify="yes"]', 'type' => 'console')
 		);
     }
     
@@ -48,6 +48,12 @@ class Craft extends m62Craft implements PlatformInterface
      */
     public function getIaCronCommands()
     {
-        return array();
+        $config = \Craft\craft()->config;
+        $trigger = $config->get('actionTrigger');
+        $url = UrlHelper::getSiteUrl().$trigger.'/backupPro/cron/integrity';
+		return array(
+			 'verify_backup_stability' => array('url' => $url, 'cmd' => 'curl "'.$url, 'type' => 'curl'),
+			 'console_verify_backup_stability' => array('url' => '', 'cmd' => 'php craft/app/etc/console/yiic.php backup integrity', 'type' => 'console'),
+		);
     }
 }
