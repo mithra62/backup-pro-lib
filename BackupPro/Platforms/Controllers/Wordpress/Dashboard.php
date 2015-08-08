@@ -28,7 +28,6 @@ trait Dashboard
         if( empty($this->settings['working_directory']) )
         {
             //\Craft\craft()->userSession->setFlash('error', $this->services['lang']->__('working_dir_not_setup'));
-            ob_start();
             $location = '/wp-admin/admin.php?page=backup_pro/settings';
             //wp_redirect( $location, 200 );
             //exit;
@@ -66,7 +65,8 @@ trait Dashboard
             'backups' => $backups,
             'available_space' => $available_space,
             'errors' => $this->errors,
-            'view_helper' => $this->view_helper
+            'view_helper' => $this->view_helper,
+            'url_base' => $this->url_base
         );
         
         $template = 'admin/views/dashboard';
