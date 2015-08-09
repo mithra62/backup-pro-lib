@@ -66,7 +66,9 @@ trait Dashboard
             'available_space' => $available_space,
             'errors' => $this->errors,
             'view_helper' => $this->view_helper,
-            'url_base' => $this->url_base
+            'url_base' => $this->url_base,
+            'menu_data' => $this->backup_lib->getDashboardViewMenu(),
+            'method' => $this->getPost('method')
         );
         
         $template = 'admin/views/dashboard';

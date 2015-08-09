@@ -50,6 +50,8 @@ class Wordpress
      */
     protected $view_helper = null;
     
+    protected $backup_lib = null;
+    
     /**
      * Set it up
      * @param unknown $id
@@ -84,5 +86,25 @@ class Wordpress
         extract($variables);
         include $path;
         //echo $template;
+    }
+    
+    protected function setBackupLib($backup_lib)
+    {
+        $this->backup_lib = $backup_lib;
+        return $this;
+    }
+    
+    public function getPost($index, $default = false)
+    {
+        if ( isset($_POST[$index]) )
+        {
+            return $_POST[$index];
+        }
+        elseif( isset( $_GET[$index]) )
+        {
+            return $_GET[$index];
+        }
+        
+        return $default;
     }
 }
