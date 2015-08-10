@@ -68,7 +68,7 @@ trait Dashboard
             'view_helper' => $this->view_helper,
             'url_base' => $this->url_base,
             'menu_data' => $this->backup_lib->getDashboardViewMenu(),
-            'method' => $this->getPost('method')
+            'section' => ''
         );
         
         $template = 'admin/views/dashboard';
@@ -88,10 +88,14 @@ trait Dashboard
             'settings' => $this->settings,
             'backup_meta' => $backup_meta,
             'backups' => $backups,
-            'errors' => $this->errors
+            'errors' => $this->errors,
+            'view_helper' => $this->view_helper,
+            'url_base' => $this->url_base,
+            'menu_data' => $this->backup_lib->getDashboardViewMenu(),
+            'section' => 'db_backups'
         );
         
-        $template = 'backuppro/database_backups';
+        $template = 'admin/views/database_backups';
         $this->renderTemplate($template, $variables);
     }
     
@@ -108,10 +112,14 @@ trait Dashboard
             'settings' => $this->settings,
             'backup_meta' => $backup_meta,
             'backups' => $backups,
-            'errors' => $this->errors
+            'errors' => $this->errors,
+            'view_helper' => $this->view_helper,
+            'url_base' => $this->url_base,
+            'menu_data' => $this->backup_lib->getDashboardViewMenu(),
+            'section' => 'file_backups'
         );
         
-        $template = 'backuppro/file_backups';
+        $template = 'admin/views/file_backups';
         $this->renderTemplate($template, $variables);
     }
 }

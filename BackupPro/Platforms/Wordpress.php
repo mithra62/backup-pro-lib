@@ -6,7 +6,7 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Platforms/Eecms.php
+ * @filesource 	./mithra62/BackupPro/Platforms/Wordpress.php
  */
  
 namespace mithra62\BackupPro\Platforms;
@@ -15,9 +15,9 @@ use mithra62\Platforms\Wordpress AS m62Wp;
 use mithra62\BackupPro\Platforms\PlatformInterface;
 
 /**
- * Backup Pro - Eecms Bridge
+ * Backup Pro - Wordpress Bridge
  *
- * Contains the Eecms specific 
+ * Contains the Wordpress specific items Backup Pro needs
  *
  * @package 	mithra62\BackupPro
  * @author		Eric Lamb <eric@mithra62.com>
@@ -30,6 +30,7 @@ class Wordpress extends m62Wp implements PlatformInterface
      */
     public function getBackupCronCommands()
     {
+        return array();
 		ee()->load->library('backup_pro_lib', null, 'backup_pro');
         return ee()->backup_pro->get_cron_commands();
     }
@@ -41,6 +42,7 @@ class Wordpress extends m62Wp implements PlatformInterface
      */
     public function getIaCronCommands()
     {
+        return array();
 		ee()->load->library('backup_pro_lib', null, 'backup_pro');
         return ee()->backup_pro->get_ia_cron_commands();
     }

@@ -199,10 +199,8 @@ $lang = array(
 'settings_breadcrumb_files' => 'File Backup',
 'settings_breadcrumb_cron' => 'Cron Backup',
 'settings_breadcrumb_integrity_agent' => 'Integrity Agent',
-'settings_breadcrumb_cf' => 'Cloud Files',
-'settings_breadcrumb_s3' => 'Amazon S3',
-'settings_breadcrumb_gcs' => 'Google Cloud',
-'settings_breadcrumb_ftp' => 'FTP',
+'settings_breadcrumb_license' => 'License Details',
+'settings_breadcrumb_storage' => 'Storage Locations',
 
 //integrity agent
 'verify_backup_stability' => 'Verify Backup Stability',
