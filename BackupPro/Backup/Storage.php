@@ -145,7 +145,7 @@ class Storage
             $tail = $db_backup_method.$this->name_sep;
         }
         	
-        return mktime().$this->name_sep.$tail.$db_name.'.sql';
+        return date('U').$this->name_sep.$tail.$db_name.'.sql';
     }
     
     /**
@@ -154,7 +154,7 @@ class Storage
      */
     public function makeFileFilename()
     {
-        return mktime();
+        return date('U');
     }
     
     /**

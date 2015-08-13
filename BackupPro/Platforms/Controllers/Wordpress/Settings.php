@@ -47,15 +47,7 @@ trait Settings
             $data['meta'] = $backup->getBackupMeta($backups);
             $extra = array('db_creds' => $this->platform->getDbCredentials());
             $settings_errors = $this->services['settings']->validate($data, $extra);
-            if( !$settings_errors )
-            {
-                if( $this->services['settings']->update($data) )
-                {
-                    ee()->session->set_flashdata('message_success', $this->services['lang']->__('settings_updated'));
-                    ee()->functions->redirect($this->url_base.'settings'.AMP.'section='.ee()->input->get_post('section'));
-                }
-            }
-            else
+            if( $settings_errors )
             {
                 $variables['form_errors'] = array_merge($variables['form_errors'], $settings_errors);
             }

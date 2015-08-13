@@ -68,7 +68,8 @@ trait Dashboard
             'view_helper' => $this->view_helper,
             'url_base' => $this->url_base,
             'menu_data' => $this->backup_lib->getDashboardViewMenu(),
-            'section' => ''
+            'section' => '',
+            'theme_folder_url' => plugin_dir_url(self::name)
         );
         
         $template = 'admin/views/dashboard';
@@ -92,7 +93,8 @@ trait Dashboard
             'view_helper' => $this->view_helper,
             'url_base' => $this->url_base,
             'menu_data' => $this->backup_lib->getDashboardViewMenu(),
-            'section' => 'db_backups'
+            'section' => 'db_backups',
+            'theme_folder_url' => plugin_dir_url(self::name)
         );
         
         $template = 'admin/views/database_backups';
@@ -116,7 +118,8 @@ trait Dashboard
             'view_helper' => $this->view_helper,
             'url_base' => $this->url_base,
             'menu_data' => $this->backup_lib->getDashboardViewMenu(),
-            'section' => 'file_backups'
+            'section' => 'file_backups',
+            'theme_folder_url' => plugin_dir_url(self::name)
         );
         
         $template = 'admin/views/file_backups';

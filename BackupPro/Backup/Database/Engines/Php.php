@@ -151,7 +151,7 @@ class Php extends DbAbstract
                 $db->queryConstant(sprintf('SELECT * FROM %1$s LIMIT %2$s, %3$s', $table, $offset, $this->getSqlGroupBy()));
                 $columns = '';
                 $rows = array();
-                while ($value =& $db->fetchAssoc())
+                while ($value = $db->fetchAssoc())
                 {
                     if ($columns == '')
                     {

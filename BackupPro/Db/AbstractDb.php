@@ -637,7 +637,7 @@ class AbstractDb
      * @return     boolean True if there were any rows affected by the query, false otherwise.
      */
 
-    public function affectedRows()
+    public function affectedRows($dblink)
     {
         return (isset($this->_affectedRows) && ($this->_affectedRows > 0)) ;
     }
