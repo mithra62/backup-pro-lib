@@ -193,7 +193,7 @@ class Files extends AbstractBackup
             $rel_dir = basename($dir);
             foreach ($files AS $file)
             {
-                if (!$file->isDir())
+                if ( !$file->isDir() && $file->isReadable() )
                 {
                     $this->setTotalFiles(1);
                     $filePath = $file->getRealPath();
