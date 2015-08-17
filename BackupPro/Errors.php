@@ -54,6 +54,23 @@ class Errors extends m62Errors
     }
     
     /**
+     * Verifies the working directory is usable
+     * @param string $path
+     * @return \mithra62\BackupPro\Errors
+     */
+    public function checkWorkingDirectory($path)
+    {
+        $validate = $this->getValidation()->workingDirectory();
+        $data = array('working_directory' => $path);
+        if( !$validate->check($data) )
+        {
+             $this->setError('invalid_working_directory', 'invalid_working_directory');
+        }
+        
+        return $this;
+    }
+    
+    /**
      * Runs the tests to make sure the backup directories exist and are writable
      * @param \mithra62\BackupPro\Backup\Storage $storage
      * @return \mithra62\BackupPro\Errors

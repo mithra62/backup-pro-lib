@@ -5,7 +5,7 @@
  * @author		Eric Lamb <eric@mithra62.com>
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
- * @version		2.0
+ * @version		3.0
  * @filesource 	./mithra62/BackupPro/BackupPro.php
  */
  

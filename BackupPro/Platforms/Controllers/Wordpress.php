@@ -67,7 +67,8 @@ class Wordpress
         
         $this->m62->setDbConfig($this->platform->getDbCredentials());
         $this->settings = $this->services['settings']->get();
-        $this->errors = $this->services['errors']->checkStorageLocations($this->settings['storage_details'])
+        $this->errors = $this->services['errors']->setValidation($this->services['settings_validate'])->checkWorkingDirectory($this->settings['working_directory'])
+                                                 ->checkStorageLocations($this->settings['storage_details'])
                                                  ->licenseCheck($this->settings['license_number'], $this->services['license'])
                                                  ->getErrors();
         
@@ -81,11 +82,9 @@ class Wordpress
     
     protected function renderTemplate($template, $variables) 
     {
-        //echo WP_PLUGIN_DIR.DIRECTORY_SEPARATOR.'backup_pro';
         $path = WP_PLUGIN_DIR.DIRECTORY_SEPARATOR.'backup_pro'.DIRECTORY_SEPARATOR.$template.'.php';
         extract($variables);
         include $path;
-        //echo $template;
     }
     
     protected function setBackupLib($backup_lib)
