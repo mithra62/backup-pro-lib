@@ -50,6 +50,10 @@ class Wordpress
      */
     protected $view_helper = null;
     
+    /**
+     * The backup helper object
+     * @var BackupPro
+     */
     protected $backup_lib = null;
     
     /**
@@ -67,7 +71,7 @@ class Wordpress
         
         $this->m62->setDbConfig($this->platform->getDbCredentials());
         $this->settings = $this->services['settings']->get();
-        $this->errors = $this->services['errors']->setValidation($this->services['settings_validate'])->checkWorkingDirectory($this->settings['working_directory'])
+        $this->errors = $this->services['errors']->checkWorkingDirectory($this->settings['working_directory'])
                                                  ->checkStorageLocations($this->settings['storage_details'])
                                                  ->licenseCheck($this->settings['license_number'], $this->services['license'])
                                                  ->getErrors();
@@ -80,19 +84,44 @@ class Wordpress
         $this->url_base = '/wp-admin/admin.php?page=backup_pro/';
     }
     
-    protected function renderTemplate($template, $variables) 
+    /**
+     * Outputs a template to the browser
+     * 
+     * Since Wordpress doesn't have an MVC design we're sort of forcing it here.
+     * The idea is we just lock all view scripts to anything within the backup_pro 
+     * folder and the rest will take care of itself. 
+     * 
+     * Oh, and yeah, I'm using extract for pulling out the $variables. Sue me.
+     * 
+     * @param string $template The path to the template we want to render
+     * @param array $variables The variables the template is expecting
+     */
+    protected function renderTemplate($template, array $variables = array()) 
     {
         $path = WP_PLUGIN_DIR.DIRECTORY_SEPARATOR.'backup_pro'.DIRECTORY_SEPARATOR.$template.'.php';
         extract($variables);
         include $path;
     }
     
-    protected function setBackupLib($backup_lib)
+    /**
+     * Sets the BackupPro object for use
+     * @param \BackupPro $backup_lib
+     * @return \mithra62\BackupPro\Platforms\Controllers\Wordpress
+     */
+    protected function setBackupLib(\BackupPro $backup_lib)
     {
         $this->backup_lib = $backup_lib;
         return $this;
     }
     
+    /**
+     * Handy little helper method to figure out the passed variables 
+     * 
+     * We check the _POST then _GET in that order. 
+     * @param string $index The GET or POST variable we want
+     * @param string $default The value to use if the expected isn't set
+     * @return unknown|string
+     */
     public function getPost($index, $default = false)
     {
         if ( isset($_POST[$index]) )

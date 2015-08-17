@@ -60,9 +60,7 @@ class Errors extends m62Errors
      */
     public function checkWorkingDirectory($path)
     {
-        $validate = $this->getValidation()->workingDirectory();
-        $data = array('working_directory' => $path);
-        if( !$validate->check($data) )
+        if( !is_dir($path) || !is_writable($path) )
         {
              $this->setError('invalid_working_directory', 'invalid_working_directory');
         }
