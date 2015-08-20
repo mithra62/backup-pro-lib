@@ -77,7 +77,7 @@ jQuery(document).ready(function() {
 				alert(" Cron: Complete");
 				jQuery(image_id).hide();
 				jQuery(link).show();
-				clean_bp_errors(backup_type);
+				//clean_bp_errors(backup_type);
 			},
 			error: function(data, status, errorThrown) {
 				alert(" Cron: Failed with status "+ data.status +"\n" +errorThrown );
