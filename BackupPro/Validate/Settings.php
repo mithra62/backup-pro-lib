@@ -352,12 +352,18 @@ class Settings extends Validate
                 try 
                 {
                     $link = @new mysqli($credentials['host'], $credentials['user'], $credentials['password'], $name);
-                    if( !$link )
+                    if( $link->connect_errno )
                     {
                         $this->rule('false', 'db_verification_db_name')->message('"'.$name.'" isn\'t available to your configured database connection');
                     }
                     else 
                     {
+                        $tables = $link->query("SHOW TABLES");
+                        if( $tables->num_rows != '0' )
+                        {
+                            $this->rule('false', 'db_verification_db_name')->message('"'.$name.'" isn\'t an empty database; remove all the tables and try again.');
+                        }
+                        
                         @$link->close();
                     }
                 }
@@ -365,7 +371,6 @@ class Settings extends Validate
                 {
                     $this->rule('false', 'db_verification_db_name')->message('"'.$name.'" isn\'t available to your configured database connection');
                 }
-                    $this->rule('false', 'db_verification_db_name')->message('"'.$name.'" isn\'t available to your configured database connection');
             }
         }
     }
