@@ -11,6 +11,8 @@
 namespace mithra62\BackupPro\Validate;
 
 use mithra62\BackupPro\Validate;
+use Aws\CloudFront\Exception\Exception;
+use mysqli;
 
 /**
  * Backup Pro - Settings Validation Object
@@ -95,7 +97,7 @@ class Settings extends Validate
      * @param array $data The form data
      * @return \mithra62\BackupPro\Validate\Settings
      */
-    public function dbBackupMetho(array $data)
+    public function dbBackupMethod(array $data)
     {
         $this->rule('required', 'db_backup_method')->message('{field} is required');
         if( !empty($data['db_backup_method']) && $data['db_backup_method'] == 'mysqldump' )
@@ -347,15 +349,23 @@ class Settings extends Validate
             }
             else
             {
-                $link = @mysqli_connect($credentials['host'], $credentials['user'], $credentials['password'], $name);
-                if( !$link )
+                try 
+                {
+                    $link = @new mysqli($credentials['host'], $credentials['user'], $credentials['password'], $name);
+                    if( !$link )
+                    {
+                        $this->rule('false', 'db_verification_db_name')->message('"'.$name.'" isn\'t available to your configured database connection');
+                    }
+                    else 
+                    {
+                        @$link->close();
+                    }
+                }
+                catch(Exception $e)
                 {
                     $this->rule('false', 'db_verification_db_name')->message('"'.$name.'" isn\'t available to your configured database connection');
                 }
-                else 
-                {
-                    @mysqli_close($link);
-                }
+                    $this->rule('false', 'db_verification_db_name')->message('"'.$name.'" isn\'t available to your configured database connection');
             }
         }
     }
@@ -429,7 +439,7 @@ class Settings extends Validate
         
         if( isset($data['db_backup_method']) )
         {
-            $this->dbBackupMetho($data);
+            $this->dbBackupMethod($data);
         }
            
         if( isset($data['license_number']) )
