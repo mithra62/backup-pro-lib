@@ -28,11 +28,13 @@ class Wordpress extends m62Wp implements PlatformInterface
      * (non-PHPdoc)
      * @see \mithra62\BackupPro\Platforms\PlatformInterface::getCronCommands()
      */
-    public function getBackupCronCommands()
+    public function getBackupCronCommands(array $settings)
     {
-        return array();
-		ee()->load->library('backup_pro_lib', null, 'backup_pro');
-        return ee()->backup_pro->get_cron_commands();
+        $url = $this->getSiteUrl();
+		return array(
+			 'file_backup' => array('url' => $url.'?backup_pro='.$settings['cron_query_key'].'&backup=files&type=file', 'cmd' => 'curl "'.$url.'?backup_pro='.$settings['cron_query_key'].'&backup=files&type=file"'),
+			 'db_backup' => array('url' => $url.'?backup_pro='.$settings['cron_query_key'].'&backup=files&type=db', 'cmd' => 'curl "'.$url.'?backup_pro='.$settings['cron_query_key'].'&backup=files&type=db"')
+		);
     }
     
     /**
@@ -40,10 +42,11 @@ class Wordpress extends m62Wp implements PlatformInterface
      * @ignore
      * @see \mithra62\BackupPro\Platforms\PlatformInterface::getEmailDetails()
      */
-    public function getIaCronCommands()
+    public function getIaCronCommands(array $settings)
     {
-        return array();
-		ee()->load->library('backup_pro_lib', null, 'backup_pro');
-        return ee()->backup_pro->get_ia_cron_commands();
+        $url = $this->getSiteUrl();
+		return array(
+			'verify_backup_stability' => array('url' => $url.'?backup_pro='.$settings['cron_query_key'].'&integrity=check', 'cmd' => '0 * * * * * curl "'.$url.'?backup_pro='.$settings['cron_query_key'].'&integrity=check"')
+		);
     }
 }

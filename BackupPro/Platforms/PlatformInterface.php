@@ -24,10 +24,10 @@ interface PlatformInterface
     /**
      * Returns the Backup Cron commands
      */
-    public function getBackupCronCommands();
+    public function getBackupCronCommands(array $settings);
     
     /**
      * Returns the Integrity Agent Cron command
      */
-    public function getIaCronCommands();
+    public function getIaCronCommands(array $settings);
 }
