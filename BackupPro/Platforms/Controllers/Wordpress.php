@@ -55,6 +55,12 @@ class Wordpress
      * @var BackupPro
      */
     protected $backup_lib = null;
+	
+	/**
+	 * An instance of the BackupPro object
+	 * @var BackupPro
+	 */
+	protected $context = null;
     
     /**
      * Set it up
@@ -108,7 +114,7 @@ class Wordpress
      * @param \BackupPro $backup_lib
      * @return \mithra62\BackupPro\Platforms\Controllers\Wordpress
      */
-    protected function setBackupLib(\BackupPro $backup_lib)
+    public function setBackupLib(\BackupPro $backup_lib)
     {
         $this->backup_lib = $backup_lib;
         return $this;
@@ -134,5 +140,15 @@ class Wordpress
         }
         
         return $default;
+    }
+    
+    /**
+     * Sets the BackupPro library for use
+     * @param BackupPro $context
+     */
+    public function setContext(\BackupPro $context)
+    {
+        $this->context = $context;
+        return $this;
     }
 }

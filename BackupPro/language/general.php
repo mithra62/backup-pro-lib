@@ -285,6 +285,8 @@ Please don\'t respond to this email; all emails are automatically deleted.',
 'no_storage_locations_setup' => 'No Storage Locations have been setup yet.',
 'no_backup_file_location' => 'No File Backup Locations have been configured. ',
 'invalid_working_directory' => 'Invalid Working Directory.',
+'click_to_add_note' => 'Click to add note...',    
+'database_restore_fail' => 'Database Restore Failed...',    
 ''=>''
 		
 		
