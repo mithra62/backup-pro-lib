@@ -45,21 +45,31 @@ class Settings extends m62Settings
         'exclude_paths' => array(),
         'allow_duplicates' => '0',
         
-        'enable_cron' => '0',
+        'db_backup_on_cms_update' => '0',
+        'file_backup_on_cms_update' => '0',
+        'db_backup_on_plugin_update' => '0',
+        'file_backup_on_plugin_update' => '0',
+        'db_backup_on_plugin_install' => '0',
+        'file_backup_on_plugin_install' => '0',
+        'db_backup_on_theme_update' => '0',
+        'file_backup_on_theme_update' => '0',
+        'db_backup_on_theme_install' => '0',
+        'file_backup_on_theme_install' => '0',
+        
+        'enable_cron_db_backup' => '1',
+        'enable_cron_file_backup' => '1',
+        'enable_cron_integrity_check' => '1',
+        
         'cron_notify_emails' => array(),
         'cron_notify_email_subject' => '',
         'cron_notify_email_message' => '',
         'cron_notify_email_mailtype' => 'html',
+        'cron_query_key' => 'yup', //the value the backup_pro query query key must have
         
         'storage_details' => array(),
         
         'working_directory' => '',
         'backup_file_location' => array(),
-        
-        'gcs_access_key' => '',
-        'gcs_secret_key' => '',
-        'gcs_bucket' => '',
-        'gcs_prune_remote' => '1',
         
         'max_file_backups' => '0',
         'max_db_backups' => '0',
