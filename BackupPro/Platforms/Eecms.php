@@ -28,10 +28,10 @@ class Eecms extends m62Eecms implements PlatformInterface
      * (non-PHPdoc)
      * @see \mithra62\BackupPro\Platforms\PlatformInterface::getCronCommands()
      */
-    public function getBackupCronCommands()
+    public function getBackupCronCommands(array $settings)
     {
 		ee()->load->library('backup_pro_lib', null, 'backup_pro');
-        return ee()->backup_pro->get_cron_commands();
+        return ee()->backup_pro->get_cron_commands($settings);
     }
     
     /**
@@ -39,9 +39,9 @@ class Eecms extends m62Eecms implements PlatformInterface
      * @ignore
      * @see \mithra62\BackupPro\Platforms\PlatformInterface::getEmailDetails()
      */
-    public function getIaCronCommands()
+    public function getIaCronCommands(array $settings)
     {
 		ee()->load->library('backup_pro_lib', null, 'backup_pro');
-        return ee()->backup_pro->get_ia_cron_commands();
+        return ee()->backup_pro->get_ia_cron_commands($settings);
     }
 }

@@ -29,7 +29,7 @@ class Craft extends m62Craft implements PlatformInterface
      * (non-PHPdoc)
      * @see \mithra62\BackupPro\Platforms\PlatformInterface::getCronCommands()
      */
-    public function getBackupCronCommands()
+    public function getBackupCronCommands(array $settings)
     {
         $config = \Craft\craft()->config;
         $trigger = $config->get('actionTrigger');
@@ -46,7 +46,7 @@ class Craft extends m62Craft implements PlatformInterface
      * (non-PHPdoc)
      * @see \mithra62\BackupPro\Platforms\PlatformInterface::getIaCronCommands()
      */
-    public function getIaCronCommands()
+    public function getIaCronCommands(array $settings)
     {
         $config = \Craft\craft()->config;
         $trigger = $config->get('actionTrigger');
