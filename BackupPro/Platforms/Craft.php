@@ -30,13 +30,13 @@ class Craft extends m62Craft implements PlatformInterface
      * @see \mithra62\BackupPro\Platforms\PlatformInterface::getCronCommands()
      */
     public function getBackupCronCommands(array $settings)
-    {
+    { 
         $config = \Craft\craft()->config;
         $trigger = $config->get('actionTrigger');
         $url = UrlHelper::getSiteUrl().$trigger.'/backupPro/cron/backup';
 		return array(
-			 'file_backup' => array('url' => $url.'?type=file', 'cmd' => 'curl "'.$url.'?type=file"', 'type' => 'curl'),
-			 'db_backup' => array('url' => $url.'?type=db', 'cmd' => 'curl "'.$url.'?type=db"', 'type' => 'curl'),
+			 'file_backup' => array('url' => $url.'?type=file&backup_pro='.$settings['cron_query_key'], 'cmd' => 'curl "'.$url.'?type=file&backup_pro='.$settings['cron_query_key'].'"', 'type' => 'curl'),
+			 'db_backup' => array('url' => $url.'?type=db&backup_pro='.$settings['cron_query_key'], 'cmd' => 'curl "'.$url.'?type=db&backup_pro='.$settings['cron_query_key'].'"', 'type' => 'curl'),
 			 'console_file_backup' => array('url' => '', 'cmd' => 'php craft/app/etc/console/yiic.php backup file [--notify="yes"]', 'type' => 'console'),
 			 'console_db_backup' => array('url' => '', 'cmd' => 'php craft/app/etc/console/yiic.php backup database [--notify="yes"]', 'type' => 'console')
 		);
@@ -50,7 +50,7 @@ class Craft extends m62Craft implements PlatformInterface
     {
         $config = \Craft\craft()->config;
         $trigger = $config->get('actionTrigger');
-        $url = UrlHelper::getSiteUrl().$trigger.'/backupPro/cron/integrity';
+        $url = UrlHelper::getSiteUrl().$trigger.'/backupPro/cron/integrity?backup_pro='.$settings['cron_query_key'];
 		return array(
 			 'verify_backup_stability' => array('url' => $url, 'cmd' => 'curl "'.$url, 'type' => 'curl'),
 			 'console_verify_backup_stability' => array('url' => '', 'cmd' => 'php craft/app/etc/console/yiic.php backup integrity', 'type' => 'console'),
