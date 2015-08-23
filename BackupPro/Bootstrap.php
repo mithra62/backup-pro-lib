@@ -55,7 +55,7 @@ class Bootstrap extends m62Boostrap
         $this->container['settings'] = function($c) {
             $settings = new Settings($c['db'], $c['lang']);
             $db_info = $this->getDbConfig();
-            $settings->setValidate($c['settings_validate'])->setTable($db_info['settings_table_name']);
+            $settings->setEncrypt($c['encrypt'])->setValidate($c['settings_validate'])->setTable($db_info['settings_table_name']);
             return $settings;
         };
 

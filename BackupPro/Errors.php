@@ -30,7 +30,7 @@ class Errors extends m62Errors
      */
     public function checkStorageLocations(array $storage_locations)
     {
-        if( count($storage_locations) == 0 )
+        if( !is_array($storage_locations) || count($storage_locations) == 0 )
         {
             $this->setError('no_storage_locations_setup', 'no_storage_locations_setup');
         }

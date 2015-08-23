@@ -246,15 +246,16 @@ class Settings extends m62Settings
         }
         
         //little sanity check to ensure we can use the `system()` function for SQL backups and set to PHP accordingly
-        if(!function_exists('system'))
+        if( !function_exists('system') )
         {
             $this->settings['db_backup_method'] = $this->settings['db_restore_method'] = 'php';
         }
         
         $this->settings['max_file_backups'] = (int)$this->settings['max_file_backups'];
         $this->settings['max_db_backups'] = (int)$this->settings['max_db_backups'];
-        //$this->settings['cron_notify_emails'] = ( !is_array($this->settings['cron_notify_emails']) ? explode("\n", $this->settings['cron_notify_emails']) : $this->settings['cron_notify_emails'] );
-        //$this->settings['backup_file_location'] = ( !is_array($this->settings['backup_file_location']) ? explode("\n", $this->settings['backup_file_location']) : $this->settings['backup_file_location'] );
+        
+        //we have to ensure storage_details is always an array since if the encryption key is changed we'll get a bad return. Rare, but it happens.
+        $this->settings['storage_details'] = (is_array($this->settings['storage_details']) ? $this->settings['storage_details'] : array());
 
         
         return $this->settings;
