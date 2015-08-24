@@ -42,23 +42,33 @@ class SettingsTest extends TestFixture
         'auto_threshold_custom' => '',
         'exclude_paths' => array(),
         'allow_duplicates' => '0',
-    
-        'enable_cron' => '0',
+        
+        'db_backup_on_cms_update' => '0',
+        'file_backup_on_cms_update' => '0',
+        'db_backup_on_plugin_update' => '0',
+        'file_backup_on_plugin_update' => '0',
+        'db_backup_on_plugin_install' => '0',
+        'file_backup_on_plugin_install' => '0',
+        'db_backup_on_theme_update' => '0',
+        'file_backup_on_theme_update' => '0',
+        'db_backup_on_theme_install' => '0',
+        'file_backup_on_theme_install' => '0',
+        
+        'enable_cron_db_backup' => '1',
+        'enable_cron_file_backup' => '1',
+        'enable_cron_integrity_check' => '1',
+        
         'cron_notify_emails' => array(),
         'cron_notify_email_subject' => '',
         'cron_notify_email_message' => '',
         'cron_notify_email_mailtype' => 'html',
-    
+        'cron_query_key' => 'yup', //the value the backup_pro query query key must have
+        
         'storage_details' => array(),
-    
+        
         'working_directory' => '',
         'backup_file_location' => array(),
-    
-        'gcs_access_key' => '',
-        'gcs_secret_key' => '',
-        'gcs_bucket' => '',
-        'gcs_prune_remote' => '1',
-    
+        
         'max_file_backups' => '0',
         'max_db_backups' => '0',
         'db_backup_method' => 'php', //mysqldump
@@ -75,7 +85,7 @@ class SettingsTest extends TestFixture
         'db_backup_alert_threshold' => '1',
         'file_backup_alert_threshold' => '7',
     
-        'backup_missed_schedule_notify_emails' => '',
+        'backup_missed_schedule_notify_emails' => array(),
         'backup_state_notify_email_subject' => '',
         'backup_state_notify_email_message' => '',
         'backup_state_notify_email_mailtype' => 'html',
@@ -174,7 +184,7 @@ class SettingsTest extends TestFixture
         $this->assertObjectHasAttribute('auto_prune_threshold_options', $settings);
         
         $this->assertTrue(is_array($settings->getDefaults()));
-        $this->assertCount(52, $settings->getDefaults());
+        $this->assertCount(61, $settings->getDefaults());
 
         $this->assertTrue(is_array($settings->getCustomOptions()));
         $this->assertCount(1, $settings->getCustomOptions());
