@@ -56,4 +56,23 @@ class Craft extends m62Craft implements PlatformInterface
 			 'console_verify_backup_stability' => array('url' => '', 'cmd' => 'php craft/app/etc/console/yiic.php backup integrity', 'type' => 'console'),
 		);
     }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\Platforms\Craft::getConfigOverrides()
+     */
+    public function getConfigOverrides()
+    {
+        $path = rtrim(\Craft\craft()->path->getConfigPath(), '/').'/backuppro.php';
+        if( file_exists($path) )
+        {
+            $config = include($path);
+            if( is_array($config) )
+            {
+                return $config;
+            }
+        }
+        
+        return array();
+    }
 }
