@@ -126,7 +126,7 @@ class Mysql extends AbstractDb
     
     public function totalRows($table)
     {
-        $sql = sprintf('SELECT COUNT(*) AS count FROM %s', $table);
+        $sql = sprintf('SELECT COUNT(*) AS count FROM `%s`', $table);
         if( $this->query($sql) )
         {
             $result = $this->fetchAssoc();

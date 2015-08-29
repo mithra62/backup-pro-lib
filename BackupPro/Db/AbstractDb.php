@@ -210,13 +210,19 @@ class AbstractDb
     {
         if ($this->debug)
         {
-            return $this->error[] = $message.'<pre>'.var_export(debug_backtrace()).'</pre>'.$this->db_error().'.';
+            return $this->error[] = $message.'<pre>'.var_export(debug_backtrace()).'</pre>'.$this->getDbError().'.';
         }
         else
         {
-            return $this->error[] = $message . $this->db_error() . '.';
+            return $this->error[] = $message . $this->getDbError() . '.';
         }
     } // end function
+
+	public function getDbError()
+	{
+		$error = mysqli_error($this->dblink);
+		return $error;
+	}
 
     /**
      * Show any errors that occurred.
