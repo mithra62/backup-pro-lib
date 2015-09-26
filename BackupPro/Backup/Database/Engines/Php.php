@@ -13,7 +13,6 @@ namespace mithra62\BackupPro\Backup\Database\Engines;
 
 use \mithra62\BackupPro\Backup\Database\DbAbstract;
 use \mithra62\BackupPro\Db\Mysql;
-use \mithra62\BackupPro\Exceptions\Backup\DatabaseException;
 
 /**
  * Backup Pro - PHP Backup Engine

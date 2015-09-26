@@ -11,7 +11,8 @@
  
 namespace mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
 
-//use 
+use mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
+
 /**
  * Backup Pro - PHP Backup Engine
  *
@@ -20,7 +21,7 @@ namespace mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
  * @package 	Backup\Database\Engines
  * @author		Eric Lamb <eric@mithra62.com>
  */
-class Point
+class Point extends Columns
 {
     
 }
