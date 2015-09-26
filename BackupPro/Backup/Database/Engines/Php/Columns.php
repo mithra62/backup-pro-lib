@@ -21,5 +21,26 @@ namespace mithra62\BackupPro\Backup\Database\Engines\Php;
  */
 abstract class Columns
 {
+    /**
+     * Creates the unique column name to use for the specific column type
+     * @param array $column
+     * @return string
+     */
+    abstract function getFieldName(array $column);
     
+    /**
+     * Creates the value to use in the SQL statement for the backup based on the column type
+     * @param string $value
+     */
+    abstract function getFieldValue($value);
+    
+    /**
+     * Wraps the field name in the MySQL AsText() function
+     * @param string $field_name
+     * @return string
+     */
+    public function asText($field_name)
+    {
+        return 'AsText('.$field_name.') AS '.$field_name;
+    }
 }

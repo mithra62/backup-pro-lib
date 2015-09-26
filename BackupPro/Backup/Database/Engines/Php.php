@@ -161,21 +161,7 @@ class Php extends DbAbstract
                     $the_data = array() ;
                     foreach ($value as $k => $v)
                     {
-                        $data = '';
-                        if(is_null($v))
-                        {
-                            $data = 'NULL';
-                        }
-                        elseif(is_numeric($v))
-                        {
-                            $data = $v;
-                        }
-                        else
-                        {
-                            $data = "'".$this->getContext()->getBackup()->getDb()->escape($v)."'";
-                        }
-                
-                        $the_data[] = $data;
+                        $the_data[] = $this->prepareData($k, $v, $column_data);
                     }
                      
                     $rows[] = '('.implode(', ', $the_data).')';
@@ -216,7 +202,15 @@ class Php extends DbAbstract
         return $this;
     }
     
-    public function buildSelectStatement($column_data, $table, $offset, $group_by)
+    /**
+     * Creates the SELECT statement for use in the backup
+     * @param array $column_data
+     * @param string $table
+     * @param int $offset
+     * @param string $group_by
+     * @return string
+     */
+    public function buildSelectStatement(array $column_data, $table, $offset, $group_by)
     {
         $columns = array();
         foreach($column_data AS $column)
@@ -225,22 +219,63 @@ class Php extends DbAbstract
             $class = "\\mithra62\\BackupPro\\Backup\\Database\\Engines\\Php\\Columns\\".$column_type;
             if( class_exists($class) )
             {
-                echo 'f';
-                exit;
                 $obj = new $class;
-                if( $obj instanceof Database\DbInterface )
+                if( $obj instanceof Php\Columns )
                 {
-                    $obj->setContext($this);
-                    return $obj;
+                    $columns[] = $obj->getFieldName($column);
+                }
+                else 
+                {
+                    $columns[] = $this->tickIt($column['Field']);
                 }
             }
             else
             {
-                $columns[] = $column['Field'];
+                $columns[] = $this->tickIt($column['Field']);
             }
         }
         
         return sprintf('SELECT '.implode(',',$columns).' FROM %1$s LIMIT %2$s, %3$s', $table, $offset, $group_by);    
+    }
+    
+    public function prepareData($column_name, $value, array $column_data)
+    {
+        foreach($column_data AS $column)
+        {
+            if( $column['Field'] == $column_name )
+            {
+                
+                $column_type = $this->determineColumnType($column['Type']);
+                $class = "\\mithra62\\BackupPro\\Backup\\Database\\Engines\\Php\\Columns\\".$column_type;
+                $data = '';
+                if( class_exists($class) )
+                {
+                    $obj = new $class;
+                    if( $obj instanceof Php\Columns )
+                    {
+                        $data = $obj->getFieldValue($value);
+                    }
+                }
+                
+                if($data == '')
+                {
+                    if(is_null($value))
+                    {
+                        $data = 'NULL';
+                    }
+                    elseif(is_numeric($value))
+                    {
+                        $data = $value;
+                    }
+                    else
+                    {
+                        $data = "'".$this->getContext()->getBackup()->getDb()->escape($value)."'";
+                    }
+                }  
+                
+                return $data;
+            }
+        }
     }
     
     /**
@@ -255,5 +290,15 @@ class Php extends DbAbstract
         {
             return $parts['0'];
         }
+    }
+    
+    /**
+     * Wraps a string in ticks for MySQL safety
+     * @param string $string
+     * @return string
+     */
+    public function tickIt($string)
+    {
+        return '`'.$string.'`';
     }
 }

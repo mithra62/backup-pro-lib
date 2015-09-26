@@ -1,23 +1,46 @@
 <?php
+/**
+ * mithra62 - Backup Pro
+ *
+ * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
+ * @link		http://mithra62.com/
+ * @version		3.0
+ * @filesource 	./mithra62/Db/Mysql.php
+ */
+ 
 namespace mithra62\BackupPro\Db;
 
+use mithra62\BackupPro\Exceptions\Db\MysqlException;
+
+/**
+ * Backup Pro - Mysql Object
+ *
+ * Abstracts interaction with Mysql
+ *
+ * @package 	BackupPro
+ * @author		Eric Lamb <eric@mithra62.com>
+ */
 class Mysql extends AbstractDb
 {
 
+    /**
+     * Sets up the defaults
+     * @param string $dblogin The username to use for mysql
+     * @param string $dbpass The password to use for mysql
+     * @param string $dbname The name of the mysql database we want to use
+     * @param string $dbhost The location of the mysql database
+     */
     public function __construct($dblogin, $dbpass, $dbname, $dbhost = null)
     {
         parent::__construct($dblogin, $dbpass, $dbname, $dbhost) ;
     }
 
     /**
-     * This is intended primarily as a mechanism for helping PostgreSQL handle
-     * the MySQL "get_last_id" functionality.
-     *
+     * Returns the last query id
      * @access protected
      * @return reference to resource the query id of the last executed query.
      */
-
-    public function &getQueryid()
+    public function getQueryid()
     {
         return $this->queryid ;
     }
@@ -27,12 +50,10 @@ class Mysql extends AbstractDb
      * @return array the names of the tables in the current database.
      */
 
-    public function &showTables()
+    public function showTables()
     {
         $theTableNames = array() ;
-
         $this->queryConstant('SHOW TABLES ;') ;
-
         while ($theTableName =& $this->fetchRow())
         {
             $theTableNames[] = $theTableName[0] ;
@@ -81,7 +102,7 @@ class Mysql extends AbstractDb
 
     public function error()
     {
-        return mysqli_error() ;
+        return mysqli_error($this->getDbLink()) ;
     }
 
     public function fetchArray($queryid)
@@ -91,7 +112,12 @@ class Mysql extends AbstractDb
 
     public function dbFetchAssoc($queryid)
     {
-        return mysqli_fetch_assoc($queryid) ;
+        if( $queryid instanceof \mysqli_result )
+        {
+            return mysqli_fetch_assoc($queryid) ;
+        }
+        
+        throw new MysqlException($this->error());
     }
 
     public function dbFreeResult($result)

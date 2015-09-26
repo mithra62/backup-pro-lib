@@ -23,5 +23,21 @@ use mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
  */
 class Point extends Columns
 {
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\BackupPro\Backup\Database\Engines\Php\Columns::getFieldName()
+     */
+    public function getFieldName(array $column)
+    {
+        return $this->asText($column['Field']);
+    }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\BackupPro\Backup\Database\Engines\Php\Columns::getFieldValue()
+     */
+    public function getFieldValue($value)
+    {
+        return 'GeomFromText(\''.$value.'\')';
+    }
 }
