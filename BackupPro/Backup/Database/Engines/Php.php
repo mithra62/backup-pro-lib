@@ -263,15 +263,11 @@ class Php extends DbAbstract
                     {
                         $data = 'NULL';
                     }
-                    elseif(is_numeric($value))
-                    {
-                        $data = $value;
-                    }
                     else
                     {
                         $data = "'".$this->getContext()->getBackup()->getDb()->escape($value)."'";
                     }
-                }  
+                }
                 
                 return $data;
             }

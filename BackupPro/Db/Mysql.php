@@ -117,7 +117,7 @@ class Mysql extends AbstractDb
             return mysqli_fetch_assoc($queryid) ;
         }
         
-        throw new MysqlException($this->error());
+        throw new MysqlException($this->error()."\n".$this->lastQuery);
     }
 
     public function dbFreeResult($result)
@@ -137,6 +137,7 @@ class Mysql extends AbstractDb
 
     public function dbQuery($sql, $dblink)
     {
+        $this->lastQuery = $sql;
         return mysqli_query($dblink, $sql) ;
     }
 

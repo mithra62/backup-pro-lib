@@ -6,7 +6,7 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Point.php
+ * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Int.php
  */
  
 namespace mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
@@ -16,12 +16,12 @@ use mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
 /**
  * Backup Pro - Point Column Object
  *
- * Handles processing data from a MySQL Point column
+ * Handles processing data from a MySQL Int column
  *
  * @package 	Backup\Database\Engines\Php
  * @author		Eric Lamb <eric@mithra62.com>
  */
-class Point extends Columns
+class Int extends Columns
 {
     /**
      * (non-PHPdoc)
@@ -29,7 +29,7 @@ class Point extends Columns
      */
     public function getFieldName(array $column)
     {
-        return $this->asText($column['Field']);
+        return '`'.$column['Field'].'`';
     }
     
     /**
@@ -38,10 +38,6 @@ class Point extends Columns
      */
     public function getFieldValue($value)
     {
-        if( $value != '' )
-        {
-            return 'GeomFromText(\''.$value.'\')';
-        }
-        return '';
+        return $value;
     }
 }
