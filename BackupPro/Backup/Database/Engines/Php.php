@@ -12,7 +12,8 @@
 namespace mithra62\BackupPro\Backup\Database\Engines;
 
 use \mithra62\BackupPro\Backup\Database\DbAbstract;
-use mithra62\BackupPro\Db\Mysql;
+use \mithra62\BackupPro\Db\Mysql;
+use \mithra62\BackupPro\Exceptions\Backup\DatabaseException;
 
 /**
  * Backup Pro - PHP Backup Engine
@@ -139,16 +140,16 @@ class Php extends DbAbstract
     {
         $db = clone( $this->getDb() );
         $db->clear();
-
         $total_rows = $db->totalRows($table);
         $db->clear();
         if( $total_rows >= 1)
         {
             $total_pages = ceil($total_rows/$this->getSqlGroupBy());
+            $column_data = $db->getColumnns($table);
             $offset = 0;
             for($i=0; $i<$total_pages;$i++)
-            {
-                $db->queryConstant(sprintf('SELECT * FROM %1$s LIMIT %2$s, %3$s', $table, $offset, $this->getSqlGroupBy()));
+            {   
+                $db->queryConstant( $this->buildSelectStatement($column_data, $table, $offset, $this->getSqlGroupBy()) );
                 $columns = '';
                 $rows = array();
                 while ($value = $db->fetchAssoc())
@@ -214,5 +215,46 @@ class Php extends DbAbstract
     {
         $this->sql_group_by = $number;
         return $this;
+    }
+    
+    public function buildSelectStatement($column_data, $table, $offset, $group_by)
+    {
+        $columns = array();
+        foreach($column_data AS $column)
+        {
+            $column_type = $this->determineColumnType($column['Type']);
+            $class = "\\mithra62\\BackupPro\\Backup\\Database\\Engines\\Php\\Columns\\".$column_type;
+            if( class_exists($class) )
+            {
+                echo 'f';
+                exit;
+                $obj = new $class;
+                if( $obj instanceof Database\DbInterface )
+                {
+                    $obj->setContext($this);
+                    return $obj;
+                }
+            }
+            else
+            {
+                $columns[] = $column['Field'];
+            }
+        }
+        
+        return sprintf('SELECT '.implode(',',$columns).' FROM %1$s LIMIT %2$s, %3$s', $table, $offset, $group_by);    
+    }
+    
+    /**
+     * Takes the MysQL column Type value and parses out the alpha string for checking against an object
+     * @param string $type
+     * @return string
+     */
+    protected function determineColumnType($type)
+    {
+        $parts = explode('(', $type);
+        if( !empty($parts['0']) )
+        {
+            return $parts['0'];
+        }
     }
 }

@@ -138,6 +138,20 @@ class Mysql extends AbstractDb
         
         return '0';
     }
+    
+    public function getColumnns($table)
+    {
+        $sql = sprintf('SHOW COLUMNS FROM `%s`', $table);
+        if( $this->query($sql) )
+        {
+            $return = array();
+            while ($value = $this->fetchAssoc())
+            {
+                $return[] = $value;
+            }
+            return $return;
+        }
+    }
 
     /**
      * Checks to see whether or not the MySQL server supports transactions.
