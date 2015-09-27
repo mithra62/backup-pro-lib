@@ -128,7 +128,11 @@ class Locations
         {
             $obj = $this->getContext()->getDriver($_settings['storage_details'][$storage_id]['storage_location_driver']);
             $_settings['storage_details'][$storage_id] = array_merge($_settings['storage_details'][$storage_id], $obj->prepUpdate($data));
-            return $this->getSetting()->update($_settings);
+            
+            $update = array();
+            $_settings['storage_details'][$storage_id] = array_merge($_settings['storage_details'][$storage_id], $obj->prepUpdate($data));
+            $update['storage_details'] = $_settings['storage_details'];
+            return $this->getSetting()->update($update);
         }
         
         return false;
@@ -163,7 +167,9 @@ class Locations
             //$backups = $this->getLocationBackups($storage_id, $backups);
             
             unset($_settings['storage_details'][$storage_id]);
-            return $this->getSetting()->update($_settings);
+            $update = array();
+            $update['storage_details'] = $_settings['storage_details'];
+            return $this->getSetting()->update($update);
         }
         
         return false;

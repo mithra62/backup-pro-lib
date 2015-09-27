@@ -197,13 +197,6 @@ class Local extends AbstractStorage
                     //same driver so ensure no duplicate locations
                     $ignore[] = $location['backup_store_location'];
                 }
-                else 
-                {
-                    if( $settings['location_id'] != $location_id )
-                    {
-                        $ignore[] = $location['backup_store_location'];
-                    }
-                }
             }
         }
         
