@@ -289,7 +289,9 @@ Please don\'t respond to this email; all emails are automatically deleted.',
 'database_restore_fail' => 'Database Restore Failed...',   
 'cron_query_key' => 'Cron Query Key',
 'cron_query_key_instructions' => 'For security, Backup Pro allows customization of the URL used for Cron commands so malicious users can\'t force Cron executions. Any calls to Cron URls MUST have the value for the `backup_pro` parameter.',
-''=>''
+'backup' => 'Backup',
+'manage_backups' => 'Manage Backups',    
+    ''=>''
 		
 		
 		
