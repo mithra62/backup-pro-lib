@@ -7,6 +7,7 @@ $(document).ready(function() {
 		var note_backup = $(element).attr("rel");
 		var dataString = "backup="+note_backup+"&note_text="+note_text+"&backup_type="+backup_type + "&"+$.param({ "XID": EE.XID});
 		
+			alert(EE.BASE);
 		$.ajax({
 			type: "POST",
 			url: EE.BASE+"&C=addons_modules&M=show_module_cp&module=backup_pro&method=update_backup_note&",
