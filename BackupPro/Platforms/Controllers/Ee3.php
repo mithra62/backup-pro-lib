@@ -10,9 +10,9 @@
  
 namespace mithra62\BackupPro\Platforms\Controllers;
 
-use mithra62\BackupPro\Platforms\Eecms AS Platform;
+use mithra62\BackupPro\Platforms\Ee3 AS Platform;
 use mithra62\BackupPro\Traits\Controller;
-use mithra62\BackupPro\Platforms\View\Eecms AS EecmsView;
+use mithra62\BackupPro\Platforms\View\Ee3 AS Ee3View;
 
 /**
  * Backup Pro - Eecms Base Controller
@@ -70,7 +70,7 @@ class Ee3
                                                  ->licenseCheck($this->settings['license_number'], $this->services['license'])
                                                  ->getErrors();
         
-        $this->view_helper = new EecmsView($this->services['lang'], $this->services['files'], $this->services['settings'], $this->services['encrypt'], $this->platform);
+        $this->view_helper = new Ee3View($this->services['lang'], $this->services['files'], $this->services['settings'], $this->services['encrypt'], $this->platform);
         $this->m62->setService('view_helpers', function($c) {
             return $this->view_helper;
         });
