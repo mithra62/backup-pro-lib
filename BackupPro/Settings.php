@@ -83,6 +83,8 @@ class Settings extends m62Settings
         'db_backup_ignore_table_data' => array(), //which tables should we not bother grabbing the data for?
         'mysqldump_command' => 'mysqldump',
         'mysqlcli_command' => 'mysql',
+        'php_backup_method_select_chunk_limit' => '50',
+        'system_command_function' => 'proc_open', //exec
         'dashboard_recent_total' => '5',
         'db_backup_alert_threshold' => '1',
         'file_backup_alert_threshold' => '7',
@@ -232,9 +234,9 @@ class Settings extends m62Settings
      * (non-PHPdoc)
      * @see \mithra62\Settings::get()
      */
-    public function get()
+    public function get($force = false)
     {
-        $this->settings = parent::get();
+        $this->settings = parent::get($force);
         if($this->settings['backup_file_location'] == '')
         {
             $this->settings['backup_file_location'] = $this->_defaults['backup_file_location'];

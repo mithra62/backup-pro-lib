@@ -54,12 +54,4 @@ class DetailsTest extends TestFixture
         $this->assertArrayHasKey('time_taken', $details->getDetailsPrototype());
         $this->assertArrayHasKey('max_memory', $details->getDetailsPrototype());
     }
-    
-    public function testCreateDetailsFile()
-    {
-        $path = $this->getWorkingDir();
-        $details = new Details;
-        
-        //$details->createDetailsFile('test_details_file', $path, array());
-    }
 }

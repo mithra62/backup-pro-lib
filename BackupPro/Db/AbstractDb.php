@@ -1,77 +1,209 @@
 <?php
+/**
+ * mithra62 - Backup Pro
+ *
+ * @author		Eric Lamb <eric@mithra62.com>
+ * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
+ * @link		http://mithra62.com/
+ * @version		3.0
+ * @filesource 	./mithra62/BackupPro/Db/AbstractDb.php
+ */
+ 
 namespace mithra62\BackupPro\Db;
 
-
+/**
+ * Backup Pro - Abstract Backup Database Object
+ *
+ * Optimized interface for taking database backups
+ *
+ * @package 	Db
+ * @author		Eric Lamb <eric@mithra62.com>
+ */
 class AbstractDb
 {
-    public $dbhost = 'localhost';            // default database host
-    public $dblogin;                         // database login name
-    public $dbpass;                          // database login password
-    public $dbport = '' ;                    // default port to connect to the database server.
-    public $dbname;                          // database name
-    public $dblink;                          // database link identifier
+    /**
+     * The database host
+     * @var string
+     */
+    public $dbhost = 'localhost';
+        
+    /**
+     * Database login name
+     * @var string
+     */
+    public $dblogin;
+    
+    /**
+     * Database login password
+     * @var string
+     */
+    public $dbpass;
+    
+    /**
+     * Database port to connect to
+     * @var number
+     */
+    public $dbport = '';
 
     /**
-     * @access private
-     * @var resource The query id of the last query.
+     * Database name
+     * @var string
      */
-
-    public $queryid;                         // database query identifier
-    public $error = array();                 // storage for error messages
-    public $record = array();                // database query record identifier
-    public $totalrecords;                    // the total number of records received from a select statement
-    public $last_insert_id;                  // last incremented value of the primary key
-    public $previd = 0;                      // previus record id. [for navigating through the db]
-    public $transactions_capable = false;    // does the server support transactions?
-    public $begin_work = false;              // sentinel to keep track of active transactions
-    public $lastQuery ;
-    public $debug = false ;
-    public $_affectedRows ;                  // Number of rows affected by the last query.
+    public $dbname;
     
+    /**
+     * Database link identifier
+     * @var \mysqli
+     */
+    public $dblink;
+
+    /**
+     * Database query identifier 
+     * @var \mysqli_result
+     */
+    private $queryid;
+    
+    /**
+     * Storage for error messages
+     * @var array
+     */
+    private $error = array();
+    
+    /**
+     * Database query record identifier
+     * @var array
+     */
+    private $record = array();
+    
+    /**
+     * The total number of records received from a select statement
+     * @var number
+     */
+    private $totalrecords;
+    
+    /**
+     * Last incremented value of the primary key
+     * @var number
+     */
+    private $last_insert_id;
+    
+    /**
+     * Previus record id. [for navigating through the db]
+     * @var number
+     */
+    private $previd = 0;
+    
+    /**
+     * Does the server support transactions?
+     * @var bool
+     */
+    private $transactions_capable = false;
+    
+    /**
+     * Sentinel to keep track of active transactions
+     * @var bool
+     */
+    private $begin_work = false;
+    
+    /**
+     * The last SQL query executed
+     * @var string
+     */
+    private $lastQuery;
+    
+    /**
+     * Flag for enabling debugging
+     * @var bool
+     */
+    private $debug = false ;
+    
+    /**
+     * Number of rows affected by the last query.
+     * @var number
+     */
+    private $_affectedRows;
+    
+    /**
+     * Set it up
+     * @param string $dblogin The database login username
+     * @param string $dbpass The database login password
+     * @param string $dbname The database name
+     * @param string $dbhost The database host
+     */
+    public function __construct($dblogin, $dbpass, $dbname, $dbhost = null)
+    {
+        $this->setDbLogin($dblogin);
+        $this->setDbPass($dbpass);
+        $this->setDbName($dbname);
+    
+        if ($dbhost != null)
+        {
+            $xxx = explode(':', $dbhost) ;
+            $this->setDbHost($xxx[0]) ;
+            $this->setDbPort((array_key_exists(1, $xxx) ? $xxx[1] : '')) ;
+        }
+    
+    }    
+    
+    /**
+     * Returns the database host
+     * @return string
+     */
     public function getDbHost()
     {
         return $this->dbhost ;
-    } // end function
-
+    } 
+    
     /**
-     * @desc return the current database connection resource.
-     * @returns the current database connection resource.
-     * @access public
+     * Return the current database connection resource.
+     * @return \mysqli
      */
-
     public function getDbLink()
     {
         return $this->dblink;
-    } // end function
+    }
 
+    /**
+     * Returns the database login
+     * @return string
+     */
     public function getDbLogin()
     {
         return $this->dblogin;
-    } // end function
+    }
 
+    /**
+     * Returns the database password
+     * @return string
+     */
     public function getDbPass()
     {
         return $this->dbpass;
-
-    } // end function
+    }
 
     /**
-     * @desc Return the optional port portion of the dbhost.
-     * @returns The port or the null string if there was no port specified
-     * @access
+     * Return the optional port portion of the dbhost.
+     * @return number
      */
-
     public function get_dbport()
     {
         return $this->dbport ;
-    } // end function
+    }
 
+    /**
+     * Returns the database bane
+     * @return string
+     */
     public function getDbName()
     {
         return $this->dbname;
+    }
 
-    } // end function
-
+    /**
+     * Sets the database host we're using
+     * @param string $value The full host to connect to
+     * @return string The set host
+     */
     public function setDbHost($value)
     {
         if ($value === NULL)
@@ -79,9 +211,13 @@ class AbstractDb
             $value = 'localhost' ;
         }
         return $this->dbhost = $value;
+    }
 
-    } // end function
-
+    /**
+     * Sets the database port to use
+     * @param number $value
+     * @return number The set port
+     */
     public function setDbPort($value)
     {
         if ($value === NULL)
@@ -89,69 +225,51 @@ class AbstractDb
             $value = '' ;
         }
         return $this->dbport = $value;
+    } 
 
-    } // end function
-
+    /**
+     * Sets the database username
+     * @param string $value
+     * @return string
+     */
     public function setDbLogin($value)
     {
         return $this->dblogin = $value;
+    }
 
-    } // end function
-
+    /**
+     * Sets the database password
+     * @param string $value
+     * @return string
+     */
     public function setDbPass($value)
     {
         return $this->dbpass = $value;
+    }
 
-    } // end function
-
+    /**
+     * Sets the database name
+     * @param string $value
+     * @return string
+     */
     public function setDbName($value)
     {
         return $this->dbname = $value;
+    } 
 
-    } // end function
-
+    /**
+     * Returns the error array
+     * @return array
+     */
     public function getErrors()
     {
         return $this->error;
-
-    } // end function
-
-    /**
-     * End of the Get and Set methods
-     */
-
-    /**
-     * Constructor
-     *
-     * @param      String $dblogin, String $dbpass, String $dbname
-     * @return     void
-     * @access     public
-     */
-
-    public function __construct($dblogin, $dbpass, $dbname, $dbhost = null)
-    {
-        $this->setDbLogin($dblogin);
-        $this->setDbPass($dbpass);
-        $this->setDbName($dbname);
-
-        if ($dbhost != null)
-        {
-            $xxx = explode(':', $dbhost) ;
-            $this->setDbHost($xxx[0]) ;
-            $this->setDbPort((array_key_exists(1, $xxx) ? $xxx[1] : '')) ;
-        }
-
-    } // end function
+    }
 
     /**
      * Connect to the database and change to the appropriate database.
-     *
-     * @param      none
-     * @return     database link identifier
-     * @access     public
-     * @scope      public
+     * @return mysqli
      */
-
     public function connect()
     {
         $this->dblink = $this->dBConnect($this->dbhost, $this->dblogin, $this->dbpass, $this->dbname);
@@ -162,7 +280,7 @@ class AbstractDb
         
         return $this->dblink;
 
-    } // end function
+    } 
 
     /**
      * Disconnect from the database.

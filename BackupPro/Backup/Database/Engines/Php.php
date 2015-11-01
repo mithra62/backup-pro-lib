@@ -40,7 +40,7 @@ class Php extends DbAbstract
      * How many statements we want to compile into 1 INSERT command
      * @var int
      */
-    protected $sql_group_by = 50;
+    protected $sql_group_by = 250;
     
     /**
      * The values for type of column definition
@@ -238,6 +238,13 @@ class Php extends DbAbstract
         return sprintf('SELECT '.implode(',',$columns).' FROM %1$s LIMIT %2$s, %3$s', $table, $offset, $group_by);    
     }
     
+    /**
+     * Abstracts preparing the data fro storage in the SQL backup file
+     * @param string $column_name The name for the column in the table
+     * @param string $value The value the column contains
+     * @param array $column_data The data we're storing
+     * @return string The string to use in the backup SQL string
+     */
     public function prepareData($column_name, $value, array $column_data)
     {
         foreach($column_data AS $column)

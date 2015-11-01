@@ -25,6 +25,7 @@ class Blob extends Columns
 {
     /**
      * (non-PHPdoc)
+     * @ignore
      * @see \mithra62\BackupPro\Backup\Database\Engines\Php\Columns::getFieldName()
      */
     public function getFieldName(array $column)
@@ -34,6 +35,7 @@ class Blob extends Columns
     
     /**
      * (non-PHPdoc)
+     * @ignore
      * @see \mithra62\BackupPro\Backup\Database\Engines\Php\Columns::getFieldValue()
      */
     public function getFieldValue($value)

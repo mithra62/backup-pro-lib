@@ -206,7 +206,7 @@ class Backup
                                       ->setShell($shell);
             
             $backup_file = $db->backup($database, $file_name);
-            $compressed_file = $this->getCompress()->setKeepOriginal(false)->archiveSingle($backup_file);
+            $compressed_file = $this->getCompress()->setArchiveName($file_name)->setKeepOriginal(false)->archiveSingle($backup_file);
             $db->writeDetails($this->getDetails(), $compressed_file, $options['db_backup_method']);
             
             $this->getStorage()->save($compressed_file, $options['storage_details'], 'database', $this->getDetails());

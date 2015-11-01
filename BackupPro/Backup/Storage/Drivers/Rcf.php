@@ -171,8 +171,8 @@ class Rcf extends AbstractStorage
             if( !empty($settings['rcf_container']) )
             {
                 $validate->rule('rcf_container_exists', 'rcf_container', $settings)->message('Your container doesn\'t appear to exist...');
-                //$validate->rule('rcf_bucket_readable', 'rcf_bucket', $settings)->message('Your bucket doesn\'t appear to be readable...');
-                //$validate->rule('rcf_bucket_writable', 'rcf_bucket', $settings)->message('Your bucket doesn\'t appear to be writable...');
+                $validate->rule('rcf_container_readable', 'rcf_container', $settings)->message('Your container doesn\'t appear to be readable...');
+                $validate->rule('rcf_container_writable', 'rcf_container', $settings)->message('Your container doesn\'t appear to be writable...');
             } 
         }
         

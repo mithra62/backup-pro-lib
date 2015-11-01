@@ -55,9 +55,4 @@ class BackupTest extends TestFixture
         $this->assertInstanceOf('\\mithra62\\Compress', $backup->getCompress());
         $this->assertInstanceOf('\\mithra62\\Db', $backup->getDb());
     }
-    
-    public function testStoragePath()
-    {
-        $backup = new Backup( new Db );
-    }
 }
