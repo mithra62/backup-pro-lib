@@ -1,0 +1,29 @@
+<project name="Backup Pro Files" default="move_zip">
+<target name="m62-files" depends="cms-files">
+	<echo msg="" />
+	<echo msg="Copying files to mithra62 directory..." />
+	<copy todir="${jaeger_base}">
+		<fileset dir="../mithra62-lib/mithra62">
+			<include name="**"></include>
+			<exclude name="**/BackupPro/**"></exclude>
+			<exclude name="**.phar**"></exclude>
+			<exclude name="**/docs/**"></exclude>
+		</fileset>
+	</copy>
+
+	<echo msg="" />
+	<echo msg="Copying BackupPro files..." />
+	<copy todir="${backup_pro_logic_base}">
+		<fileset dir="../backup-pro-lib/BackupPro">
+			<include name="**"></include>
+		</fileset>
+	</copy>
+
+	<echo msg="Copying themes directory to ./builds/EEMCS/themes..." />
+	<copy todir="${backup_pro_theme_base}">
+		<fileset dir="../backup-pro-lib/resources">
+			<include name="**"></include>
+		</fileset>
+	</copy>
+</target>
+</project>

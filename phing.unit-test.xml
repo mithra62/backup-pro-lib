@@ -1,0 +1,18 @@
+<project name="Backup Pro Unit Tests" default="move_zip">
+	<target name="test" depends="prepare">
+		<phpunit 
+			haltonfailure="true" 
+			printsummary="true" 
+			bootstrap="../mithra62-lib/mithra62/tests/autoload.php"
+			configuration="../mithra62-lib/mithra62/phpunit.xml"
+			pharlocation="../mithra62-lib/mithra62/bin/phpunit.phar"
+		>
+			<formatter type="plain" usefile="false"/>
+			<batchtest>
+				<fileset dir="../mithra62-lib/mithra62/tests">
+					<include name="**/*Test.php"/>
+				</fileset>
+			</batchtest>
+		</phpunit>		
+	</target>
+</project>
