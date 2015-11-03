@@ -5,5 +5,24 @@
 		<echo msg="" />
 		<echo msg="(${platform_name}) Making directory ${build_container_dir}" />	
 		<mkdir dir="${build_container_dir}" />
+		
+<!--
+		<phplint haltonfailure="yes" tofile="../backup-pro-lib/craft.lint.txt">
+		  <fileset dir="../mithra62-lib/mithra62">
+		    <include name="**/*.php"/>
+		  </fileset>
+		</phplint>
+	
+		<apigen
+		  source="../mithra62-lib/mithra62"
+		  destination="${build_container_dir}/api"
+		  exclude="*/tests/*"
+		  title="My Project API Documentation"
+		  deprecated="true"
+		  command="generate"
+		  executable="../apigen.phar"
+			debug="true"
+		  todo="true" />
+	-->			
 	</target>
 </project>
