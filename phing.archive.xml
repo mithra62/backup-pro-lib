@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Backup Pro Archive Build" default="move_zip">
+    <target name="zip" depends="clean-install">
+    	<echo msg="" />
+        <echo msg="(${platform_name}) Creating archive..." />
+
+        <zip destfile="${build_archive_path}">
+            <fileset dir="${build_container_dir}">
+                <include name="**" />
+            </fileset>
+        </zip>
+
+        <echo msg="(${platform_name}) Files copied and compressed in build directory OK!" />
+    </target>
+
+    <target name="move_zip" depends="zip">
+    	<echo msg="" />
+        <echo msg="(${platform_name}) Copying zip to export folder..." />
+		<copy file="${build_archive_path}" toFile="${export_archive_path}" />
+    </target>
+</project>

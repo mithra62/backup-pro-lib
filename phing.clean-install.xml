@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Backup Pro Clean Install" default="move_zip">
+    <target name="clean-install" depends="vendor-files">
+    	<echo msg="" />
+        <echo msg="(${platform_name}) Setting up clean instalation for testing..." />
+    	<delete dir="${clean_install_bp_core_file_path}" /> 
+    	<delete dir="${clean_install_bp_theme_path}" /> 
+
+		<copy todir="${clean_install_cms_add_on_path}">
+			<fileset dir="${cms_root_path}">
+				<include name="**"></include>
+			</fileset>
+		</copy>
+    	
+		<copy todir="${clean_install_cms_theme}">
+			<fileset dir="${platform_theme_base}">
+				<include name="**"></include>
+			</fileset>
+		</copy>
+        <echo msg="(${platform_name}) Files copied and compressed in build directory OK!" />
+    </target>
+</project>    

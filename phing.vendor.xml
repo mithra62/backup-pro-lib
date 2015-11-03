@@ -161,6 +161,11 @@
 				<include name="**"></include>
 			</fileset>
 		</copy>
+		<copy todir="${vendor_path}/vlucas/valitron/lang">
+			<fileset dir="../mithra62-lib/vendor/vlucas/valitron/lang">
+				<include name="**"></include>
+			</fileset>
+		</copy>
 					
         <echo msg="(${platform_name}) Copying Voku Portable UTF-8 Files..." />
 		<copy todir="${vendor_path}/voku/portable-utf8/src">

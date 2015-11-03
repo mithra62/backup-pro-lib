@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Backup Pro CMS Files" default="move_zip">
+    <target name="cms-files" depends="test">
+        <echo msg="(${platform_name}) Copying files to build directory..." />
+
+    	<echo msg="" />
+		<echo msg="(${platform_name}) Copying to ${cms_root_path}" />
+		<copy todir="${cms_root_path}">
+			<fileset dir="${main_files}">
+				<include name="**"></include>
+				<exclude name="**/mithra62/**"></exclude>
+				<exclude name="**/vendor/**"></exclude>
+				<exclude name="**composer.**"></exclude>
+				<exclude name="**/resources/**"></exclude>
+			</fileset>
+		</copy>
+    </target>
+</project>

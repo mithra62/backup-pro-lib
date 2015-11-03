@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Backup Pro Unit Tests" default="move_zip">
+	<target name="prepare">
+		<delete dir="${build_path}" />
+		<echo msg="" />
+		<echo msg="(${platform_name}) Making directory ${build_container_dir}" />	
+		<mkdir dir="${build_container_dir}" />
+	</target>
+</project>
