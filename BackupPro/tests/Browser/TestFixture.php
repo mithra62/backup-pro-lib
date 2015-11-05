@@ -21,4 +21,10 @@ class TestFixture extends BrowserTestCase
     {
         return $this->urls[$key];
     }
+    
+    public function iDisableTheAlerts()
+    {
+       $javascript = "window.confirm = function() {};";
+       $this->session->executeScript($javascript);
+    }    
 }

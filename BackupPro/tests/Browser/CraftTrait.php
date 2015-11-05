@@ -30,6 +30,7 @@ trait CraftTrait
     public function  teardown()
     {
         sleep(2);
+        $this->iDisableTheAlerts();
         $this->session->visit('http://eric.craft.clean.mithra62.com/admin/settings/plugins');
         $page = $this->session->getPage();
         $form = $page->find('xpath', '/body/div/main/div/div/div/div/div/table/tbody/tr/td[2]/form/input[2]')->click();
