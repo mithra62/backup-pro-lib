@@ -5,8 +5,12 @@
 		<echo msg="" />
 		<echo msg="(${platform_name}) Making directory ${build_container_dir}" />	
 		<mkdir dir="${build_container_dir}" />
+<!--		
+		<echo msg="Optimizing Composer Autoloader..." />
+		<composer php="php" composer="../mithra62-lib/composer.phar" command="dumpautoload" />
 		
-<!--
+		
+
 		<phplint haltonfailure="yes" tofile="../backup-pro-lib/craft.lint.txt">
 		  <fileset dir="../mithra62-lib/mithra62">
 		    <include name="**/*.php"/>

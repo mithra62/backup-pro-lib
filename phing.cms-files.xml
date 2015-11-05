@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Backup Pro CMS Files" default="move_zip">
-    <target name="cms-files" depends="test">
+    <target name="cms-files" depends="prepare">
         <echo msg="(${platform_name}) Copying files to build directory..." />
 
     	<echo msg="" />

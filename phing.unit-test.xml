@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Backup Pro Unit Tests" default="move_zip">
-	<target name="test" depends="prepare">
+	<target name="clean-cms-test" depends="clean-install">
 		<phpunit 
 			haltonfailure="true" 
 			printsummary="true" 
@@ -13,6 +13,14 @@
 				<fileset dir="../mithra62-lib/mithra62/tests">
 					<include name="**/*Test.php"/>
 				</fileset>
+				<fileset dir="../mithra62-lib/mithra62/BackupPro/tests">
+					<include name="**/*Test.php"/>
+					<exclude name="**/Browser/**"></exclude>
+				</fileset>
+				<fileset dir="../mithra62-lib/mithra62/BackupPro/tests/Browser/${mink_test_dir}">
+					<include name="**/*Test.php"/>
+				</fileset>
+				
 			</batchtest>
 		</phpunit>		
 	</target>
