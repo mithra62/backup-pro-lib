@@ -291,13 +291,7 @@ Please don\'t respond to this email; all emails are automatically deleted.',
 'cron_query_key_instructions' => 'For security, Backup Pro allows customization of the URL used for Cron commands so malicious users can\'t force Cron executions. Any calls to Cron URls MUST have the value for the `backup_pro` parameter.',
 'backup' => 'Backup',
 'manage_backups' => 'Manage Backups',    
-    ''=>''
-		
-		
-		
-		
-		
-		
-		
+'pre_backup_setting_issue_blurb' => 'You\'re going to need to fix the below configuration errors before you can start taking backups',
+''=>''
 		
 );

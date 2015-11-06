@@ -35,6 +35,5 @@ trait EE3Trait
         $checkbox = $page->find('xpath', '/body/section[3]/div[2]/div/div[2]/div/form/div[2]/table/tbody/tr/td[4]/input')->check();
         $action_select = $page->find('xpath', '/body/section[3]/div[2]/div/div[2]/div/form/fieldset/select')->selectOption('remove');
         $page->find('xpath', '/body/section[3]/div[2]/div/div[2]/div/form/fieldset/button')->submit();
-        $page->find('xpath', '/body/section[3]/div[3]/div/div/div/div/form/fieldset/input')->submit();
     }
 }

@@ -20,6 +20,16 @@ trait EE2Trait
     
     protected function setUp()
     {
+        $this->install_addon();
+    }
+    
+    public function  teardown()
+    {
+        $this->uninstall_addon();
+    }
+    
+    public function install_addon()
+    {
         $this->login();
         $this->session->visit('http://eric.ee2.clean.mithra62.com/admin.php?/cp/addons/package_settings&package=backup_pro&return=addons_modules');
         $page = $this->session->getPage();
@@ -27,7 +37,7 @@ trait EE2Trait
         $page->findButton('submit')->submit();
     }
     
-    public function  teardown()
+    public function uninstall_addon()
     {
         $this->session->visit('http://eric.ee2.clean.mithra62.com/admin.php?/cp/addons/package_settings&package=backup_pro&return=addons_modules');
         $page = $this->session->getPage();

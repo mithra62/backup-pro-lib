@@ -2,9 +2,12 @@
 namespace mithra62\BackupPro\tests\Browser;
 
 use aik099\PHPUnit\BrowserTestCase;
+use mithra62\tests\TestTrait;
 
 class TestFixture extends BrowserTestCase
 {
+    use TestTrait; 
+    
     public static $browsers = array(
         array(
             'driver' => 'selenium2',

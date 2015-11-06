@@ -17,9 +17,6 @@ class FreshInstallTestAbstract extends TestFixture
         $this->assertTrue($this->session->getPage()->hasContent('Would you like to take a database backup now?'));
     }
     
-    /**
-     * @depends testDashboardDefault
-     */
     public function testDbBackupViewDefault()
     {
         $this->session->visit( $this->url('db_backups') );
@@ -27,9 +24,6 @@ class FreshInstallTestAbstract extends TestFixture
         $this->assertTrue($this->session->getPage()->hasContent('Would you like to take a database backup now?'));
     }
     
-    /**
-     * @depends testDbBackupViewDefault
-     */
     public function testFileBackupViewDefault()
     {
         $this->session->visit( $this->url('file_backups') );
@@ -37,14 +31,22 @@ class FreshInstallTestAbstract extends TestFixture
         $this->assertTrue($this->session->getPage()->hasContent('Would you like to take a file backup now?'));
     }
     
-    /**
-     * @depends testDbBackupViewDefault
-     */
-    public function testBackupDbViewDefault()
+    public function testBackupDbConfirmDefault()
     {
-        $this->session->visit( $this->url('file_backups') );
-        $this->assertTrue($this->session->getPage()->hasContent('No file backups exist yet.'));
-        $this->assertTrue($this->session->getPage()->hasContent('Would you like to take a file backup now?'));
+        $this->session->visit( $this->url('db_backup') );
+        $this->assertTrue($this->session->getPage()->hasContent('You\'re going to need to fix the below configuration errors before you can start taking backups:'));
+        $this->assertTrue($this->session->getPage()->hasContent('No Storage Locations have been setup yet!'));
+        $this->assertTrue($this->session->getPage()->hasContent('Setup Storage Location'));
+    }
+    
+    public function testBackupFilesConfirmDefault()
+    {
+        $this->session->visit( $this->url('file_backup') );
+        $this->assertTrue($this->session->getPage()->hasContent('You\'re going to need to fix the below configuration errors before you can start taking backups:'));
+        $this->assertTrue($this->session->getPage()->hasContent('No Storage Locations have been setup yet!'));
+        $this->assertTrue($this->session->getPage()->hasContent('Setup Storage Location'));
+        $this->assertTrue($this->session->getPage()->hasContent('No File Backup Locations have been configured.'));
+        $this->assertTrue($this->session->getPage()->hasContent('Set File Backup Locations'));
     }
 
 }
