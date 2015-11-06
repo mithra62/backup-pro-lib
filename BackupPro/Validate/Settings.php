@@ -185,15 +185,19 @@ class Settings extends Validate
             foreach($paths AS $path)
             {
                 $path = trim($path);
-                if( !file_exists($path) )
+                if( !$this->regex->validate($path) )
                 {
-                    $this->rule('false', 'backup_file_location')->message('"'.$path.'" doesn\'t appear to exist...');
-                    //break;
-                }
-                
-                elseif( !is_readable($path) )
-                {
-                    $this->rule('false', 'backup_file_location')->message('"'.$path.'" isn\'t readable by PHP.');
+                    if( file_exists($path) )
+                    {
+                        if( !is_readable($path) )
+                        {
+                            $this->rule('false', 'backup_file_location')->message('"'.$path.'" isn\'t a readable path by PHP.');
+                        }
+                    }
+                    else
+                    {
+                        $this->rule('false', 'backup_file_location')->message('"'.$path.'" isn\'t a valid regular expression or path on the system.');
+                    }
                 }
             }
         }
@@ -273,9 +277,9 @@ class Settings extends Validate
             
             foreach($emails AS $email)
             {
-                if( !filter_var($email, FILTER_VALIDATE_EMAIL) )
+                if( !filter_var(trim($email), FILTER_VALIDATE_EMAIL) )
                 {
-                    $this->rule('false', 'cron_notify_emails')->message('"'.$email.'" isn\'t a valid email');
+                    $this->rule('false', 'cron_notify_emails')->message('"'.trim($email).'" isn\'t a valid email');
                     //break;
                 }
             }
@@ -284,20 +288,34 @@ class Settings extends Validate
         return $this;
     }
     
+    /**
+     * Validates we have a subject for cron notify emails
+     * @param string $subject
+     * @return \mithra62\BackupPro\Validate\Settings
+     */
     public function cronNotifyEmailSubject($subject)
     {
         if($subject == '')
         {
             $this->rule('required', 'cron_notify_email_subject')->message('{field} is required');
         }
+        
+        return $this;
     }
     
+    /**
+     * Validates we have a message for cron notify emails
+     * @param string $message
+     * @return \mithra62\BackupPro\Validate\Settings
+     */
     public function cronNotifyEmailMessage($message)
     {
         if($message == '')
         {
             $this->rule('required', 'cron_notify_email_message')->message('{field} is required');
         }
+        
+        return $this;
     }
     
     /**
@@ -327,22 +345,41 @@ class Settings extends Validate
         return $this;
     }
     
+    /**
+     * Validates the subject for the missed backup email
+     * @param string $subject
+     * @return \mithra62\BackupPro\Validate\Settings
+     */
     public function backupMissedScheduleNotifyEmailSubject($subject)
     {
         if($subject == '')
         {
             $this->rule('required', 'backup_missed_schedule_notify_email_subject')->message('{field} is required');
         }
+        
+        return $this;
     }
     
+    /**
+     * Validates the message for the missed backup email
+     * @param string $message
+     * @return \mithra62\BackupPro\Validate\Settings
+     */
     public function backupMissedScheduleNotifyEmailMessage($message)
     {
         if($message == '')
         {
             $this->rule('required', 'backup_missed_schedule_notify_email_message')->message('{field} is required');
         }
+        
+        return $this;
     }
     
+    /**
+     * Validates the total verifications per execution value
+     * @param string $message
+     * @return \mithra62\BackupPro\Validate\Settings
+     */
     public function totalVerificationsPerExecution($total)
     {
         if($total == '')
@@ -351,8 +388,15 @@ class Settings extends Validate
         }
         
         $this->rule('integer', 'total_verifications_per_execution')->message('{field} must be a whole number');
+        
+        return $this;
     }
     
+    /**
+     * Validates the total verifications per execution value for the missed backup email
+     * @param number $total
+     * @return \mithra62\BackupPro\Validate\Settings
+     */
     public function backupMissedScheduleNotifyEmailInterval($total)
     {
         if($total == '')
@@ -361,8 +405,15 @@ class Settings extends Validate
         }
         
         $this->rule('integer', 'backup_missed_schedule_notify_email_interval')->message('{field} must be a whole number');
+        
+        return $this;
     }
     
+    /**
+     * Validates the database name for the Integrity Agent
+     * @param string $name The database name to validate
+     * @param array $credentials The connection details 
+     */
     public function dbVerificationDbName($name, array $credentials)
     {
         if( $name != '' )

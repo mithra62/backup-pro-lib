@@ -361,7 +361,244 @@ abstract class SettingsTestAbstract extends TestFixture
     
         $this->assertNotTrue($this->session->getPage()->hasContent('Db Backup Alert Threshold is required'));
         $this->assertNotTrue($this->session->getPage()->hasContent('Db Backup Alert Threshold must be a number'));
+    }
+
+    /**
+     * @depends testDbBackupDbBackupAlertFreqGoodValue
+     */
+    public function testDbBackupDbMysqldumpNoValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_db') );
+        $page = $this->session->getPage();
+        $page->findById('db_backup_method' )->selectOption('mysqldump');
+        $page->findById('mysqldump_command' )->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
     
+        $this->assertTrue($this->session->getPage()->hasContent('Mysqldump Command is required'));
+    }
+
+    /**
+     * @depends testDbBackupDbMysqldumpNoValue
+     */
+    public function testDbBackupDbMysqldumpGoodValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_db') );
+        $page = $this->session->getPage();
+        $page->findById('db_backup_method' )->selectOption('mysqldump');
+        $page->findById('mysqldump_command' )->setValue('mysqldump');
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertNotTrue($this->session->getPage()->hasContent('Mysqldump Command is required'));
+    }
+
+    /**
+     * @depends testDbBackupDbMysqldumpNoValue
+     */
+    public function testDbBackupDbMysqlcliNoValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_db') );
+        $page = $this->session->getPage();
+        $page->findById('db_restore_method' )->selectOption('mysql');
+        $page->findById('mysqlcli_command' )->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertTrue($this->session->getPage()->hasContent('Mysqlcli Command is required'));
+    }
+
+    /**
+     * @depends testDbBackupDbMysqlcliNoValue
+     */
+    public function testDbBackupDbMysqlcliGoodValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_db') );
+        $page = $this->session->getPage();
+        $page->findById('db_restore_method' )->selectOption('mysql');
+        $page->findById('mysqlcli_command' )->setValue('mysql');
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertNotTrue($this->session->getPage()->hasContent('Mysqlcli Command is required'));
+    }
+
+    /**
+     * @depends testDbBackupDbMysqlcliGoodValue
+     */
+    public function testFileBackupMaxFileBackupsNoValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_files') );
+        $page = $this->session->getPage();
+        $page->findById('max_file_backups' )->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertTrue($this->session->getPage()->hasContent('Max File Backups is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('Max File Backups must be a number'));
+    }
+
+    /**
+     * @depends testFileBackupMaxFileBackupsNoValue
+     */
+    public function testFileBackupMaxFileBackupsBadValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_files') );
+        $page = $this->session->getPage();
+        $page->findById('max_file_backups' )->setValue('fdsafdsa');
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertNotTrue($this->session->getPage()->hasContent('Max File Backups is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('Max File Backups must be a number'));
+    }
+
+    /**
+     * @depends testFileBackupMaxFileBackupsBadValue
+     */
+    public function testFileBackupMaxFileBackupsGoodValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_files') );
+        $page = $this->session->getPage();
+        $page->findById('max_file_backups' )->setValue(4);
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertNotTrue($this->session->getPage()->hasContent('Max File Backups is required'));
+        $this->assertNotTrue($this->session->getPage()->hasContent('Max File Backups must be a number'));
+    }
+
+    /**
+     * @depends testFileBackupMaxFileBackupsGoodValue
+     */
+    public function testFileBackupBackupAlertThresholdNoValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_files') );
+        $page = $this->session->getPage();
+        $page->findById('file_backup_alert_threshold' )->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertTrue($this->session->getPage()->hasContent('File Backup Alert Threshold is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('File Backup Alert Threshold must be a number'));
+    }
+
+    /**
+     * @depends testFileBackupBackupAlertThresholdNoValue
+     */
+    public function testFileBackupBackupAlertThresholdBadValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_files') );
+        $page = $this->session->getPage();
+        $page->findById('file_backup_alert_threshold' )->setValue('fdsafdsa');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertNotTrue($this->session->getPage()->hasContent('File Backup Alert Threshold is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('File Backup Alert Threshold must be a number'));
+    }
+
+    /**
+     * @depends testFileBackupBackupAlertThresholdBadValue
+     */
+    public function testFileBackupBackupAlertThresholdGoodValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_files') );
+        $page = $this->session->getPage();
+        $page->findById('file_backup_alert_threshold' )->setValue(4);
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertNotTrue($this->session->getPage()->hasContent('File Backup Alert Threshold is required'));
+        $this->assertNotTrue($this->session->getPage()->hasContent('File Backup Alert Threshold must be a number'));
+    }
+
+    /**
+     * @depends testFileBackupBackupAlertThresholdGoodValue
+     */
+    public function testFileBackupFileBackupLocationsNoValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_files') );
+        $page = $this->session->getPage();
+        $page->findById('backup_file_location' )->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertTrue($this->session->getPage()->hasContent('Backup File Location is required'));
+    }
+
+    /**
+     * @depends testFileBackupFileBackupLocationsNoValue
+     */
+    public function testFileBackupFileBackupLocationsBadValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_files') );
+        $page = $this->session->getPage();
+        $page->findById('backup_file_location' )->setValue('fdsafdsa');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertNotTrue($this->session->getPage()->hasContent('Backup File Location is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('"fdsafdsa" isn\'t a valid regular expression or path on the system.'));
+    }
+
+    /**
+     * @depends testFileBackupFileBackupLocationsBadValue
+     */
+    public function testFileBackupFileBackupLocationsGoodValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_files') );
+        $page = $this->session->getPage();
+        $page->findById('backup_file_location' )->setValue(dirname(__FILE__));
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertNotTrue($this->session->getPage()->hasContent('Backup File Location is required'));
+        $this->assertNotTrue($this->session->getPage()->hasContent('"fdsafdsa" isn\'t a valid regular expression or path on the system.'));
+    }
+
+    /**
+     * @depends testFileBackupFileBackupLocationsGoodValue
+     */
+    public function testFileBackupExcludePathsBadValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_files') );
+        $page = $this->session->getPage();
+        $page->findById('exclude_paths' )->setValue('fdsafdsa');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertTrue($this->session->getPage()->hasContent('"fdsafdsa" isn\'t a valid regular expression or path on the system.'));
+    }
+
+    /**
+     * @depends testFileBackupExcludePathsBadValue
+     */
+    public function testFileBackupExcludePathsGoodPathValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_files') );
+        $page = $this->session->getPage();
+        $page->findById('backup_file_location' )->setValue(dirname(__FILE__));
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertNotTrue($this->session->getPage()->hasContent('"fdsafdsa" isn\'t a valid regular expression or path on the system.'));
+    }
+
+    /**
+     * @depends testFileBackupExcludePathsGoodPathValue
+     */
+    public function testCronBackupNotifyEmailBadValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_cron') );
+        $page = $this->session->getPage();
+        $page->findById('cron_notify_emails' )->setValue("fdsafdsa\neric@mithra62.com\nuuuuuuuu");
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertTrue($this->session->getPage()->hasContent('"fdsafdsa" isn\'t a valid email'));
+        $this->assertTrue($this->session->getPage()->hasContent('"uuuuuuuu" isn\'t a valid email'));
+        $this->assertNotTrue($this->session->getPage()->hasContent('"eric@mithra62.com" isn\'t a valid email'));
         $this->uninstall_addon();
     }
 }
