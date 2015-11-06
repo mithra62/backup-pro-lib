@@ -4,7 +4,7 @@ namespace mithra62\BackupPro\tests\Browser;
 
 use mithra62\BackupPro\tests\Browser\TestFixture;
 
-class FreshInstallTestAbstract extends TestFixture  
+abstract class FreshInstallTestAbstract extends TestFixture  
 {   
     public $session = null;
     

@@ -54,7 +54,7 @@ class Settings extends Validate
     public function dashboardRecentTotal()
     {
         $this->rule('required', 'dashboard_recent_total')->message('{field} is required');
-        $this->rule('min', 'dashboard_recent_total', '1')->message('{field} must be 1 characters at least');
+        $this->rule('min', 'dashboard_recent_total', '1')->message('{field} must be a number greater than 1');
         return $this;
     }
     

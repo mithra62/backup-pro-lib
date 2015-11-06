@@ -5,7 +5,12 @@
 		<echo msg="" />
 		<echo msg="(${platform_name}) Making directory ${build_container_dir}" />	
 		<mkdir dir="${build_container_dir}" />
+
 <!--		
+		<composer php="php" composer="../mithra62-lib/composer.phar" command="update">
+			<arg value="-g"/>
+			<arg value="../mithra62-lib/composer.json" />
+		</composer>
 		<echo msg="Optimizing Composer Autoloader..." />
 		<composer php="php" composer="../mithra62-lib/composer.phar" command="dumpautoload" />
 		

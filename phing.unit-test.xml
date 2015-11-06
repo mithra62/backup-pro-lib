@@ -3,9 +3,11 @@
 	<target name="clean-cms-test" depends="clean-install">
 		<phpunit 
 			haltonfailure="true" 
+			haltonincomplete="true"
+			haltonskipped="true"
+			haltonerror="true"
 			printsummary="true" 
 			bootstrap="../mithra62-lib/mithra62/tests/autoload.php"
-			configuration="../mithra62-lib/mithra62/phpunit.xml"
 			pharlocation="../mithra62-lib/mithra62/bin/phpunit.phar"
 		>
 			<formatter type="plain" usefile="false"/>

@@ -1,6 +1,6 @@
 <?php
 /**
- * mithra62 - Unit Test
+ * mithra62
  *
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
@@ -31,78 +31,6 @@ class SettingsTest extends TestFixture
      * @var string
      */
     protected $expected_settings_table = 'backup_pro_settings';
-    
-    /**
-     * The settings Backup Pro offers with a default value
-     * @var array
-     */
-    protected $expected_defaults = array(
-        'allowed_access_levels' => '',
-        'auto_threshold' => '0',
-        'auto_threshold_custom' => '',
-        'exclude_paths' => array(),
-        'allow_duplicates' => '0',
-        
-        'db_backup_on_cms_update' => '0',
-        'file_backup_on_cms_update' => '0',
-        'db_backup_on_plugin_update' => '0',
-        'file_backup_on_plugin_update' => '0',
-        'db_backup_on_plugin_install' => '0',
-        'file_backup_on_plugin_install' => '0',
-        'db_backup_on_theme_update' => '0',
-        'file_backup_on_theme_update' => '0',
-        'db_backup_on_theme_install' => '0',
-        'file_backup_on_theme_install' => '0',
-        
-        'enable_cron_db_backup' => '1',
-        'enable_cron_file_backup' => '1',
-        'enable_cron_integrity_check' => '1',
-        
-        'cron_notify_emails' => array(),
-        'cron_notify_email_subject' => '',
-        'cron_notify_email_message' => '',
-        'cron_notify_email_mailtype' => 'html',
-        'cron_query_key' => 'yup', //the value the backup_pro query query key must have
-        
-        'storage_details' => array(),
-        
-        'working_directory' => '',
-        'backup_file_location' => array(),
-        
-        'max_file_backups' => '0',
-        'max_db_backups' => '0',
-        'db_backup_method' => 'php', //mysqldump
-        'db_restore_method' => 'php', //mysql
-        'db_backup_execute_pre_sql' => array(), //these get executed against MySQL before a backup starts
-        'db_backup_execute_post_sql' => array(), //these get executed against MySQL after a backup finishes
-        'db_backup_archive_pre_sql' => array(), //these get written in the backup SQL dump at the top
-        'db_backup_archive_post_sql' => array(), //these get written in the backup SQL dump at the bottom
-        'db_backup_ignore_tables' => array(), //what MySQL tables to ignore from the backup?
-        'db_backup_ignore_table_data' => array(), //which tables should we not bother grabbing the data for?
-        'mysqldump_command' => 'mysqldump',
-        'mysqlcli_command' => 'mysql',
-        'dashboard_recent_total' => '5',
-        'db_backup_alert_threshold' => '1',
-        'file_backup_alert_threshold' => '7',
-    
-        'backup_missed_schedule_notify_emails' => array(),
-        'backup_state_notify_email_subject' => '',
-        'backup_state_notify_email_message' => '',
-        'backup_state_notify_email_mailtype' => 'html',
-    
-        'backup_missed_schedule_notify_member_ids' => array(),
-        'backup_missed_schedule_notify_email_mailtype' => 'html',
-        'backup_missed_schedule_notify_email_subject' => '',
-        'backup_missed_schedule_notify_email_message' => '',
-        'backup_missed_schedule_notify_email_last_sent' => '0', //unix timestamp for determining whether to send an email
-        'backup_missed_schedule_notify_email_interval' => 8, //hours between when backup state emails should be sent
-    
-        'db_verification_db_name' => '',
-        'last_verification_type' => 'database', // either "database" or "files" to alternate between which backup to verify at any given time
-        'last_verification_time' => '0', //timestamp last time a verification happened
-        'total_verifications_per_execution' => '2', //the number of backups to check in a given run
-        'check_backup_state_cp_login' => '1',
-    );
     
     /**
      * These setting keys are ignored since they're already tested elsewhere
@@ -175,6 +103,7 @@ class SettingsTest extends TestFixture
         '10737418240' => '10GB',
         'custom' => 'Custom'
     );
+    
     /**
      * Tests the initial attributes and property values
      */
@@ -198,17 +127,10 @@ class SettingsTest extends TestFixture
         $this->assertTrue($settings->getTable() == $this->expected_settings_table);
     }
     
-    public function testDefaults()
+    public function testDefaultWorkingDirValue()
     {
         $settings = new Settings(new Db, new Language );
         $defaults = $settings->getDefaults();
-        foreach($this->expected_defaults AS $key => $value)
-        {
-            $this->assertArrayHasKey($key, $defaults);
-            if( !in_array($key, $this->lang_overrides_to_ignore) )
-            {
-                $this->assertSame($defaults[$key], $value, 'Failed asserting default setting '.$key.' had a value of: '.$value);
-            }
-        }
+        //$this->assertTrue( is_dir($defaults['working_dir']) );
     }
 }
