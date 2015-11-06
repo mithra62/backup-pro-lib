@@ -14,16 +14,5 @@ class FreshInstallTest extends FreshInstallTestAbstract
         'file_backups' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/file_backups',
         'db_backup' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/backup?type=database',
         'file_backup' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/backup?type=files',
-        'settings' => array(
-            'general' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings',
-            'db' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings?section=db',
-            'files' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings?section=files',
-            'cron' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings?section=cron',
-            'storage_locations' => array(
-                'default' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings/storage',
-            ),
-            'ia' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings?section=ia',
-            'license' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings?section=license',
-        ),
     );
 }

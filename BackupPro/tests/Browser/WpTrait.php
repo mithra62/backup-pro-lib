@@ -21,6 +21,16 @@ trait WpTrait
     protected function setUp()
     {
         $this->login();
+        $this->install_addon();
+    }
+    
+    public function  teardown()
+    {
+        $this->uninstall_addon();
+    }
+    
+    public function install_addon()
+    {
         $this->session->visit('http://eric.wp.clean.mithra62.com/wp-admin/plugins.php');
         $page = $this->session->getPage();
         $checkbox = $page->find('xpath', '/body/div[1]/div[2]/div[2]/div[1]/div[3]/form[2]/table/tbody/tr[2]/th/input')->check();
@@ -28,7 +38,7 @@ trait WpTrait
         $page->findButton('doaction2')->submit();
     }
     
-    public function  teardown()
+    public function uninstall_addon()
     {
         $this->session->visit('http://eric.wp.clean.mithra62.com/wp-admin/plugins.php');
         $page = $this->session->getPage();

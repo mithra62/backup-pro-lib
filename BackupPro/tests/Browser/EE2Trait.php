@@ -20,6 +20,7 @@ trait EE2Trait
     
     protected function setUp()
     {
+        $this->login();
         $this->install_addon();
     }
     
@@ -30,7 +31,6 @@ trait EE2Trait
     
     public function install_addon()
     {
-        $this->login();
         $this->session->visit('http://eric.ee2.clean.mithra62.com/admin.php?/cp/addons/package_settings&package=backup_pro&return=addons_modules');
         $page = $this->session->getPage();
         $form = $page->findById('install_module')->setValue('install');

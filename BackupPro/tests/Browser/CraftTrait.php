@@ -22,15 +22,24 @@ trait CraftTrait
     {
         $this->login();
         sleep(2);
+        $this->install_addon();
+    }
+    
+    public function  teardown()
+    {
+        $this->uninstall_addon();
+    }
+    
+    public function install_addon()
+    {
         $this->session->visit('http://eric.craft.clean.mithra62.com/admin/settings/plugins');
         sleep(2);
         $page = $this->session->getPage();
         $form = $page->find('xpath', '/body/div/main/div/div/div/div/div/table/tbody/tr/td[2]/form/input[2]')->click();
     }
     
-    public function  teardown()
+    public function uninstall_addon()
     {
-        $this->iDisableTheAlerts();
         $this->session->visit('http://eric.craft.clean.mithra62.com/admin/settings/plugins');
         sleep(2);
         $page = $this->session->getPage();

@@ -21,6 +21,16 @@ trait EE3Trait
     protected function setUp()
     {
         $this->login();
+        $this->install_addon();
+    }
+    
+    public function  teardown()
+    {
+        $this->uninstall_addon();
+    }
+    
+    public function install_addon()
+    {
         $this->session->visit('http://eric.ee3.clean.mithra62.com/admin.php?/cp/addons');
         $page = $this->session->getPage();
         $checkbox = $page->find('xpath', '/body/section[3]/div[2]/div/div[2]/div/form/div[2]/table/tbody/tr/td[4]/input')->check();
@@ -28,7 +38,7 @@ trait EE3Trait
         $page->find('xpath', '/body/section[3]/div[2]/div/div[2]/div/form/fieldset/button')->submit();
     }
     
-    public function  teardown()
+    public function uninstall_addon()
     {
         $this->session->visit('http://eric.ee3.clean.mithra62.com/admin.php?/cp/addons');
         $page = $this->session->getPage();
