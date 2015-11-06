@@ -92,6 +92,13 @@ class Settings extends Validate
         return $this;
     }
     
+    public function cronQueryKey($string)
+    {
+        $this->rule('required', 'cron_query_key')->message('{field} is required');
+        $this->rule('alphanum', 'cron_query_key')->message('{field} must be alpha-numeric only');
+        return $this;
+    }
+    
     /**
      * Validates the database backup method setting value
      * @param array $data The form data
@@ -495,6 +502,11 @@ class Settings extends Validate
         if( isset($data['db_verification_db_name']) )
         {
             $this->dbVerificationDbName( $data['db_verification_db_name'], $extra['db_creds'] );
+        }
+        
+        if( isset($data['cron_query_key']) )
+        {
+            $this->cronQueryKey( $data['cron_query_key'] );
         }
     
         $this->val($data);
