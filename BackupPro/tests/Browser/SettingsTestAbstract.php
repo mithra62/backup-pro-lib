@@ -120,7 +120,7 @@ abstract class SettingsTestAbstract extends TestFixture
     /**
      * @depends testGeneralCronQueryGoodValue
      */
-    public function testGeneralDashboardrRecentTotalEmptyField()
+    public function testGeneralDashboardRecentTotalEmptyField()
     {
         $this->session = $this->getSession();
         $this->session->visit( $this->url('settings_general') );
@@ -133,9 +133,9 @@ abstract class SettingsTestAbstract extends TestFixture
     }
 
     /**
-     * @depends testGeneralDashboardrRecentTotalEmptyField
+     * @depends testGeneralDashboardRecentTotalEmptyField
      */
-    public function testGeneralDashboardrRecentTotalBadValue()
+    public function testGeneralDashboardRecentTotalBadValue()
     {
         $this->session = $this->getSession();
         $this->session->visit( $this->url('settings_general') );
@@ -148,9 +148,9 @@ abstract class SettingsTestAbstract extends TestFixture
     }
 
     /**
-     * @depends testGeneralDashboardrRecentTotalBadValue
+     * @depends testGeneralDashboardRecentTotalBadValue
      */
-    public function testGeneralDashboardrRecentTotalGoodValue()
+    public function testGeneralDashboardRecentTotalGoodValue()
     {
         $this->session = $this->getSession();
         $this->session->visit( $this->url('settings_general') );
@@ -160,8 +160,208 @@ abstract class SettingsTestAbstract extends TestFixture
     
         $this->assertNotTrue($this->session->getPage()->hasContent('Dashboard Recent Total is required'));
         $this->assertNotTrue($this->session->getPage()->hasContent('Dashboard Recent Total must be a number greater than 1'));
+    }
+
+    /**
+     * @depends testGeneralDashboardRecentTotalGoodValue
+     */
+    public function testGeneralAutoThresholdGoodValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_general') );
+        $page = $this->session->getPage();
+        $page->findById('auto_threshold' )->setValue( 104857600 );
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertNotTrue($this->session->getPage()->hasContent('Auto Threshold is required'));
+        $this->assertNotTrue($this->session->getPage()->hasContent('Auto Threshold must be a number'));
+    }
+
+    /**
+     * @depends testGeneralAutoThresholdGoodValue
+     */
+    public function testGeneralAutoThresholdCustomEmptyValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_general') );
+        $page = $this->session->getPage();
+        $page->findById('auto_threshold' )->selectOption('custom');
+        $page->findById('auto_threshold_custom' )->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertTrue($this->session->getPage()->hasContent('Auto Threshold Custom is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('Auto Threshold Custom must be a number'));
+        $this->assertTrue($this->session->getPage()->hasContent('Auto Threshold Custom must be at least 100MB (100000000)'));
+    }
+
+    /**
+     * @depends testGeneralAutoThresholdCustomEmptyValue
+     */
+    public function testGeneralAutoThresholdCustomStringBadValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_general') );
+        $page = $this->session->getPage();
+        $page->findById('auto_threshold' )->selectOption('custom');
+        $page->findById('auto_threshold_custom' )->setValue('fdsafdsa');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertNotTrue($this->session->getPage()->hasContent('Auto Threshold Custom is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('Auto Threshold Custom must be a number'));
+        $this->assertTrue($this->session->getPage()->hasContent('Auto Threshold Custom must be at least 100MB (100000000)'));
+    }
+
+    /**
+     * @depends testGeneralAutoThresholdCustomStringBadValue
+     */
+    public function testGeneralAutoThresholdCustomNumberBadValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_general') );
+        $page = $this->session->getPage();
+        $page->findById('auto_threshold' )->selectOption('custom');
+        $page->findById('auto_threshold_custom' )->setValue(99);
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertNotTrue($this->session->getPage()->hasContent('Auto Threshold Custom is required'));
+        $this->assertNotTrue($this->session->getPage()->hasContent('Auto Threshold Custom must be a number'));
+        $this->assertTrue($this->session->getPage()->hasContent('Auto Threshold Custom must be at least 100MB (100000000)'));
+    }
+
+    /**
+     * @depends testGeneralAutoThresholdCustomStringBadValue
+     */
+    public function testGeneralAutoThresholdCustomGoodValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_general') );
+        $page = $this->session->getPage();
+        $page->findById('auto_threshold' )->selectOption('custom');
+        $page->findById('auto_threshold_custom' )->setValue(100000000);
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertNotTrue($this->session->getPage()->hasContent('Auto Threshold Custom is required'));
+        $this->assertNotTrue($this->session->getPage()->hasContent('Auto Threshold Custom must be a number'));
+        $this->assertNotTrue($this->session->getPage()->hasContent('Auto Threshold Custom must be at least 100MB (100000000)'));
+    }
+
+    /**
+     * @depends testGeneralAutoThresholdCustomGoodValue
+     */
+    public function testGeneralDateFormatEmptyValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_general') );
+        $page = $this->session->getPage();
+        $page->findById('date_format' )->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertTrue($this->session->getPage()->hasContent('Date Format is required'));
+    }
+
+    /**
+     * @depends testGeneralDateFormatEmptyValue
+     */
+    public function testGeneralDateFormatGoodValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_general') );
+        $page = $this->session->getPage();
+        $page->findById('date_format' )->setValue('M d, Y, h:i:sA');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertNotTrue($this->session->getPage()->hasContent('Date Format is required'));
+    }
+    
+    /**
+     * @depends testGeneralDateFormatGoodValue
+     */
+    public function testDbBackupMaxDbBackupEmptyValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_db') );
+        $page = $this->session->getPage();
+        $page->findById('max_db_backups' )->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertTrue($this->session->getPage()->hasContent('Max Db Backups is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('Max Db Backups must be a number'));
+    }
+
+    /**
+     * @depends testDbBackupMaxDbBackupEmptyValue
+     */
+    public function testDbBackupMaxDbBackupStringValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_db') );
+        $page = $this->session->getPage();
+        $page->findById('max_db_backups' )->setValue('fdsafdsa');
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertNotTrue($this->session->getPage()->hasContent('Max Db Backups is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('Max Db Backups must be a number'));
+    }
+
+    /**
+     * @depends testDbBackupMaxDbBackupStringValue
+     */
+    public function testDbBackupMaxDbBackupGoodValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_db') );
+        $page = $this->session->getPage();
+        $page->findById('max_db_backups' )->setValue(4);
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertNotTrue($this->session->getPage()->hasContent('Max Db Backups is required'));
+        $this->assertNotTrue($this->session->getPage()->hasContent('Max Db Backups must be a number'));
+    }
+
+    /**
+     * @depends testDbBackupMaxDbBackupGoodValue
+     */
+    public function testDbBackupDbBackupAlertFreqEmptyValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_db') );
+        $page = $this->session->getPage();
+        $page->findById('db_backup_alert_threshold' )->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertTrue($this->session->getPage()->hasContent('Db Backup Alert Threshold is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('Db Backup Alert Threshold must be a number'));
+    }
+
+    /**
+     * @depends testDbBackupDbBackupAlertFreqEmptyValue
+     */
+    public function testDbBackupDbBackupAlertFreqStringValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_db') );
+        $page = $this->session->getPage();
+        $page->findById('db_backup_alert_threshold' )->setValue('fdsafdsa');
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertNotTrue($this->session->getPage()->hasContent('Db Backup Alert Threshold is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('Db Backup Alert Threshold must be a number'));
+    }
+
+    /**
+     * @depends testDbBackupDbBackupAlertFreqStringValue
+     */
+    public function testDbBackupDbBackupAlertFreqGoodValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_db') );
+        $page = $this->session->getPage();
+        $page->findById('db_backup_alert_threshold' )->setValue(3);
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertNotTrue($this->session->getPage()->hasContent('Db Backup Alert Threshold is required'));
+        $this->assertNotTrue($this->session->getPage()->hasContent('Db Backup Alert Threshold must be a number'));
     
         $this->uninstall_addon();
     }
-
 }

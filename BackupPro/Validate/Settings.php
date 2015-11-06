@@ -85,6 +85,7 @@ class Settings extends Validate
         {
             if( $data['auto_threshold'] != '0')
             {
+                $this->rule('numeric', 'auto_threshold')->message('{field} must be a number');
                 $this->rule('min', 'auto_threshold', $data['meta']['global']['total_space_used_raw'])
                       ->message('You\'re already using '.$data['meta']['global']['total_space_used'].' so {field} must be at least that or a custom value over "'.$data['meta']['global']['total_space_used_raw'].'"');                
             }
@@ -110,6 +111,22 @@ class Settings extends Validate
         if( !empty($data['db_backup_method']) && $data['db_backup_method'] == 'mysqldump' )
         {
             $this->rule('required', 'mysqldump_command')->message('{field} is required');
+        }
+        
+        return $this;
+    }
+    
+    /**
+     * Validates the database restore method setting value
+     * @param array $data
+     * @return \mithra62\BackupPro\Validate\Settings
+     */
+    public function dbRestoreMethod(array $data)
+    {
+        $this->rule('required', 'db_restore_method')->message('{field} is required');
+        if( !empty($data['db_restore_method']) && $data['db_restore_method'] == 'mysql' )
+        {
+            $this->rule('required', 'mysqlcli_command')->message('{field} is required');
         }
         
         return $this;
@@ -452,6 +469,11 @@ class Settings extends Validate
         if( isset($data['db_backup_method']) )
         {
             $this->dbBackupMethod($data);
+        }
+        
+        if( isset($data['db_restore_method']) )
+        {
+            $this->dbRestoreMethod($data);
         }
            
         if( isset($data['license_number']) )
