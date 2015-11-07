@@ -165,6 +165,10 @@ class Ftp extends AbstractStorage
         $validate->rule('required', 'ftp_username')->message('{field} is required');
         $validate->rule('required', 'ftp_password')->message('{field} is required');
         $validate->rule('required', 'ftp_port')->message('{field} is required');
+        $validate->rule('numeric', 'ftp_port')->message('{field} must be a number');
+        $validate->rule('required', 'ftp_timeout')->message('{field} is required');
+        $validate->rule('numeric', 'ftp_timeout')->message('{field} must be a number');
+        
         $validate->rule('required', 'ftp_store_location')->message('{field} is required');
         
         if( !empty($settings['ftp_hostname']) && !empty($settings['ftp_username']) && !empty($settings['ftp_password']) && !empty($settings['ftp_port']))

@@ -41,6 +41,8 @@ class StorageTest extends StorageTestAbstract
         'storage_add_s3storage' => 'http://eric.ee2.clean.mithra62.com/admin.php?S=0&D=cp&C=addons_modules&M=show_module_cp&module=backup_pro&method=new_storage&engine=s3',
     );
     
+    public $local_clean_install_local_storage_path = 'D:\ProjectFiles\mithra62\clean_cms\ee2\backups';
+    
 
     /**
      * Disable this since we want full browser support

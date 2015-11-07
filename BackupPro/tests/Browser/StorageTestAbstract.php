@@ -114,6 +114,112 @@ abstract class StorageTestAbstract extends TestFixture
         $this->assertTrue($this->session->getPage()->hasContent('"fdsafdsa" isn\'t a valid email'));
         $this->assertTrue($this->session->getPage()->hasContent('"uuuuuuuu" isn\'t a valid email'));
         $this->assertNotTrue($this->session->getPage()->hasContent('"eric@mithra62.com" isn\'t a valid email'));
+    }
+
+    /**
+     * @depends testAddEmailStorageBadEmailAddresses
+     */
+    public function testAddEmailStorageAttachMaxSizeNoValue() 
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('storage_add_email_storage') );
+        $page = $this->session->getPage();
+        $page->findById('email_storage_attach_threshold')->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+
+
+        $this->assertTrue($this->session->getPage()->hasContent('Email Storage Attach Threshold is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('Email Storage Attach Threshold must be a number'));
+    }
+
+    /**
+     * @depends testAddEmailStorageAttachMaxSizeNoValue
+     */
+    public function testAddEmailStorageAttachMaxSizeStringValue() 
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('storage_add_email_storage') );
+        $page = $this->session->getPage();
+        $page->findById('email_storage_attach_threshold')->setValue('fdsafdsa');
+        $page->findButton('m62_settings_submit')->submit();
+
+
+        $this->assertNotTrue($this->session->getPage()->hasContent('Email Storage Attach Threshold is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('Email Storage Attach Threshold must be a number'));
+    }
+    
+    /**
+     * @depends testAddEmailStorageAttachMaxSizeStringValue
+     */
+    public function testAddCompleteEmailStorage()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('storage_add_email_storage') );
+        $page = $this->session->getPage();
+        $page->findById('storage_location_name')->setValue('Test Email Storage');
+        $page->findById('email_storage_attach_threshold')->setValue('0');
+        $page->findById('email_storage_emails')->setValue('eric@mithra62.com');
+        $page->findButton('m62_settings_submit')->submit();
+        
+        $this->assertTrue($this->session->getPage()->hasContent('Storage Location Added!'));
+        $this->assertTrue($this->session->getPage()->hasContent('Test Email Storage'));
+        $this->assertNotTrue($this->session->getPage()->hasContent('No Storage Locations have been setup yet!'));
+    }
+
+    /**
+     * @depends testAddCompleteEmailStorage
+     */
+    public function testAddFtpStorageNoName()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('storage_add_ftp_storage') );
+        $page = $this->session->getPage();
+        $page->findById('storage_location_name')->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+        
+        $this->assertTrue($this->session->getPage()->hasContent('Storage Location Name is required'));
+    }
+
+    /**
+     * @depends testAddFtpStorageNoName
+     */
+    public function testAddFtpStorageGoodName() 
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('storage_add_ftp_storage') );
+        $page = $this->session->getPage();
+        $page->findById('storage_location_name')->setValue('My FTP Storage');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertNotTrue($this->session->getPage()->hasContent('Storage Location Name is required'));
+    }
+
+    /**
+     * @depends testAddFtpStorageGoodName
+     */
+    public function testAddFtpStorageNoHost()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('storage_add_ftp_storage') );
+        $page = $this->session->getPage();
+        $page->findById('ftp_hostname')->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+        
+        $this->assertTrue($this->session->getPage()->hasContent('Ftp Hostname is required'));
+    }
+
+    /**
+     * @depends testAddFtpStorageBadHost
+     */
+    public function testAddFtpStorageBadHost()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('storage_add_ftp_storage') );
+        $page = $this->session->getPage();
+        $page->findById('ftp_hostname')->setValue('fdsafdsa');
+        $page->findButton('m62_settings_submit')->submit();
+        
+        $this->assertTrue($this->session->getPage()->hasContent('Ftp Hostname is required'));
         
         $this->uninstall_addon();
     }
