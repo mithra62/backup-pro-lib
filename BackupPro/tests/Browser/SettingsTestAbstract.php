@@ -579,7 +579,7 @@ abstract class SettingsTestAbstract extends TestFixture
         $this->session = $this->getSession();
         $this->session->visit( $this->url('settings_files') );
         $page = $this->session->getPage();
-        $page->findById('backup_file_location' )->setValue(dirname(__FILE__));
+        $page->findById('exclude_paths' )->setValue(dirname(__FILE__));
         $page->findButton('m62_settings_submit')->submit();
 
         $this->assertNotTrue($this->session->getPage()->hasContent('"fdsafdsa" isn\'t a valid regular expression or path on the system.'));
@@ -595,10 +595,272 @@ abstract class SettingsTestAbstract extends TestFixture
         $page = $this->session->getPage();
         $page->findById('cron_notify_emails' )->setValue("fdsafdsa\neric@mithra62.com\nuuuuuuuu");
         $page->findButton('m62_settings_submit')->submit();
-
+        
         $this->assertTrue($this->session->getPage()->hasContent('"fdsafdsa" isn\'t a valid email'));
         $this->assertTrue($this->session->getPage()->hasContent('"uuuuuuuu" isn\'t a valid email'));
         $this->assertNotTrue($this->session->getPage()->hasContent('"eric@mithra62.com" isn\'t a valid email'));
+    }
+
+    /**
+     * @depends testFileBackupExcludePathsBadValue
+     */
+    public function testCronBackupNotifyEmailSubjectNoValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_cron') );
+        $page = $this->session->getPage();
+        $page->findById('cron_notify_email_subject' )->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertTrue($this->session->getPage()->hasContent('Cron Notify Email Subject is required'));
+    }
+
+    /**
+     * @depends testCronBackupNotifyEmailSubjectNoValue
+     */
+    public function testCronBackupNotifyEmailSubjectGoodValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_cron') );
+        $page = $this->session->getPage();
+        $page->findById('cron_notify_email_subject' )->setValue('fdsafdsa');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertNotTrue($this->session->getPage()->hasContent('Cron Notify Email Subject is required'));
+    }
+
+    /**
+     * @depends testCronBackupNotifyEmailSubjectGoodValue
+     */
+    public function testCronBackupNotifyEmailMessageNoValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_cron') );
+        $page = $this->session->getPage();
+        $page->findById('cron_notify_email_message' )->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertTrue($this->session->getPage()->hasContent('Cron Notify Email Message is required'));
+    }
+
+    /**
+     * @depends testCronBackupNotifyEmailMessageNoValue
+     */
+    public function testIaVerificationTempDatabaseBadValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_ia') );
+        $page = $this->session->getPage();
+        $page->findById('db_verification_db_name' )->setValue('fdsafdsa');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertTrue($this->session->getPage()->hasContent('"fdsafdsa" isn\'t available to your configured database connection'));
+    }
+
+    /**
+     * @depends testCronBackupNotifyEmailMessageNoValue
+     */
+    public function testIaVerificationTempDatabaseGoodValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_ia') );
+        $page = $this->session->getPage();
+        $page->findById('db_verification_db_name' )->setValue('test_backup_pro_verification');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertNotTrue($this->session->getPage()->hasContent('"test_backup_pro_verification" isn\'t available to your configured database connection'));
+    }
+
+    /**
+     * @depends testIaVerificationTempDatabaseGoodValue
+     */
+    public function testIaTotalExecutionsPerExecutionNoValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_ia') );
+        $page = $this->session->getPage();
+        $page->findById('total_verifications_per_execution' )->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertTrue($this->session->getPage()->hasContent('Total Verifications Per Execution is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('Total Verifications Per Execution must be a whole number'));
+    }
+
+    /**
+     * @depends testIaTotalExecutionsPerExecutionNoValue
+     */
+    public function testIaTotalExecutionsPerExecutionStringValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_ia') );
+        $page = $this->session->getPage();
+        $page->findById('total_verifications_per_execution' )->setValue('fdsafdsa');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertNotTrue($this->session->getPage()->hasContent('Total Verifications Per Execution is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('Total Verifications Per Execution must be a whole number'));
+    }
+
+    /**
+     * @depends testIaTotalExecutionsPerExecutionStringValue
+     */
+    public function testIaTotalExecutionsPerExecutionGoodValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_ia') );
+        $page = $this->session->getPage();
+        $page->findById('total_verifications_per_execution' )->setValue(4);
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertNotTrue($this->session->getPage()->hasContent('Total Verifications Per Execution is required'));
+        $this->assertNotTrue($this->session->getPage()->hasContent('Total Verifications Per Execution must be a whole number'));
+    }
+
+    /**
+     * @depends testIaTotalExecutionsPerExecutionStringValue
+     */
+    public function testIaBackupMissingScheduleEmailIntervalEmptyValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_ia') );
+        $page = $this->session->getPage();
+        $page->findById('backup_missed_schedule_notify_email_interval' )->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertTrue($this->session->getPage()->hasContent('Backup Missed Schedule Notify Email Interval is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('Backup Missed Schedule Notify Email Interval must be a whole number'));
+    }
+
+    /**
+     * @depends testIaBackupMissingScheduleEmailIntervalEmptyValue
+     */
+    public function testIaBackupMissingScheduleEmailIntervalStringValue() 
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_ia') );
+        $page = $this->session->getPage();
+        $page->findById('backup_missed_schedule_notify_email_interval' )->setValue('fdsafdsa');
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertNotTrue($this->session->getPage()->hasContent('Backup Missed Schedule Notify Email Interval is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('Backup Missed Schedule Notify Email Interval must be a whole number'));
+    }
+
+    /**
+     * @depends testIaBackupMissingScheduleEmailIntervalStringValue
+     */
+    public function testIaBackupMissedScheduleNotifyEmailsBadValue() 
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_ia') );
+        $page = $this->session->getPage();
+        $page->findById('backup_missed_schedule_notify_emails')->setValue("fdsafdsa\neric@mithra62.com\nuuuuuuuu");
+        $page->findButton('m62_settings_submit')->submit();
+        
+        $this->assertTrue($this->session->getPage()->hasContent('"fdsafdsa" isn\'t a valid email'));
+        $this->assertTrue($this->session->getPage()->hasContent('"uuuuuuuu" isn\'t a valid email'));
+        $this->assertNotTrue($this->session->getPage()->hasContent('"eric@mithra62.com" isn\'t a valid email'));
+    }
+
+    /**
+     * @depends testIaBackupMissedScheduleNotifyEmailsBadValue
+     */
+    public function testIaBackupMissedScheduleEmailSubjectNoValue() 
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_ia') );
+        $page = $this->session->getPage();
+        $page->findById('backup_missed_schedule_notify_email_subject')->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertTrue($this->session->getPage()->hasContent('Backup Missed Schedule Notify Email Subject is required'));
+    }
+
+    /**
+     * @depends testIaBackupMissedScheduleEmailSubjectNoValue
+     */
+    public function testIaBackupMissedScheduleEmailSubjectGoodValue() 
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_ia') );
+        $page = $this->session->getPage();
+        $page->findById('backup_missed_schedule_notify_email_subject')->setValue('My Test Subject');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertNotTrue($this->session->getPage()->hasContent('Backup Missed Schedule Notify Email Subject is required'));
+    }
+
+    /**
+     * @depends testIaBackupMissedScheduleEmailSubjectGoodValue
+     */
+    public function testIaBackupMissedScheduleEmailMessageNoValue() 
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_ia') );
+        $page = $this->session->getPage();
+        $page->findById('backup_missed_schedule_notify_email_message')->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertTrue($this->session->getPage()->hasContent('Backup Missed Schedule Notify Email Message is required'));
+    }
+
+    /**
+     * @depends testIaBackupMissedScheduleEmailMessageNoValue
+     */
+    public function testIaBackupMissedScheduleEmailMessageGoodValue() 
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_ia') );
+        $page = $this->session->getPage();
+        $page->findById('backup_missed_schedule_notify_email_message')->setValue('My Test Message');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertNotTrue($this->session->getPage()->hasContent('Backup Missed Schedule Notify Email Message is required'));
+    }
+
+    /**
+     * @depends testIaBackupMissedScheduleEmailMessageGoodValue
+     */
+    public function testLicenseKeyNoValue() 
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_license') );
+        $page = $this->session->getPage();
+        $page->findById('license_number')->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertTrue($this->session->getPage()->hasContent('License Number is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('License Number isn\'t a valid license key'));
+    }
+
+    /**
+     * @depends testLicenseKeyNoValue
+     */
+    public function testLicenseKeyBadValue() 
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_license') );
+        $page = $this->session->getPage();
+        $page->findById('license_number')->setValue('fdsafdsa');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertNotTrue($this->session->getPage()->hasContent('License Number is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('License Number isn\'t a valid license key'));
+    }
+
+    /**
+     * @depends testLicenseKeyBadValue
+     */
+    public function testLicenseKeyGoodValue() 
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_license') );
+        $page = $this->session->getPage();
+        $page->findById('license_number')->setValue('5214af45-9bc9-4019-8af9-bc98c38802c1');
+        $page->findButton('m62_settings_submit')->submit();
+
+        $this->assertNotTrue($this->session->getPage()->hasContent('License Number is required'));
+        $this->assertNotTrue($this->session->getPage()->hasContent('License Number isn\'t a valid license key'));
         $this->uninstall_addon();
     }
 }

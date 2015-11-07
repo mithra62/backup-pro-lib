@@ -334,9 +334,9 @@ class Settings extends Validate
             
             foreach($emails AS $email)
             {
-                if( !filter_var($email, FILTER_VALIDATE_EMAIL) )
+                if( !filter_var(trim($email), FILTER_VALIDATE_EMAIL) )
                 {
-                    $this->rule('false', 'backup_missed_schedule_notify_emails')->message('"'.$email.'" isn\'t a valid email');
+                    $this->rule('false', 'backup_missed_schedule_notify_emails')->message('"'.trim($email).'" isn\'t a valid email');
                     //break;
                 }
             }

@@ -10,6 +10,8 @@
  
 namespace mithra62\BackupPro\tests\Browser;
 
+use mithra62\Db;
+
 /**
  * mithra62 - Craft Trait
  *
@@ -76,5 +78,10 @@ trait CraftTrait
         sleep(2);
         $page = $this->session->getPage();
         $form = $page->find('xpath', '/body/div/main/div/div/div/div/div/table/tbody/tr/td[2]/form/input[2]')->click();
+        
+        $db = new Db();
+        $creds = $this->getDbCreds();
+        $db->setCredentials( $creds )->setDbName('clean_craft')->emptyTable('craft_backup_pro_settings');
+        $db->setDbName($creds['database']);
     }
 }
