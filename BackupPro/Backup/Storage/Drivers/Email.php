@@ -163,8 +163,9 @@ class Email extends AbstractStorage
     public function validateSettings(\mithra62\Validate $validate, array $settings, array $drivers = array())
     {
         $validate->rule('required', 'email_storage_attach_threshold')->message('{field} is required');
-        $validate->rule('required', 'email_storage_emails')->message('{field} is required');
+        $validate->rule('numeric', 'email_storage_attach_threshold')->message('{field} must be a number');
         
+        $validate->rule('required', 'email_storage_emails')->message('{field} is required');
         if( !empty($settings['email_storage_emails']) )
         {
             $emails = explode("\n", trim($settings['email_storage_emails']));
