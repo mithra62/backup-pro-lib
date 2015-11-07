@@ -167,14 +167,23 @@ class Email extends AbstractStorage
         
         if( !empty($settings['email_storage_emails']) )
         {
-            $emails = explode(PHP_EOL, trim($settings['email_storage_emails']));
-            foreach($emails AS $email)
+            $emails = explode("\n", trim($settings['email_storage_emails']));
+            if($emails != '')
             {
-                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+                if( !is_array($emails) )
                 {
-                    $validate->rule('false', 'email_storage_emails')->message('"'.$email.'" isn\'t a valid email address...');
+                    $emails = explode("\n", $emails);
                 }
-            }
+            
+                foreach($emails AS $email)
+                {
+                    if( !filter_var(trim($email), FILTER_VALIDATE_EMAIL) )
+                    {
+                        $validate->rule('false', 'email_storage_emails')->message('"'.trim($email).'" isn\'t a valid email');
+                        //break;
+                    }
+                }
+            }            
         }
         
         return $validate;

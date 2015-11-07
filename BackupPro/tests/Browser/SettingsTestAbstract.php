@@ -1,13 +1,37 @@
 <?php
+/**
+ * mithra62
+ *
+ * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
+ * @link		http://mithra62.com/
+ * @version		2.0
+ * @filesource 	./mithra62/BackupPro/tests/Browser/SettingsTestAbstract.php
+ */
 
 namespace mithra62\BackupPro\tests\Browser;
 
 use mithra62\BackupPro\tests\Browser\TestFixture;
 
+/**
+ * mithra62 - (Selenium) Settings object Unit Tests
+ *
+ * Executes all teh tests by platform using the below definitions
+ *
+ * @package 	mithra62\Tests
+ * @author		Eric Lamb <eric@mithra62.com>
+ */
 abstract class SettingsTestAbstract extends TestFixture  
 {   
+    /**
+     * An instance of the mink selenium object
+     * @var unknown
+     */
     public $session = null;
     
+    /**
+     * The browser config
+     * @var array
+     */
     public static $browsers = array(
         array(
             'driver' => 'selenium2',
