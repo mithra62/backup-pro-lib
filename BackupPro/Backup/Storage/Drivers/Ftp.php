@@ -160,7 +160,6 @@ class Ftp extends AbstractStorage
      */
     public function validateSettings(\mithra62\Validate $validate, array $settings, array $drivers = array())
     {
-        
         $validate->rule('required', 'ftp_hostname')->message('{field} is required');
         $validate->rule('required', 'ftp_username')->message('{field} is required');
         $validate->rule('required', 'ftp_password')->message('{field} is required');
