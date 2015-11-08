@@ -8,7 +8,7 @@
  * @filesource 	./mithra62/BackupPro/tests/Browser/EE3/Storage/NoEnginesTest.php
  */
 
-namespace mithra62\BackupPro\tests\Browser\EE2\Storage;
+namespace mithra62\BackupPro\tests\Browser\EE3\Storage;
 
 use mithra62\BackupPro\tests\Browser\AbstractBase\Storage\NoEngines; 
 use mithra62\BackupPro\tests\Browser\EE3Trait;

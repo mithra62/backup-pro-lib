@@ -258,6 +258,7 @@ abstract class EmailEngine extends TestFixture
         $page->findButton('m62_settings_submit')->submit();
     
         $this->assertNotTrue($this->session->getPage()->findById('storage_location_include_prune')->isChecked());
+        $this->uninstall_addon();
     }
     
     /**

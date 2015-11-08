@@ -5,10 +5,10 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/tests/Browser/EE2/Settings/DbTest.php
+ * @filesource 	./mithra62/BackupPro/tests/Browser/EE3/Settings/DbTest.php
  */
 
-namespace mithra62\BackupPro\tests\Browser;
+namespace mithra62\BackupPro\tests\Browser\EE3;
 
 use mithra62\BackupPro\tests\Browser\AbstractBase\Settings\FileBackup;
 use mithra62\BackupPro\tests\Browser\EE3Trait;
