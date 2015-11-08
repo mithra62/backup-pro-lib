@@ -1,10 +1,10 @@
 <?php
 /**
- * mithra62
+ * mithra62 - Backup Pro
  *
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
- * @version		1.0
+ * @version		3.0
  * @filesource 	./mithra62/tests/Browser/EE3Trait.php
  */
  

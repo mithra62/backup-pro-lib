@@ -224,9 +224,29 @@ class Storage
     {
         $storage_drivers = $this->getAvailableStorageOptions();
         $validate->rule('required', 'storage_location_name')->message('{field} is required');
+        
+        //pass to the engine to validate what it needs
         if(isset($storage_drivers[$driver]) && $storage_drivers[$driver]['obj'] instanceof Storage\StorageInterface )
         {
             $validate = $storage_drivers[$driver]['obj']->setExistingStorageLocations($locations)->validateSettings($validate, $data);
+        }
+        
+        //now we ahve to make sure we always have at least 1 location active
+        if( count($locations) <= 1 && $data['storage_location_status'] != '1' )
+        {
+            $validate->rule('false', 'storage_location_status')->message('{field} is required unless you have more than 1 Storage Location');
+        }
+
+        //now we ahve to make sure we always have at least 1 database location active
+        if( count($locations) <= 1 && $data['storage_location_file_use'] != '1' )
+        {
+            $validate->rule('false', 'storage_location_file_use')->message('{field} is required unless you have more than 1 Storage Location');
+        }
+        
+        //now we ahve to make sure we always have at least 1 file location active
+        if( count($locations) <= 1 && $data['storage_location_db_use'] != '1' )
+        {
+            $validate->rule('false', 'storage_location_db_use')->message('{field} is required unless you have more than 1 Storage Location');
         }
         
         $errors = array();

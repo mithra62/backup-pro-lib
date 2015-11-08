@@ -1,11 +1,11 @@
 <?php
 /**
- * mithra62
+ * mithra62 - Backup Pro
  *
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/tests/Browser/AbstractBase/Storage/EmailEngine.php
+ * @filesource 	./mithra62/BackupPro/tests/Browser/AbstractBase/Storage/GcsEngine.php
  */
 
 namespace mithra62\BackupPro\tests\Browser\AbstractBase\Storage;
@@ -13,19 +13,19 @@ namespace mithra62\BackupPro\tests\Browser\AbstractBase\Storage;
 use mithra62\BackupPro\tests\Browser\TestFixture;
 
 /**
- * mithra62 - (Selenium) Storage Eamil Engine object Unit Tests
+ * mithra62 - (Selenium) Storage Google Cloud Storage Engine object Unit Tests
  *
  * Executes all the tests by platform using the below definitions
  *
  * @package 	mithra62\Tests
  * @author		Eric Lamb <eric@mithra62.com>
  */
-abstract class EmailEngine extends TestFixture  
+abstract class GcsEngine extends TestFixture  
 {   
     
     /**
      * An instance of the mink selenium object
-     * @var unknown
+     * @var \Behat\Mink\Session
      */
     public $session = null;
     
@@ -44,14 +44,14 @@ abstract class EmailEngine extends TestFixture
         ),
     );
 
-    public function testAddEmailStorageNoName()
+    public function testAddGcsStorageNoName()
     {
         $this->login();
         sleep(2);
         $this->install_addon();
-        
+    
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_email_storage') );
+        $this->session->visit( $this->url('storage_add_gcs_storage') );
         $page = $this->session->getPage();
         $page->findById('storage_location_name')->setValue('');
         $page->findButton('m62_settings_submit')->submit();
@@ -60,90 +60,128 @@ abstract class EmailEngine extends TestFixture
     }
     
     /**
-     * @depends testAddEmailStorageNoName
+     * @depends testAddGcsStorageNoName
      */
-    public function testAddEmailStorageGoodName()
+    public function testAddGcsStorageGoodName()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_email_storage') );
+        $this->session->visit( $this->url('storage_add_gcs_storage') );
         $page = $this->session->getPage();
-        $page->findById('storage_location_name')->setValue('My Email Storage');
+        $page->findById('storage_location_name')->setValue('My GCS Storage');
         $page->findButton('m62_settings_submit')->submit();
     
         $this->assertNotTrue($this->session->getPage()->hasContent('Storage Location Name is required'));
     }
     
     /**
-     * @depends testAddEmailStorageGoodName
+     * @depends testAddGcsStorageGoodName
      */
-    public function testAddEmailStorageNoEmailAddresses()
+    public function testAddGcsAccessKeyIdNoValue()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_email_storage') );
+        $this->session->visit( $this->url('storage_add_gcs_storage') );
         $page = $this->session->getPage();
-        $page->findById('email_storage_emails')->setValue('');
+        $page->findById('gcs_access_key')->setValue('');
         $page->findButton('m62_settings_submit')->submit();
     
-        $this->assertTrue($this->session->getPage()->hasContent('Email Storage Emails is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('Gcs Access Key is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('Can\'t connect to Gcs Access Key'));
     }
     
     /**
-     * @depends testAddEmailStorageNoEmailAddresses
+     * @depends testAddGcsAccessKeyIdNoValue
      */
-    public function testAddEmailStorageBadEmailAddresses()
+    public function testAddGcsAccessKeyIdGoodValue()
     {
+        $gcs_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_email_storage') );
+        $this->session->visit( $this->url('storage_add_gcs_storage') );
         $page = $this->session->getPage();
-        $page->findById('email_storage_emails')->setValue("fdsafdsa\neric@mithra62.com\nuuuuuuuu");
+        $page->findById('gcs_access_key')->setValue($gcs_creds['gcs_access_key']);
         $page->findButton('m62_settings_submit')->submit();
     
-    
-        $this->assertTrue($this->session->getPage()->hasContent('"fdsafdsa" isn\'t a valid email'));
-        $this->assertTrue($this->session->getPage()->hasContent('"uuuuuuuu" isn\'t a valid email'));
-        $this->assertNotTrue($this->session->getPage()->hasContent('"eric@mithra62.com" isn\'t a valid email'));
+        $this->assertNotTrue($this->session->getPage()->hasContent('Gcs Access Key is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('Can\'t connect to Gcs Access Key'));
     }
     
     /**
-     * @depends testAddEmailStorageBadEmailAddresses
+     * @depends testAddGcsAccessKeyIdGoodValue
      */
-    public function testAddEmailStorageAttachMaxSizeNoValue()
+    public function testAddGcsAccessKeySecretNoValue()
     {
+        $gcs_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_email_storage') );
+        $this->session->visit( $this->url('storage_add_gcs_storage') );
         $page = $this->session->getPage();
-        $page->findById('email_storage_attach_threshold')->setValue('');
+        $page->findById('gcs_secret_key')->setValue('');
         $page->findButton('m62_settings_submit')->submit();
     
-    
-        $this->assertTrue($this->session->getPage()->hasContent('Email Storage Attach Threshold is required'));
-        $this->assertTrue($this->session->getPage()->hasContent('Email Storage Attach Threshold must be a number'));
+        $this->assertTrue($this->session->getPage()->hasContent('Gcs Secret Key is required'));
     }
     
     /**
-     * @depends testAddEmailStorageAttachMaxSizeNoValue
+     * @depends testAddGcsAccessKeySecretNoValue
      */
-    public function testAddEmailStorageAttachMaxSizeStringValue()
+    public function testAddGcsAccessKeySecretGoodValue()
     {
+        $gcs_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_email_storage') );
+        $this->session->visit( $this->url('storage_add_gcs_storage') );
         $page = $this->session->getPage();
-        $page->findById('email_storage_attach_threshold')->setValue('fdsafdsa');
+        $page->findById('gcs_secret_key')->setValue($gcs_creds['gcs_secret_key']);
         $page->findButton('m62_settings_submit')->submit();
     
-    
-        $this->assertNotTrue($this->session->getPage()->hasContent('Email Storage Attach Threshold is required'));
-        $this->assertTrue($this->session->getPage()->hasContent('Email Storage Attach Threshold must be a number'));
+        $this->assertNotTrue($this->session->getPage()->hasContent('Gcs Secret Key is required'));
     }
     
     /**
-     * @depends testAddEmailStorageAttachMaxSizeStringValue
+     * @depends testAddGcsAccessKeySecretGoodValue
      */
-    public function testAddEmailStorageLocationStatusChecked()
+    public function testAddGcsBucketNoValue()
     {
-        $ftp_creds = $this->getFtpCreds();
+        $gcs_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_email_storage') );
+        $this->session->visit( $this->url('storage_add_gcs_storage') );
+        $page = $this->session->getPage();
+        $page->findById('gcs_bucket')->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertTrue($this->session->getPage()->hasContent('Gcs Bucket is required'));
+    }
+    
+    /**
+     * @depends testAddGcsBucketNoValue
+     */
+    public function testAddGcsBucketGoodValue()
+    {
+        $gcs_creds = $this->getGcsCreds();
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('storage_add_gcs_storage') );
+        $page = $this->session->getPage();
+        $page->findById('gcs_bucket')->setValue($gcs_creds['gcs_bucket']);
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertNotTrue($this->session->getPage()->hasContent('Gcs Bucket is required'));
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+    /**
+     * @depends testAddGcsBucketGoodValue
+     */
+    public function testAddGcsStorageLocationStatusChecked()
+    {
+        $ftp_creds = $this->getGcsCreds();
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('storage_add_gcs_storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_status')->check();
@@ -153,13 +191,13 @@ abstract class EmailEngine extends TestFixture
     }
     
     /**
-     * @depends testAddEmailStorageLocationStatusChecked
+     * @depends testAddGcsStorageLocationStatusChecked
      */
-    public function testAddEmailStorageLocationStatusUnChecked()
+    public function testAddGcsStorageLocationStatusUnChecked()
     {
-        $ftp_creds = $this->getFtpCreds();
+        $ftp_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_email_storage') );
+        $this->session->visit( $this->url('storage_add_gcs_storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_status')->uncheck();
@@ -169,13 +207,13 @@ abstract class EmailEngine extends TestFixture
     }
     
     /**
-     * @depends testAddEmailStorageLocationStatusUnChecked
+     * @depends testAddGcsStorageLocationStatusUnChecked
      */
-    public function testAddEmailStorageLocationFileUseChecked()
+    public function testAddGcsStorageLocationFileUseChecked()
     {
-        $ftp_creds = $this->getFtpCreds();
+        $ftp_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_email_storage') );
+        $this->session->visit( $this->url('storage_add_gcs_storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_file_use')->check();
@@ -185,13 +223,13 @@ abstract class EmailEngine extends TestFixture
     }
     
     /**
-     * @depends testAddEmailStorageLocationFileUseChecked
+     * @depends testAddGcsStorageLocationFileUseChecked
      */
-    public function testAddEmailStorageLocationFileUseUnChecked()
+    public function testAddGcsStorageLocationFileUseUnChecked()
     {
-        $ftp_creds = $this->getFtpCreds();
+        $ftp_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_email_storage') );
+        $this->session->visit( $this->url('storage_add_gcs_storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_file_use')->uncheck();
@@ -201,12 +239,13 @@ abstract class EmailEngine extends TestFixture
     }
     
     /**
-     * @depends testAddEmailStorageLocationFileUseUnChecked
+     * @depends testAddGcsStorageLocationFileUseUnChecked
      */
-    public function testAddEmailStorageLocationDbUseChecked()
+    public function testAddGcsStorageLocationDbUseChecked()
     {
+        $ftp_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_email_storage') );
+        $this->session->visit( $this->url('storage_add_gcs_storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_db_use')->check();
@@ -216,12 +255,13 @@ abstract class EmailEngine extends TestFixture
     }
     
     /**
-     * @depends testAddEmailStorageLocationDbUseChecked
+     * @depends testAddGcsStorageLocationDbUseChecked
      */
-    public function testAddEmailStorageLocationDbUseUnChecked()
+    public function testAddGcsStorageLocationDbUseUnChecked()
     {
+        $ftp_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_email_storage') );
+        $this->session->visit( $this->url('storage_add_gcs_storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_db_use')->uncheck();
@@ -231,12 +271,13 @@ abstract class EmailEngine extends TestFixture
     }
     
     /**
-     * @depends testAddEmailStorageLocationDbUseUnChecked
+     * @depends testAddGcsStorageLocationDbUseUnChecked
      */
-    public function testAddEmailStorageLocationIncludePruneChecked()
+    public function testAddGcsStorageLocationIncludePruneChecked()
     {
+        $ftp_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_email_storage') );
+        $this->session->visit( $this->url('storage_add_gcs_storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_include_prune')->check();
@@ -246,12 +287,13 @@ abstract class EmailEngine extends TestFixture
     }
     
     /**
-     * @depends testAddEmailStorageLocationIncludePruneChecked
+     * @depends testAddGcsStorageLocationIncludePruneChecked
      */
-    public function testAddEmailStorageLocationIncludePruneUnChecked()
+    public function testAddGcsStorageLocationIncludePruneUnChecked()
     {
+        $ftp_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_email_storage') );
+        $this->session->visit( $this->url('storage_add_gcs_storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_include_prune')->uncheck();
@@ -261,15 +303,13 @@ abstract class EmailEngine extends TestFixture
     }
     
     /**
-     * @depends testAddEmailStorageLocationIncludePruneUnChecked
+     * @depends testAddGcsStorageLocationIncludePruneUnChecked
      */
-    public function testAddCompleteEmailStorage()
+    public function testAddGcsStorageLocationCompleteWorking()
     {
-        $page = $this->setupEmailStorageLocation();
+        $page = $this->setupGcsStorageLocation();
         $this->assertTrue($this->session->getPage()->hasContent('Created Date'));
         $this->assertNotTrue($this->session->getPage()->hasContent('No Storage Locations have been setup yet!'));
-        
         $this->uninstall_addon();
     }
-    
 }

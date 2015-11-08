@@ -1,17 +1,17 @@
 <?php
 /**
- * mithra62
+ * mithra62 - Backup Pro
  *
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
- * @version		1.0
+ * @version		3.0
  * @filesource 	./mithra62/tests/Browser/EE2Trait.php
  */
  
 namespace mithra62\BackupPro\tests\Browser;
 
 /**
- * mithra62 - ExpressionEngine 2 Trait
+ * Backup Pro - ExpressionEngine 2 Selenium Browser Testing Trait
  *
  * Contains all the methods for using Selenium against Backup Pro and ExpressionEngine 2
  *
@@ -140,7 +140,7 @@ trait EE2Trait
     
         // Go to a page.
         $this->session->visit('http://eric.ee2.clean.mithra62.com/admin.php?/cp/login&return=');
-    
+        
         //log in
         $page = $this->session->getPage();
         $page->findById('username' )->setValue('mithra62');

@@ -486,6 +486,16 @@ abstract class FtpEngine extends TestFixture
         $page->findButton('m62_settings_submit')->submit();
     
         $this->assertNotTrue($this->session->getPage()->findById('storage_location_include_prune')->isChecked());
+    }
+    
+    /**
+     * @depends testAddFtpStorageLocationIncludePruneUnChecked
+     */
+    public function testAddFtpStorageLocationCompleteWorking()
+    {
+        $page = $this->setupFtpStorageLocation();
+        $this->assertTrue($this->session->getPage()->hasContent('Created Date'));
+        $this->assertNotTrue($this->session->getPage()->hasContent('No Storage Locations have been setup yet!'));
         $this->uninstall_addon();
     }
     
