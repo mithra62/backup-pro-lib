@@ -5,25 +5,25 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/tests/Browser/EE2/Settings/IaTest.php
+ * @filesource 	./mithra62/BackupPro/tests/Browser/EE2/Settings/DbTest.php
  */
 
-namespace mithra62\BackupPro\tests\Browser\EE2;
+namespace mithra62\BackupPro\tests\Browser;
 
-use mithra62\BackupPro\tests\Browser\AbstractBase\Settings\Ia;
-use mithra62\BackupPro\tests\Browser\EE2Trait;
+use mithra62\BackupPro\tests\Browser\AbstractBase\Settings\FileBackup;
+use mithra62\BackupPro\tests\Browser\EE3Trait;
 
 /**
- * mithra62 - (Selenium) Integrity Agent Settings object Unit Tests
+ * mithra62 - (Selenium) Db Settings object Unit Tests
  *
  * Executes all teh tests by platform using the below definitions
  *
  * @package 	mithra62\Tests
  * @author		Eric Lamb <eric@mithra62.com>
  */
-class IaTest extends Ia
+class FileBackupTest extends FileBackup
 {
-    use EE2Trait;
+    use EE3Trait;
 
     /**
      * Disable this since we want full browser support

@@ -1,14 +1,14 @@
 <?php
 /**
- * mithra62
+ * mithra62 - Backup Pro
  *
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
- * @version		2.0
+ * @version		3.0
  * @filesource 	./mithra62/BackupPro/tests/Browser/EE2/Settings/LicenseTest.php
  */
 
-namespace mithra62\BackupPro\tests\Browser;
+namespace mithra62\BackupPro\tests\Browser\EE2;
 
 use mithra62\BackupPro\tests\Browser\AbstractBase\Settings\License;
 use mithra62\BackupPro\tests\Browser\EE2Trait;

@@ -1,6 +1,6 @@
 <?php
 /**
- * mithra62
+ * mithra62 - Backup Pro
  *
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/

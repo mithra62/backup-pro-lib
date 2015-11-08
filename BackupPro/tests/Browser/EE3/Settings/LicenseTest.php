@@ -5,13 +5,13 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/tests/Browser/EE2/Settings/IaTest.php
+ * @filesource 	./mithra62/BackupPro/tests/Browser/EE2/Settings/LicenseTest.php
  */
 
-namespace mithra62\BackupPro\tests\Browser\EE2;
+namespace mithra62\BackupPro\tests\Browser\EE3;
 
-use mithra62\BackupPro\tests\Browser\AbstractBase\Settings\Ia;
-use mithra62\BackupPro\tests\Browser\EE2Trait;
+use mithra62\BackupPro\tests\Browser\AbstractBase\Settings\License;
+use mithra62\BackupPro\tests\Browser\EE3Trait;
 
 /**
  * mithra62 - (Selenium) Integrity Agent Settings object Unit Tests
@@ -21,9 +21,9 @@ use mithra62\BackupPro\tests\Browser\EE2Trait;
  * @package 	mithra62\Tests
  * @author		Eric Lamb <eric@mithra62.com>
  */
-class IaTest extends Ia
+class LicenseTest extends License
 {
-    use EE2Trait;
+    use EE3Trait;
 
     /**
      * Disable this since we want full browser support
