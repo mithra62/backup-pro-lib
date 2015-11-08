@@ -18,8 +18,6 @@ class TestFixture extends BrowserTestCase
         ),
     );
     
-    public $urls = array();
-    
     protected function url($key)
     {
         return $this->urls[$key];

@@ -5,23 +5,23 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/tests/Browser/EE2/FreshInstallTest.php
+ * @filesource 	./mithra62/BackupPro/tests/Browser/EE2/Storage/EmailEnginesTest.php
  */
- 
-namespace mithra62\BackupPro\tests\Browser\EE2;
 
-use mithra62\BackupPro\tests\Browser\AbstractBase\FreshInstall;
+namespace mithra62\BackupPro\tests\Browser\EE2\Storage;
+
+use mithra62\BackupPro\tests\Browser\AbstractBase\Storage\EmailEngine; 
 use mithra62\BackupPro\tests\Browser\EE2Trait;
 
 /**
- * mithra62 - (Selenium) Fresh Install Browser Tests
+ * mithra62 - (Selenium) Storage Email Engine object Unit Tests
  *
- * Executes all the tests by platform using the below definitions
+ * Executes all teh tests by platform using the below definitions
  *
  * @package 	mithra62\Tests
  * @author		Eric Lamb <eric@mithra62.com>
  */
-class FreshInstallTest extends FreshInstall
+class EmailEnginesTest extends EmailEngine
 {
     use EE2Trait;
 

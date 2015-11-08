@@ -1,27 +1,27 @@
 <?php
 /**
- * mithra62 - Backup Pro
+ * mithra62
  *
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/tests/Browser/EE2/FreshInstallTest.php
+ * @filesource 	./mithra62/BackupPro/tests/Browser/FtpEngine.php
  */
- 
-namespace mithra62\BackupPro\tests\Browser\EE2;
 
-use mithra62\BackupPro\tests\Browser\AbstractBase\FreshInstall;
+namespace mithra62\BackupPro\tests\Browser\EE2\Storage;
+
+use mithra62\BackupPro\tests\Browser\AbstractBase\Storage\FtpEngine; 
 use mithra62\BackupPro\tests\Browser\EE2Trait;
 
 /**
- * mithra62 - (Selenium) Fresh Install Browser Tests
+ * mithra62 - (Selenium) Storage FTP Engine object Unit Tests
  *
  * Executes all the tests by platform using the below definitions
  *
  * @package 	mithra62\Tests
  * @author		Eric Lamb <eric@mithra62.com>
  */
-class FreshInstallTest extends FreshInstall
+class FtpEngineTest extends FtpEngine
 {
     use EE2Trait;
 
@@ -40,4 +40,5 @@ class FreshInstallTest extends FreshInstall
     {
     
     }
+    
 }

@@ -1,15 +1,53 @@
 <?php
-
-namespace mithra62\BackupPro\tests\Browser;
+/**
+ * mithra62 - Backup Pro
+ *
+ * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
+ * @link		http://mithra62.com/
+ * @version		3.0
+ * @filesource 	./mithra62/BackupPro/tests/Browser/AbstractBase/FreshInstall.php
+ */
+namespace mithra62\BackupPro\tests\Browser\AbstractBase;
 
 use mithra62\BackupPro\tests\Browser\TestFixture;
 
-abstract class FreshInstallTestAbstract extends TestFixture  
+/**
+ * mithra62 - (Selenium) Fresh Installation Tests
+ *
+ * Executes all the tests by platform using the below definitions
+ *
+ * @package 	mithra62\Tests
+ * @author		Eric Lamb <eric@mithra62.com>
+ */
+abstract class FreshInstall extends TestFixture  
 {   
+    /**
+     * An instance of the mink selenium object
+     * @var unknown
+     */
     public $session = null;
+    
+    /**
+     * The browser config
+     * @var array
+     */
+    public static $browsers = array(
+        array(
+            'driver' => 'selenium2',
+            'host' => 'localhost',
+            'port' => 4444,
+            'browserName' => 'firefox',
+            'baseUrl' => 'http://eric.ee2.clean.mithra62.com',
+            'sessionStrategy' => 'shared',
+        ),
+    );
     
     public function testDashboardDefault()
     {
+        $this->login();
+        sleep(2);
+        $this->install_addon();
+        
         $this->session->visit( $this->url('dashboard') );
         $this->assertTrue($this->session->getPage()->hasContent('No backups exist yet.'));
         $this->assertTrue($this->session->getPage()->hasContent('No Storage Locations have been setup yet!'));
@@ -17,36 +55,53 @@ abstract class FreshInstallTestAbstract extends TestFixture
         $this->assertTrue($this->session->getPage()->hasContent('Would you like to take a database backup now?'));
     }
     
+    /**
+     * @depends testDashboardDefault
+     */
     public function testDbBackupViewDefault()
     {
+        $this->session = $this->getSession();
         $this->session->visit( $this->url('db_backups') );
         $this->assertTrue($this->session->getPage()->hasContent('No database backups exist yet.'));
         $this->assertTrue($this->session->getPage()->hasContent('Would you like to take a database backup now?'));
     }
     
+    /**
+     * @depends testDbBackupViewDefault
+     */
     public function testFileBackupViewDefault()
     {
+        $this->session = $this->getSession();
         $this->session->visit( $this->url('file_backups') );
         $this->assertTrue($this->session->getPage()->hasContent('No file backups exist yet.'));
         $this->assertTrue($this->session->getPage()->hasContent('Would you like to take a file backup now?'));
     }
     
+    /**
+     * @depends testFileBackupViewDefault
+     */
     public function testBackupDbConfirmDefault()
     {
+        $this->session = $this->getSession();
         $this->session->visit( $this->url('db_backup') );
         $this->assertTrue($this->session->getPage()->hasContent('You\'re going to need to fix the below configuration errors before you can start taking backups:'));
         $this->assertTrue($this->session->getPage()->hasContent('No Storage Locations have been setup yet!'));
         $this->assertTrue($this->session->getPage()->hasContent('Setup Storage Location'));
     }
     
+    /**
+     * @depends testBackupDbConfirmDefault
+     */
     public function testBackupFilesConfirmDefault()
     {
+        $this->session = $this->getSession();
         $this->session->visit( $this->url('file_backup') );
         $this->assertTrue($this->session->getPage()->hasContent('You\'re going to need to fix the below configuration errors before you can start taking backups:'));
         $this->assertTrue($this->session->getPage()->hasContent('No Storage Locations have been setup yet!'));
         $this->assertTrue($this->session->getPage()->hasContent('Setup Storage Location'));
         $this->assertTrue($this->session->getPage()->hasContent('No File Backup Locations have been configured.'));
         $this->assertTrue($this->session->getPage()->hasContent('Set File Backup Locations'));
+        $this->uninstall_addon();
     }
 
 }
