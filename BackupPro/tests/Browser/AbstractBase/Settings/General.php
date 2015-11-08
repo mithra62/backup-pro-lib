@@ -273,6 +273,36 @@ abstract class General extends TestFixture
     /**
      * @depends testGeneralAutoThresholdCustomGoodValue
      */
+    public function testGeneralAllowDuplicatesCheck()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_general') );
+    
+        $page = $this->session->getPage();
+        $page->findById('allow_duplicates')->check();
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertTrue($this->session->getPage()->findById('allow_duplicates')->isChecked());
+    }
+    
+    /**
+     * @depends testGeneralAllowDuplicatesCheck
+     */
+    public function testGeneralAllowDuplicatesUnCheck()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_general') );
+    
+        $page = $this->session->getPage();
+        $page->findById('allow_duplicates')->uncheck();
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertNotTrue($this->session->getPage()->findById('allow_duplicates')->isChecked());
+    }
+    
+    /**
+     * @depends testGeneralAllowDuplicatesUnCheck
+     */
     public function testGeneralDateFormatEmptyValue()
     {
         $this->session = $this->getSession();
@@ -296,6 +326,36 @@ abstract class General extends TestFixture
         $page->findButton('m62_settings_submit')->submit();
     
         $this->assertNotTrue($this->session->getPage()->hasContent('Date Format is required'));
+    }
+    
+    /**
+     * @depends testGeneralDateFormatGoodValue
+     */
+    public function testGeneralRelativeTimeCheck()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_general') );
+    
+        $page = $this->session->getPage();
+        $page->findById('relative_time')->check();
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertTrue($this->session->getPage()->findById('relative_time')->isChecked());
+    }
+    
+    /**
+     * @depends testGeneralRelativeTimeCheck
+     */
+    public function testGeneralRelativeTimeUnCheck()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_general') );
+    
+        $page = $this->session->getPage();
+        $page->findById('relative_time')->uncheck();
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertNotTrue($this->session->getPage()->findById('relative_time')->isChecked());
         $this->uninstall_addon();
     }
     
