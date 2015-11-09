@@ -1,10 +1,26 @@
 <?php
-
+/**
+ * mithra62 - Backup Pro
+ *
+ * @author		Eric Lamb <eric@mithra62.com>
+ * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
+ * @link		http://mithra62.com/
+ * @version		3.0
+ * @filesource 	./mithra62/BackupPro/Backup/Storage/Sftp.php
+ */
 namespace mithra62\BackupPro\Backup\Storage\Drivers;
 
 use mithra62\BackupPro\Backup\Storage\AbstractStorage;
 use mithra62\BackupPro\Exceptions\Backup\StorageException;
 
+/**
+ * Backup Pro - SFTP Storage Object
+ *
+ * Driver for storing files on a remote SFTP/SSH server
+ *
+ * @package 	Backup\Storage\Driver
+ * @author		Eric Lamb <eric@mithra62.com>
+ */
 class Sftp extends AbstractStorage
 {
     /**
@@ -24,13 +40,13 @@ class Sftp extends AbstractStorage
      * @var string
      */
     protected $settings = array(
-        'host' => '',
-        'port' => 22,
-        'username' => '',
-        'password' => '',
-        'privateKey' => '',
-        'root' => '',
-        'timeout' => 10,
+        'sftp_host' => '',
+        'sftp_port' => 22,
+        'sftp_username' => '',
+        'sftp_password' => '',
+        'sftp_private_key' => '',
+        'sftp_root' => '',
+        'sftp_timeout' => 10,
     );
     
     /**
@@ -100,7 +116,7 @@ class Sftp extends AbstractStorage
      */
     public function validateSettings(\mithra62\Validate $validate, array $settings, array $drivers = array())
     {
-        
+        return $validate;
     }
     
     /**
