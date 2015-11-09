@@ -157,4 +157,25 @@ class TestFixture extends BrowserTestCase
         
         return $page;
     }
+    
+    /**
+     * Sets up a Rackspace Cloud Files Storage Location for use
+     * @return \Behat\Mink\Element\DocumentElement
+     */
+    public function setupRcfStorageLocation()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('storage_add_rcf_storage') );
+
+        $rcf_creds = $this->getRcfCreds();
+        $page = $this->session->getPage();
+        $page->findById('storage_location_name')->setValue('My Rackspace Storage');
+        $page->findById('rcf_username')->setValue($rcf_creds['rcf_username']);
+        $page->findById('rcf_api')->setValue($rcf_creds['rcf_api']);
+        $page->findById('rcf_container')->setValue($rcf_creds['rcf_container']);
+        $page->findById('rcf_location')->selectOption($rcf_creds['rfc_location']);
+        $page->findButton('m62_settings_submit')->submit();
+        
+        return $page;
+    }
 }
