@@ -137,7 +137,8 @@ trait CraftTrait
     {
         // This is Mink's Session.
         $this->session = $this->getSession();
-    
+        $this->session->maximizeWindow();
+        
         // Go to a page.
         $this->session->visit('http://eric.craft.clean.mithra62.com/admin/login');
     

@@ -232,7 +232,7 @@ Please don\'t respond to this email; all emails are automatically deleted.',
 'total_verifications_per_execution' => 'Total Verifications Per Execution',
 'total_verifications_per_execution_instructions' => 'Depending on your server configuration you may want to limit how many backups Backup Pro verifies at any given time.',
 'check_backup_state_cp_login' => 'Check Backup State on CP Login',
-'check_backup_state_cp_login_instructions' => 'If you\'d like Backup Pro to verify the state of your backup schedule on EE Control Panel login check the box. Note that this only verify you have backups as determined by the Backup Alert Frequency.',
+'check_backup_state_cp_login_instructions' => 'If you\'d like Backup Pro to verify the state of your backup schedule on Control Panel login check the box. Note that this only verify you have backups as determined by the Backup Alert Frequency.',
 
 //cron
 'configure_cron_email_attachment' => 'Configure Email Attachments',

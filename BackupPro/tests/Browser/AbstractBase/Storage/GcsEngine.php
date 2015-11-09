@@ -163,16 +163,6 @@ abstract class GcsEngine extends TestFixture
     
         $this->assertNotTrue($this->session->getPage()->hasContent('Gcs Bucket is required'));
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 
     /**
      * @depends testAddGcsBucketGoodValue
@@ -204,6 +194,7 @@ abstract class GcsEngine extends TestFixture
         $page->findButton('m62_settings_submit')->submit();
     
         $this->assertNotTrue($this->session->getPage()->findById('storage_location_status')->isChecked());
+        $this->assertTrue($this->session->getPage()->hasContent('Storage Location Status is required unless you have more than 1 Storage Location'));
     }
     
     /**
@@ -236,6 +227,7 @@ abstract class GcsEngine extends TestFixture
         $page->findButton('m62_settings_submit')->submit();
     
         $this->assertNotTrue($this->session->getPage()->findById('storage_location_file_use')->isChecked());
+        $this->assertTrue($this->session->getPage()->hasContent('Storage Location File Use is required unless you have more than 1 Storage Location'));
     }
     
     /**
@@ -268,6 +260,7 @@ abstract class GcsEngine extends TestFixture
         $page->findButton('m62_settings_submit')->submit();
     
         $this->assertNotTrue($this->session->getPage()->findById('storage_location_db_use')->isChecked());
+        $this->assertTrue($this->session->getPage()->hasContent('Storage Location Db Use is required unless you have more than 1 Storage Location'));
     }
     
     /**

@@ -137,7 +137,8 @@ trait EE2Trait
     {
         // This is Mink's Session.
         $this->session = $this->getSession();
-    
+        $this->session->maximizeWindow();
+        
         // Go to a page.
         $this->session->visit('http://eric.ee2.clean.mithra62.com/admin.php?/cp/login&return=');
         
