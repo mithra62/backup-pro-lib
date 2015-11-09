@@ -139,4 +139,22 @@ class TestFixture extends BrowserTestCase
         
         return $page;
     }
+    
+    /**
+     * Sets up a Local Storage Location for use
+     * @param string $path The local path to the Storage Location
+     * @return \Behat\Mink\Element\DocumentElement
+     */
+    public function setupLocalStorageLocation($path)
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('storage_add_local_storage') );
+        
+        $page = $this->session->getPage();
+        $page->findById('storage_location_name')->setValue('My Local Storage');
+        $page->findById('backup_store_location')->setValue($path);
+        $page->findButton('m62_settings_submit')->submit();
+        
+        return $page;
+    }
 }

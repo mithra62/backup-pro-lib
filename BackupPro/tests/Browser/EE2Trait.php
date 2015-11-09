@@ -91,6 +91,7 @@ trait EE2Trait
         'storage_details' => array(),
     
         'working_directory' => 'D:\ProjectFiles\mithra62\clean_cms\ee2\backup_meta',
+        'local_backup_store_location' => 'D:\ProjectFiles\mithra62\clean_cms\ee2\backups',
         'backup_file_location' => array('D:\ProjectFiles\mithra62\clean_cms\ee2\html'),
     
         'max_file_backups' => '3',

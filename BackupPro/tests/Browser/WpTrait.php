@@ -91,6 +91,7 @@ trait WpTrait
         'storage_details' => array(),
     
         'working_directory' => 'D:\ProjectFiles\mithra62\clean_cms\wp\backup_meta',
+        'local_backup_store_location' => 'D:\ProjectFiles\mithra62\clean_cms\wp\backups',
         'backup_file_location' => array('D:\ProjectFiles\mithra62\clean_cms\wp\html'),
     
         'max_file_backups' => '3',
