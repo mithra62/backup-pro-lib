@@ -1,4 +1,4 @@
-<project name="mithra62 vendor files" default="move_zip">
+<project name="mithra62 vendor files" default="move_zip" description="Compiles just the files Backup Pro needs from the vendor folder">
 	<target name="vendor-no-dev-files" depends="cms-files">
         
 		<echo msg="(${platform_name}) Deleting Vendor Folder..." />

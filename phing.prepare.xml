@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Backup Pro Unit Tests" default="move_zip">
-	<target name="prepare">
+<project name="Backup Pro Unit Tests" default="move_zip" >
+	<target name="prepare" description="Clears up any pre-existing data from previous builds in so we start with a clean slate...">
 		<delete dir="${build_path}" />
 		<echo msg="" />
 		<echo msg="(${platform_name}) Making directory ${build_container_dir}" />	

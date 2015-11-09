@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Backup Pro Unit Tests" default="move_zip">
+<project name="Backup Pro Unit Tests" default="move_zip" description="Runs tests against the compiled files to verify we have everything in place for distribution...">
 	<target name="clean-cms-test" depends="clean-install">
 		<phpunit 
 			haltonfailure="true" 

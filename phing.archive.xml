@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Backup Pro Archive Build" default="move_zip">
+<project name="Backup Pro Archive Build" default="move_zip" description="Creates the Zip file for distribution...">
     <target name="zip" depends="clean-cms-test">
     	<echo msg="" />
         <echo msg="(${platform_name}) Creating archive..." />

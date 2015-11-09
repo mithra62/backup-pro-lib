@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Backup Pro Clean Install" default="move_zip">
+<project name="Backup Pro Clean Install" default="move_zip" description="Removes the testing folder so we start with a clean slate...">
     <target name="clean-install" depends="m62-files">
     	<echo msg="" />
         <echo msg="(${platform_name}) Setting up clean instalation for testing..." />

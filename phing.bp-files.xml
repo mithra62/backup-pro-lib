@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Backup Pro Files" default="move_zip">
+<project name="Backup Pro Files" default="move_zip" description="Compiles the Jaeger files, Backup Pro library files, and static asssets together...">
 	<target name="m62-files" depends="vendor-no-dev-files">
 		<echo msg="" />
 		<echo msg="Copying files to mithra62 directory..." />
