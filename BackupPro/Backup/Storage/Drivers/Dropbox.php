@@ -42,8 +42,9 @@ class Dropbox extends AbstractStorage
      * @var string
      */
     protected $settings = array(
-        'access_token' => '',
-        'app_secret' => ''
+        'dropbox_access_token' => '',
+        'dropbox_app_secret' => '',
+        'dropbox_prefix' => ''
     );
     
     /**
@@ -153,36 +154,7 @@ class Dropbox extends AbstractStorage
      * @return \mithra62\Validate
      */
     public function validateSettings(\mithra62\Validate $validate, array $settings, array $drivers = array())
-    {
-        if( $settings['sftp_username'] == '' && $settings['sftp_password'] == '' && $settings['sftp_private_key'] == '' )
-        {
-            $validate->rule('required', 'sftp_username')->message('Either a username and password OR a private key path must be supplied.');
-            $validate->rule('required', 'sftp_password')->message('Either a username and password OR a private key path must be supplied.');
-            $validate->rule('required', 'sftp_private_key')->message('Either a username and password OR a private key path must be supplied.');
-        }
-        else 
-        {
-            $validate->rule('sftp_connect', 'sftp_hostname', $settings)->message('Can\'t connect to entered {field}');
-            if( !empty($settings['sftp_root']) )
-            {
-                $settings['sftp_root'] = $settings['sftp_root'];
-                $validate->rule('sftp_writable', 'sftp_root', $settings)->message('{field} has to be writable by the SFTP user');
-            }
-        }
-        
-        if( $settings['sftp_private_key'] != '' )
-        {
-            $validate->rule('file', 'sftp_private_key')->message('{field} must be a file');
-            $validate->rule('readable', 'sftp_private_key')->message('{field} must be readable by PHP');
-        }
-        
-        $validate->rule('required', 'sftp_host')->message('{field} is required');
-        $validate->rule('required', 'sftp_port')->message('{field} is required');
-        $validate->rule('numeric', 'sftp_port')->message('{field} must be a number');
-        $validate->rule('required', 'sftp_timeout')->message('{field} is required');
-        $validate->rule('required', 'sftp_root')->message('{field} is required');
-        $validate->rule('numeric', 'sftp_timeout')->message('{field} must be a number');
-        
+    {   
         return $validate;
     }
     
@@ -192,14 +164,8 @@ class Dropbox extends AbstractStorage
      */
     public function getFileSystem()
     {
-        $client = m62Dropbox::getRemoteClient($this->settings['access_token'], $this->settings['app_secret']);
-        $options = array();
-        if( $this->settings['s3_reduced_redundancy'] == '1' )
-        {
-            $options['StorageClass'] = 'REDUCED_REDUNDANCY';
-        }
-        
-        $adapter = new m62S3($client, $this->settings['s3_bucket'], $this->settings['s3_optional_prefix'], $options);
+        $client = m62Dropbox::getRemoteClient($this->settings['dropbox_access_token'], $this->settings['dropbox_app_secret']);
+        $adapter = new m62Dropbox($client, $this->settings['dropbox_prefix']);
 
         $filesystem = new Remote( $adapter );
         $filesystem->checkBackupDirs();  

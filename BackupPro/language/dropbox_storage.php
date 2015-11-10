@@ -18,4 +18,8 @@
 $lang = array(
     'backup_pro_dropbox_storage_driver_name' => 'Dropbox Storage',
     'backup_pro_dropbox_storage_driver_description' => 'This Driver will store backups on Dropbox.',
+    'dropbox_access_token' => 'Oauth Access Token',
+    'dropbox_access_token_instructions' => '',
+    'dropbox_app_secret' => 'App Secret',
+    'dropbox_prefix' => 'Prefix',
 );
