@@ -12,6 +12,8 @@ namespace mithra62\BackupPro\Backup\Storage\Drivers;
 
 use mithra62\BackupPro\Backup\Storage\AbstractStorage;
 use mithra62\BackupPro\Exceptions\Backup\StorageException;
+use mithra62\BackupPro\Remote;
+use mithra62\Remote\Sftp AS m62Sftp;
 
 /**
  * Backup Pro - SFTP Storage Object
@@ -79,21 +81,59 @@ class Sftp extends AbstractStorage
      */
     protected $can_restore = false;
     
+
     /**
-     * Should remove the given directory path
+     * Removes a file from the remove service
+     * @param string $file_name The path to the file
+     * @param string $backup_type the backup type (file or database) we're processing
+     * @return bool
+     */
+    public function removeFile($file_name, $backup_type = 'database')
+    {
+        $filesystem = $this->getFilesystem();
+        $path = $backup_type.'/'.$file_name;
+        if( $filesystem->has($path) )
+        {
+            return $filesystem->delete($path);
+        }
+    }
+    
+    /**
+     * NOT USED!!
+     * @param string $path The path to the file
+     * @return bool
+     */
+    public function removeFiles($path)
+    {   
+        return true;
+    }
+    
+    /**
+     * NOT USED!!
      * @param string $path The path to the file
      */
     public function removeDir($path)
     {
-        
+        return true;
     }
     
     /**
-     * Should remove all the files and directories from the given path
+     * NOT USED!!
+     * @param string $file_name The full path to the backup
+     * @param string $backup_type The type of backup, either database or files
+     */
+    public function getFilePath($file_name, $backup_type = 'database')
+    {
+        throw new StorageException('Unused');
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\BackupPro\Backup\Storage\StorageInterface::clearFiles($path)
      */
     public function clearFiles()
     {
-        
+        return true;
     }
     
     /**
@@ -104,9 +144,12 @@ class Sftp extends AbstractStorage
      */
     public function createFile($file, $type = 'database')
     {
-        
+        $filesystem = $this->getFilesystem();
+        $stream = fopen($file, 'r+');
+        $file_name = basename($file);
+        return $filesystem->writeStream($type . '/' . $file_name, $stream);
     }
-    
+
     /**
      * Should validate the Driver settings using the \mithra62\Validate object
      * @param \mithra62\Validate $validate
@@ -116,6 +159,28 @@ class Sftp extends AbstractStorage
      */
     public function validateSettings(\mithra62\Validate $validate, array $settings, array $drivers = array())
     {
+        if( $settings['sftp_username'] == '' && $settings['sftp_password'] == '' && $settings['sftp_private_key'] == '' )
+        {
+            $validate->rule('required', 'sftp_username')->message('Either a username and password OR a private key path must be supplied.');
+            $validate->rule('required', 'sftp_password')->message('Either a username and password OR a private key path must be supplied.');
+            $validate->rule('required', 'sftp_private_key')->message('Either a username and password OR a private key path must be supplied.');
+        }
+        else 
+        {
+            $validate->rule('sftp_connect', 'sftp_hostname', $settings)->message('Can\'t connect to entered {field}');
+            if( !empty($settings['sftp_root']) )
+            {
+                $settings['sftp_root'] = $settings['sftp_root'];
+                $validate->rule('sftp_writable', 'sftp_root', $settings)->message('{field} has to be writable by the SFTP user');
+            }
+        }
+        
+        if( $settings['sftp_private_key'] != '' )
+        {
+            $validate->rule('file', 'sftp_private_key')->message('{field} must be a file');
+            $validate->rule('readable', 'sftp_private_key')->message('{field} must be readable by PHP');
+        }
+        
         $validate->rule('required', 'sftp_host')->message('{field} is required');
         $validate->rule('required', 'sftp_port')->message('{field} is required');
         $validate->rule('numeric', 'sftp_port')->message('{field} must be a number');
@@ -127,21 +192,25 @@ class Sftp extends AbstractStorage
     }
     
     /**
-     * Should remove a file from the remove service
-     * @param string $file The path to the file
-     * @param string $type
+     * Returns an instance of the Fileysystem object
+     * @return \mithra62\BackupPro\Remote
      */
-    public function removeFile($file, $type = 'database')
+    public function getFileSystem()
     {
+        $filesystem = new Remote(new m62Sftp([
+            'host' => $this->settings['sftp_host'],
+            'username' => $this->settings['sftp_username'],
+            'password' => $this->settings['sftp_password'],
+            'port' => $this->settings['sftp_port'],
+            'privateKey' => ( isset($this->settings['sftp_private_key']) ? $this->settings['sftp_private_key'] : '' ),
+            'timeout' => ( !empty($this->settings['sftp_timeout']) ? $this->settings['sftp_timeout'] : '30' ),
+            'root' => $params['sftp_root'],
+        ]));
         
-    }
-    
-    /**
-     * Should remove all the files from within the path
-     * @param string $path The path to the file
-     */
-    public function removeFiles($path)
-    {
+
+        $filesystem->getAdapter()->setRoot($this->settings['sftp_root']);
+        $filesystem->checkBackupDirs();  
         
+        return $filesystem;
     }
 }
