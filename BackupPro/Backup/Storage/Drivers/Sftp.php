@@ -116,6 +116,13 @@ class Sftp extends AbstractStorage
      */
     public function validateSettings(\mithra62\Validate $validate, array $settings, array $drivers = array())
     {
+        $validate->rule('required', 'sftp_host')->message('{field} is required');
+        $validate->rule('required', 'sftp_port')->message('{field} is required');
+        $validate->rule('numeric', 'sftp_port')->message('{field} must be a number');
+        $validate->rule('required', 'sftp_timeout')->message('{field} is required');
+        $validate->rule('required', 'sftp_root')->message('{field} is required');
+        $validate->rule('numeric', 'sftp_timeout')->message('{field} must be a number');
+        
         return $validate;
     }
     
