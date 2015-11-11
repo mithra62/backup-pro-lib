@@ -53,7 +53,9 @@ trait WpTrait
         'storage_add_gcs_storage' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=storage&action=new&engine=gcs',
         'storage_add_local_storage' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=storage&action=new&engine=local',
         'storage_add_rcf_storage' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=storage&action=new&engine=rcf',
-        'storage_add_s3storage' => 'http://eric.ee3.clean.mithra62.com/admin.php?/cp/addons/settings/backup_pro/new_storage/s3',
+        'storage_add_s3storage' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=storage&action=new&engine=s3',
+        'storage_add_dropbox_storage' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=storage&action=new&engine=dropbox',
+        'storage_add_sftp_storage' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=storage&action=new&engine=sftp',
     );
     
     /**

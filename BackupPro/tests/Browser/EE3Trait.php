@@ -52,7 +52,9 @@ trait EE3Trait
         'storage_add_gcs_storage' => 'http://eric.ee3.clean.mithra62.com/admin.php?/cp/addons/settings/backup_pro/new_storage/gcs',
         'storage_add_local_storage' => 'http://eric.ee3.clean.mithra62.com/admin.php?/cp/addons/settings/backup_pro/new_storage/local',
         'storage_add_rcf_storage' => 'http://eric.ee3.clean.mithra62.com/admin.php?/cp/addons/settings/backup_pro/new_storage/rcf',
-        'storage_add_s3storage' => 'http://eric.ee3.clean.mithra62.com/admin.php?/cp/addons/settings/backup_pro/new_storage/s3',        
+        'storage_add_s3storage' => 'http://eric.ee3.clean.mithra62.com/admin.php?/cp/addons/settings/backup_pro/new_storage/s3',       
+        'storage_add_dropbox_storage' => 'http://eric.ee3.clean.mithra62.com/admin.php?/cp/addons/settings/backup_pro/new_storage/dropbox',    
+        'storage_add_sftp_storage' => 'http://eric.ee3.clean.mithra62.com/admin.php?/cp/addons/settings/backup_pro/new_storage/sftp',     
     );
     
     /**

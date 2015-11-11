@@ -5,7 +5,7 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/tests/Browser/AbstractBase/Storage/S3Engine.php
+ * @filesource 	./mithra62/BackupPro/tests/Browser/AbstractBase/Storage/DropboxEngine.php
  */
 
 namespace mithra62\BackupPro\tests\Browser\AbstractBase\Storage;
@@ -13,14 +13,14 @@ namespace mithra62\BackupPro\tests\Browser\AbstractBase\Storage;
 use mithra62\BackupPro\tests\Browser\TestFixture;
 
 /**
- * mithra62 - (Selenium) Amazon S3 Storage Engine object Unit Tests
+ * mithra62 - (Selenium) Dropbox Storage Engine object Unit Tests
  *
  * Executes all the tests by platform using the below definitions
  *
  * @package 	mithra62\Tests
  * @author		Eric Lamb <eric@mithra62.com>
  */
-abstract class S3Engine extends TestFixture  
+abstract class DropboxEngine extends TestFixture  
 {   
     
     /**
@@ -42,139 +42,128 @@ abstract class S3Engine extends TestFixture
             'baseUrl' => 'http://eric.ee2.clean.mithra62.com',
             'sessionStrategy' => 'shared',
         ),
-    );
+    );  
 
-    public function testAddS3StorageNoName()
+    public function testAddDropboxStorageNoName()
     {
         $this->login();
         sleep(2);
         $this->install_addon();
         
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_s3storage') );
+        $this->session->visit( $this->url('storage_add_dropbox_storage') );
         $page = $this->session->getPage();
         $page->findById('storage_location_name')->setValue('');
         $page->findButton('m62_settings_submit')->submit();
     
         $this->assertTrue($this->session->getPage()->hasContent('Storage Location Name is required'));
-    }
+    } 
     
     /**
-     * @depends testAddS3StorageNoName
+     * @depends testAddDropboxStorageNoName
      */
-    public function testAddS3StorageGoodName()
+    public function testAddDropboxStorageGoodName()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_s3storage') );
+        $this->session->visit( $this->url('storage_add_dropbox_storage') );
         $page = $this->session->getPage();
-        $page->findById('storage_location_name')->setValue('My Amazon S3 Storage');
+        $page->findById('storage_location_name')->setValue('My Dropbox Storage');
         $page->findButton('m62_settings_submit')->submit();
     
         $this->assertNotTrue($this->session->getPage()->hasContent('Storage Location Name is required'));
     }
     
     /**
-     * @depends testAddS3StorageGoodName
+     * @depends testAddDropboxStorageNoName
      */
-    public function testAddS3AccessKeyNoValue()
+    public function testAddDropboxStorageAccessTokenNoValue()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_s3storage') );
+        $this->session->visit( $this->url('storage_add_dropbox_storage') );
         $page = $this->session->getPage();
-        $page->findById('s3_access_key')->setValue('');
+        $page->findById('dropbox_access_token')->setValue('');
         $page->findButton('m62_settings_submit')->submit();
     
-        $this->assertTrue($this->session->getPage()->hasContent('S3 Access Key is required'));
-        $this->assertTrue($this->session->getPage()->hasContent('Can\'t connect to S3 Access Key'));
+        $this->assertTrue($this->session->getPage()->hasContent('Dropbox Access Token is required'));
     }
     
     /**
-     * @depends testAddS3AccessKeyNoValue
+     * @depends testAddDropboxStorageAccessTokenNoValue
      */
-    public function testAddS3AccessKeyGoodValue()
+    public function testAddDropboxStorageAccessTokenStringValue()
     {
-        $rcf_creds = $this->getS3Creds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_s3storage') );
+        $this->session->visit( $this->url('storage_add_dropbox_storage') );
         $page = $this->session->getPage();
-        $page->findById('s3_access_key')->setValue( $rcf_creds['s3_access_key'] );
+        $page->findById('dropbox_access_token')->setValue('fdsafdsafdsa');
         $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertNotTrue($this->session->getPage()->hasContent('Dropbox Access Token is required'));
+    }
 
-        $this->assertNotTrue($this->session->getPage()->hasContent('S3 Access Key is required'));
-        $this->assertTrue($this->session->getPage()->hasContent('Can\'t connect to S3 Access Key'));
-    }
-    
     /**
-     * @depends testAddS3AccessKeyGoodValue
+     * @depends testAddDropboxStorageAccessTokenStringValue
      */
-    public function testAddS3SecretKeyNoValue()
+    public function testAddDropboxStorageAppSecretNoValue()
     {
-        $rcf_creds = $this->getS3Creds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_s3storage') );
+        $this->session->visit( $this->url('storage_add_dropbox_storage') );
         $page = $this->session->getPage();
-        $page->findById('s3_secret_key')->setValue( '' );
+        $page->findById('dropbox_app_secret')->setValue('');
         $page->findButton('m62_settings_submit')->submit();
     
-        $this->assertTrue($this->session->getPage()->hasContent('S3 Secret Key is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('Dropbox App Secret is required'));
     }
-    
+
     /**
-     * @depends testAddS3SecretKeyNoValue
+     * @depends testAddDropboxStorageAppSecretNoValue
      */
-    public function testAddS3SecretKeyGoodValue()
+    public function testAddDropboxStorageAppSecretStringValue()
     {
-        $rcf_creds = $this->getS3Creds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_s3storage') );
+        $this->session->visit( $this->url('storage_add_dropbox_storage') );
         $page = $this->session->getPage();
-        $page->findById('s3_secret_key')->setValue( $rcf_creds['s3_secret_key'] );
+        $page->findById('dropbox_app_secret')->setValue('fdsafdsa');
         $page->findButton('m62_settings_submit')->submit();
     
-        $this->assertNotTrue($this->session->getPage()->hasContent('S3 Secret Key is required'));
+        $this->assertNotTrue($this->session->getPage()->hasContent('Dropbox App Secret is required'));
     }
-    
+
     /**
-     * @depends testAddS3SecretKeyGoodValue
+     * @depends testAddDropboxStorageAppSecretStringValue
      */
-    public function testAddS3BucketNoValue()
+    public function testAddDropboxStoragePrefixNoValue()
     {
-        $rcf_creds = $this->getS3Creds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_s3storage') );
+        $this->session->visit( $this->url('storage_add_dropbox_storage') );
         $page = $this->session->getPage();
-        $page->findById('s3_bucket')->setValue( '' );
+        $page->findById('dropbox_prefix')->setValue('');
         $page->findButton('m62_settings_submit')->submit();
     
-        $this->assertTrue($this->session->getPage()->hasContent('S3 Bucket is required'));
+        $this->assertTrue( ($page->findById('dropbox_prefix')->getValue() == '') );
     }
-    
+
     /**
-     * @depends testAddS3BucketNoValue
+     * @depends testAddDropboxStoragePrefixNoValue
      */
-    public function testAddS3BucketGoodValue()
+    public function testAddDropboxStoragePrefixStringValue()
     {
-        $rcf_creds = $this->getS3Creds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_s3storage') );
+        $this->session->visit( $this->url('storage_add_dropbox_storage') );
         $page = $this->session->getPage();
-        $page->findById('s3_bucket')->setValue( $rcf_creds['s3_bucket'] );
+        $page->findById('dropbox_prefix')->setValue('fdsafdsa');
         $page->findButton('m62_settings_submit')->submit();
     
-        $this->assertNotTrue($this->session->getPage()->hasContent('S3 Bucket is required'));
+        $this->assertTrue( ($page->findById('dropbox_prefix')->getValue() == 'fdsafdsa') );
     }
-    
-    
-    
-    
-    
+
     /**
-     * @depends testAddS3BucketGoodValue
+     * @depends testAddDropboxStoragePrefixStringValue
      */
-    public function testAddS3StorageStatusChecked()
+    public function testAddDropboxStorageStatusChecked()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_s3storage') );
+        $this->session->visit( $this->url('storage_add_dropbox_storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_status')->check();
@@ -184,12 +173,12 @@ abstract class S3Engine extends TestFixture
     }
     
     /**
-     * @depends testAddS3StorageStatusChecked
+     * @depends testAddDropboxStorageStatusChecked
      */
-    public function testAddS3StorageStatusUnChecked()
+    public function testAddDropboxStorageStatusUnChecked()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_s3storage') );
+        $this->session->visit( $this->url('storage_add_dropbox_storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_status')->uncheck();
@@ -200,12 +189,12 @@ abstract class S3Engine extends TestFixture
     }
     
     /**
-     * @depends testAddS3StorageStatusUnChecked
+     * @depends testAddDropboxStorageStatusUnChecked
      */
-    public function testAddS3StorageFileUseChecked()
+    public function testAddDropboxStorageFileUseChecked()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_s3storage') );
+        $this->session->visit( $this->url('storage_add_dropbox_storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_file_use')->check();
@@ -215,12 +204,12 @@ abstract class S3Engine extends TestFixture
     }
     
     /**
-     * @depends testAddS3StorageFileUseChecked
+     * @depends testAddDropboxStorageFileUseChecked
      */
-    public function testAddS3StorageFileUseUnChecked()
+    public function testAddDropboxStorageFileUseUnChecked()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_s3storage') );
+        $this->session->visit( $this->url('storage_add_dropbox_storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_file_use')->uncheck();
@@ -231,12 +220,12 @@ abstract class S3Engine extends TestFixture
     }
     
     /**
-     * @depends testAddS3StorageFileUseUnChecked
+     * @depends testAddDropboxStorageFileUseUnChecked
      */
-    public function testAddS3StorageDbUseChecked()
+    public function testAddDropboxStorageDbUseChecked()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_s3storage') );
+        $this->session->visit( $this->url('storage_add_dropbox_storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_db_use')->check();
@@ -246,12 +235,12 @@ abstract class S3Engine extends TestFixture
     }
     
     /**
-     * @depends testAddS3StorageDbUseChecked
+     * @depends testAddDropboxStorageDbUseChecked
      */
-    public function testAddS3StorageDbUseUnChecked()
+    public function testAddDropboxStorageDbUseUnChecked()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_s3storage') );
+        $this->session->visit( $this->url('storage_add_dropbox_storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_db_use')->uncheck();
@@ -262,12 +251,12 @@ abstract class S3Engine extends TestFixture
     }
     
     /**
-     * @depends testAddS3StorageDbUseUnChecked
+     * @depends testAddDropboxStorageDbUseUnChecked
      */
     public function testAddS3StorageIncludePruneChecked()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_s3storage') );
+        $this->session->visit( $this->url('storage_add_dropbox_storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_include_prune')->check();
@@ -277,12 +266,12 @@ abstract class S3Engine extends TestFixture
     }
     
     /**
-     * @depends testAddS3StorageIncludePruneChecked
+     * @depends testAddDropboxStorageDbUseUnChecked
      */
-    public function testAddS3StorageIncludePruneUnChecked()
+    public function testAddDropboxStorageIncludePruneUnChecked()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_s3storage') );
+        $this->session->visit( $this->url('storage_add_dropbox_storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_include_prune')->uncheck();
@@ -292,15 +281,15 @@ abstract class S3Engine extends TestFixture
     }
     
     /**
-     * @depends testAddS3StorageIncludePruneUnChecked
+     * @depends testAddDropboxStorageIncludePruneUnChecked
      */
-    public function testAddCompleteS3Storage()
+    public function testAddCompleteDropboxStorage()
     {
-        $page = $this->setupS3StorageLocation( );
+        $page = $this->setupDropboxStorageLocation( );
         $this->assertTrue($this->session->getPage()->hasContent('Created Date'));
         $this->assertNotTrue($this->session->getPage()->hasContent('No Storage Locations have been setup yet!'));
-        
+    
         $this->uninstall_addon();
-    }
+    } 
     
 }

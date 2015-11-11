@@ -178,4 +178,45 @@ class TestFixture extends BrowserTestCase
         
         return $page;
     }
+    
+    /**
+     * Sets up an Amazon S3 Storage Location for use
+     * @return \Behat\Mink\Element\DocumentElement
+     */
+    public function setupS3StorageLocation()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('storage_add_s3storage') );
+        
+        $rcf_creds = $this->getS3Creds();
+        $page = $this->session->getPage();
+        $page->findById('storage_location_name')->setValue('My S3 Storage');
+        $page->findById('s3_access_key')->setValue($rcf_creds['s3_access_key']);
+        $page->findById('s3_secret_key')->setValue($rcf_creds['s3_secret_key']);
+        $page->findById('s3_bucket')->setValue($rcf_creds['s3_bucket']);
+        $page->findButton('m62_settings_submit')->submit();
+        
+        return $page;
+    }
+    
+    /**
+     * Sets up a Dropbox Storage Location for use
+     * @return \Behat\Mink\Element\DocumentElement
+     */
+    public function setupDropboxStorageLocation()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('storage_add_dropbox_storage') );
+        
+        $rcf_creds = $this->getDropboxCreds();
+        $page = $this->session->getPage();
+        $page->findById('storage_location_name')->setValue('My Dropbox Storage');
+        $page->findById('dropbox_access_token')->setValue($rcf_creds['dropbox_access_token']);
+        $page->findById('dropbox_app_secret')->setValue($rcf_creds['dropbox_app_secret']);
+        $page->findById('dropbox_prefix')->setValue($rcf_creds['dropbox_prefix']);
+        $page->findButton('m62_settings_submit')->submit();
+        
+        return $page;
+    }
+    
 }

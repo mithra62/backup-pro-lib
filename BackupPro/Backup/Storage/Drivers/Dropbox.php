@@ -155,6 +155,14 @@ class Dropbox extends AbstractStorage
      */
     public function validateSettings(\mithra62\Validate $validate, array $settings, array $drivers = array())
     {   
+        $validate->rule('required', 'dropbox_access_token')->message('{field} is required');
+        $validate->rule('required', 'dropbox_app_secret')->message('{field} is required');
+        
+        if( !empty($settings['dropbox_access_token']) && !empty($settings['dropbox_app_secret']) )
+        {
+            $validate->rule('dropbox_connect', 'dropbox_access_token', $settings)->message('Can\'t connect to Dropbox using those credentials...');
+        }
+        
         return $validate;
     }
     

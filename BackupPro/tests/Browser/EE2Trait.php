@@ -53,6 +53,8 @@ trait EE2Trait
         'storage_add_local_storage' => 'http://eric.ee2.clean.mithra62.com/admin.php?S=0&D=cp&C=addons_modules&M=show_module_cp&module=backup_pro&method=new_storage&engine=local',
         'storage_add_rcf_storage' => 'http://eric.ee2.clean.mithra62.com/admin.php?S=0&D=cp&C=addons_modules&M=show_module_cp&module=backup_pro&method=new_storage&engine=rcf',
         'storage_add_s3storage' => 'http://eric.ee2.clean.mithra62.com/admin.php?S=0&D=cp&C=addons_modules&M=show_module_cp&module=backup_pro&method=new_storage&engine=s3',
+        'storage_add_dropbox_storage' => 'http://eric.ee2.clean.mithra62.com/admin.php?S=0&D=cp&C=addons_modules&M=show_module_cp&module=backup_pro&method=new_storage&engine=dropbox',
+        'storage_add_sftp_storage' => 'http://eric.ee2.clean.mithra62.com/admin.php?S=0&D=cp&C=addons_modules&M=show_module_cp&module=backup_pro&method=new_storage&engine=sftp',
     );
 
 

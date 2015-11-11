@@ -54,6 +54,8 @@ trait CraftTrait
         'storage_add_local_storage' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings/storage/new?engine=local',
         'storage_add_rcf_storage' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings/storage/new?engine=rcf',
         'storage_add_s3storage' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings/storage/new?engine=s3',
+        'storage_add_dropbox_storage' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings/storage/new?engine=dropbox',
+        'storage_add_sftp_storage' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings/storage/new?engine=sftp',
     );
     
     /**
