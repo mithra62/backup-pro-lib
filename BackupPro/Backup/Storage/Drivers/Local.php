@@ -205,6 +205,17 @@ class Local extends AbstractStorage
             $validate->rule('notIn', 'backup_store_location', $ignore)->message('{field} is already setup with another Storage Location');
         }
         
+        //and now make sure we're not using the working directory for storage
+        $services = $this->getServices();
+        $context_settings = $services['settings']->get();
+        if( !empty($context_settings['working_directory']) && !empty($settings['backup_store_location']) )
+        {
+            if( $context_settings['working_directory'] == $settings['backup_store_location'] )
+            {
+                $validate->rule('false', 'backup_store_location')->message('{field} can\'t be set as the Backup Pro Working Directory');
+            }
+        }
+        
         $validate->rule('required', 'backup_store_location')->message('{field} is required');
         $validate->rule('dir', 'backup_store_location')->message('{field} has to be a directory');
         $validate->rule('writable', 'backup_store_location')->message('{field} has to be writable');

@@ -228,7 +228,7 @@ class Storage
         //pass to the engine to validate what it needs
         if(isset($storage_drivers[$driver]) && $storage_drivers[$driver]['obj'] instanceof Storage\StorageInterface )
         {
-            $validate = $storage_drivers[$driver]['obj']->setExistingStorageLocations($locations)->validateSettings($validate, $data);
+            $validate = $storage_drivers[$driver]['obj']->setServices($this->getServices())->setExistingStorageLocations($locations)->validateSettings($validate, $data);
         }
         
         //now we ahve to make sure we always have at least 1 location active
