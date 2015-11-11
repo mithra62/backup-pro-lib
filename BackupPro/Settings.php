@@ -202,7 +202,7 @@ class Settings extends m62Settings
     public function validate(array $data, array $extra = array())
     {
         $errors = array();
-        if( !$this->getValidate()->check($data, $extra) )
+        if( !$this->getValidate()->setExistingSettings( $this->get() )->check($data, $extra) )
         {
             $errors = $this->getValidate()->getErrorMessages();
         }
