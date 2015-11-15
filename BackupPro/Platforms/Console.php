@@ -13,7 +13,7 @@ namespace mithra62\BackupPro\Platforms;
 use mithra62\Platforms\Console AS m62Console;
 
 /**
- * Backup Pro - Console Object
+ * Backup Pro - Console Platform
  *
  * Creates the Console interface to process Console commands for Backup Pro
  *
@@ -22,5 +22,5 @@ use mithra62\Platforms\Console AS m62Console;
  */
 class Console extends m62Console
 {
-
+    
 }

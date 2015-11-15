@@ -18,6 +18,7 @@ use mithra62\BackupPro\Backup;
 use mithra62\BackupPro\Restore;
 use mithra62\BackupPro\Errors;
 use mithra62\BackupPro\Notify; 
+use mithra62\BackupPro\Console; 
 use mithra62\BackupPro\Validate\Settings AS valSettings;
 
 /**
@@ -93,6 +94,12 @@ class Bootstrap extends m62Boostrap
             $validate = new valSettings();
             $validate->setRegex($this->container['regex']);
             return $validate;
+        };
+        
+        $this->container['console'] = function($c) {
+            $console = new Console();
+            $console->setLang($c['lang']);
+            return $console;
         };
         
         return $this->container;
