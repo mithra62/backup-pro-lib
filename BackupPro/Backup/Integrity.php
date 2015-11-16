@@ -238,6 +238,11 @@ class Integrity
      */
     public function checkBackup(array $backup_info, $type = 'database')
     {
+        if( !is_array($backup_info['storage_locations']) )
+        {
+            return false;    
+        }
+        
         foreach($backup_info['storage_locations'] AS  $location)
         {
             if( $location['obj']->canDownload() )

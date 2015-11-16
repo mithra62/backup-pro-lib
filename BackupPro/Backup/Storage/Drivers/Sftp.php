@@ -204,7 +204,7 @@ class Sftp extends AbstractStorage
             'port' => $this->settings['sftp_port'],
             'privateKey' => ( isset($this->settings['sftp_private_key']) ? $this->settings['sftp_private_key'] : '' ),
             'timeout' => ( !empty($this->settings['sftp_timeout']) ? $this->settings['sftp_timeout'] : '30' ),
-            'root' => $params['sftp_root'],
+            'root' => $this->settings['sftp_root'],
         ]));
         
 
