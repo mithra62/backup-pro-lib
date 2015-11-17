@@ -37,6 +37,8 @@ $lang = array(
     
     'db_backup_past_expectation' => 'A database backup hasn\'t happened in %1$s! You should take a <a href="%2$s">database backup</a> ASAP to ensure system stability. ',
     'files_backup_past_expectation' => 'A file backup hasn\'t happened in %1$s! You should take a <a href="%2$s">file backup</a> ASAP to ensure system stability. ',
+    'db_backup_past_expectation_stub' => '',
+    'file_backup_past_expectation_stub' => '',
     
     'mysqldump_command' => 'Mysqldump Command',
     'mysqldump_command_instructions' => 'Depending on your system needs you may need to customize the command used to execute mysqldump. Be sure NOT to include any connection or database details; Backup Pro will inject that automagically for you.',

@@ -186,8 +186,8 @@ $lang = array(
 'click_to_add_note' => 'Click to add note...',
 'note' => 'Note',
 
-'no_db_backups_exist_yet' => 'No database backups exist yet; click <a href="%s">here</a> to take one.',
-'no_file_backups_exist_yet' => 'No file backups exist yet; click <a href="%s">here</a> to take one.',
+'no_db_backups_exist_yet' => 'No database backups exist yet ',
+'no_file_backups_exist_yet' => 'No file backups exist yet ',
 'unlimited' => 'Unlimited',
 'taken' => 'Taken',
 'remote_status' => 'Remote Status',
@@ -292,6 +292,11 @@ Please don\'t respond to this email; all emails are automatically deleted.',
 'backup' => 'Backup',
 'manage_backups' => 'Manage Backups',    
 'pre_backup_setting_issue_blurb' => 'You\'re going to need to fix the below configuration errors before you can start taking backups',
+    
+'check_working_dir' => 'Check Working Directory',
+'enter_license' => 'Enter License',
+'purchase_a_license' => 'Purchase a License',
+'setup_storage_location' => 'Setup Storage Location',
 ''=>''
 		
 );

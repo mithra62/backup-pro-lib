@@ -24,17 +24,46 @@ class Integrity
 {
     use DateTime;
     
+    /**
+     * The Storage object
+     * @var \mithra62\BackupPro\Backup\Storage
+     */
     protected $storage = null;
     
+    /**
+     * The Compress object
+     * @var \mithra62\Compress
+     */
     protected $compress = null;
     
+    /**
+     * The Backup Restore object
+     * @var \mithra62\BackupPro\Restore
+     */
     protected $restore = null;
     
+    /**
+     * The Shell object
+     * @var \mithra62\Shell
+     */
     protected $shell = null;
     
+    /**
+     * The database to test our database backups with
+     * @var string
+     */
     protected $test_db_name = false;
     
+    /**
+     * The details about the current backup system
+     * @var array
+     */
     protected $backup_info = array();
+    
+    /**
+     * The Backpu Pro settings array
+     * @var array
+     */
     protected $settings = array();
     
     /**
@@ -173,6 +202,10 @@ class Integrity
         return $this;
     }
     
+    /**
+     * Returns an instance of the Storage object
+     * @return \mithra62\BackupPro\Backup\Storage
+     */
     public function getStorage()
     {
         return $this->storage;
@@ -189,6 +222,10 @@ class Integrity
         return $this;
     }
     
+    /**
+     * Returns an instance of the Shell object
+     * @return \mithra62\Shell
+     */
     public function getShell()
     {
         return $this->shell;
@@ -205,6 +242,10 @@ class Integrity
         return $this;
     }
     
+    /**
+     * Returns an instance of the Restore object
+     * @return \mithra62\BackupPro\Restore
+     */
     public function getRestore()
     {
         return $this->restore;
@@ -232,9 +273,9 @@ class Integrity
     
     /**
      * Checks the integrity of the backup in $path
-     * @param string $path
+     * @param array $backup_info
      * @param string $type
-     * @param string $force
+     * @return bool
      */
     public function checkBackup(array $backup_info, $type = 'database')
     {
@@ -322,35 +363,59 @@ class Integrity
      * @param array $settings
      * @return multitype:boolean
      */
-    public function monitorBackupState(array $backup_meta, array $settings)
+    public function monitorDbBackupState(array $backup_meta, $threshold)
     {
-        $errors = array();
-        //now let's check to see if we have a backup for each configured timeframe
-        if( $settings['db_backup_alert_threshold'] >= 1 )
+        if( !empty($backup_meta['newest_backup_taken_raw']) )
         {
-            if( !empty($backup_meta['database']['newest_backup_taken_raw']) )
+            $db_check_hours = mktime(0,0,0,date('m'), date('d')-$threshold, date('Y'));
+            if($backup_meta['newest_backup_taken_raw'] > $db_check_hours)
             {
-                $db_check_hours = mktime(0,0,0,date('m'), date('d')-$settings['db_backup_alert_threshold'], date('Y'));
-                if($backup_meta['database']['newest_backup_taken_raw'] < $db_check_hours)
-                {
-                    $errors['backup_state_db_backups'] = TRUE;
-                }
+                return true;
             }
         }
-        
-        if( $settings['file_backup_alert_threshold'] >= 1 )
+    }
+    
+    /**
+     * Checks the existing file backups on the system and ensure's things are kosher
+     * @param array $backup_meta
+     * @param array $settings
+     * @return multitype:boolean
+     */
+    public function monitorFileBackupState(array $backup_meta, $threshold)
+    {
+        if( !empty($backup_meta['newest_backup_taken_raw']) )
         {
-            if( !empty($backup_meta['files']['newest_backup_taken_raw']) )
+            $file_check_hours = mktime(0,0,0,date('m'), date('d')-$threshold, date('Y'));
+            if($backup_meta['newest_backup_taken_raw'] > $file_check_hours)
             {
-                $file_check_hours = mktime(0,0,0,date('m'), date('d')-$settings['file_backup_alert_threshold'], date('Y'));
-                if($backup_meta['files']['newest_backup_taken_raw'] < $file_check_hours)
-                {
-                    $errors['backup_state_files_backups'] = TRUE; 
-                }
+                return true; 
             }
         }
+    }
+    
+    /**
+     * Inspects the backup state and notifies when/if appropriate
+     * @param array $backup_meta
+     * @param array $settings
+     * @param \mithra62\BackupPro\Notify $notify
+     * @return boolean
+     */
+    public function notifyBackupState(array $backup_meta, array $settings, array $errors, \mithra62\BackupPro\Notify $notify)
+    {
+        $last_notified = $settings['backup_missed_schedule_notify_email_last_sent'];
+        $next_notified = mktime(
+            date('G', $last_notified)+$settings['backup_missed_schedule_notify_email_interval'], 
+            date('i', $last_notified), 
+            0, 
+            date('n', $last_notified), 
+            date('j', $last_notified), 
+            date('Y', $last_notified)
+        );
         
-        return $errors;
+        if(time() > $next_notified)
+        {
+            $notify->setSettings($settings)->sendBackupState($settings['backup_missed_schedule_notify_emails'], $backup_meta, $errors);
+        }
     }
     
     /**
