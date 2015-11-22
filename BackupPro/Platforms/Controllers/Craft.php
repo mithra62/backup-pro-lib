@@ -60,9 +60,31 @@ class Craft extends BaseController
         
         $this->m62->setDbConfig($this->platform->getDbCredentials());
         $this->settings = $this->services['settings']->get();
-        $this->errors = $this->services['errors']->checkWorkingDirectory($this->settings['working_directory'])
+        $errors = $this->services['errors']->checkWorkingDirectory($this->settings['working_directory'])
                                                  ->checkStorageLocations($this->settings['storage_details'])
-                                                 ->licenseCheck($this->settings['license_number'], $this->services['license'])
-                                                 ->getErrors();
+                                                 ->licenseCheck($this->settings['license_number'], $this->services['license']);
+        
+        if( $errors->totalErrors() == '0' )
+        {
+            $errors = $errors->checkBackupState($this->services['backups'], $this->settings);
+        }
+        
+        $this->errors = $errors->getErrors();
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \Craft\BaseController::renderTemplate()
+     */
+    public function renderTemplate($template, $variables = array(), $return = false, $processOutput = false)
+    {
+        //grab the backup details
+        $backup = $this->services['backups'];
+        $backups = $backup->setBackupPath($this->settings['working_directory'])->getAllBackups($this->settings['storage_details']);
+        $backup_meta = $backup->getBackupMeta($backups);
+        
+        $variables['backup_meta'] = $backup_meta;
+        $variables['backup_details'] = $backups;
+        parent::renderTemplate($template, $variables, $return, $processOutput);
     }
 }
