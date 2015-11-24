@@ -191,14 +191,28 @@ class Database extends AbstractBackup
             $uncompressed_size = 0;
             foreach($this->getTables() AS $meta)
             {
-                $uncompressed_size = $uncompressed_size+$meta['Data_length'];
-                $meta_details[] = array(
-                    'Name' => $meta['Name'],
-                    'Rows' => $meta['Rows'],
-                    'Avg_row_length' => $meta['Avg_row_length'],
-                    'Data_length' => $meta['Name'],
-                    'Auto_increment' => $meta['Auto_increment'],
-                );
+                if( (count( $this->getIgnoreTables() ) >= 1 && in_array(trim($meta['Name']), $this->getIgnoreTables())) || 
+                    (count($this->getIgnoreTableData()) >= 1 && in_array(trim($meta['Name']), $this->getIgnoreTableData())) )
+                {
+                    $meta_details[] = array(
+                        'Name' => $meta['Name'],
+                        'Rows' => 0,
+                        'Avg_row_length' => 0,
+                        'Data_length' => 0,
+                        'Auto_increment' => $meta['Auto_increment'],
+                    );
+                }
+                else
+                {
+                    $uncompressed_size = $uncompressed_size+$meta['Data_length'];
+                    $meta_details[] = array(
+                        'Name' => $meta['Name'],
+                        'Rows' => $meta['Rows'],
+                        'Avg_row_length' => $meta['Avg_row_length'],
+                        'Data_length' => $meta['Data_length'],
+                        'Auto_increment' => $meta['Auto_increment'],
+                    );                    
+                }
             }
              
             $details->addDetails($file_name, $details_path, array('details' => $meta_details, 'item_count' => count($meta_details), 'uncompressed_size' => $uncompressed_size));
