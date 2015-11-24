@@ -257,6 +257,7 @@ class Backup
             $file_name = $this->getStorage()->makeFileFilename();
             $file_backup = $this->getFile()->setRegex($regex)->setBackup($this)->setFile($file)
                                 ->setExcludePaths($options['exclude_paths'])
+                                ->setExludeRegex($options['regex_file_exclude'])
                                 ->setBackupPaths($options['backup_file_location']);
             
             $compressed_file = $file_backup->backup($file_name, $this->getCompress());

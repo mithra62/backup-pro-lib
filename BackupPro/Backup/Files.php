@@ -30,6 +30,12 @@ class Files extends AbstractBackup
     protected $exclude_paths = array();
     
     /**
+     * Flag to determine whether regular expressions are used to exclude files
+     * @var bool
+     */
+    protected $exclude_regex = true;
+    
+    /**
      * The paths we want to include in our backup
      * @var array
      */
@@ -170,6 +176,26 @@ class Files extends AbstractBackup
     }
     
     /**
+     * Set whether regular expressions are used for file exclusion
+     * @param bool $exclude_regex
+     * @return \mithra62\BackupPro\Backup\Files
+     */
+    public function setExludeRegex($exclude_regex)
+    {
+        $this->exclude_regex = $exclude_regex;
+        return $this;
+    }
+    
+    /**
+     * Returns whether we should use regular expressions on file exclusion
+     * @return bool
+     */
+    public function getExludeRegex()
+    {
+        return $this->exclude_regex;
+    }
+    
+    /**
      * Performs the file backup
      * @param string $file_name The name of the containing folder the backup should be saved as
      * @param \mithra62\Compress $compress The compression object
@@ -211,7 +237,7 @@ class Files extends AbstractBackup
                         {
                             $should_exclude = true;
                         }   
-                        else if( $this->getRegex()->match(trim($exclude), trim($filePath)) )
+                        else if( $this->getExludeRegex() && $this->getRegex()->match(trim($exclude), trim($filePath)) )
                         {
                             $should_exclude = true;
                         }  

@@ -142,7 +142,7 @@ class Database extends AbstractBackup
             $progress->writeLog('backup_progress_bar_table_start'.$table['Name'], $total, $count);
             $engine->writeCommentBlock('Table Data For: '.$table['Name'].' ('.$table['Rows'].' Rows)');
             $include_data = true;
-            if(count($this->getIgnoreTableData()) >= 1 && in_array($table['Name'], $this->getIgnoreTableData()))
+            if( count($this->getIgnoreTableData()) >= 1 && in_array($table['Name'], $this->getIgnoreTableData()) )
             {
                 $include_data = false;
             }
