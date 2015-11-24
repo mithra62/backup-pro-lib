@@ -85,7 +85,7 @@ class Settings extends m62Settings
         'mysqlcli_command' => 'mysql',
         'php_backup_method_select_chunk_limit' => '50',
         'system_command_function' => 'proc_open', //exec
-        'regex_file_exclude' => '1',
+        'regex_file_exclude' => '0',
         'dashboard_recent_total' => '5',
         'db_backup_alert_threshold' => '1',
         'file_backup_alert_threshold' => '7',
