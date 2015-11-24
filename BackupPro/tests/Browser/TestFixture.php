@@ -219,4 +219,68 @@ class TestFixture extends BrowserTestCase
         return $page;
     }
     
+    /**
+     * Sets up a SFTP Storage Location for use
+     * @return \Behat\Mink\Element\DocumentElement
+     */
+    public function setupSftpStorageLocation()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('storage_add_sftp_storage') );
+        
+        $rcf_creds = $this->getSftpCreds();
+        $page = $this->session->getPage();
+        $page->findById('storage_location_name')->setValue('My SFTP Storage');
+        $page->findById('sftp_host')->setValue($rcf_creds['sftp_host']);
+        $page->findById('sftp_username')->setValue($rcf_creds['sftp_username']);
+        $page->findById('sftp_password')->setValue($rcf_creds['sftp_password']);
+        $page->findById('sftp_port')->setValue($rcf_creds['sftp_port']);
+        $page->findById('sftp_root')->setValue($rcf_creds['sftp_root']);
+        $page->findById('sftp_timeout')->setValue($rcf_creds['sftp_timeout']);
+        $page->findButton('m62_settings_submit')->submit();
+        
+        return $page;
+    }
+    
+    /**
+     * Sets a workable "Working Directory" setting
+     * @return unknown
+     */
+    public function setupGoodWorkingDirectory()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_general') );
+        $page = $this->session->getPage();
+        $page->findById('working_directory' )->setValue( $this->ts('working_directory') );
+        $page->findButton('m62_settings_submit')->submit();
+        
+        return $page;
+    }
+    
+    /**
+     * 
+     * @return unknown
+     */
+    public function setupGoodLicenseKey()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_license') );
+        $page = $this->session->getPage();
+        $page->findById('license_number')->setValue('5214af45-9bc9-4019-8af9-bc98c38802c1');
+        $page->findButton('m62_settings_submit')->submit();
+        
+        return $page;
+    }
+    
+    public function setupGoodFileBackupLocation()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_files') );
+        $page = $this->session->getPage();
+        $page->findById('backup_file_location' )->setValue(dirname(__FILE__));
+        $page->findButton('m62_settings_submit')->submit();
+        
+        return $page;
+    }
+    
 }

@@ -159,13 +159,18 @@ class Sftp extends AbstractStorage
      */
     public function validateSettings(\mithra62\Validate $validate, array $settings, array $drivers = array())
     {
-        if( $settings['sftp_username'] == '' && $settings['sftp_password'] == '' && $settings['sftp_private_key'] == '' )
+        $validate->rule('required', 'sftp_username')->message('{field} is required');
+        if( $settings['sftp_private_key'] == '' )
         {
-            $validate->rule('required', 'sftp_username')->message('Either a username and password OR a private key path must be supplied.');
-            $validate->rule('required', 'sftp_password')->message('Either a username and password OR a private key path must be supplied.');
-            $validate->rule('required', 'sftp_private_key')->message('Either a username and password OR a private key path must be supplied.');
+            $validate->rule('required', 'sftp_password')->message('A password is required if no private key is set');
         }
-        else 
+        
+        if( $settings['sftp_password'] == '' )
+        {
+            $validate->rule('required', 'sftp_private_key')->message('A private key is required if no password is set');
+        }
+        
+        if( $settings['sftp_username'] != '' || $settings['sftp_private_key'] != '' ) 
         {
             $validate->rule('sftp_connect', 'sftp_hostname', $settings)->message('Can\'t connect to entered {field}');
             if( !empty($settings['sftp_root']) )

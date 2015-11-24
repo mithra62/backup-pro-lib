@@ -169,12 +169,7 @@ abstract class FileBackup extends TestFixture
      */
     public function testFileBackupFileBackupLocationsGoodValue()
     {
-        $this->session = $this->getSession();
-        $this->session->visit( $this->url('settings_files') );
-        $page = $this->session->getPage();
-        $page->findById('backup_file_location' )->setValue(dirname(__FILE__));
-        $page->findButton('m62_settings_submit')->submit();
-    
+        $this->setupGoodFileBackupLocation();
         $this->assertNotTrue($this->session->getPage()->hasContent('Backup File Location is required'));
         $this->assertNotTrue($this->session->getPage()->hasContent('"fdsafdsa" isn\'t a valid regular expression or path on the system.'));
     }
