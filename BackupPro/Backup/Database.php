@@ -133,7 +133,7 @@ class Database extends AbstractBackup
                 continue; //we have a View most likely or something else silly    
             }
             
-            if( count( $this->getIgnoreTables() ) >= 1 && in_array($table['Name'], $this->getIgnoreTables()) )
+            if( count( $this->getIgnoreTables() ) >= 1 && in_array(trim($table['Name']), $this->getIgnoreTables()) )
             {
                 $engine->writeCommentBlock('Skipping '.$table['Name'].' due to configuration');
                 continue;
@@ -142,7 +142,8 @@ class Database extends AbstractBackup
             $progress->writeLog('backup_progress_bar_table_start'.$table['Name'], $total, $count);
             $engine->writeCommentBlock('Table Data For: '.$table['Name'].' ('.$table['Rows'].' Rows)');
             $include_data = true;
-            if( count($this->getIgnoreTableData()) >= 1 && in_array($table['Name'], $this->getIgnoreTableData()) )
+            
+            if( count($this->getIgnoreTableData()) >= 1 && in_array(trim($table['Name']), $this->getIgnoreTableData()) )
             {
                 $include_data = false;
             }
@@ -360,7 +361,16 @@ class Database extends AbstractBackup
      */
     public function setIgnoreTables(array $tables = array())
     {
-        $this->ignore_tables = $tables;
+        $_tables = array();
+        foreach($tables AS $k => $v)
+        {
+            if( trim($v) != '' )
+            {
+                $_tables[] = trim($v);
+            }
+                
+        }
+        $this->ignore_tables = $_tables;
         return $this;
     }
     
@@ -382,7 +392,16 @@ class Database extends AbstractBackup
      */
     public function setIgnoreTableData(array $tables = array())
     {
-        $this->ignore_table_data = $tables;
+        $_tables = array();
+        foreach($tables AS $k => $v)
+        {
+            if( trim($v) != '' )
+            {
+                $_tables[] = trim($v);
+            }
+        
+        }
+        $this->ignore_table_data = $_tables;
         return $this;
     }
     
