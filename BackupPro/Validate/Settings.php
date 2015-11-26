@@ -157,6 +157,11 @@ class Settings extends Validate
         return $this;
     }
     
+    /**
+     * Validates the php backup method select chunk limit
+     * @param number $limit
+     * @return \mithra62\BackupPro\Validate\Settings
+     */
     public function phpBackupMethodSelectChunkLimit($limit)
     {
         $this->rule('required', 'php_backup_method_select_chunk_limit')->message('SELECT Chunk Limit is required');
