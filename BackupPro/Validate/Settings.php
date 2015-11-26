@@ -157,6 +157,13 @@ class Settings extends Validate
         return $this;
     }
     
+    public function phpBackupMethodSelectChunkLimit($limit)
+    {
+        $this->rule('required', 'php_backup_method_select_chunk_limit')->message('SELECT Chunk Limit is required');
+        $this->rule('numeric', 'php_backup_method_select_chunk_limit')->message('SELECT Chunk Limit must be a number');
+        return $this;
+    }
+    
     /**
      * Validates the database restore method setting value
      * @param array $data
@@ -621,6 +628,11 @@ class Settings extends Validate
         if( isset($data['cron_query_key']) )
         {
             $this->cronQueryKey( $data['cron_query_key'] );
+        }
+        
+        if( isset($data['php_backup_method_select_chunk_limit']) )
+        {
+            $this->phpBackupMethodSelectChunkLimit( $data['php_backup_method_select_chunk_limit'] );
         }
     
         $this->val($data);
