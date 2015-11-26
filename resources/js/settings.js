@@ -11,6 +11,10 @@ jQuery(document).ready(function() {
 	{
 		jQuery("#mysqldump_command_wrap").show();
 	}
+	else
+	{
+		jQuery("#php_backup_method_select_chunk_limit_wrap").show();
+	}
 
 	if(jQuery("#db_restore_method").val() == "mysql")
 	{
@@ -37,10 +41,12 @@ jQuery(document).ready(function() {
 		if(new_assign == def_assign)
 		{
 			jQuery("#mysqldump_command_wrap").hide();
+			jQuery("#php_backup_method_select_chunk_limit_wrap").show();
 		}
 		else
 		{
 			jQuery("#mysqldump_command_wrap").show();
+			jQuery("#php_backup_method_select_chunk_limit_wrap").hide();
 		}
 	});	
 

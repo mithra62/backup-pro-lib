@@ -40,4 +40,5 @@ $lang = array(
     'storage_location_removed' => 'Storage Location Removed',
     'storage_location_status' => 'Active',
     'storage_location_status_instructions' => 'Should this Storage Location be used?',
+    'delete_storage_confirm' => 'Are you sure you want to remove the below Storage Location?',
 );

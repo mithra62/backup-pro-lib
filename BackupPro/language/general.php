@@ -299,6 +299,9 @@ Please don\'t respond to this email; all emails are automatically deleted.',
 'enter_license' => 'Enter License',
 'purchase_a_license' => 'Purchase a License',
 'setup_storage_location' => 'Setup Storage Location',
+    
+    'regex_file_exclude' => 'Regular Expressions on Exclude?',
+    'regex_file_exclude_instructions' => 'If you like, Backup Pro allows for regular expression use for defining what files to exclude. Be careful though! This can increase your file backup time depending on your setup.',
 ''=>''
 		
 );
