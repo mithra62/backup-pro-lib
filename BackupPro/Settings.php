@@ -83,7 +83,7 @@ class Settings extends m62Settings
         'db_backup_ignore_table_data' => array(), //which tables should we not bother grabbing the data for?
         'mysqldump_command' => 'mysqldump',
         'mysqlcli_command' => 'mysql',
-        'php_backup_method_select_chunk_limit' => '50',
+        'php_backup_method_select_chunk_limit' => 250,
         'system_command_function' => 'proc_open', //exec
         'regex_file_exclude' => '0',
         'dashboard_recent_total' => '5',
