@@ -122,6 +122,7 @@ class Console implements BackupPro
             switch($args['backup'])
             {
                 case 'files':
+                case 'file':
                     $this->actionFile();
                 break;
                 case 'integrity':
@@ -134,21 +135,34 @@ class Console implements BackupPro
         }
     }
     
+    /**
+     * Wrapper to output any system errors BEFORE anything else
+     * @return void
+     */
     protected function displayErrors()
     {
         if( $this->errors )
         {
-            $this->console->outputLine('');
-            
+
+            $this->console->outputLine();
+            $this->console->outputLine('uh_oh_there_are_issues');
             $this->console->outputPageBreak();
+            
             foreach($this->errors AS $type => $value)
             {
                 $this->console->outputError($value);
             }
             $this->console->outputPageBreak();
+            $this->console->outputLine('fix_console_errors_instructions');
+            exit;
         }
     }
     
+    /**
+     * Displays the Console Help screen
+     * @param \cli\Arguments $args
+     * @return void
+     */
     protected function displayHelp(\cli\Arguments $args)
     {
         $this->console->outputPageBreak();
@@ -167,8 +181,11 @@ class Console implements BackupPro
     {
         $error = $this->services['errors'];
         $backup = $this->services['backup']->setStoragePath($this->settings['working_directory']);
-        $errors = $error->clearErrors()->checkStorageLocations($this->settings['storage_details'])->checkBackupDirs($backup->getStorage())->getErrors();
+        $errors = $error->clearErrors()->checkStorageLocations($this->settings['storage_details'])
+                                       ->checkBackupDirs($backup->getStorage())
+                                       ->getErrors();
     
+        $this->displayErrors();
         $db_info = $this->platform->getDbCredentials();
         $backup_paths = array();
         $backup_paths['database'] = $backup->setDbInfo($db_info)->database($db_info['database'], $this->settings, $this->services['shell']);
@@ -184,13 +201,20 @@ class Console implements BackupPro
     {
         $error = $this->services['errors'];
         $backup = $this->services['backup']->setStoragePath($this->settings['working_directory']);
-        $errors = $error->clearErrors()->checkStorageLocations($this->settings['storage_details'])->checkBackupDirs($backup->getStorage())->getErrors();
-    
+        $this->errors = $error->clearErrors()->checkStorageLocations($this->settings['storage_details'])
+                                             ->checkBackupDirs($backup->getStorage())
+                                             ->checkFileBackupLocations($this->settings['backup_file_location'])
+                                             ->getErrors();
+        
+        $this->displayErrors();
         $backup_paths = array();
         $backup_paths['files'] = $backup->files($this->settings, $this->services['files'], $this->services['regex']);
         $this->cleanup($backup)->notify($notify, $backup_paths, $backup);
     }
     
+    /**
+     * The integrity agent route
+     */
     public function actionIntegrity()
     {
         @ini_set('memory_limit', -1);
@@ -198,7 +222,7 @@ class Console implements BackupPro
     
         //grab the backup and storage objects and set them up
         $backup = $this->services['backups']->setLocations($this->settings['storage_details'])
-        ->setBackupPath($this->settings['working_directory']);
+                       ->setBackupPath($this->settings['working_directory']);
         $storage = $this->services['backup']->setStoragePath($this->settings['working_directory']);
         $backup->getIntegrity()->setFile($this->services['files'])->setStorage($storage->getStorage());
         //first, check the backup state
