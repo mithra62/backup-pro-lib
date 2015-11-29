@@ -27,7 +27,7 @@ class Console extends m62Console
         $args = parent::getArgs($strict, $force);
         $args->addOption(array('backup', 'B'), array(
             'default'     => 'database',
-            'description' => ''));
+            'description' => '[file] [database] [integrity]'));
         $args->parse();
         return $args;
     }

@@ -12,6 +12,7 @@
 				<exclude name="**/vendor/**"></exclude>
 				<exclude name="**composer.**"></exclude>
 				<exclude name="**/resources/**"></exclude>
+				<exclude name="**/cli.config.php"></exclude>
 			</fileset>
 		</copy>
     </target>
