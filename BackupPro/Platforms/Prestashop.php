@@ -30,7 +30,7 @@ class Prestashop extends m62Prestashop implements PlatformInterface
      */
     public function getBackupCronCommands(array $settings)
     {
-        $url = $this->getSiteUrl();
+        $url = $this->presta_context->link->getModuleLink('backup_pro', 'cron');
 		return array(
 			 'file_backup' => array('url' => $url.'?backup_pro='.$settings['cron_query_key'].'&backup=files&type=file', 'cmd' => 'curl "'.$url.'?backup_pro='.$settings['cron_query_key'].'&backup=files&type=file"'),
 			 'db_backup' => array('url' => $url.'?backup_pro='.$settings['cron_query_key'].'&backup=files&type=db', 'cmd' => 'curl "'.$url.'?backup_pro='.$settings['cron_query_key'].'&backup=files&type=db"')
@@ -44,7 +44,7 @@ class Prestashop extends m62Prestashop implements PlatformInterface
      */
     public function getIaCronCommands(array $settings)
     {
-        $url = $this->getSiteUrl();
+        $url = $this->presta_context->link->getModuleLink('backup_pro', 'cron');
 		return array(
 			'verify_backup_stability' => array('url' => $url.'?backup_pro='.$settings['cron_query_key'].'&integrity=check', 'cmd' => '0 * * * * * curl "'.$url.'?backup_pro='.$settings['cron_query_key'].'&integrity=check"')
 		);
