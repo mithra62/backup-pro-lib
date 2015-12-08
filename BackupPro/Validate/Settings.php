@@ -70,6 +70,11 @@ class Settings extends Validate
             }
         }
         
+        if( $existing_settings['working_directory'] != $path )
+        {
+            $this->rule('dir_empty', 'working_directory')->message('{field} has to be an empty directory');
+        }
+        
         $this->rule('required', 'working_directory')->message('{field} is required');
         $this->rule('writable', 'working_directory')->message('{field} has to be writable');
         $this->rule('dir', 'working_directory')->message('{field} has to be a directory');
