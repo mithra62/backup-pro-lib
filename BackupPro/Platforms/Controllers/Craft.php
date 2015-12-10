@@ -85,6 +85,8 @@ class Craft extends BaseController
         
         $variables['backup_meta'] = $backup_meta;
         $variables['backup_details'] = $backups;
+        $variables['selectedSubnavItem'] = (empty($variables['selectedSubnavItem']) ? 'dashboard' : $variables['selectedSubnavItem']);
+        $variables['tab_set'] = (empty($variables['tab_set']) ? '' : $variables['tab_set']);
         parent::renderTemplate($template, $variables, $return, $processOutput);
     }
 }

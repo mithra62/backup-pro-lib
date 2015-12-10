@@ -305,9 +305,13 @@ class Backups
             {
                 if( !is_dir($this->getDbBackupDir().'/'.$entry) && !in_array($entry, $ignore) )
                 {
+                    //now let's check we have a valid details entry
                     $file_data = $this->getDetails()->getDetails($path.DIRECTORY_SEPARATOR.$entry); 
-                    $file_data = $this->getBackupStorageData($file_data, $locations, $drivers);
-                    $data['database'][$file_data['created_date']] = $file_data;
+                    if( $file_data )
+                    {
+                        $file_data = $this->getBackupStorageData($file_data, $locations, $drivers);
+                        $data['database'][$file_data['created_date']] = $file_data;
+                    }
                 }
             }
             	
@@ -322,9 +326,13 @@ class Backups
             {
                 if( !is_dir($this->getFileBackupDir().'/'.$entry) && !in_array($entry, $ignore) )
                 {
+                    //now let's check we have a valid details entry
                     $file_data = $this->getDetails()->getDetails($path.DIRECTORY_SEPARATOR.$entry); 
-                    $file_data = $this->getBackupStorageData($file_data, $locations, $drivers);
-                    $data['files'][$file_data['created_date']] = $file_data;
+                    if( $file_data )
+                    {
+                        $file_data = $this->getBackupStorageData($file_data, $locations, $drivers);
+                        $data['files'][$file_data['created_date']] = $file_data;
+                    }
                 }
             }
             krsort($data['files'], SORT_NUMERIC);
