@@ -134,17 +134,8 @@ class Wordpress
      * @return unknown|string
      */
     public function getPost($index, $default = false)
-    {
-        if ( isset($_POST[$index]) )
-        {
-            return $_POST[$index];
-        }
-        elseif( isset( $_GET[$index]) )
-        {
-            return $_GET[$index];
-        }
-        
-        return $default;
+    {   
+        return $this->platform->getPost($index, $default);
     }
     
     /**
