@@ -22,7 +22,7 @@
 			</fileset>
 		</copy>
 	
-		<echo msg="Copying themes directory to ./builds/EEMCS/themes..." />
+		<echo msg="Copying themes directory to ${backup_pro_theme_base}" />
 		<copy todir="${backup_pro_theme_base}">
 			<fileset dir="../backup-pro-lib/resources">
 				<include name="**"></include>
