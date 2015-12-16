@@ -39,7 +39,7 @@ abstract class FreshInstall extends TestFixture
             'browserName' => 'firefox',
             'baseUrl' => 'http://eric.ee2.clean.mithra62.com',
             'sessionStrategy' => 'shared',
-        ),
+        )
     );
     
     public function testDashboardDefault()
