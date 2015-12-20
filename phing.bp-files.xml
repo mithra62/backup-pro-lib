@@ -28,5 +28,22 @@
 				<include name="**"></include>
 			</fileset>
 		</copy>
+		
+		<if>
+		 <equals arg1="${platform_name}" arg2="Prestashop" />
+		 <then>
+		   <echo message="Renaming images to img" />
+		 	<copy todir="${platform_theme_base}/img" haltonerror="false">
+				<fileset dir="${platform_theme_base}/images">
+					<include name="**" />
+				</fileset>		 	
+		 	</copy>
+		 	<delete dir="${platform_theme_base}/images" />
+		 </then>
+		 <else>
+		   <echo message="Skipping renmae of images to img" />
+		 </else>
+		</if>
+		
 	</target>
 </project>
