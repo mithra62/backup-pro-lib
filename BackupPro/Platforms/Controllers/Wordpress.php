@@ -77,11 +77,16 @@ class Wordpress
         
         $this->m62->setDbConfig($this->platform->getDbCredentials());
         $this->settings = $this->services['settings']->get();
-        $this->errors = $this->services['errors']->checkWorkingDirectory($this->settings['working_directory'])
+        $errors = $this->services['errors']->checkWorkingDirectory($this->settings['working_directory'])
                                                  ->checkStorageLocations($this->settings['storage_details'])
-                                                 ->licenseCheck($this->settings['license_number'], $this->services['license'])
-                                                 ->getErrors();
+                                                 ->licenseCheck($this->settings['license_number'], $this->services['license']);
         
+        if( $errors->totalErrors() == '0' )
+        {
+            $errors = $errors->checkBackupState($this->services['backups'], $this->settings);
+        }
+        
+        $this->errors = $errors->getErrors();
         $this->view_helper = new WordpressView($this->services['lang'], $this->services['files'], $this->services['settings'], $this->services['encrypt'], $this->platform);
         $this->m62->setService('view_helpers', function($c) {
             return $this->view_helper;
@@ -129,17 +134,8 @@ class Wordpress
      * @return unknown|string
      */
     public function getPost($index, $default = false)
-    {
-        if ( isset($_POST[$index]) )
-        {
-            return $_POST[$index];
-        }
-        elseif( isset( $_GET[$index]) )
-        {
-            return $_GET[$index];
-        }
-        
-        return $default;
+    {   
+        return $this->platform->getPost($index, $default);
     }
     
     /**

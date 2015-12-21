@@ -193,6 +193,54 @@ abstract class DbBackup extends TestFixture
         $page->findButton('m62_settings_submit')->submit();
     
         $this->assertNotTrue($this->session->getPage()->hasContent('Mysqlcli Command is required'));
+    }
+    
+    /**
+     * @depends testDbBackupDbMysqlcliGoodValue
+     */
+    public function testSelectChunkLimitNoValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_db') );
+        $page = $this->session->getPage();
+        $page->findById('db_backup_method' )->selectOption('php');
+        $page->findById('php_backup_method_select_chunk_limit' )->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertTrue($this->session->getPage()->hasContent('SELECT Chunk Limit is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('SELECT Chunk Limit must be a number'));
+    }
+    
+    /**
+     * @depends testSelectChunkLimitNoValue
+     */
+    public function testSelectChunkLimitStringValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_db') );
+        $page = $this->session->getPage();
+        $page->findById('db_backup_method' )->selectOption('php');
+        $page->findById('php_backup_method_select_chunk_limit')->setValue('fdsafdsa');
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertNotTrue($this->session->getPage()->hasContent('SELECT Chunk Limit is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('SELECT Chunk Limit must be a number'));
+    }
+    
+    /**
+     * @depends testSelectChunkLimitStringValue
+     */
+    public function testSelectChunkLimitGoodValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_db') );
+        $page = $this->session->getPage();
+        $page->findById('db_backup_method' )->selectOption('php');
+        $page->findById('php_backup_method_select_chunk_limit')->setValue(300);
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertNotTrue($this->session->getPage()->hasContent('SELECT Chunk Limit is required'));
+        $this->assertNotTrue($this->session->getPage()->hasContent('SELECT Chunk Limit must be a number'));
         $this->uninstall_addon();
     }
     

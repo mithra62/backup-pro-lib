@@ -169,12 +169,7 @@ abstract class FileBackup extends TestFixture
      */
     public function testFileBackupFileBackupLocationsGoodValue()
     {
-        $this->session = $this->getSession();
-        $this->session->visit( $this->url('settings_files') );
-        $page = $this->session->getPage();
-        $page->findById('backup_file_location' )->setValue(dirname(__FILE__));
-        $page->findButton('m62_settings_submit')->submit();
-    
+        $this->setupGoodFileBackupLocation();
         $this->assertNotTrue($this->session->getPage()->hasContent('Backup File Location is required'));
         $this->assertNotTrue($this->session->getPage()->hasContent('"fdsafdsa" isn\'t a valid regular expression or path on the system.'));
     }
@@ -205,6 +200,36 @@ abstract class FileBackup extends TestFixture
         $page->findButton('m62_settings_submit')->submit();
     
         $this->assertNotTrue($this->session->getPage()->hasContent('"fdsafdsa" isn\'t a valid regular expression or path on the system.'));
+    }
+
+    /**
+     * @depends testFileBackupExcludePathsGoodPathValue
+     */
+    public function testFileBackupExcludeRegexCheck()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_files') );
+    
+        $page = $this->session->getPage();
+        $page->findById('regex_file_exclude')->check();
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertTrue($this->session->getPage()->findById('regex_file_exclude')->isChecked());
+    }
+    
+    /**
+     * @depends testFileBackupExcludeRegexCheck
+     */
+    public function testFileBackupExcludeRegexUnCheck()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_files') );
+    
+        $page = $this->session->getPage();
+        $page->findById('regex_file_exclude')->uncheck();
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertNotTrue($this->session->getPage()->findById('regex_file_exclude')->isChecked());
         $this->uninstall_addon();
     }
     

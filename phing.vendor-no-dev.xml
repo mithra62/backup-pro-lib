@@ -102,21 +102,6 @@
 			</fileset>
 		</copy>	
 					
-        <echo msg="(${platform_name}) Copying PHPMailer Files..." />
-		<copy todir="${vendor_path}/phpmailer/phpmailer">
-			<fileset dir="../mithra62-lib/vendor/phpmailer/phpmailer">
-				<include name="**"></include>
-				<exclude name="**/.git/**"></exclude>
-				<exclude name="**/docs/**"></exclude>
-				<exclude name="**/examples/**"></exclude>
-				<exclude name=".gitignore"></exclude>
-				<exclude name="**.yml"></exclude>
-				<exclude name=".gitignore"></exclude>
-				<exclude name="**.md"></exclude>
-				<exclude name="**.dist"></exclude>
-			</fileset>
-		</copy>	
-					
         <echo msg="(${platform_name}) Copying PHP Sec Lib Files..." />
 		<copy todir="${vendor_path}/phpseclib/phpseclib/phpseclib">
 			<fileset dir="../mithra62-lib/vendor/phpseclib/phpseclib/phpseclib">
@@ -158,10 +143,24 @@
 				<include name="**"></include>
 			</fileset>
 		</copy>
+		
+		<echo msg="(${platform_name}) Copying Relative Time Files..." />
+		<copy todir="${vendor_path}/mpratt/relativetime/Lib/RelativeTime">
+			<fileset dir="../mithra62-lib/vendor/mpratt/relativetime/Lib/RelativeTime">
+				<include name="**"></include>
+			</fileset>
+		</copy>
 					
         <echo msg="(${platform_name}) Copying Symfony Files..." />
 		<copy todir="${vendor_path}/symfony">
 			<fileset dir="../mithra62-lib/vendor/symfony">
+				<include name="**"></include>
+			</fileset>
+		</copy>
+		
+		<echo msg="(${platform_name}) Copying Swiftmailer Files..." />
+		<copy todir="${vendor_path}/swiftmailer/swiftmailer/lib">
+			<fileset dir="../mithra62-lib/vendor/swiftmailer/swiftmailer/lib">
 				<include name="**"></include>
 			</fileset>
 		</copy>
@@ -198,6 +197,13 @@
 				<include name="**"></include>
 			</fileset>
 		</copy>
+		
+		<echo msg="(${platform_name}) Copying WP CLI Files..." />
+		<copy todir="${vendor_path}/wp-cli/php-cli-tools/lib/cli">
+		<fileset dir="../mithra62-lib/vendor/wp-cli/php-cli-tools/lib/cli">
+			<include name="**"></include>
+		</fileset>
+		</copy>		
 					
         <echo msg="(${platform_name}) Copying Autoload File..." />
 		<copy toFile="${vendor_path}/autoload.php" file="../mithra62-lib/vendor/autoload.php" />

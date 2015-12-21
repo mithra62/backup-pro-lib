@@ -111,7 +111,7 @@ class Restore extends Backup
      * @param array $options
      * @param \mithra62\Files $file
      */
-    public function files(array $backup, array $options, \mithra62\Files $file)
+    public function files(array $options, \mithra62\Files $file, \mithra62\Regex $regex)
     {
         
     }

@@ -150,3 +150,8 @@ div.bp_editable {
 {
 	line-height:1em;
 }
+
+.icon-AdminBackupProDashboard:before
+{
+	content: "";
+}

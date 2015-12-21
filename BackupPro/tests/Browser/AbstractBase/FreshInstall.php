@@ -39,7 +39,7 @@ abstract class FreshInstall extends TestFixture
             'browserName' => 'firefox',
             'baseUrl' => 'http://eric.ee2.clean.mithra62.com',
             'sessionStrategy' => 'shared',
-        ),
+        )
     );
     
     public function testDashboardDefault()
@@ -101,6 +101,24 @@ abstract class FreshInstall extends TestFixture
         $this->assertTrue($this->session->getPage()->hasContent('Setup Storage Location'));
         $this->assertTrue($this->session->getPage()->hasContent('No File Backup Locations have been configured.'));
         $this->assertTrue($this->session->getPage()->hasContent('Set File Backup Locations'));
+    }
+    
+    /**
+     * @depends testBackupFilesConfirmDefault
+     */
+    public function testNoBackupExistMessaging()
+    {
+        $this->session = $this->getSession();
+        $this->setupGoodWorkingDirectory();
+        $this->setupGoodLicenseKey();
+        $this->setupLocalStorageLocation( $this->ts('local_backup_store_location') );
+        $this->setupGoodFileBackupLocation();
+
+        $this->assertTrue($this->session->getPage()->hasContent('No database backups exist yet'));
+        $this->assertTrue($this->session->getPage()->hasContent('Would you like to take a database backup now?'));
+        
+        $this->assertTrue($this->session->getPage()->hasContent('No file backups exist yet'));
+        $this->assertTrue($this->session->getPage()->hasContent('Would you like to take a file backup now?'));
         $this->uninstall_addon();
     }
 

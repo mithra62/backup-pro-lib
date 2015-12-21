@@ -85,11 +85,7 @@ abstract class General extends TestFixture
      */
     public function testGeneralViewWorkingdirecotryGoodValue()
     {
-        $this->session = $this->getSession();
-        $this->session->visit( $this->url('settings_general') );
-        $page = $this->session->getPage();
-        $page->findById('working_directory' )->setValue( $this->ts('working_directory') );
-        $page->findButton('m62_settings_submit')->submit();
+        $this->setupGoodWorkingDirectory();
     
         $this->assertNotTrue($this->session->getPage()->hasContent('Working Directory is required'));
         $this->assertNotTrue($this->session->getPage()->hasContent('Working Directory has to be writable'));

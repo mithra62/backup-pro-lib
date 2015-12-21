@@ -25,15 +25,61 @@ use mysqli;
 class Settings extends Validate
 {   
     /**
+     * The previously set settings 
+     * @var array
+     */
+    protected $existing_settings = array();
+    
+    /**
+     * Sets the previously set settings for the Validation object to use
+     * @param array $settings
+     * @return \mithra62\BackupPro\Validate\Settings
+     */
+    public function setExistingSettings(array $settings)
+    {
+        $this->existing_settings = $settings;
+        return $this;
+    }
+    
+    /**
+     * Returns the previously set settings 
+     * @return array
+     */
+    public function getExistingSettings()
+    {
+        return $this->existing_settings;
+    }
+    
+    /**
      * Validates the backup store location rules
      * @return \mithra62\BackupPro\Validate\Settings
      */
-    public function workingDirectory()
+    public function workingDirectory($path)
     {
+        //ensure we don't have a local storage location setup for this path already
+        $existing_settings = $this->getExistingSettings();
+        if( !empty($existing_settings['storage_details']) && is_array($existing_settings['storage_details']) )
+        {
+            foreach($existing_settings['storage_details'] AS $key => $value)
+            {
+                if( $value['storage_location_driver'] =='local' && $value['backup_store_location'] == $path )
+                {
+                    $this->rule('false', 'working_directory')->message('{field} can\'t be set as a Local Storage path');
+                    break;
+                }
+            }
+        }
+        
+        if( $existing_settings['working_directory'] != $path )
+        {
+            $this->rule('dir_empty', 'working_directory')->message('{field} has to be an empty directory');
+        }
+        
         $this->rule('required', 'working_directory')->message('{field} is required');
         $this->rule('writable', 'working_directory')->message('{field} has to be writable');
         $this->rule('dir', 'working_directory')->message('{field} has to be a directory');
         $this->rule('readable', 'working_directory')->message('{field} has to be readable');
+        
         return $this;
     }
     
@@ -113,6 +159,18 @@ class Settings extends Validate
             $this->rule('required', 'mysqldump_command')->message('{field} is required');
         }
         
+        return $this;
+    }
+    
+    /**
+     * Validates the php backup method select chunk limit
+     * @param number $limit
+     * @return \mithra62\BackupPro\Validate\Settings
+     */
+    public function phpBackupMethodSelectChunkLimit($limit)
+    {
+        $this->rule('required', 'php_backup_method_select_chunk_limit')->message('SELECT Chunk Limit is required');
+        $this->rule('numeric', 'php_backup_method_select_chunk_limit')->message('SELECT Chunk Limit must be a number');
         return $this;
     }
     
@@ -459,7 +517,7 @@ class Settings extends Validate
     {
         if( isset($data['working_directory']) )
         {
-            $this->workingDirectory();
+            $this->workingDirectory($data['working_directory']);
         }
     
         if( isset($data['dashboard_recent_total']) )
@@ -580,6 +638,11 @@ class Settings extends Validate
         if( isset($data['cron_query_key']) )
         {
             $this->cronQueryKey( $data['cron_query_key'] );
+        }
+        
+        if( isset($data['php_backup_method_select_chunk_limit']) )
+        {
+            $this->phpBackupMethodSelectChunkLimit( $data['php_backup_method_select_chunk_limit'] );
         }
     
         $this->val($data);

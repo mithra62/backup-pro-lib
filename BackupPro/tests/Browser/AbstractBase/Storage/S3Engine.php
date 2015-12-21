@@ -51,7 +51,7 @@ abstract class S3Engine extends TestFixture
         $this->install_addon();
         
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_rcf_storage') );
+        $this->session->visit( $this->url('storage_add_s3storage') );
         $page = $this->session->getPage();
         $page->findById('storage_location_name')->setValue('');
         $page->findButton('m62_settings_submit')->submit();
@@ -65,9 +65,9 @@ abstract class S3Engine extends TestFixture
     public function testAddS3StorageGoodName()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_rcf_storage') );
+        $this->session->visit( $this->url('storage_add_s3storage') );
         $page = $this->session->getPage();
-        $page->findById('storage_location_name')->setValue('My Rackspace Storage');
+        $page->findById('storage_location_name')->setValue('My Amazon S3 Storage');
         $page->findButton('m62_settings_submit')->submit();
     
         $this->assertNotTrue($this->session->getPage()->hasContent('Storage Location Name is required'));
@@ -76,92 +76,92 @@ abstract class S3Engine extends TestFixture
     /**
      * @depends testAddS3StorageGoodName
      */
-    public function testAddS3UsernameNoValue()
+    public function testAddS3AccessKeyNoValue()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_rcf_storage') );
+        $this->session->visit( $this->url('storage_add_s3storage') );
         $page = $this->session->getPage();
-        $page->findById('rcf_username')->setValue('');
+        $page->findById('s3_access_key')->setValue('');
         $page->findButton('m62_settings_submit')->submit();
     
-        $this->assertTrue($this->session->getPage()->hasContent('Rcf Username is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('S3 Access Key is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('Can\'t connect to S3 Access Key'));
     }
     
     /**
-     * @depends testAddS3UsernameNoValue
+     * @depends testAddS3AccessKeyNoValue
      */
-    public function testAddS3UsernameGoodValue()
+    public function testAddS3AccessKeyGoodValue()
     {
-        $rcf_creds = $this->getRcfCreds();
+        $rcf_creds = $this->getS3Creds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_rcf_storage') );
+        $this->session->visit( $this->url('storage_add_s3storage') );
         $page = $this->session->getPage();
-        $page->findById('rcf_username')->setValue( $rcf_creds['rcf_username'] );
+        $page->findById('s3_access_key')->setValue( $rcf_creds['s3_access_key'] );
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertNotTrue($this->session->getPage()->hasContent('Rcf Username is required'));
-    }
-    
-    /**
-     * @depends testAddRcfUsernameGoodValue
-     */
-    public function testAddRcfApiKeyNoValue()
-    {
-        $rcf_creds = $this->getRcfCreds();
-        $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_rcf_storage') );
-        $page = $this->session->getPage();
-        $page->findById('rcf_api')->setValue( '' );
-        $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertTrue($this->session->getPage()->hasContent('Rcf Api is required'));
-    }
-    
-    /**
-     * @depends testAddRcfApiKeyNoValue
-     */
-    public function testAddRcfApiKeyGoodValue()
-    {
-        $rcf_creds = $this->getRcfCreds();
-        $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_rcf_storage') );
-        $page = $this->session->getPage();
-        $page->findById('rcf_api')->setValue( $rcf_creds['rcf_api'] );
-        $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertNotTrue($this->session->getPage()->hasContent('Rcf Api is required'));
-    }
-    
 
-
-    /**
-     * @depends testAddRcfApiKeyGoodValue
-     */
-    public function testAddRcfContainerNoValue()
-    {
-        $rcf_creds = $this->getRcfCreds();
-        $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_rcf_storage') );
-        $page = $this->session->getPage();
-        $page->findById('rcf_container')->setValue( '' );
-        $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertTrue($this->session->getPage()->hasContent('Rcf Container is required'));
+        $this->assertNotTrue($this->session->getPage()->hasContent('S3 Access Key is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('Can\'t connect to S3 Access Key'));
     }
     
     /**
-     * @depends testAddRcfContainerNoValue
+     * @depends testAddS3AccessKeyGoodValue
      */
-    public function testAddRcfContainerGoodValue()
+    public function testAddS3SecretKeyNoValue()
     {
-        $rcf_creds = $this->getRcfCreds();
+        $rcf_creds = $this->getS3Creds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_rcf_storage') );
+        $this->session->visit( $this->url('storage_add_s3storage') );
         $page = $this->session->getPage();
-        $page->findById('rcf_container')->setValue( $rcf_creds['rcf_container'] );
+        $page->findById('s3_secret_key')->setValue( '' );
         $page->findButton('m62_settings_submit')->submit();
     
-        $this->assertNotTrue($this->session->getPage()->hasContent('Rcf Container is required'));
+        $this->assertTrue($this->session->getPage()->hasContent('S3 Secret Key is required'));
+    }
+    
+    /**
+     * @depends testAddS3SecretKeyNoValue
+     */
+    public function testAddS3SecretKeyGoodValue()
+    {
+        $rcf_creds = $this->getS3Creds();
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('storage_add_s3storage') );
+        $page = $this->session->getPage();
+        $page->findById('s3_secret_key')->setValue( $rcf_creds['s3_secret_key'] );
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertNotTrue($this->session->getPage()->hasContent('S3 Secret Key is required'));
+    }
+    
+    /**
+     * @depends testAddS3SecretKeyGoodValue
+     */
+    public function testAddS3BucketNoValue()
+    {
+        $rcf_creds = $this->getS3Creds();
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('storage_add_s3storage') );
+        $page = $this->session->getPage();
+        $page->findById('s3_bucket')->setValue( '' );
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertTrue($this->session->getPage()->hasContent('S3 Bucket is required'));
+    }
+    
+    /**
+     * @depends testAddS3BucketNoValue
+     */
+    public function testAddS3BucketGoodValue()
+    {
+        $rcf_creds = $this->getS3Creds();
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('storage_add_s3storage') );
+        $page = $this->session->getPage();
+        $page->findById('s3_bucket')->setValue( $rcf_creds['s3_bucket'] );
+        $page->findButton('m62_settings_submit')->submit();
+    
+        $this->assertNotTrue($this->session->getPage()->hasContent('S3 Bucket is required'));
     }
     
     
@@ -169,12 +169,12 @@ abstract class S3Engine extends TestFixture
     
     
     /**
-     * @depends testAddRcfContainerGoodValue
+     * @depends testAddS3BucketGoodValue
      */
-    public function testAddRcfStorageLocationStatusChecked()
+    public function testAddS3StorageStatusChecked()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_rcf_storage') );
+        $this->session->visit( $this->url('storage_add_s3storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_status')->check();
@@ -184,12 +184,12 @@ abstract class S3Engine extends TestFixture
     }
     
     /**
-     * @depends testAddRcfStorageLocationStatusChecked
+     * @depends testAddS3StorageStatusChecked
      */
-    public function testAddRcfStorageLocationStatusUnChecked()
+    public function testAddS3StorageStatusUnChecked()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_rcf_storage') );
+        $this->session->visit( $this->url('storage_add_s3storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_status')->uncheck();
@@ -200,12 +200,12 @@ abstract class S3Engine extends TestFixture
     }
     
     /**
-     * @depends testAddRcfStorageLocationStatusUnChecked
+     * @depends testAddS3StorageStatusUnChecked
      */
-    public function testAddRcfStorageLocationFileUseChecked()
+    public function testAddS3StorageFileUseChecked()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_rcf_storage') );
+        $this->session->visit( $this->url('storage_add_s3storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_file_use')->check();
@@ -215,12 +215,12 @@ abstract class S3Engine extends TestFixture
     }
     
     /**
-     * @depends testAddRcfStorageLocationFileUseChecked
+     * @depends testAddS3StorageFileUseChecked
      */
-    public function testAddRcfStorageLocationFileUseUnChecked()
+    public function testAddS3StorageFileUseUnChecked()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_rcf_storage') );
+        $this->session->visit( $this->url('storage_add_s3storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_file_use')->uncheck();
@@ -231,12 +231,12 @@ abstract class S3Engine extends TestFixture
     }
     
     /**
-     * @depends testAddRcfStorageLocationFileUseUnChecked
+     * @depends testAddS3StorageFileUseUnChecked
      */
-    public function testAddRcfStorageLocationDbUseChecked()
+    public function testAddS3StorageDbUseChecked()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_rcf_storage') );
+        $this->session->visit( $this->url('storage_add_s3storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_db_use')->check();
@@ -246,12 +246,12 @@ abstract class S3Engine extends TestFixture
     }
     
     /**
-     * @depends testAddRcfStorageLocationDbUseChecked
+     * @depends testAddS3StorageDbUseChecked
      */
-    public function testAddRcfStorageLocationDbUseUnChecked()
+    public function testAddS3StorageDbUseUnChecked()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_rcf_storage') );
+        $this->session->visit( $this->url('storage_add_s3storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_db_use')->uncheck();
@@ -262,12 +262,12 @@ abstract class S3Engine extends TestFixture
     }
     
     /**
-     * @depends testAddRcfStorageLocationDbUseUnChecked
+     * @depends testAddS3StorageDbUseUnChecked
      */
-    public function testAddRcfStorageLocationIncludePruneChecked()
+    public function testAddS3StorageIncludePruneChecked()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_rcf_storage') );
+        $this->session->visit( $this->url('storage_add_s3storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_include_prune')->check();
@@ -277,12 +277,12 @@ abstract class S3Engine extends TestFixture
     }
     
     /**
-     * @depends testAddRcfStorageLocationIncludePruneChecked
+     * @depends testAddS3StorageIncludePruneChecked
      */
-    public function testAddRcfStorageLocationIncludePruneUnChecked()
+    public function testAddS3StorageIncludePruneUnChecked()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_rcf_storage') );
+        $this->session->visit( $this->url('storage_add_s3storage') );
     
         $page = $this->session->getPage();
         $page->findById('storage_location_include_prune')->uncheck();
@@ -292,11 +292,11 @@ abstract class S3Engine extends TestFixture
     }
     
     /**
-     * @depends testAddRcfStorageLocationIncludePruneUnChecked
+     * @depends testAddS3StorageIncludePruneUnChecked
      */
-    public function testAddCompleteRcfStorage()
+    public function testAddCompleteS3Storage()
     {
-        $page = $this->setupRcfStorageLocation( );
+        $page = $this->setupS3StorageLocation( );
         $this->assertTrue($this->session->getPage()->hasContent('Created Date'));
         $this->assertNotTrue($this->session->getPage()->hasContent('No Storage Locations have been setup yet!'));
         

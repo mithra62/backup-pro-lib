@@ -80,12 +80,7 @@ abstract class License extends TestFixture
      */
     public function testLicenseKeyGoodValue()
     {
-        $this->session = $this->getSession();
-        $this->session->visit( $this->url('settings_license') );
-        $page = $this->session->getPage();
-        $page->findById('license_number')->setValue('5214af45-9bc9-4019-8af9-bc98c38802c1');
-        $page->findButton('m62_settings_submit')->submit();
-    
+        $this->setupGoodLicenseKey();
         $this->assertNotTrue($this->session->getPage()->hasContent('License Number is required'));
         $this->assertNotTrue($this->session->getPage()->hasContent('License Number isn\'t a valid license key'));
         $this->uninstall_addon();

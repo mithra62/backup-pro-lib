@@ -186,8 +186,8 @@ $lang = array(
 'click_to_add_note' => 'Click to add note...',
 'note' => 'Note',
 
-'no_db_backups_exist_yet' => 'No database backups exist yet; click <a href="%s">here</a> to take one.',
-'no_file_backups_exist_yet' => 'No file backups exist yet; click <a href="%s">here</a> to take one.',
+'no_db_backups_exist_yet' => 'No database backups exist yet ',
+'no_file_backups_exist_yet' => 'No file backups exist yet ',
 'unlimited' => 'Unlimited',
 'taken' => 'Taken',
 'remote_status' => 'Remote Status',
@@ -211,9 +211,11 @@ $lang = array(
 'db_verification_db_name_instructions' => 'To ensure your database backups are stable Backup Pro can import your backups into a temporary database. Ensure the database user for the site has full MySQL privledges for the input one.',
 'configure_integrity_agent_backup_missed_schedule' => 'Configure Missed Backup Email',
 'default_backup_missed_schedule_notify_email_subject' => '{{ site_name }} - Backup State Notification',
-'default_backup_missed_schedule_notify_email_message' => 'Hello,<br /><br />
+'default_backup_missed_schedule_notify_email_message' => '{{%FILTERS}}
+    
+Hello,<br /><br />
 
-A {{ backup_type }} backup hasn\'t been completed on {{ site_name }} since {{ last_backup_date }}. A {{ backup_type }} backup is expected to run every {{ backup_frequency }} day(s) so something is clearly wrong; you should investigate ASAP<br /><br />
+A {{ backup_type }} backup hasn\'t been completed on {{ site_name }} since {{ last_backup_date | m62.relative_time }}. A {{ backup_type }} backup is expected to run every {{ backup_frequency }} day(s) so something is clearly wrong; you should investigate ASAP<br /><br />
 
 {{ site_name }}<br />
 {{ site_url }}<br /><br />
@@ -292,6 +294,16 @@ Please don\'t respond to this email; all emails are automatically deleted.',
 'backup' => 'Backup',
 'manage_backups' => 'Manage Backups',    
 'pre_backup_setting_issue_blurb' => 'You\'re going to need to fix the below configuration errors before you can start taking backups',
+    
+'check_working_dir' => 'Check Working Directory',
+'enter_license' => 'Enter License',
+'purchase_a_license' => 'Purchase a License',
+'setup_storage_location' => 'Setup Storage Location',
+    
+    'regex_file_exclude' => 'Regular Expressions on Exclude?',
+    'regex_file_exclude_instructions' => 'If you like, Backup Pro allows for regular expression use for defining what files to exclude. Be careful though! This can increase your file backup time depending on your setup.',
+'uh_oh_there_are_issues' => 'Uh-oh... There are some issues...',
+'fix_console_errors_instructions' => 'You\'ll have to log into your site and configure Backup Pro to remove the above errors before you can continue. ',
 ''=>''
 		
 );

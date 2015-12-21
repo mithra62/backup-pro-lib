@@ -137,4 +137,43 @@ class Errors extends m62Errors
         return $this;
     }
     
+    /**
+     * Wraps up the backup state errors 
+     * @param \mithra62\BackupPro\Backups $backups
+     * @param array $settings
+     * @return \mithra62\BackupPro\Errors
+     */
+    public function checkBackupState(\mithra62\BackupPro\Backups $backups, array $settings)
+    {
+        $backup_data = $backups->setBackupPath($settings['working_directory'])->getAllBackups($settings['storage_details']);
+        $backup_meta = $backups->getBackupMeta($backup_data);
+        $integrity = $backups->getIntegrity();
+        
+        if( $settings['db_backup_alert_threshold'] >= 1 )
+        {
+            if( $backup_meta['database']['total_backups'] == 0 )
+            {
+                $this->setError('no_db_backups_exist_yet', 'no_db_backups_exist_yet');
+            }
+            else if( !$integrity->monitorDbBackupState($backup_meta['database'], $settings['db_backup_alert_threshold']) )
+            {
+                $this->setError('db_backup_past_expectation', 'db_backup_past_expectation_stub');
+            }
+        }
+        
+        if( $settings['file_backup_alert_threshold'] >= 1 && count($settings['backup_file_location']) >= 1 )
+        {
+            if( $backup_meta['files']['total_backups'] == 0 )
+            {
+                $this->setError('no_file_backups_exist_yet', 'no_file_backups_exist_yet');
+            }
+            else if( !$integrity->monitorFileBackupState($backup_meta['files'], $settings['file_backup_alert_threshold']) )
+            {
+                $this->setError('file_backup_past_expectation', 'file_backup_past_expectation_stub');
+            }
+        }
+        
+        return $this;
+    }
+    
 }

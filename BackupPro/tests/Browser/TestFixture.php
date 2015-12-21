@@ -178,4 +178,109 @@ class TestFixture extends BrowserTestCase
         
         return $page;
     }
+    
+    /**
+     * Sets up an Amazon S3 Storage Location for use
+     * @return \Behat\Mink\Element\DocumentElement
+     */
+    public function setupS3StorageLocation()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('storage_add_s3storage') );
+        
+        $rcf_creds = $this->getS3Creds();
+        $page = $this->session->getPage();
+        $page->findById('storage_location_name')->setValue('My S3 Storage');
+        $page->findById('s3_access_key')->setValue($rcf_creds['s3_access_key']);
+        $page->findById('s3_secret_key')->setValue($rcf_creds['s3_secret_key']);
+        $page->findById('s3_bucket')->setValue($rcf_creds['s3_bucket']);
+        $page->findButton('m62_settings_submit')->submit();
+        
+        return $page;
+    }
+    
+    /**
+     * Sets up a Dropbox Storage Location for use
+     * @return \Behat\Mink\Element\DocumentElement
+     */
+    public function setupDropboxStorageLocation()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('storage_add_dropbox_storage') );
+        
+        $rcf_creds = $this->getDropboxCreds();
+        $page = $this->session->getPage();
+        $page->findById('storage_location_name')->setValue('My Dropbox Storage');
+        $page->findById('dropbox_access_token')->setValue($rcf_creds['dropbox_access_token']);
+        $page->findById('dropbox_app_secret')->setValue($rcf_creds['dropbox_app_secret']);
+        $page->findById('dropbox_prefix')->setValue($rcf_creds['dropbox_prefix']);
+        $page->findButton('m62_settings_submit')->submit();
+        
+        return $page;
+    }
+    
+    /**
+     * Sets up a SFTP Storage Location for use
+     * @return \Behat\Mink\Element\DocumentElement
+     */
+    public function setupSftpStorageLocation()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('storage_add_sftp_storage') );
+        
+        $rcf_creds = $this->getSftpCreds();
+        $page = $this->session->getPage();
+        $page->findById('storage_location_name')->setValue('My SFTP Storage');
+        $page->findById('sftp_host')->setValue($rcf_creds['sftp_host']);
+        $page->findById('sftp_username')->setValue($rcf_creds['sftp_username']);
+        $page->findById('sftp_password')->setValue($rcf_creds['sftp_password']);
+        $page->findById('sftp_port')->setValue($rcf_creds['sftp_port']);
+        $page->findById('sftp_root')->setValue($rcf_creds['sftp_root']);
+        $page->findById('sftp_timeout')->setValue($rcf_creds['sftp_timeout']);
+        $page->findButton('m62_settings_submit')->submit();
+        
+        return $page;
+    }
+    
+    /**
+     * Sets a workable "Working Directory" setting
+     * @return unknown
+     */
+    public function setupGoodWorkingDirectory()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_general') );
+        $page = $this->session->getPage();
+        $page->findById('working_directory' )->setValue( $this->ts('working_directory') );
+        $page->findButton('m62_settings_submit')->submit();
+        
+        return $page;
+    }
+    
+    /**
+     * 
+     * @return unknown
+     */
+    public function setupGoodLicenseKey()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_license') );
+        $page = $this->session->getPage();
+        $page->findById('license_number')->setValue('5214af45-9bc9-4019-8af9-bc98c38802c1');
+        $page->findButton('m62_settings_submit')->submit();
+        
+        return $page;
+    }
+    
+    public function setupGoodFileBackupLocation()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit( $this->url('settings_files') );
+        $page = $this->session->getPage();
+        $page->findById('backup_file_location' )->setValue(dirname(__FILE__));
+        $page->findButton('m62_settings_submit')->submit();
+        
+        return $page;
+    }
+    
 }

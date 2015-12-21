@@ -52,7 +52,7 @@ class Notify
      * @param \mithra62\Email $mail
      * @return \mithra62\BackupPro\Notify
      */
-    public function setMail(\mithra62\Email $mail)
+    public function setMail(\mithra62\Email $mail) 
     {
         $this->mail = $mail;
         return $this;
@@ -167,29 +167,49 @@ class Notify
 		}
 	}
 
+	/**
+	 * Sends the backup state notification 
+	 * @param array $emails
+	 * @param array $backup_meta
+	 * @param array $errors
+	 */
 	public function sendBackupState(array $emails, array $backup_meta, array $errors)
 	{
-	    $type = 'files';
-	    $frequency = $this->settings['file_backup_alert_threshold'];
-	    if( isset($errors['backup_state_db_backups']) )
+	    try 
 	    {
-	        $type = 'database';
-	        $frequency = $this->settings['db_backup_alert_threshold'];
-	    }
-	
-	    $services = $this->backup->getServices();
-	    $vars = array(
-	        'last_backup_date' => $backup_meta[$type]['newest_backup_taken'], 
-	        'backup_frequency' => $frequency, 
-	        'backup_type' => $type,
-	        'site_name' => $services['platform']->getSiteName(),
-	        'site_url' => $services['platform']->getSiteUrl(),
-	    );
+    	    $type = 'files';
+    	    $frequency = $this->settings['file_backup_alert_threshold'];
+    	    if( isset($errors['backup_state_db_backups']) )
+    	    {
+    	        $type = 'database';
+    	        $frequency = $this->settings['db_backup_alert_threshold'];
+    	    }
+    	
+    	    $services = $this->backup->getServices();
+    	    $vars = array(
+    	        'last_backup_date' => $backup_meta[$type]['newest_backup_taken'], 
+    	        'backup_frequency' => $frequency, 
+    	        'backup_type' => $type,
+    	        'site_name' => $services['platform']->getSiteName(),
+    	        'site_url' => $services['platform']->getSiteUrl(),
+    	    );
+    	    
+    	    $email = $this->getMail()->setConfig( $services['platform']->getEmailConfig() )->setSubject($this->settings['backup_missed_schedule_notify_email_subject'])
+                	      ->setMessage($this->settings['backup_missed_schedule_notify_email_message'])
+                	      ->setTo($emails)
+                	      ->setMailtype($this->settings['backup_missed_schedule_notify_email_mailtype']);
+    	    
+    	    $email->send($vars); 
 	    
-	    $email = $this->getMail()->setSubject($this->settings['backup_missed_schedule_notify_email_subject'])
-            	      ->setMessage($this->settings['backup_missed_schedule_notify_email_message'])
-            	      ->setTo($emails)
-            	      ->setMailtype($this->settings['backup_missed_schedule_notify_email_mailtype']);
-	    $email->send($vars);
+	    }
+	    catch(EmailException $e)
+	    {
+	        $e->logException($e);
+	        throw new EmailException($e->getMessage());
+	    }
+	    catch(\Exception $e)
+	    {
+	        throw new \Exception($e->getMessage());
+	    }
 	}
 }

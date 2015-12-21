@@ -1,3 +1,12 @@
+/**
+ * mithra62 - Backup Pro
+ *
+ * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
+ * @link		http://mithra62.com/projects/view/backup-pro
+ * @version		3.0
+ * @filesource 	./settings.js
+ */
+
 jQuery(document).ready(function() {
 	
 	//settings form
@@ -10,6 +19,10 @@ jQuery(document).ready(function() {
 	if(jQuery("#db_backup_method").val() == "mysqldump")
 	{
 		jQuery("#mysqldump_command_wrap").show();
+	}
+	else
+	{
+		jQuery("#php_backup_method_select_chunk_limit_wrap").show();
 	}
 
 	if(jQuery("#db_restore_method").val() == "mysql")
@@ -37,10 +50,12 @@ jQuery(document).ready(function() {
 		if(new_assign == def_assign)
 		{
 			jQuery("#mysqldump_command_wrap").hide();
+			jQuery("#php_backup_method_select_chunk_limit_wrap").show();
 		}
 		else
 		{
 			jQuery("#mysqldump_command_wrap").show();
+			jQuery("#php_backup_method_select_chunk_limit_wrap").hide();
 		}
 	});	
 

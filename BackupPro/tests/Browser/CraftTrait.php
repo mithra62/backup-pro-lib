@@ -54,6 +54,8 @@ trait CraftTrait
         'storage_add_local_storage' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings/storage/new?engine=local',
         'storage_add_rcf_storage' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings/storage/new?engine=rcf',
         'storage_add_s3storage' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings/storage/new?engine=s3',
+        'storage_add_dropbox_storage' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings/storage/new?engine=dropbox',
+        'storage_add_sftp_storage' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings/storage/new?engine=sftp',
     );
     
     /**
@@ -176,7 +178,8 @@ trait CraftTrait
         $this->session->visit('http://eric.craft.clean.mithra62.com/admin/settings/plugins');
         sleep(2);
         $page = $this->session->getPage();
-        $form = $page->find('xpath', '/body/div/main/div/div/div/div/div/table/tbody/tr/td[2]/form/input[2]')->click();
+        
+        $form = $page->find('xpath', '/body/div/main/div/div/div/table/tbody/tr/td[3]/form/input[2]')->click();
     }
     
     /**
@@ -187,7 +190,7 @@ trait CraftTrait
         $this->session->visit('http://eric.craft.clean.mithra62.com/admin/settings/plugins');
         sleep(2);
         $page = $this->session->getPage();
-        $form = $page->find('xpath', '/body/div/main/div/div/div/div/div/table/tbody/tr/td[2]/form/input[2]')->click();
+        $form = $page->find('xpath', '/body/div/main/div/div/div/table/tbody/tr/td[3]/form/input[2]')->click();
         
         $db = new Db();
         $creds = $this->getDbCreds();

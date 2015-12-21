@@ -5,7 +5,7 @@
         <echo msg="(${platform_name}) Creating archive..." />
 
         <zip destfile="${build_archive_path}">
-            <fileset dir="${build_container_dir}">
+            <fileset dir="${export_archive_directory_root}">
                 <include name="**" />
             </fileset>
         </zip>

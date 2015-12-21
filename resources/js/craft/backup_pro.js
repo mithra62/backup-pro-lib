@@ -1,3 +1,12 @@
+/**
+ * mithra62 - Backup Pro
+ *
+ * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
+ * @link		http://mithra62.com/projects/view/backup-pro
+ * @version		3.0
+ * @filesource 	./craft/backup_pro.js
+ */
+
 $(document).ready(function() {
 	
 	//lil' method to send the backup note to the server
