@@ -60,6 +60,8 @@ class Settings extends m62Settings
         'enable_cron_file_backup' => '1',
         'enable_cron_integrity_check' => '1',
         
+        'auto_restorable_db_backups' => array(), //the backups we'll allow auto restoration to be used on
+        
         'cron_notify_emails' => array(),
         'cron_notify_email_subject' => '',
         'cron_notify_email_message' => '',

@@ -358,6 +358,11 @@ class Storage
      */
     public function remove(array $backup, Details $details = null, $cleanup = false)
     {
+        if( $backup['locked'] == '1' )
+        {
+            return false; //we don't remove locked backups
+        }
+        
         if( isset($backup['storage_locations']) && is_array($backup['storage_locations']) )
         {
             foreach( $backup['storage_locations'] AS $storage_id => $storage)
