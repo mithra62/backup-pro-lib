@@ -92,31 +92,20 @@ class Php extends DbAbstract
      * @see \mithra62\BackupPro\Backup\Database\DbInterface::backup()
      * @ignore
      */
-    public function backupTable($table, $backup_data = true)
+    public function backupTable($table)
     {
         //first, the create statement
-        $statement = $this->getContext()->getBackup()->getDb()->getCreateTable($table, ($backup_data == false));
+        $statement = $this->getContext()->getBackup()->getDb()->getCreateTable($table, false);
         $statement = $this->removeWhiteSpace($statement);
+
+        //we want data so we're gonna want to drop the table
+        $this->getContext()->writeOut(sprintf("DROP TABLE IF EXISTS `%s`;".PHP_EOL, $table));
+        $this->getContext()->writeOut( $statement . ";".PHP_EOL);
+        $this->getContext()->writeOut(PHP_EOL);
         
-        //now write it out 
-        if( !$backup_data )
-        {
-            //we're just grabbing the structure here
-            $this->getContext()->writeOut('SET sql_notes = 0;      -- Temporarily disable the "Table already exists" warning' .PHP_EOL);
-            $this->getContext()->writeOut( $statement . ";".PHP_EOL);
-            $this->getContext()->writeOut('SET sql_notes = 1;      -- And then re-enable the warning again' . PHP_EOL);
-        }
-        else 
-        {
-            //we want data so we're gonna want to drop the table
-            $this->getContext()->writeOut(sprintf("DROP TABLE IF EXISTS `%s`;".PHP_EOL, $table));
-            $this->getContext()->writeOut( $statement . ";".PHP_EOL);
-            $this->getContext()->writeOut(PHP_EOL);
-            
-            //now the data
-            $this->writeCommentBlock('Data for '.$table);
-            $this->getTableData($table);
-        }
+        //now the data
+        $this->writeCommentBlock('Data for '.$table);
+        $this->getTableData($table);
         
         $this->getContext()->writeOut(PHP_EOL);
     }

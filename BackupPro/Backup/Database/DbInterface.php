@@ -26,7 +26,7 @@ interface DbInterface
      * @param string $table The name of the table to backup
      * @param bool $data Whether to include the data with the export
      */
-    public function backupTable($table, $data = true);
+    public function backupTable($table);
     
     /**
      * Perfroms the backup of a stored procedure

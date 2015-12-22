@@ -258,10 +258,7 @@ abstract class DbAbstract implements DbInterface
      */
     public function removeWhiteSpace($string)
     {
-        $string = preg_replace('/\s*\n\s*/', ' ', $string) ;
-        $string = preg_replace('/\(\s*/', '(', $string) ;
-        $string = preg_replace('/\s*\)/', ')', $string) ;
-        return $string;
+        return $this->getContext()->removeWhiteSpace($string);
     }
     
     /**

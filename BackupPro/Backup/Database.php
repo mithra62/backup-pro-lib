@@ -159,10 +159,20 @@ class Database extends AbstractBackup
             
             if( count($this->getIgnoreTableData()) >= 1 && in_array(trim($table['Name']), $this->getIgnoreTableData()) )
             {
-                $include_data = false;
+                //we're just grabbing the structure here
+                $statement = $this->getBackup()->getDb()->getCreateTable($table['Name'], true);
+                $statement = $this->removeWhiteSpace($statement);
+                
+                $this->writeOut('SET sql_notes = 0;      -- Temporarily disable the "Table already exists" warning' .PHP_EOL);
+                $this->writeOut( $statement . ";".PHP_EOL);
+                $this->writeOut('SET sql_notes = 1;      -- And then re-enable the warning again' . PHP_EOL);
+            }
+            else 
+            {
+                //pass to engine and pull the table data
+                $engine->backupTable($table['Name']);
             }
             
-            $engine->backupTable($table['Name'], $include_data);
             $progress->writeLog('backup_progress_bar_table_stop'.$table['Name'], $total, $count);
             $count++;
         }
@@ -431,6 +441,19 @@ class Database extends AbstractBackup
         }
         $this->ignore_table_data = $_tables;
         return $this;
+    }
+
+    /**
+     * Removes the whitespace from the given string
+     * @param $string The string to remove white space from
+     * @return \mithra62\BackupPro\Backup\Database\string
+     */
+    public function removeWhiteSpace($string)
+    {
+        $string = preg_replace('/\s*\n\s*/', ' ', $string) ;
+        $string = preg_replace('/\(\s*/', '(', $string) ;
+        $string = preg_replace('/\s*\)/', ')', $string) ;
+        return $string;
     }
     
     /**
