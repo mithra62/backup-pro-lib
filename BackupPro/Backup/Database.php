@@ -120,7 +120,7 @@ class Database extends AbstractBackup
         $progress = $this->backup->getProgress();
         $engine = $this->setOutputName($path)->getEngine()->start()->execPreSql()->archivePreSql();
         $tables = $this->tables = $this->backup->getDb()->getTableStatus();
-        $engine->setEngineCmd($this->getEngineCmd())->setShell($this->getShell())->setTables($tables);
+        $engine->setSqlGroupBy( $this->getSqlGroupBy() )->setEngineCmd($this->getEngineCmd())->setShell($this->getShell())->setTables($tables);
         
         //no go through the tables and back them up
         $count = 1;

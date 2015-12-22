@@ -50,6 +50,32 @@ abstract class AbstractBackup implements BackupInterface
      * @var \mithra62\Regex
      */
     protected $regex = null;
+    
+    /**
+     * How many statements we want to compile into 1 INSERT command
+     * @var int
+     */
+    protected $sql_group_by = 250;
+    
+    /**
+     * Sets how many rows to include per INSERT statement on recovery
+     * @param int $number
+     * @return \mithra62\BackupPro\Backup\Database\Php
+     */
+    public function setSqlGroupBy($number)
+    {
+        $this->sql_group_by = $number;
+        return $this;
+    }
+    
+    /**
+     * Returns the total number of rows to group INSERT statements by
+     * @return \mithra62\BackupPro\Backup\Database\int
+     */
+    public function getSqlGroupBy()
+    {
+        return $this->sql_group_by;
+    }
 
     /**
      * Sets the Backup object

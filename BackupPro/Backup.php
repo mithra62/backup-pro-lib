@@ -196,6 +196,7 @@ class Backup
             $file_name = $this->getStorage()->makeDbFilename($options['db_backup_method'], $database);
             $db = $this->getDatabase()->setBackup($this)
                                       ->setIgnoreTableData( $options['db_backup_ignore_table_data'] )
+                                      ->setSqlGroupBy( $options['php_backup_method_select_chunk_limit'] )
                                       ->setIgnoreTables( $options['db_backup_ignore_tables'] )
                                       ->setArchivePostSql( $options['db_backup_archive_post_sql'] )
                                       ->setArchivePreSql( $options['db_backup_archive_pre_sql'] )
