@@ -99,6 +99,11 @@ $lang = array(
 'log_backup_downloaded' => 'Backup downloaded.',
 'log_backup_deleted' => 'Backups deleted.',
 'log_settings_updated' => 'Backup Pro settings updated',
+'restore_in_progress' => 'Restore Running...',
+ 'restore_in_progress_instructions' => '<strong>DO NOT DO THE FOLLOWING UNTIL THE RESTORE IS COMPLETE:</strong><br />
+    1. Close your browser<br />
+    2. Reload this page<br />
+    3. Navigate away from this page<br />',
 
 'backup_in_progress_instructions' => '<strong>DO NOT DO THE FOLLOWING UNTIL THE BACKUP IS COMPLETE:</strong><br />
     1. Close your browser<br />
