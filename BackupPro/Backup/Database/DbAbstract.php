@@ -74,6 +74,20 @@ abstract class DbAbstract implements DbInterface
      * @var \mithra62\Shell
      */
     protected $shell = null;
+
+    /**
+     * How many statements we want to compile into 1 INSERT command
+     * @var int
+     */
+    protected $sql_group_by = 250;
+    
+    /**
+     * A table based group by
+     *
+     * Format should be $table => $group_by_limit
+     * @var array
+     */
+    protected $table_sql_group_by = array();    
     
     /**
      * Sets the database tables we're backing up
@@ -365,5 +379,45 @@ abstract class DbAbstract implements DbInterface
     public function getShell()
     {
         return $this->shell;
+    }
+
+    /**
+     * Sets how many rows to include per INSERT statement on recovery
+     * @param int $number
+     * @return \mithra62\BackupPro\Backup\Database\Php
+     */
+    public function setSqlGroupBy($number)
+    {
+        $this->sql_group_by = $number;
+        return $this;
+    }
+    
+    /**
+     * Returns the total number of rows to group INSERT statements by
+     * @return \mithra62\BackupPro\Backup\Database\int
+     */
+    public function getSqlGroupBy()
+    {
+        return $this->sql_group_by;
+    }
+    
+    /**
+     * Sets the configuration for how many rows to chunk per table (if configured)
+     * @param array $config
+     * @return \mithra62\BackupPro\Backup\Database\Php
+     */
+    public function setTableSqlGroupBy(array $config)
+    {
+        $this->table_sql_group_by = $config;
+        return $this;
+    }
+    
+    /**
+     * Returns the total number of rows to group INSERT statements by
+     * @return \mithra62\BackupPro\Backup\Database\int
+     */
+    public function getTableSqlGroupBy()
+    {
+        return $this->table_sql_group_by;
     }
 }

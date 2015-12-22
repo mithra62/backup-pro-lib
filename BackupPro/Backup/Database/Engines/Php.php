@@ -183,26 +183,6 @@ class Php extends DbAbstract
     }
     
     /**
-     * Returns the total number of rows to group INSERT statements by
-     * @return \mithra62\BackupPro\Backup\Database\int
-     */
-    public function getSqlGroupBy()
-    {
-        return $this->sql_group_by;
-    }
-    
-    /**
-     * Sets how many rows to include per INSERT statement on recovery
-     * @param int $number
-     * @return \mithra62\BackupPro\Backup\Database\Php
-     */
-    public function setSqlGroupBy($number)
-    {
-        $this->sql_group_by = $number;
-        return $this;
-    }
-    
-    /**
      * Creates the SELECT statement for use in the backup
      * @param array $column_data
      * @param string $table

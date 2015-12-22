@@ -108,6 +108,20 @@ class Database extends AbstractBackup
     protected $tables = array();
     
     /**
+     * How many statements we want to compile into 1 INSERT command
+     * @var int
+     */
+    protected $sql_group_by = 250;
+    
+    /**
+     * A table based group by 
+     * 
+     * Format should be $table => $group_by_limit
+     * @var array
+     */
+    protected $table_sql_group_by = array();  
+    
+    /**
      * Executes the database backup
      * @param string $database The name of the database we're backing up
      * @param string $file_name The filename to save the backup as
@@ -120,7 +134,7 @@ class Database extends AbstractBackup
         $progress = $this->backup->getProgress();
         $engine = $this->setOutputName($path)->getEngine()->start()->execPreSql()->archivePreSql();
         $tables = $this->tables = $this->backup->getDb()->getTableStatus();
-        $engine->setSqlGroupBy( $this->getSqlGroupBy() )->setEngineCmd($this->getEngineCmd())->setShell($this->getShell())->setTables($tables);
+        $engine->setSqlGroupBy( $this->getSqlGroupBy() )->setTableSqlGroupBy( $this->getTableSqlGroupBy() )->setEngineCmd($this->getEngineCmd())->setShell($this->getShell())->setTables($tables);
         
         //no go through the tables and back them up
         $count = 1;
@@ -555,5 +569,45 @@ class Database extends AbstractBackup
     public function getShell()
     {
         return $this->shell;
+    }
+
+    /**
+     * Sets how many rows to include per INSERT statement on recovery
+     * @param int $number
+     * @return \mithra62\BackupPro\Backup\Database\Php
+     */
+    public function setSqlGroupBy($number)
+    {
+        $this->sql_group_by = $number;
+        return $this;
+    }
+    
+    /**
+     * Returns the total number of rows to group INSERT statements by
+     * @return \mithra62\BackupPro\Backup\Database\int
+     */
+    public function getSqlGroupBy()
+    {
+        return $this->sql_group_by;
+    }
+    
+    /**
+     * Sets the configuration for how many rows to chunk per table (if configured)
+     * @param array $config
+     * @return \mithra62\BackupPro\Backup\Database\Php
+     */
+    public function setTableSqlGroupBy(array $config)
+    {
+        $this->table_sql_group_by = $config;
+        return $this;
+    }
+    
+    /**
+     * Returns the total number of rows to group INSERT statements by
+     * @return \mithra62\BackupPro\Backup\Database\int
+     */
+    public function getTableSqlGroupBy()
+    {
+        return $this->table_sql_group_by;
     }
 }
