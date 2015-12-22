@@ -182,7 +182,12 @@ abstract class DbAbstract implements DbInterface
      * @return \mithra62\BackupPro\Backup\Database\DbAbstract
      */
     public function archivePostSql()
-    {
+    {   
+        if( $this->context->getArchivePostSql() )
+        {
+            $this->context->writeOut(implode(PHP_EOL, $this->context->getArchivePostSql()).PHP_EOL.PHP_EOL);
+        }
+        
         return $this;
     }
     
@@ -192,6 +197,17 @@ abstract class DbAbstract implements DbInterface
      */
     public function execPostSql()
     {
+        if( $this->context->getExecutePostSql() )
+        {
+            foreach( $this->context->getExecutePostSql() AS $sql)
+            {
+                if( $sql != '' )
+                {
+                    $this->context->getBackup()->getDb()->query($sql);
+                }
+            }
+        }
+        
         return $this;
     }
     
