@@ -11,7 +11,7 @@ jQuery(document).ready(function() {
 	
 	jQuery("#_restore_direct").on("click", function(e) {
 		jQuery("#restore_running_details").show();
-		jQuery("#_backup_details_table").hide();
+		jQuery("#_restore_details_table").hide();
 		jQuery(this).hide();
 	});
 });	
