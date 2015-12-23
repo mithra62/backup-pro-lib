@@ -25,7 +25,7 @@ interface BackupPro
      * The version of the add-on
      * @var float
      */
-    const version = '3.2.0';
+    const version = '3.2.1';
     
     /**
      * The Build version
