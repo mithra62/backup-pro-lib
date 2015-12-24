@@ -18,5 +18,29 @@
 			</fileset>
 		</copy>
         <echo msg="(${platform_name}) Files copied to build directory OK!" />
+    	
+    	
+		<if>
+		 <equals arg1="${platform_name}" arg2="Prestashop" />
+		 <then>
+		   <echo message="Added stupid index.php file so PrestaStore thinks they're secure..." />
+		 	<foreach param="dirname" absparam="absname" target="copy_index">
+		 	  <fileset dir="${build_container_dir}">
+		 	  	<include name="**"></include>
+		        <type type="dir" />
+		        <depth max="100" min="0" />
+		 	  </fileset>
+		 	</foreach>
+		 </then>
+		 <else>
+		   <echo message="Skipping stupid index.php nonsense" />
+		 </else>
+		</if>    	
+    	
+    	
     </target>
+	
+	<target name="copy_index" >
+		<copy file="./index.php" tofile="${absname}/index.php" />
+	</target>	
 </project>    

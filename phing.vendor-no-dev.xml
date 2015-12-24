@@ -155,6 +155,10 @@
 		<copy todir="${vendor_path}/symfony">
 			<fileset dir="../mithra62-lib/vendor/symfony">
 				<include name="**"></include>
+				<exclude name="**/Tests/**"></exclude>
+				<exclude name="**.md"></exclude>
+				<exclude name="**.gitignore"></exclude>
+				<exclude name="**phpunit.xml.dist"></exclude>
 			</fileset>
 		</copy>
 		
