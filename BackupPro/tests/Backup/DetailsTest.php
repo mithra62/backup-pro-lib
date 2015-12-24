@@ -7,7 +7,6 @@
  * @version		1.0
  * @filesource 	./mithra62/BackupPro/tests/Backup/DetailsTest.php
  */
- 
 namespace mithra62\BackupPro\tests\Backup;
 
 use \mithra62\BackupPro\Backup\Details;
@@ -15,19 +14,19 @@ use \mithra62\tests\TestFixture;
 
 class DetailsTest extends TestFixture
 {
-    
+
     public function getWorkingDir()
     {
-        return realpath(dirname(__FILE__).'/../working_dir');
+        return realpath(dirname(__FILE__) . '/../working_dir');
     }
-    
+
     public function testDefaults()
     {
         $this->assertClassHasAttribute('details_directory', '\\mithra62\\BackupPro\\Backup\\Details');
         $this->assertClassHasAttribute('details_ext', '\\mithra62\\BackupPro\\Backup\\Details');
         $this->assertClassHasAttribute('details_prototype', '\\mithra62\\BackupPro\\Backup\\Details');
         
-        $details = new Details;
+        $details = new Details();
         
         $this->assertInstanceOf('\\mithra62\\BackupPro\\Backup\\Details', $details);
         
@@ -38,10 +37,10 @@ class DetailsTest extends TestFixture
         $this->assertEquals('.m62', $details->getDetailsExt());
         $this->assertEquals('.meta', $details->getDetailsDir());
     }
-    
+
     public function testDefaultPrototype()
     {
-        $details = new Details;
+        $details = new Details();
         $this->assertArrayHasKey('note', $details->getDetailsPrototype());
         $this->assertArrayHasKey('hash', $details->getDetailsPrototype());
         $this->assertArrayHasKey('storage', $details->getDetailsPrototype());

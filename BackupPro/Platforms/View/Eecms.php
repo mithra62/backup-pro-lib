@@ -7,12 +7,10 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/Platforms/View/Eecms.php
  */
- 
 namespace mithra62\BackupPro\Platforms\View;
 
-use mithra62\Platforms\View\Eecms AS EecmsView;
+use mithra62\Platforms\View\Eecms as EecmsView;
 
 class Eecms extends EecmsView
 {
-    
 }

@@ -9,7 +9,6 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/tests/BackupTest.php
  */
- 
 namespace mithra62\BackupPro\tests;
 
 use mithra62\BackupPro\Backup;
@@ -18,6 +17,7 @@ use mithra62\tests\TestFixture;
 
 class BackupTest extends TestFixture
 {
+
     public function testDefaults()
     {
         $this->assertClassHasAttribute('storage_path', '\\mithra62\\BackupPro\Backup');
@@ -31,8 +31,8 @@ class BackupTest extends TestFixture
         $this->assertClassHasAttribute('timer_start', '\\mithra62\\BackupPro\Backup');
         $this->assertClassHasAttribute('timer_stop', '\\mithra62\\BackupPro\Backup');
         
-        $backup = new Backup( new Db );
-        $backup->setServices( new \Pimple\Container() ); //should mock this up :|
+        $backup = new Backup(new Db());
+        $backup->setServices(new \Pimple\Container()); // should mock this up :|
         
         $this->assertObjectHasAttribute('storage_path', $backup);
         $this->assertObjectHasAttribute('db', $backup);

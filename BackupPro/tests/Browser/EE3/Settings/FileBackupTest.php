@@ -7,7 +7,6 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/tests/Browser/EE3/Settings/DbTest.php
  */
-
 namespace mithra62\BackupPro\tests\Browser\EE3;
 
 use mithra62\BackupPro\tests\Browser\AbstractBase\Settings\FileBackup;
@@ -18,8 +17,8 @@ use mithra62\BackupPro\tests\Browser\EE3Trait;
  *
  * Executes all teh tests by platform using the below definitions
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class FileBackupTest extends FileBackup
 {
@@ -29,15 +28,11 @@ class FileBackupTest extends FileBackup
      * Disable this since we want full browser support
      */
     public function setUp()
-    {
-    
-    }
-    
+    {}
+
     /**
      * Disable this since we want full browser support
      */
     public function teardown()
-    {
-    
-    }
+    {}
 }

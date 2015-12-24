@@ -7,7 +7,6 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/tests/Browser/AbstractBase/Storage/NoEngines.php
  */
-
 namespace mithra62\BackupPro\tests\Browser\AbstractBase\Storage;
 
 use mithra62\BackupPro\tests\Browser\TestFixture;
@@ -17,20 +16,22 @@ use mithra62\BackupPro\tests\Browser\TestFixture;
  *
  * Executes all the tests by platform using the below definitions
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
-abstract class NoEngines extends TestFixture  
-{   
-    
+abstract class NoEngines extends TestFixture
+{
+
     /**
      * An instance of the mink selenium object
+     * 
      * @var unknown
      */
     public $session = null;
-    
+
     /**
      * The browser config
+     * 
      * @var array
      */
     public static $browsers = array(
@@ -40,23 +41,23 @@ abstract class NoEngines extends TestFixture
             'port' => 4444,
             'browserName' => 'firefox',
             'baseUrl' => 'http://eric.ee2.clean.mithra62.com',
-            'sessionStrategy' => 'shared',
-        ),
+            'sessionStrategy' => 'shared'
+        )
     );
-    
+
     public function testNoStorageLocationsCreatedYet()
     {
         $this->login();
         sleep(2);
         $this->install_addon();
-    
-        $this->session->visit( $this->url('storage_view_storage') );
-    
+        
+        $this->session->visit($this->url('storage_view_storage'));
+        
         $page = $this->session->getPage();
-    
+        
         $page = $this->session->getPage();
-        $this->assertTrue($this->session->getPage()->hasContent('No Storage Locations Created Yet'));
+        $this->assertTrue($this->session->getPage()
+            ->hasContent('No Storage Locations Created Yet'));
         $this->uninstall_addon();
     }
-    
 }

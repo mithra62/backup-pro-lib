@@ -7,10 +7,9 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/tests/Browser/Craft/Storage/RcfEngineTest.php
  */
-
 namespace mithra62\BackupPro\tests\Browser\Craft\Storage;
 
-use mithra62\BackupPro\tests\Browser\AbstractBase\Storage\RcfEngine; 
+use mithra62\BackupPro\tests\Browser\AbstractBase\Storage\RcfEngine;
 use mithra62\BackupPro\tests\Browser\CraftTrait;
 
 /**
@@ -18,8 +17,8 @@ use mithra62\BackupPro\tests\Browser\CraftTrait;
  *
  * Executes all the tests by platform using the below definitions
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class RcfEngineTest extends RcfEngine
 {
@@ -29,16 +28,11 @@ class RcfEngineTest extends RcfEngine
      * Disable this since we want full browser support
      */
     public function setUp()
-    {
-    
-    }
-    
+    {}
+
     /**
      * Disable this since we want full browser support
      */
     public function teardown()
-    {
-    
-    }
-    
+    {}
 }

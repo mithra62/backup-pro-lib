@@ -7,7 +7,6 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/tests/Browser/AbstractBase/Settings/License.php
  */
-
 namespace mithra62\BackupPro\tests\Browser\AbstractBase\Settings;
 
 use mithra62\BackupPro\tests\Browser\TestFixture;
@@ -17,20 +16,22 @@ use mithra62\BackupPro\tests\Browser\TestFixture;
  *
  * Executes all the tests by platform using the below definitions
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
-abstract class License extends TestFixture  
-{   
-    
+abstract class License extends TestFixture
+{
+
     /**
      * An instance of the mink selenium object
+     * 
      * @var unknown
      */
     public $session = null;
-    
+
     /**
      * The browser config
+     * 
      * @var array
      */
     public static $browsers = array(
@@ -40,10 +41,10 @@ abstract class License extends TestFixture
             'port' => 4444,
             'browserName' => 'firefox',
             'baseUrl' => 'http://eric.ee2.clean.mithra62.com',
-            'sessionStrategy' => 'shared',
-        ),
+            'sessionStrategy' => 'shared'
+        )
     );
-    
+
     public function testLicenseKeyNoValue()
     {
         $this->login();
@@ -51,38 +52,44 @@ abstract class License extends TestFixture
         $this->install_addon();
         
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('settings_license') );
+        $this->session->visit($this->url('settings_license'));
         $page = $this->session->getPage();
         $page->findById('license_number')->setValue('');
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertTrue($this->session->getPage()->hasContent('License Number is required'));
-        $this->assertTrue($this->session->getPage()->hasContent('License Number isn\'t a valid license key'));
+        
+        $this->assertTrue($this->session->getPage()
+            ->hasContent('License Number is required'));
+        $this->assertTrue($this->session->getPage()
+            ->hasContent('License Number isn\'t a valid license key'));
     }
-    
+
     /**
      * @depends testLicenseKeyNoValue
      */
     public function testLicenseKeyBadValue()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('settings_license') );
+        $this->session->visit($this->url('settings_license'));
         $page = $this->session->getPage();
         $page->findById('license_number')->setValue('fdsafdsa');
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertNotTrue($this->session->getPage()->hasContent('License Number is required'));
-        $this->assertTrue($this->session->getPage()->hasContent('License Number isn\'t a valid license key'));
+        
+        $this->assertNotTrue($this->session->getPage()
+            ->hasContent('License Number is required'));
+        $this->assertTrue($this->session->getPage()
+            ->hasContent('License Number isn\'t a valid license key'));
     }
-    
+
     /**
      * @depends testLicenseKeyBadValue
      */
     public function testLicenseKeyGoodValue()
     {
         $this->setupGoodLicenseKey();
-        $this->assertNotTrue($this->session->getPage()->hasContent('License Number is required'));
-        $this->assertNotTrue($this->session->getPage()->hasContent('License Number isn\'t a valid license key'));
+        $this->assertNotTrue($this->session->getPage()
+            ->hasContent('License Number is required'));
+        $this->assertNotTrue($this->session->getPage()
+            ->hasContent('License Number isn\'t a valid license key'));
         $this->uninstall_addon();
     }
 }

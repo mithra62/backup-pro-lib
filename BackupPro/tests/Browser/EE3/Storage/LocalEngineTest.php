@@ -7,10 +7,9 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/tests/Browser/EE3/Storage/LocalEngine.php
  */
-
 namespace mithra62\BackupPro\tests\Browser\EE3\Storage;
 
-use mithra62\BackupPro\tests\Browser\AbstractBase\Storage\LocalEngine; 
+use mithra62\BackupPro\tests\Browser\AbstractBase\Storage\LocalEngine;
 use mithra62\BackupPro\tests\Browser\EE3Trait;
 
 /**
@@ -18,8 +17,8 @@ use mithra62\BackupPro\tests\Browser\EE3Trait;
  *
  * Executes all the tests by platform using the below definitions
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class LocalEngineTest extends LocalEngine
 {
@@ -29,16 +28,11 @@ class LocalEngineTest extends LocalEngine
      * Disable this since we want full browser support
      */
     public function setUp()
-    {
-    
-    }
-    
+    {}
+
     /**
      * Disable this since we want full browser support
      */
     public function teardown()
-    {
-    
-    }
-    
+    {}
 }

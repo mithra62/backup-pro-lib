@@ -7,10 +7,9 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/tests/Browser/WP/Storage/DropboxEngineTest.php
  */
-
 namespace mithra62\BackupPro\tests\Browser\WP\Storage;
 
-use mithra62\BackupPro\tests\Browser\AbstractBase\Storage\DropboxEngine; 
+use mithra62\BackupPro\tests\Browser\AbstractBase\Storage\DropboxEngine;
 use mithra62\BackupPro\tests\Browser\WPTrait;
 
 /**
@@ -18,8 +17,8 @@ use mithra62\BackupPro\tests\Browser\WPTrait;
  *
  * Executes all the tests by platform using the below definitions
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class DropboxEngineTest extends DropboxEngine
 {
@@ -29,16 +28,11 @@ class DropboxEngineTest extends DropboxEngine
      * Disable this since we want full browser support
      */
     public function setUp()
-    {
-    
-    }
-    
+    {}
+
     /**
      * Disable this since we want full browser support
      */
     public function teardown()
-    {
-    
-    }
-    
+    {}
 }

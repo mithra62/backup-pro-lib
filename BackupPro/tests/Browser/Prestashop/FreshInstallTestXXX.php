@@ -7,7 +7,6 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/tests/Browser/Prestashop/FreshInstallTest.php
  */
- 
 namespace mithra62\BackupPro\tests\Browser\Prestashop;
 
 use mithra62\BackupPro\tests\Browser\AbstractBase\FreshInstall;
@@ -18,10 +17,10 @@ use mithra62\BackupPro\tests\Browser\PrestashopTrait;
  *
  * Executes all the tests by platform using the below definitions
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
-class FreshInstallTestXXX extends FreshInstall 
+class FreshInstallTestXXX extends FreshInstall
 {
     use PrestashopTrait;
 
@@ -29,15 +28,11 @@ class FreshInstallTestXXX extends FreshInstall
      * Disable this since we want full browser support
      */
     public function setUp()
-    {
-    
-    }
-    
+    {}
+
     /**
      * Disable this since we want full browser support
      */
     public function teardown()
-    {
-    
-    }
+    {}
 }

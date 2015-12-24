@@ -7,7 +7,6 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/tests/Browser/SettingsTestAbstract.php
  */
-
 namespace mithra62\BackupPro\tests\Browser\EE3;
 
 use mithra62\BackupPro\tests\Browser\AbstractBase\Settings\General;
@@ -18,8 +17,8 @@ use mithra62\BackupPro\tests\Browser\EE3Trait;
  *
  * Executes all teh tests by platform using the below definitions
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class GeneralTest extends General
 {
@@ -29,15 +28,11 @@ class GeneralTest extends General
      * Disable this since we want full browser support
      */
     public function setUp()
-    {
-    
-    }
-    
+    {}
+
     /**
      * Disable this since we want full browser support
      */
     public function teardown()
-    {
-    
-    }
+    {}
 }

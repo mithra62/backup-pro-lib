@@ -8,7 +8,6 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/Backup/RestoreInterface.php
  */
- 
 namespace mithra62\BackupPro\Restore;
 
 /**
@@ -16,10 +15,9 @@ namespace mithra62\BackupPro\Restore;
  *
  * All Restore methods should implement this interface
  *
- * @package 	Restore
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package Restore
+ * @author Eric Lamb <eric@mithra62.com>
  */
 interface RestoreInterface
 {
-    
 }

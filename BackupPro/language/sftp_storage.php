@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * mithra62 - Backup Pro
  *
@@ -12,9 +12,9 @@
 /**
  * SFTP Storage Language Array
  * mithra62 language translation array
+ * 
  * @var array
  */
- 
 $lang = array(
     'backup_pro_sftp_storage_driver_name' => 'SFTP Storage',
     'backup_pro_sftp_storage_driver_description' => 'This Driver will store backups on a remote SFTP/SSH server.',
@@ -32,5 +32,5 @@ $lang = array(
     'sftp_root_instructions' => 'Where on the remote server do you want to store the files. This directory has to exist before the settings can be saved.',
     'sftp_root' => 'SFTP Store Location',
     'sftp_private_key' => 'Private Key Path',
-    'sftp_private_key_instructions' => 'The full system path to where your private key file is stored if you\'d like to use that for authentication instead of username and password. ',
+    'sftp_private_key_instructions' => 'The full system path to where your private key file is stored if you\'d like to use that for authentication instead of username and password. '
 );

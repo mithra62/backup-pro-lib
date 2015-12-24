@@ -7,7 +7,6 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/tests/Browser/AbstractBase/Storage/GcsEngine.php
  */
-
 namespace mithra62\BackupPro\tests\Browser\AbstractBase\Storage;
 
 use mithra62\BackupPro\tests\Browser\TestFixture;
@@ -17,20 +16,22 @@ use mithra62\BackupPro\tests\Browser\TestFixture;
  *
  * Executes all the tests by platform using the below definitions
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
-abstract class GcsEngine extends TestFixture  
-{   
-    
+abstract class GcsEngine extends TestFixture
+{
+
     /**
      * An instance of the mink selenium object
+     * 
      * @var \Behat\Mink\Session
      */
     public $session = null;
-    
+
     /**
      * The browser config
+     * 
      * @var array
      */
     public static $browsers = array(
@@ -40,8 +41,8 @@ abstract class GcsEngine extends TestFixture
             'port' => 4444,
             'browserName' => 'firefox',
             'baseUrl' => 'http://eric.ee2.clean.mithra62.com',
-            'sessionStrategy' => 'shared',
-        ),
+            'sessionStrategy' => 'shared'
+        )
     );
 
     public function testAddGcsStorageNoName()
@@ -49,45 +50,49 @@ abstract class GcsEngine extends TestFixture
         $this->login();
         sleep(2);
         $this->install_addon();
-    
+        
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_gcs_storage') );
+        $this->session->visit($this->url('storage_add_gcs_storage'));
         $page = $this->session->getPage();
         $page->findById('storage_location_name')->setValue('');
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertTrue($this->session->getPage()->hasContent('Storage Location Name is required'));
+        
+        $this->assertTrue($this->session->getPage()
+            ->hasContent('Storage Location Name is required'));
     }
-    
+
     /**
      * @depends testAddGcsStorageNoName
      */
     public function testAddGcsStorageGoodName()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_gcs_storage') );
+        $this->session->visit($this->url('storage_add_gcs_storage'));
         $page = $this->session->getPage();
         $page->findById('storage_location_name')->setValue('My GCS Storage');
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertNotTrue($this->session->getPage()->hasContent('Storage Location Name is required'));
+        
+        $this->assertNotTrue($this->session->getPage()
+            ->hasContent('Storage Location Name is required'));
     }
-    
+
     /**
      * @depends testAddGcsStorageGoodName
      */
     public function testAddGcsAccessKeyIdNoValue()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_gcs_storage') );
+        $this->session->visit($this->url('storage_add_gcs_storage'));
         $page = $this->session->getPage();
         $page->findById('gcs_access_key')->setValue('');
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertTrue($this->session->getPage()->hasContent('Gcs Access Key is required'));
-        $this->assertTrue($this->session->getPage()->hasContent('Can\'t connect to Gcs Access Key'));
+        
+        $this->assertTrue($this->session->getPage()
+            ->hasContent('Gcs Access Key is required'));
+        $this->assertTrue($this->session->getPage()
+            ->hasContent('Can\'t connect to Gcs Access Key'));
     }
-    
+
     /**
      * @depends testAddGcsAccessKeyIdNoValue
      */
@@ -95,15 +100,17 @@ abstract class GcsEngine extends TestFixture
     {
         $gcs_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_gcs_storage') );
+        $this->session->visit($this->url('storage_add_gcs_storage'));
         $page = $this->session->getPage();
         $page->findById('gcs_access_key')->setValue($gcs_creds['gcs_access_key']);
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertNotTrue($this->session->getPage()->hasContent('Gcs Access Key is required'));
-        $this->assertTrue($this->session->getPage()->hasContent('Can\'t connect to Gcs Access Key'));
+        
+        $this->assertNotTrue($this->session->getPage()
+            ->hasContent('Gcs Access Key is required'));
+        $this->assertTrue($this->session->getPage()
+            ->hasContent('Can\'t connect to Gcs Access Key'));
     }
-    
+
     /**
      * @depends testAddGcsAccessKeyIdGoodValue
      */
@@ -111,14 +118,15 @@ abstract class GcsEngine extends TestFixture
     {
         $gcs_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_gcs_storage') );
+        $this->session->visit($this->url('storage_add_gcs_storage'));
         $page = $this->session->getPage();
         $page->findById('gcs_secret_key')->setValue('');
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertTrue($this->session->getPage()->hasContent('Gcs Secret Key is required'));
+        
+        $this->assertTrue($this->session->getPage()
+            ->hasContent('Gcs Secret Key is required'));
     }
-    
+
     /**
      * @depends testAddGcsAccessKeySecretNoValue
      */
@@ -126,14 +134,15 @@ abstract class GcsEngine extends TestFixture
     {
         $gcs_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_gcs_storage') );
+        $this->session->visit($this->url('storage_add_gcs_storage'));
         $page = $this->session->getPage();
         $page->findById('gcs_secret_key')->setValue($gcs_creds['gcs_secret_key']);
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertNotTrue($this->session->getPage()->hasContent('Gcs Secret Key is required'));
+        
+        $this->assertNotTrue($this->session->getPage()
+            ->hasContent('Gcs Secret Key is required'));
     }
-    
+
     /**
      * @depends testAddGcsAccessKeySecretGoodValue
      */
@@ -141,14 +150,15 @@ abstract class GcsEngine extends TestFixture
     {
         $gcs_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_gcs_storage') );
+        $this->session->visit($this->url('storage_add_gcs_storage'));
         $page = $this->session->getPage();
         $page->findById('gcs_bucket')->setValue('');
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertTrue($this->session->getPage()->hasContent('Gcs Bucket is required'));
+        
+        $this->assertTrue($this->session->getPage()
+            ->hasContent('Gcs Bucket is required'));
     }
-    
+
     /**
      * @depends testAddGcsBucketNoValue
      */
@@ -156,12 +166,13 @@ abstract class GcsEngine extends TestFixture
     {
         $gcs_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_gcs_storage') );
+        $this->session->visit($this->url('storage_add_gcs_storage'));
         $page = $this->session->getPage();
         $page->findById('gcs_bucket')->setValue($gcs_creds['gcs_bucket']);
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertNotTrue($this->session->getPage()->hasContent('Gcs Bucket is required'));
+        
+        $this->assertNotTrue($this->session->getPage()
+            ->hasContent('Gcs Bucket is required'));
     }
 
     /**
@@ -171,15 +182,17 @@ abstract class GcsEngine extends TestFixture
     {
         $ftp_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_gcs_storage') );
-    
+        $this->session->visit($this->url('storage_add_gcs_storage'));
+        
         $page = $this->session->getPage();
         $page->findById('storage_location_status')->check();
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertTrue($this->session->getPage()->findById('storage_location_status')->isChecked());
+        
+        $this->assertTrue($this->session->getPage()
+            ->findById('storage_location_status')
+            ->isChecked());
     }
-    
+
     /**
      * @depends testAddGcsStorageLocationStatusChecked
      */
@@ -187,16 +200,19 @@ abstract class GcsEngine extends TestFixture
     {
         $ftp_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_gcs_storage') );
-    
+        $this->session->visit($this->url('storage_add_gcs_storage'));
+        
         $page = $this->session->getPage();
         $page->findById('storage_location_status')->uncheck();
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertNotTrue($this->session->getPage()->findById('storage_location_status')->isChecked());
-        $this->assertTrue($this->session->getPage()->hasContent('Storage Location Status is required unless you have more than 1 Storage Location'));
+        
+        $this->assertNotTrue($this->session->getPage()
+            ->findById('storage_location_status')
+            ->isChecked());
+        $this->assertTrue($this->session->getPage()
+            ->hasContent('Storage Location Status is required unless you have more than 1 Storage Location'));
     }
-    
+
     /**
      * @depends testAddGcsStorageLocationStatusUnChecked
      */
@@ -204,15 +220,17 @@ abstract class GcsEngine extends TestFixture
     {
         $ftp_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_gcs_storage') );
-    
+        $this->session->visit($this->url('storage_add_gcs_storage'));
+        
         $page = $this->session->getPage();
         $page->findById('storage_location_file_use')->check();
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertTrue($this->session->getPage()->findById('storage_location_file_use')->isChecked());
+        
+        $this->assertTrue($this->session->getPage()
+            ->findById('storage_location_file_use')
+            ->isChecked());
     }
-    
+
     /**
      * @depends testAddGcsStorageLocationFileUseChecked
      */
@@ -220,16 +238,19 @@ abstract class GcsEngine extends TestFixture
     {
         $ftp_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_gcs_storage') );
-    
+        $this->session->visit($this->url('storage_add_gcs_storage'));
+        
         $page = $this->session->getPage();
         $page->findById('storage_location_file_use')->uncheck();
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertNotTrue($this->session->getPage()->findById('storage_location_file_use')->isChecked());
-        $this->assertTrue($this->session->getPage()->hasContent('Storage Location File Use is required unless you have more than 1 Storage Location'));
+        
+        $this->assertNotTrue($this->session->getPage()
+            ->findById('storage_location_file_use')
+            ->isChecked());
+        $this->assertTrue($this->session->getPage()
+            ->hasContent('Storage Location File Use is required unless you have more than 1 Storage Location'));
     }
-    
+
     /**
      * @depends testAddGcsStorageLocationFileUseUnChecked
      */
@@ -237,15 +258,17 @@ abstract class GcsEngine extends TestFixture
     {
         $ftp_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_gcs_storage') );
-    
+        $this->session->visit($this->url('storage_add_gcs_storage'));
+        
         $page = $this->session->getPage();
         $page->findById('storage_location_db_use')->check();
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertTrue($this->session->getPage()->findById('storage_location_db_use')->isChecked());
+        
+        $this->assertTrue($this->session->getPage()
+            ->findById('storage_location_db_use')
+            ->isChecked());
     }
-    
+
     /**
      * @depends testAddGcsStorageLocationDbUseChecked
      */
@@ -253,16 +276,19 @@ abstract class GcsEngine extends TestFixture
     {
         $ftp_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_gcs_storage') );
-    
+        $this->session->visit($this->url('storage_add_gcs_storage'));
+        
         $page = $this->session->getPage();
         $page->findById('storage_location_db_use')->uncheck();
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertNotTrue($this->session->getPage()->findById('storage_location_db_use')->isChecked());
-        $this->assertTrue($this->session->getPage()->hasContent('Storage Location Db Use is required unless you have more than 1 Storage Location'));
+        
+        $this->assertNotTrue($this->session->getPage()
+            ->findById('storage_location_db_use')
+            ->isChecked());
+        $this->assertTrue($this->session->getPage()
+            ->hasContent('Storage Location Db Use is required unless you have more than 1 Storage Location'));
     }
-    
+
     /**
      * @depends testAddGcsStorageLocationDbUseUnChecked
      */
@@ -270,15 +296,17 @@ abstract class GcsEngine extends TestFixture
     {
         $ftp_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_gcs_storage') );
-    
+        $this->session->visit($this->url('storage_add_gcs_storage'));
+        
         $page = $this->session->getPage();
         $page->findById('storage_location_include_prune')->check();
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertTrue($this->session->getPage()->findById('storage_location_include_prune')->isChecked());
+        
+        $this->assertTrue($this->session->getPage()
+            ->findById('storage_location_include_prune')
+            ->isChecked());
     }
-    
+
     /**
      * @depends testAddGcsStorageLocationIncludePruneChecked
      */
@@ -286,23 +314,27 @@ abstract class GcsEngine extends TestFixture
     {
         $ftp_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_gcs_storage') );
-    
+        $this->session->visit($this->url('storage_add_gcs_storage'));
+        
         $page = $this->session->getPage();
         $page->findById('storage_location_include_prune')->uncheck();
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertNotTrue($this->session->getPage()->findById('storage_location_include_prune')->isChecked());
+        
+        $this->assertNotTrue($this->session->getPage()
+            ->findById('storage_location_include_prune')
+            ->isChecked());
     }
-    
+
     /**
      * @depends testAddGcsStorageLocationIncludePruneUnChecked
      */
     public function testAddGcsStorageLocationCompleteWorking()
     {
         $page = $this->setupGcsStorageLocation();
-        $this->assertTrue($this->session->getPage()->hasContent('Created Date'));
-        $this->assertNotTrue($this->session->getPage()->hasContent('No Storage Locations have been setup yet!'));
+        $this->assertTrue($this->session->getPage()
+            ->hasContent('Created Date'));
+        $this->assertNotTrue($this->session->getPage()
+            ->hasContent('No Storage Locations have been setup yet!'));
         $this->uninstall_addon();
     }
 }

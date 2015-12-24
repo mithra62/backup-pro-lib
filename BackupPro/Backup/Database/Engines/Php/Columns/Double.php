@@ -8,7 +8,6 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Double.php
  */
- 
 namespace mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
 
 use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\Int;
@@ -18,10 +17,9 @@ use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\Int;
  *
  * Handles processing data from a MySQL Double column
  *
- * @package 	Backup\Database\Engines\Php
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package Backup\Database\Engines\Php
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class Double extends Int
 {
-
 }

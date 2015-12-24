@@ -7,7 +7,6 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/tests/Browser/WP/FreshInstallTest.php
  */
- 
 namespace mithra62\BackupPro\tests\Browser\WP;
 
 use mithra62\BackupPro\tests\Browser\AbstractBase\FreshInstall;
@@ -18,10 +17,10 @@ use mithra62\BackupPro\tests\Browser\WPTrait;
  *
  * Executes all the tests by platform using the below definitions
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
-class FreshInstallTest extends FreshInstall 
+class FreshInstallTest extends FreshInstall
 {
     use WPTrait;
 
@@ -29,15 +28,11 @@ class FreshInstallTest extends FreshInstall
      * Disable this since we want full browser support
      */
     public function setUp()
-    {
-    
-    }
-    
+    {}
+
     /**
      * Disable this since we want full browser support
      */
     public function teardown()
-    {
-    
-    }
+    {}
 }

@@ -7,7 +7,6 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/tests/Browser/TestFixture.php
  */
- 
 namespace mithra62\BackupPro\tests\Browser;
 
 use aik099\PHPUnit\BrowserTestCase;
@@ -18,15 +17,16 @@ use mithra62\tests\TestTrait;
  *
  * Contains all the tools the unit tests will rely on
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class TestFixture extends BrowserTestCase
 {
-    use TestTrait; 
-    
+    use TestTrait;
+
     /**
      * The browser config
+     * 
      * @var array
      */
     public static $browsers = array(
@@ -35,41 +35,44 @@ class TestFixture extends BrowserTestCase
             'host' => 'localhost',
             'port' => 4444,
             'browserName' => 'firefox',
-            'baseUrl' => 'http://eric.ee2.clean.mithra62.com',
-        ),
+            'baseUrl' => 'http://eric.ee2.clean.mithra62.com'
+        )
     );
-    
+
     /**
      * Simple abstraction to determine the Platform specific URL we're attempting to hit
-     * @param string $key
+     * 
+     * @param string $key            
      * @return string
      */
     protected function url($key)
     {
         return $this->urls[$key];
     }
-    
+
     /**
      * Simple abstraction to determine the Platform specific Setting we want to apply
-     * @param string $key
+     * 
+     * @param string $key            
      * @return string
      */
     protected function ts($key)
     {
         return $this->test_settings[$key];
     }
-    
+
     /**
      * Helper method to remove any JS alerts contained in the webpage
      */
     public function iDisableTheAlerts()
     {
-       $javascript = "window.confirm = function() {};";
-       $this->session->executeScript($javascript);
+        $javascript = "window.confirm = function() {};";
+        $this->session->executeScript($javascript);
     }
-    
+
     /**
      * Sets up an FTP Storage Location for use
+     * 
      * @return \Behat\Mink\Element\NodeElement
      */
     protected function setupFtpStorageLocation()
@@ -77,7 +80,7 @@ class TestFixture extends BrowserTestCase
         $ftp_creds = $this->getFtpCreds();
         
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_ftp_storage') );
+        $this->session->visit($this->url('storage_add_ftp_storage'));
         
         $page = $this->session->getPage();
         $page->findById('storage_location_name')->setValue('My FTP Storage');
@@ -87,30 +90,29 @@ class TestFixture extends BrowserTestCase
         $page->findById('ftp_port')->setValue($ftp_creds['ftp_port']);
         $page->findById('ftp_store_location')->setValue($ftp_creds['ftp_store_location']);
         
-        if( $ftp_creds['ftp_passive'] == 1 )
-        {
+        if ($ftp_creds['ftp_passive'] == 1) {
             $page->findById('ftp_passive')->check();
-        }       
+        }
         
-        if( $ftp_creds['ftp_ssl'] == 1 )
-        {
+        if ($ftp_creds['ftp_ssl'] == 1) {
             $page->findById('ftp_ssl')->check();
         }
         
         $page->findById('ftp_timeout')->setValue($ftp_creds['ftp_timeout']);
-        $page->findButton('m62_settings_submit')->submit();  
+        $page->findButton('m62_settings_submit')->submit();
         
         return $page;
     }
-    
+
     /**
      * Sets up an Email Storage Location for use
+     * 
      * @return \Behat\Mink\Element\NodeElement
      */
     public function setupEmailStorageLocation()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_email_storage') );
+        $this->session->visit($this->url('storage_add_email_storage'));
         $page = $this->session->getPage();
         $page->findById('storage_location_name')->setValue('Test Email Storage');
         $page->findById('email_storage_attach_threshold')->setValue('0');
@@ -119,16 +121,17 @@ class TestFixture extends BrowserTestCase
         
         return $page;
     }
-    
+
     /**
      * Sets up a Google Cloud Storage Location for use
+     * 
      * @return \Behat\Mink\Element\DocumentElement
      */
     public function setupGcsStorageLocation()
     {
         $gcs_creds = $this->getGcsCreds();
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_gcs_storage') );
+        $this->session->visit($this->url('storage_add_gcs_storage'));
         
         $page = $this->session->getPage();
         $page->findById('storage_location_name')->setValue('My GCS Storage');
@@ -139,16 +142,18 @@ class TestFixture extends BrowserTestCase
         
         return $page;
     }
-    
+
     /**
      * Sets up a Local Storage Location for use
-     * @param string $path The local path to the Storage Location
+     * 
+     * @param string $path
+     *            The local path to the Storage Location
      * @return \Behat\Mink\Element\DocumentElement
      */
     public function setupLocalStorageLocation($path)
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_local_storage') );
+        $this->session->visit($this->url('storage_add_local_storage'));
         
         $page = $this->session->getPage();
         $page->findById('storage_location_name')->setValue('My Local Storage');
@@ -157,16 +162,17 @@ class TestFixture extends BrowserTestCase
         
         return $page;
     }
-    
+
     /**
      * Sets up a Rackspace Cloud Files Storage Location for use
+     * 
      * @return \Behat\Mink\Element\DocumentElement
      */
     public function setupRcfStorageLocation()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_rcf_storage') );
-
+        $this->session->visit($this->url('storage_add_rcf_storage'));
+        
         $rcf_creds = $this->getRcfCreds();
         $page = $this->session->getPage();
         $page->findById('storage_location_name')->setValue('My Rackspace Storage');
@@ -178,15 +184,16 @@ class TestFixture extends BrowserTestCase
         
         return $page;
     }
-    
+
     /**
      * Sets up an Amazon S3 Storage Location for use
+     * 
      * @return \Behat\Mink\Element\DocumentElement
      */
     public function setupS3StorageLocation()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_s3storage') );
+        $this->session->visit($this->url('storage_add_s3storage'));
         
         $rcf_creds = $this->getS3Creds();
         $page = $this->session->getPage();
@@ -198,15 +205,16 @@ class TestFixture extends BrowserTestCase
         
         return $page;
     }
-    
+
     /**
      * Sets up a Dropbox Storage Location for use
+     * 
      * @return \Behat\Mink\Element\DocumentElement
      */
     public function setupDropboxStorageLocation()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_dropbox_storage') );
+        $this->session->visit($this->url('storage_add_dropbox_storage'));
         
         $rcf_creds = $this->getDropboxCreds();
         $page = $this->session->getPage();
@@ -218,15 +226,16 @@ class TestFixture extends BrowserTestCase
         
         return $page;
     }
-    
+
     /**
      * Sets up a SFTP Storage Location for use
+     * 
      * @return \Behat\Mink\Element\DocumentElement
      */
     public function setupSftpStorageLocation()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('storage_add_sftp_storage') );
+        $this->session->visit($this->url('storage_add_sftp_storage'));
         
         $rcf_creds = $this->getSftpCreds();
         $page = $this->session->getPage();
@@ -241,46 +250,46 @@ class TestFixture extends BrowserTestCase
         
         return $page;
     }
-    
+
     /**
      * Sets a workable "Working Directory" setting
+     * 
      * @return unknown
      */
     public function setupGoodWorkingDirectory()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('settings_general') );
+        $this->session->visit($this->url('settings_general'));
         $page = $this->session->getPage();
-        $page->findById('working_directory' )->setValue( $this->ts('working_directory') );
+        $page->findById('working_directory')->setValue($this->ts('working_directory'));
         $page->findButton('m62_settings_submit')->submit();
         
         return $page;
     }
-    
+
     /**
-     * 
+     *
      * @return unknown
      */
     public function setupGoodLicenseKey()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('settings_license') );
+        $this->session->visit($this->url('settings_license'));
         $page = $this->session->getPage();
         $page->findById('license_number')->setValue('5214af45-9bc9-4019-8af9-bc98c38802c1');
         $page->findButton('m62_settings_submit')->submit();
         
         return $page;
     }
-    
+
     public function setupGoodFileBackupLocation()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('settings_files') );
+        $this->session->visit($this->url('settings_files'));
         $page = $this->session->getPage();
-        $page->findById('backup_file_location' )->setValue(dirname(__FILE__));
+        $page->findById('backup_file_location')->setValue(dirname(__FILE__));
         $page->findButton('m62_settings_submit')->submit();
         
         return $page;
     }
-    
 }

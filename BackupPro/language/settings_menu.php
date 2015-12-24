@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * mithra62 - Backup Pro
  *
@@ -12,10 +12,11 @@
 /**
  * Language Array
  * mithra62 language translation array
+ * 
  * @var array
  */
 $lang = array(
-    //settings menu
+    // settings menu
     'general_bp_settings_menu' => 'General',
     'db_bp_settings_menu' => 'Database Backup',
     'files_bp_settings_menu' => 'File Backup',
@@ -29,5 +30,5 @@ $lang = array(
     'storage_location_bp_settings_menu' => 'Storage Locations',
     'license_bp_settings_menu' => 'License Details',
     'storage_bp_settings_menu' => 'Storage Locations',
-    ''=>''	
+    '' => ''
 );

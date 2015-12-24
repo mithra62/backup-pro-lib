@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * mithra62 - Backup Pro
  *
@@ -12,9 +12,9 @@
 /**
  * FTP Storage Language Array
  * mithra62 language translation array
+ * 
  * @var array
  */
- 
 $lang = array(
     'backup_pro_ftp_storage_driver_name' => 'FTP Storage',
     'configure_ftp' => 'Configure FTP Sync',
@@ -35,6 +35,6 @@ $lang = array(
     'ftp_store_location' => 'FTP Store Location',
     'ftp_store_location_instructions' => 'Where on the remote server do you want to store the files. This directory has to exist before the settings can be saved.',
     'ftp_directory_missing' => 'The FTP remote directory doesn\'t exist.',
-    'backup_pro_ftp_storage_driver_description' => 'This Driver will store backups on a remote FTP server.',
-    
-);
+    'backup_pro_ftp_storage_driver_description' => 'This Driver will store backups on a remote FTP server.'
+)
+;

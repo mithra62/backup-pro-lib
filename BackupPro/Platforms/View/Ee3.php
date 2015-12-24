@@ -7,12 +7,10 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/Platforms/View/Ee3.php
  */
- 
 namespace mithra62\BackupPro\Platforms\View;
 
-use mithra62\Platforms\View\Ee3 AS Ee3View;
+use mithra62\Platforms\View\Ee3 as Ee3View;
 
 class Ee3 extends Ee3View
 {
-    
 }

@@ -7,7 +7,6 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/tests/Browser/EE2/Settings/DbBackupTest.php
  */
-
 namespace mithra62\BackupPro\tests\Browser\EE2;
 
 use mithra62\BackupPro\tests\Browser\AbstractBase\Settings\DbBackup;
@@ -18,10 +17,10 @@ use mithra62\BackupPro\tests\Browser\EE2Trait;
  *
  * Executes all the tests by platform using the below definitions
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
-class DbBackupTest extends DbBackup 
+class DbBackupTest extends DbBackup
 {
     use EE2Trait;
 
@@ -29,15 +28,11 @@ class DbBackupTest extends DbBackup
      * Disable this since we want full browser support
      */
     public function setUp()
-    {
-    
-    }
-    
+    {}
+
     /**
      * Disable this since we want full browser support
      */
     public function teardown()
-    {
-    
-    }
+    {}
 }

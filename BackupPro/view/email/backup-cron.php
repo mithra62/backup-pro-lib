@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 /**
  * mithra62 - Backup Pro
  *
@@ -9,9 +9,9 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/view/email/backup-cron.php
  */
- 
-$this->setLayout('email/partials/_layout'); ?>
+$this->setLayout('email/partials/_layout');
+?>
 
 <?php $this->capture(); ?>
-<?php echo $this['content'] ?>
+<?php echo $this['content']?>
 <?php $this->endCapture('body'); ?>

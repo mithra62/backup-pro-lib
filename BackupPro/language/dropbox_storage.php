@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * mithra62 - Backup Pro
  *
@@ -12,9 +12,9 @@
 /**
  * Dropbox Storage Language Array
  * mithra62 language translation array
+ * 
  * @var array
  */
- 
 $lang = array(
     'backup_pro_dropbox_storage_driver_name' => 'Dropbox Storage',
     'backup_pro_dropbox_storage_driver_description' => 'This Driver will store backups on Dropbox.',
@@ -23,5 +23,5 @@ $lang = array(
     'dropbox_app_secret' => 'App Secret',
     'dropbox_app_secret_instructions' => 'When you create your Dropbox App, you\'ll receive an App Secret. Enter that so Dropbox knows where to put your files. ',
     'dropbox_prefix' => 'Prefix',
-    'dropbox_prefix_instructions' => 'Basically, what folder do you want to store your backups in?',
+    'dropbox_prefix_instructions' => 'Basically, what folder do you want to store your backups in?'
 );

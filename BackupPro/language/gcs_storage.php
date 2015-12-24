@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * mithra62 - Backup Pro
  *
@@ -12,10 +12,10 @@
 /**
  * FTP Storage Language Array
  * mithra62 language translation array
+ * 
  * @var array
  */
- 
 $lang = array(
     'backup_pro_gcs_storage_driver_name' => 'Google Cloud Storage',
-    'backup_pro_gcs_storage_driver_description' => 'This Driver will store backups on the Google Cloud Storage service.',
+    'backup_pro_gcs_storage_driver_description' => 'This Driver will store backups on the Google Cloud Storage service.'
 );

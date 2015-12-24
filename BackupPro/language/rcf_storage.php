@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * mithra62 - Backup Pro
  *
@@ -12,10 +12,10 @@
 /**
  * Rackspace Cloud Files Storage Language Array
  * mithra62 language translation array
+ * 
  * @var array
  */
- 
 $lang = array(
     'backup_pro_rcf_storage_driver_name' => 'Rackspace Cloud Files',
-    'backup_pro_rcf_storage_driver_description' => 'This Driver will store backups on the Rackspace Cloud Files.',
+    'backup_pro_rcf_storage_driver_description' => 'This Driver will store backups on the Rackspace Cloud Files.'
 );

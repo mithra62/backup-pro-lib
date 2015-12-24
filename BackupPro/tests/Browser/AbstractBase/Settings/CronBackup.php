@@ -7,7 +7,6 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/tests/Browser/AbstractBase/Settings/CronBackup.php
  */
-
 namespace mithra62\BackupPro\tests\Browser\AbstractBase\Settings;
 
 use mithra62\BackupPro\tests\Browser\TestFixture;
@@ -17,20 +16,22 @@ use mithra62\BackupPro\tests\Browser\TestFixture;
  *
  * Executes all the tests by platform using the below definitions
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
-abstract class CronBackup extends TestFixture  
-{   
-    
+abstract class CronBackup extends TestFixture
+{
+
     /**
      * An instance of the mink selenium object
+     * 
      * @var unknown
      */
     public $session = null;
-    
+
     /**
      * The browser config
+     * 
      * @var array
      */
     public static $browsers = array(
@@ -40,10 +41,10 @@ abstract class CronBackup extends TestFixture
             'port' => 4444,
             'browserName' => 'firefox',
             'baseUrl' => 'http://eric.ee2.clean.mithra62.com',
-            'sessionStrategy' => 'shared',
-        ),
+            'sessionStrategy' => 'shared'
+        )
     );
-    
+
     public function testCronBackupNotifyEmailBadValue()
     {
         $this->login();
@@ -51,57 +52,62 @@ abstract class CronBackup extends TestFixture
         $this->install_addon();
         
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('settings_cron') );
+        $this->session->visit($this->url('settings_cron'));
         $page = $this->session->getPage();
-        $page->findById('cron_notify_emails' )->setValue("fdsafdsa\neric@mithra62.com\nuuuuuuuu");
+        $page->findById('cron_notify_emails')->setValue("fdsafdsa\neric@mithra62.com\nuuuuuuuu");
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertTrue($this->session->getPage()->hasContent('"fdsafdsa" isn\'t a valid email'));
-        $this->assertTrue($this->session->getPage()->hasContent('"uuuuuuuu" isn\'t a valid email'));
-        $this->assertNotTrue($this->session->getPage()->hasContent('"eric@mithra62.com" isn\'t a valid email'));
+        
+        $this->assertTrue($this->session->getPage()
+            ->hasContent('"fdsafdsa" isn\'t a valid email'));
+        $this->assertTrue($this->session->getPage()
+            ->hasContent('"uuuuuuuu" isn\'t a valid email'));
+        $this->assertNotTrue($this->session->getPage()
+            ->hasContent('"eric@mithra62.com" isn\'t a valid email'));
     }
-    
+
     /**
      * @depends testCronBackupNotifyEmailBadValue
      */
     public function testCronBackupNotifyEmailSubjectNoValue()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('settings_cron') );
+        $this->session->visit($this->url('settings_cron'));
         $page = $this->session->getPage();
-        $page->findById('cron_notify_email_subject' )->setValue('');
+        $page->findById('cron_notify_email_subject')->setValue('');
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertTrue($this->session->getPage()->hasContent('Cron Notify Email Subject is required'));
+        
+        $this->assertTrue($this->session->getPage()
+            ->hasContent('Cron Notify Email Subject is required'));
     }
-    
+
     /**
      * @depends testCronBackupNotifyEmailSubjectNoValue
      */
     public function testCronBackupNotifyEmailSubjectGoodValue()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('settings_cron') );
+        $this->session->visit($this->url('settings_cron'));
         $page = $this->session->getPage();
-        $page->findById('cron_notify_email_subject' )->setValue('fdsafdsa');
+        $page->findById('cron_notify_email_subject')->setValue('fdsafdsa');
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertNotTrue($this->session->getPage()->hasContent('Cron Notify Email Subject is required'));
+        
+        $this->assertNotTrue($this->session->getPage()
+            ->hasContent('Cron Notify Email Subject is required'));
     }
-    
+
     /**
      * @depends testCronBackupNotifyEmailSubjectGoodValue
      */
     public function testCronBackupNotifyEmailMessageNoValue()
     {
         $this->session = $this->getSession();
-        $this->session->visit( $this->url('settings_cron') );
+        $this->session->visit($this->url('settings_cron'));
         $page = $this->session->getPage();
-        $page->findById('cron_notify_email_message' )->setValue('');
+        $page->findById('cron_notify_email_message')->setValue('');
         $page->findButton('m62_settings_submit')->submit();
-    
-        $this->assertTrue($this->session->getPage()->hasContent('Cron Notify Email Message is required'));
+        
+        $this->assertTrue($this->session->getPage()
+            ->hasContent('Cron Notify Email Message is required'));
         $this->uninstall_addon();
-    }  
-    
+    }
 }

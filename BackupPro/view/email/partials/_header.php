@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * mithra62 - Backup Pro
@@ -9,5 +9,4 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/view/email/partials/_header.php
  */
- 
 echo '';

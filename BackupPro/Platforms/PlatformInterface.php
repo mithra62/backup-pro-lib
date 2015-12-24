@@ -1,4 +1,4 @@
-<?php  
+<?php
 /**
  * mithra62 - Backup Pro
  *
@@ -8,7 +8,6 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/Platforms/PlatformInterface.php
  */
- 
 namespace mithra62\BackupPro\Platforms;
 
 /**
@@ -16,20 +15,23 @@ namespace mithra62\BackupPro\Platforms;
  *
  * Ensures the platform specific methods exist
  *
- * @package 	mithra62\BackupPro
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\BackupPro
+ * @author Eric Lamb <eric@mithra62.com>
  */
 interface PlatformInterface
 {
+
     /**
      * Returns the Backup Cron commands
-     * @param array $settings
+     * 
+     * @param array $settings            
      */
     public function getBackupCronCommands(array $settings);
-    
+
     /**
      * Returns the Integrity Agent Cron command
-     * @param array $settings
+     * 
+     * @param array $settings            
      */
     public function getIaCronCommands(array $settings);
 }

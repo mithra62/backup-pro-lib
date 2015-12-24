@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * mithra62 - Backup Pro
  *
@@ -12,9 +12,9 @@
 /**
  * Local Storage Language Array
  * mithra62 language translation array
+ * 
  * @var array
  */
- 
 $lang = array(
     'storage_location_name' => 'Storage Location Name',
     'add_storage_location' => 'Add Storage Location',
@@ -40,5 +40,5 @@ $lang = array(
     'storage_location_removed' => 'Storage Location Removed',
     'storage_location_status' => 'Active',
     'storage_location_status_instructions' => 'Should this Storage Location be used?',
-    'delete_storage_confirm' => 'Are you sure you want to remove the below Storage Location?',
+    'delete_storage_confirm' => 'Are you sure you want to remove the below Storage Location?'
 );

@@ -8,7 +8,6 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Polygon.php
  */
- 
 namespace mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
 
 use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\Point;
@@ -18,10 +17,9 @@ use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\Point;
  *
  * Handles processing data from a MySQL Polygon column
  *
- * @package 	Backup\Database\Engines\Php
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package Backup\Database\Engines\Php
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class Polygon extends Point
 {
-
 }

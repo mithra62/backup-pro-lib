@@ -8,7 +8,6 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Serial.php
  */
- 
 namespace mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
 
 use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\Bigint;
@@ -18,10 +17,9 @@ use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\Bigint;
  *
  * Handles processing data from a MySQL Serial column
  *
- * @package 	Backup\Database\Engines\Php
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package Backup\Database\Engines\Php
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class Serial extends Bigint
 {
-
 }

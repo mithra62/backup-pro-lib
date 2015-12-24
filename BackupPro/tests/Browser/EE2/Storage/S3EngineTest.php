@@ -7,10 +7,9 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/tests/Browser/S3Engine.php
  */
-
 namespace mithra62\BackupPro\tests\Browser\EE2\Storage;
 
-use mithra62\BackupPro\tests\Browser\AbstractBase\Storage\S3Engine; 
+use mithra62\BackupPro\tests\Browser\AbstractBase\Storage\S3Engine;
 use mithra62\BackupPro\tests\Browser\EE2Trait;
 
 /**
@@ -18,8 +17,8 @@ use mithra62\BackupPro\tests\Browser\EE2Trait;
  *
  * Executes all the tests by platform using the below definitions
  *
- * @package 	mithra62\Tests
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package mithra62\Tests
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class S3EngineTest extends S3Engine
 {
@@ -29,16 +28,11 @@ class S3EngineTest extends S3Engine
      * Disable this since we want full browser support
      */
     public function setUp()
-    {
-    
-    }
-    
+    {}
+
     /**
      * Disable this since we want full browser support
      */
     public function teardown()
-    {
-    
-    }
-    
+    {}
 }

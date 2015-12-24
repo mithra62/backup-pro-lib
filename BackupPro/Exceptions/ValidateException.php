@@ -8,8 +8,7 @@
  * @version		1.0
  * @filesource 	./mithra62/BackupPro/Exceptions/ValidateException.php
  */
- 
-namespace mithra62\BackupPro\Exceptions; 
+namespace mithra62\BackupPro\Exceptions;
 
 use mithra62\BackupPro\Exception;
 
@@ -18,10 +17,9 @@ use mithra62\BackupPro\Exception;
  *
  * Handles exceptions from the Validate object
  *
- * @package 	BackupPro\Exceptions
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package BackupPro\Exceptions
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class ValidateException extends Exception
-{ 
-    
+{
 }

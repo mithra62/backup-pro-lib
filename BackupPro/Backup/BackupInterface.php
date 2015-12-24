@@ -8,7 +8,6 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/Backup/BackupInterface.php
  */
- 
 namespace mithra62\BackupPro\Backup;
 
 /**
@@ -16,16 +15,20 @@ namespace mithra62\BackupPro\Backup;
  *
  * All Backup methods should implement this interface
  *
- * @package 	Backup
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package Backup
+ * @author Eric Lamb <eric@mithra62.com>
  */
 interface BackupInterface
 {
+
     /**
      * Writes out the initial backup details file
-     * @param \mithra62\BackupPro\Backup\Details $details
-     * @param string $file_path The path to the backup 
-     * @param string $backup_method What type of backup was taken
+     * 
+     * @param \mithra62\BackupPro\Backup\Details $details            
+     * @param string $file_path
+     *            The path to the backup
+     * @param string $backup_method
+     *            What type of backup was taken
      */
     public function writeDetails(\mithra62\BackupPro\Backup\Details $details, $file_path, $backup_method = 'php');
 }

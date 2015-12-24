@@ -8,8 +8,7 @@
  * @version		1.0
  * @filesource 	./mithra62/BackupPro/Exceptions/ProgressException.php
  */
- 
-namespace mithra62\BackupPro\Exceptions\Backup; 
+namespace mithra62\BackupPro\Exceptions\Backup;
 
 use mithra62\BackupPro\Exception;
 
@@ -18,10 +17,9 @@ use mithra62\BackupPro\Exception;
  *
  * Handles exceptions from the Progress object
  *
- * @package 	BackupPro\Exceptions\Backup
- * @author		Eric Lamb <eric@mithra62.com>
+ * @package BackupPro\Exceptions\Backup
+ * @author Eric Lamb <eric@mithra62.com>
  */
 class ProgressException extends Exception
-{ 
-    
+{
 }
