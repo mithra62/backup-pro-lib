@@ -17,42 +17,97 @@ use mithra62\tests\TestFixture;
 
 class BackupTest extends TestFixture
 {
-
-    public function testDefaults()
+    protected $backup = null;
+    
+    protected function getBackupObj()
     {
+        $this->backup = new Backup(new Db());
+        $this->backup->setServices(new \Pimple\Container()); // should mock this up :|
+        return $this->backup;
+    }
+    
+    public function testStoragePathPropertyDefaults()
+    {
+        $backup = $this->getBackupObj();
         $this->assertClassHasAttribute('storage_path', '\\mithra62\\BackupPro\Backup');
-        $this->assertClassHasAttribute('db', '\\mithra62\\BackupPro\Backup');
-        $this->assertClassHasAttribute('storage', '\\mithra62\\BackupPro\Backup');
-        $this->assertClassHasAttribute('progress', '\\mithra62\\BackupPro\Backup');
-        $this->assertClassHasAttribute('database', '\\mithra62\\BackupPro\Backup');
-        $this->assertClassHasAttribute('compress', '\\mithra62\\BackupPro\Backup');
-        $this->assertClassHasAttribute('details', '\\mithra62\\BackupPro\Backup');
-        $this->assertClassHasAttribute('db_info', '\\mithra62\\BackupPro\Backup');
-        $this->assertClassHasAttribute('timer_start', '\\mithra62\\BackupPro\Backup');
-        $this->assertClassHasAttribute('timer_stop', '\\mithra62\\BackupPro\Backup');
-        
-        $backup = new Backup(new Db());
-        $backup->setServices(new \Pimple\Container()); // should mock this up :|
-        
         $this->assertObjectHasAttribute('storage_path', $backup);
-        $this->assertObjectHasAttribute('db', $backup);
-        $this->assertObjectHasAttribute('storage', $backup);
-        $this->assertObjectHasAttribute('progress', $backup);
-        $this->assertObjectHasAttribute('database', $backup);
-        $this->assertObjectHasAttribute('compress', $backup);
-        $this->assertObjectHasAttribute('details', $backup);
-        $this->assertObjectHasAttribute('db_info', $backup);
-        $this->assertObjectHasAttribute('timer_start', $backup);
-        $this->assertObjectHasAttribute('timer_stop', $backup);
-        
         $this->assertNull($backup->getStoragePath());
-        $this->assertCount(0, $backup->getDbInfo());
-        
-        $this->assertInstanceOf('\\mithra62\\BackupPro\\Backup\\Progress', $backup->getProgress());
-        $this->assertInstanceOf('\\mithra62\\BackupPro\\Backup\\Database', $backup->getDatabase());
-        $this->assertInstanceOf('\\mithra62\\BackupPro\\Backup\\Storage', $backup->getStorage());
-        $this->assertInstanceOf('\\mithra62\\BackupPro\\Backup\\Details', $backup->getDetails());
-        $this->assertInstanceOf('\\mithra62\\Compress', $backup->getCompress());
+    }
+    
+    public function testDbPropertyDefaults()
+    {
+        $backup = $this->getBackupObj();
+        $this->assertClassHasAttribute('db', '\\mithra62\\BackupPro\Backup');
+        $this->assertObjectHasAttribute('db', $backup);
         $this->assertInstanceOf('\\mithra62\\Db', $backup->getDb());
+    }
+    
+    public function testStoragePropertyDefaults()
+    {
+        $this->assertClassHasAttribute('storage', '\\mithra62\\BackupPro\Backup');
+        $this->assertObjectHasAttribute('storage', $this->getBackupObj());
+        $this->assertInstanceOf('\\mithra62\\BackupPro\\Backup\\Storage', $this->getBackupObj()->getStorage());
+    }
+    
+    public function testProgressPropertyDefaults()
+    {
+        $this->assertClassHasAttribute('progress', '\\mithra62\\BackupPro\Backup');
+        $this->assertObjectHasAttribute('progress', $this->getBackupObj());
+        $this->assertInstanceOf('\\mithra62\\BackupPro\\Backup\\Progress', $this->getBackupObj()->getProgress());
+    }
+    
+    public function testDatabasePropertyDefaults()
+    {
+        $this->assertClassHasAttribute('database', '\\mithra62\\BackupPro\Backup');
+        $this->assertObjectHasAttribute('database', $this->getBackupObj());
+        $this->assertInstanceOf('\\mithra62\\BackupPro\\Backup\\Database', $this->getBackupObj()->getDatabase());
+    }
+    
+    public function testFilePropertyDefaults()
+    {
+        $this->assertClassHasAttribute('file', '\\mithra62\\BackupPro\Backup');
+        $this->assertObjectHasAttribute('file', $this->getBackupObj());
+        $this->assertInstanceOf('\\mithra62\\BackupPro\\Backup\\Files', $this->getBackupObj()->getFile());
+    }
+    
+    public function testCompressPropertyDefaults()
+    {
+        $this->assertClassHasAttribute('compress', '\\mithra62\\BackupPro\Backup');
+        $this->assertObjectHasAttribute('compress', $this->getBackupObj());
+        $this->assertInstanceOf('\\mithra62\\Compress', $this->getBackupObj()->getCompress());
+    }
+    
+    public function testDetailsPropertyDefaults()
+    {
+        $this->assertClassHasAttribute('details', '\\mithra62\\BackupPro\Backup');
+        $this->assertObjectHasAttribute('details', $this->getBackupObj());
+        $this->assertInstanceOf('\\mithra62\\BackupPro\\Backup\\Details', $this->getBackupObj()->getDetails());
+    }
+    
+    public function testDbInfoPropertyDefaults()
+    {
+        $this->assertClassHasAttribute('db_info', '\\mithra62\\BackupPro\Backup');
+        $this->assertObjectHasAttribute('db_info', $this->getBackupObj());
+        $this->assertTrue(is_array($this->getBackupObj()->getDbInfo()));
+        $this->assertCount(0, $this->getBackupObj()->getDbInfo());
+    }
+    
+    public function testTimerStartPropertyDefaults()
+    {
+        $this->assertClassHasAttribute('timer_start', '\\mithra62\\BackupPro\Backup');
+        $this->assertObjectHasAttribute('timer_start', $this->getBackupObj());
+    }
+    
+    public function testTimerStopPropertyDefaults()
+    {
+        $this->assertClassHasAttribute('timer_stop', '\\mithra62\\BackupPro\Backup');
+        $this->assertObjectHasAttribute('timer_stop', $this->getBackupObj());
+    }
+    
+    public function testServicesPropertyDefaults()
+    {
+        $this->assertClassHasAttribute('services', '\\mithra62\\BackupPro\Backup');
+        $this->assertObjectHasAttribute('services', $this->getBackupObj());
+        $this->assertInstanceOf('\Pimple\Container', $this->getBackupObj()->getServices());
     }
 }
