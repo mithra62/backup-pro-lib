@@ -38,6 +38,13 @@ class Database extends AbstractBackup
      * @var string
      */
     protected $engine = 'php';
+    
+    /**
+     * The database backup engines available to the system
+     * 
+     * @var array
+     */
+    protected $available_engines = array();
 
     /**
      * The tables to not include in the archive
@@ -344,6 +351,10 @@ class Database extends AbstractBackup
      */
     public function setEngine($engine = 'php')
     {
+        if(!array_key_exists($engine, $this->getAvailableEngines())) {
+            throw new \InvalidArgumentException('Unknown backup engine "'.$engine.'"! ');
+        }
+        
         $this->engine = $engine;
         return $this;
     }
@@ -375,29 +386,33 @@ class Database extends AbstractBackup
      */
     public function getAvailableEngines()
     {
-        $old_cwd = getcwd();
-        chdir(dirname(__FILE__));
-        $path = './Database/Engines';
-        if (! is_dir($path)) {
-            throw new DatabaseException("Engine Directory " . $path . " isn't a directory...");
-        }
-        
-        $d = dir($path);
-        $engines = array();
-        while (false !== ($entry = $d->read())) {
-            $name = ucfirst(str_replace('.php', '', $entry));
-            $class = "\\mithra62\\BackupPro\\Backup\\Database\\Engines\\" . $name;
-            if (class_exists($class)) {
-                $obj = new $class();
-                if ($obj instanceof Database\DbInterface) {
-                    $engines[$obj->getShortName()] = $obj->getEngineDetails();
+        if(!$this->available_engines) {
+            $old_cwd = getcwd();
+            chdir(dirname(__FILE__));
+            $path = './Database/Engines';
+            if (! is_dir($path)) {
+                throw new DatabaseException("Engine Directory " . $path . " isn't a directory...");
+            }
+            
+            $d = dir($path);
+            $engines = array();
+            while (false !== ($entry = $d->read())) {
+                $name = ucfirst(str_replace('.php', '', $entry));
+                $class = "\\mithra62\\BackupPro\\Backup\\Database\\Engines\\" . $name;
+                if (class_exists($class)) {
+                    $obj = new $class();
+                    if ($obj instanceof Database\DbInterface) {
+                        $engines[$obj->getShortName()] = $obj->getEngineDetails();
+                    }
                 }
             }
+            
+            $d->close();
+            chdir($old_cwd);
+            $this->available_engines = $engines;
         }
         
-        $d->close();
-        chdir($old_cwd);
-        return $engines;
+        return $this->available_engines;
     }
 
     /**
@@ -446,8 +461,6 @@ class Database extends AbstractBackup
 
     /**
      * Sets the table data we want to exclude from the backup
-     *
-     * Will essentially only return the CREATE TABLE statements
      * 
      * @param array $tables            
      * @return \mithra62\BackupPro\Backup\Database
