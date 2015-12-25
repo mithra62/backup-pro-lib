@@ -62,7 +62,7 @@ interface BackupPro
      * 
      * @var string
      */
-    const docs_url = 'https://mithra62.com/';
+    const docs_url = 'https://mithra62.com/docs/table-of-contents/backup-pro';
 
     /**
      * The URL to the base site for docs and details

@@ -90,6 +90,19 @@ class Backup
      * @var array
      */
     protected $db_info = array();
+    
+    /**
+     * The expected structure for the db_info array
+     * 
+     * @var array
+     */
+    protected $db_info_prototype = array(
+        'user' => '',
+        'password' => '',
+        'database' => '',
+        'host' => '',
+        'prefix' => '',
+    );
 
     /**
      * The execution start time in milliseconds
@@ -178,10 +191,17 @@ class Backup
      * 
      * @param array $db_info            
      * @see \mithra62\Db
+     * @throws \InvalidArgumentException
      * @return \mithra62\BackupPro\Backup
      */
     public function setDbInfo(array $db_info)
     {
+        $keys = array_keys($this->db_info_prototype);
+        foreach($keys AS $key) {
+            if(!array_key_exists($key, $db_info)) {
+                throw new \InvalidArgumentException('$db_info has to be in the format '.print_r($this->db_info_prototype, true));
+            }
+        }
         $this->db_info = $db_info;
         return $this;
     }

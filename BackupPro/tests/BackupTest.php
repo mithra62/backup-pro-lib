@@ -110,4 +110,29 @@ class BackupTest extends TestFixture
         $this->assertObjectHasAttribute('services', $this->getBackupObj());
         $this->assertInstanceOf('\Pimple\Container', $this->getBackupObj()->getServices());
     }
+    
+    public function testStartTimerMethod()
+    {
+        $backup = $this->getBackupObj();
+        $backup->startTimer();
+        sleep(1);
+        $backup_time = round($backup->getBackupTime());
+        $this->assertEquals('1', $backup_time);
+    }
+    
+    public function testSetDbInfoGoodStructure()
+    {
+        $backup = $this->getBackupObj();
+        $db_info = array('user' => '', 'password' => '', 'database' => '', 'host' => '', 'prefix' => '');
+        $this->assertInstanceOf('mithra62\BackupPro\Backup', $backup->setDbInfo($db_info));
+        $this->assertEquals($db_info, $backup->getDbInfo());
+    }
+    
+    public function testSetDbInfoBadStructure()
+    {
+        $this->setExpectedException('\InvalidArgumentException');
+        $backup = $this->getBackupObj();
+        $db_info = array('username' => '', 'password' => '', 'database' => '', 'host' => '', 'prefix' => '');
+        $backup->setDbInfo($db_info);
+    }
 }
