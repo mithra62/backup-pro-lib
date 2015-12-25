@@ -172,7 +172,7 @@ class Details
     /**
      * Creates the meta details file for the given backup
      * 
-     * @param string $file_name            
+     * @param string $file_name         
      * @param string $path            
      * @param array $data            
      */

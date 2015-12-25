@@ -19,23 +19,28 @@ class DetailsTest extends TestFixture
     {
         return realpath(dirname(__FILE__) . '/../working_dir');
     }
-
-    public function testDefaults()
+    
+    public function testDetailsDirectoryPropertyDefault()
     {
-        $this->assertClassHasAttribute('details_directory', '\\mithra62\\BackupPro\\Backup\\Details');
-        $this->assertClassHasAttribute('details_ext', '\\mithra62\\BackupPro\\Backup\\Details');
-        $this->assertClassHasAttribute('details_prototype', '\\mithra62\\BackupPro\\Backup\\Details');
-        
         $details = new Details();
-        
-        $this->assertInstanceOf('\\mithra62\\BackupPro\\Backup\\Details', $details);
-        
+        $this->assertClassHasAttribute('details_directory', '\\mithra62\\BackupPro\\Backup\\Details');
         $this->assertObjectHasAttribute('details_directory', $details);
-        $this->assertObjectHasAttribute('details_ext', $details);
-        $this->assertObjectHasAttribute('details_prototype', $details);
-        
-        $this->assertEquals('.m62', $details->getDetailsExt());
         $this->assertEquals('.meta', $details->getDetailsDir());
+    }
+    
+    public function testDetailsExtPropertyDefault()
+    {
+        $details = new Details();
+        $this->assertClassHasAttribute('details_ext', '\\mithra62\\BackupPro\\Backup\\Details');
+        $this->assertObjectHasAttribute('details_ext', $details);
+        $this->assertEquals('.m62', $details->getDetailsExt());
+    }
+    
+    public function testDetailsPrototypPropetyDefault()
+    {
+        $details = new Details();
+        $this->assertClassHasAttribute('details_prototype', '\\mithra62\\BackupPro\\Backup\\Details');
+        $this->assertObjectHasAttribute('details_prototype', $details);
     }
 
     public function testDefaultPrototype()
@@ -52,5 +57,20 @@ class DetailsTest extends TestFixture
         $this->assertArrayHasKey('verified_details', $details->getDetailsPrototype());
         $this->assertArrayHasKey('time_taken', $details->getDetailsPrototype());
         $this->assertArrayHasKey('max_memory', $details->getDetailsPrototype());
+    }
+    
+    public function testGetDetailsPath()
+    {
+        $details = new Details();
+        $path = $details->getDetailsPath($this->getWorkingDir());
+        $this->assertEquals('.meta', substr($path, -5)); 
+    }
+    
+    public function testSetDetailsExt()
+    {
+        $value = '.ttt';
+        $details = new Details();
+        $details->setDetailsExt($value);
+        $this->assertEquals($value, $details->getDetailsExt());
     }
 }

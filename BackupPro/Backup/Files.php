@@ -94,7 +94,7 @@ class Files extends AbstractBackup
     public function setTotalFiles($total, $refresh = false)
     {
         if ($refresh) {
-            $this->total = $total;
+            $this->total_files = $total;
         } else {
             $this->total_files = $this->total_files + $total;
         }
