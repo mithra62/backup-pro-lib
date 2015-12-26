@@ -171,4 +171,65 @@ class DatabaseTest extends TestFixture
         $this->assertInstanceOf('mithra62\BackupPro\Backup\Database\DbAbstract', $database->setEngine('php')->getEngine());
         $this->assertInstanceOf('mithra62\BackupPro\Backup\Database\DbInterface', $database->setEngine('php')->getEngine());
     }
+    
+    public function testGetEngineDefaultValue()
+    {
+        $database = new Database();
+        $this->assertInstanceOf('mithra62\BackupPro\Backup\Database\Engines\Php', $database->getEngine());
+    }
+    
+    public function testGetAvailableEnginesOptions()
+    {
+        $database = new Database();
+        $this->assertCount(2, $database->getAvailableEnginesOptions());
+    }
+    
+    public function testSetIgnoreTablesEmptyArray()
+    {
+        $database = new Database();
+        $tables = array();
+        $this->assertInstanceOf('mithra62\BackupPro\Backup\Database', $database->setIgnoreTables($tables));
+    }
+    
+    public function testSetIgnoreTablesEmptyValue()
+    {
+        $database = new Database();
+        $tables = array();
+        $this->count(0, $database->setIgnoreTables($tables)->getIgnoreTables());
+    }
+    
+    public function testSetIgnoreTablesGoodTableValue()
+    {
+        $database = new Database();
+        $tables = array('test', 'test2');
+        $this->count(2, $database->setIgnoreTableData($tables)->getIgnoreTables());
+    }
+    
+    public function testSetIgnoreTablesDataEmptyArray()
+    {
+        $database = new Database();
+        $tables = array();
+        $this->assertInstanceOf('mithra62\BackupPro\Backup\Database', $database->setIgnoreTableData($tables));
+    }
+    
+    public function testSetIgnoreTablesDataEmptyValue()
+    {
+        $database = new Database();
+        $tables = array();
+        $this->count(0, $database->setIgnoreTableData($tables)->getIgnoreTableData());
+    }
+    
+    public function testSetIgnoreTablesGoodDataTableValue()
+    {
+        $database = new Database();
+        $tables = array('test', 'test2');
+        $this->count(2, $database->setIgnoreTableData($tables)->getIgnoreTableData());
+    }
+    
+    public function testRemoveWhiteSpace()
+    {
+        $database = new Database();
+        $string = "test\nagain\tanother";
+        $this->assertEquals("test again\tanother", $database->removeWhiteSpace($string));
+    }
 }
