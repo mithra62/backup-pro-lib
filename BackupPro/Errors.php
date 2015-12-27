@@ -24,6 +24,20 @@ class Errors extends m62Errors
 {
 
     /**
+     * The expected structure for the $settings array
+     *
+     * @var array
+     */
+    protected $settings_prototypes = array(
+        'backup_state' => array(
+            'storage_details' => '',
+            'working_directory' => '',
+            'db_backup_alert_threshold' => '',
+            'file_backup_alert_threshold' => ''
+        )
+    );
+    
+    /**
      * Checks to ensure the storage location data is all proper
      * 
      * @param array $storage_locations            
@@ -128,6 +142,13 @@ class Errors extends m62Errors
      */
     public function checkBackupState(\mithra62\BackupPro\Backups $backups, array $settings)
     {
+        $keys = array_keys($this->settings_prototypes['backup_state']);
+        foreach($keys AS $key) {
+            if(!array_key_exists($key, $settings)) {
+                throw new \InvalidArgumentException('$settings has to be in the format '.print_r($this->settings_prototypes['backup_state'], true));
+            }
+        }
+        
         $backup_data = $backups->setBackupPath($settings['working_directory'])->getAllBackups($settings['storage_details']);
         $backup_meta = $backups->getBackupMeta($backup_data);
         $integrity = $backups->getIntegrity();

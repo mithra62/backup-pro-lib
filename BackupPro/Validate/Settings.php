@@ -120,10 +120,10 @@ class Settings extends Validate
             $this->rule('required', 'auto_threshold_custom')->message('{field} is required');
             $this->rule('numeric', 'auto_threshold_custom')->message('{field} must be a number');
             
-            if ($data['meta']['global']['total_space_used_raw'] > '100000000') {
+            if ($data['meta']['global']['total_space_used_raw'] > 100000000) {
                 $this->rule('min', 'auto_threshold_custom', $data['meta']['global']['total_space_used_raw'])->message('You\'re already using ' . $data['meta']['global']['total_space_used'] . ' so {field} must be at least "' . $data['meta']['global']['total_space_used_raw'] . '"');
             } else {
-                $this->rule('min', 'auto_threshold_custom', '100000000')->message('{field} must be at least 100MB (100000000)');
+                $this->rule('min', 'auto_threshold_custom', 100000000)->message('{field} must be at least 100MB (100000000)');
             }
         } else {
             if ($data['auto_threshold'] != '0') {
