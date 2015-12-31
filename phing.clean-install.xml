@@ -23,7 +23,7 @@
 		<if>
 		 <equals arg1="${platform_name}" arg2="Prestashop" />
 		 <then>
-		   <echo message="Added stupid index.php file so PrestaStore thinks they're secure..." />
+		   <echo message="Adding index.php file to PrestaShop directories..." />
 		 	<foreach param="dirname" absparam="absname" target="copy_index">
 		 	  <fileset dir="${build_container_dir}">
 		 	  	<include name="**"></include>
