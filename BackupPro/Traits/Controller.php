@@ -11,6 +11,7 @@
 namespace mithra62\BackupPro\Traits;
 
 use mithra62\BackupPro\Bootstrap;
+use mithra62\Traits\Log;
 
 /**
  * Backup Pro - Controller Trait
@@ -22,7 +23,8 @@ use mithra62\BackupPro\Bootstrap;
  */
 trait Controller
 {
-
+    use Log;
+    
     /**
      * The mithra62 bootstrap object
      * 
@@ -62,5 +64,15 @@ trait Controller
         }
         
         return $return;
+    }
+    
+    /**
+     * Returns the 
+     * @param unknown $file_name
+     */
+    public function getDbBackupMetaName($file_name)
+    {
+        $storage = $this->services['backup']->setStoragePath($this->settings['working_directory']);
+        return $storage->getStorage()->getDbBackupNamePath($file_name);
     }
 }
