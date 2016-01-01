@@ -9,6 +9,8 @@
  */
 namespace mithra62\BackupPro\tests\Browser;
 
+use mithra62\Db;
+
 /**
  * Backup Pro - Prestashop Trait
  *
@@ -30,32 +32,32 @@ trait PrestashopTrait
     public $urls = array(
         
         // dashboards
-        'dashboard' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProDashboard',
-        'db_backups' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProDashboard&section=db_backups',
-        'file_backups' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProDashboard&section=file_backups',
+        'dashboard' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProDashboard&token=acf7f967edb8f6d110f616fbad5c44b8',
+        'db_backups' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProDashboard&token=acf7f967edb8f6d110f616fbad5c44b8&section=db_backups',
+        'file_backups' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProDashboard&token=acf7f967edb8f6d110f616fbad5c44b8&section=file_backups',
         
         // backup types
-        'db_backup' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProBackupDatabase',
-        'file_backup' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProBackupFiles',
+        'db_backup' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProBackupDatabase&token=e86101a8457bed89e27f19129ff631d6',
+        'file_backup' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProBackupFiles&token=65f50372bf1cedae0225bb6b47c0bc41',
         
         // settings
-        'settings_general' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=general',
-        'settings_db' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=db',
-        'settings_files' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=files',
-        'settings_cron' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=cron',
-        'settings_ia' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=integrity_agent',
-        'settings_license' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=license',
+        'settings_general' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=general',
+        'settings_db' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=db_backups',
+        'settings_files' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=file_backups',
+        'settings_cron' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=cron',
+        'settings_ia' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=integrity_agent',
+        'settings_license' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=license',
         
         // storage engines
-        'storage_view_storage' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=storage',
-        'storage_add_email_storage' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=storage&action=new&engine=email',
-        'storage_add_ftp_storage' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=storage&action=new&engine=ftp',
-        'storage_add_gcs_storage' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=storage&action=new&engine=gcs',
-        'storage_add_local_storage' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=storage&action=new&engine=local',
-        'storage_add_rcf_storage' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=storage&action=new&engine=rcf',
-        'storage_add_s3storage' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=storage&action=new&engine=s3',
-        'storage_add_dropbox_storage' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=storage&action=new&engine=dropbox',
-        'storage_add_sftp_storage' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=storage&action=new&engine=sftp'
+        'storage_view_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=storage',
+        'storage_add_email_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=storage&sub=new_storage&engine=email',
+        'storage_add_ftp_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=storage&sub=new_storage&engine=ftp',
+        'storage_add_gcs_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=storage&sub=new_storage&engine=gcs',
+        'storage_add_local_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=storage&sub=new_storage&engine=local',
+        'storage_add_rcf_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=storage&sub=new_storage&engine=rcf',
+        'storage_add_s3storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=storage&sub=new_storage&engine=s3',
+        'storage_add_dropbox_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=storage&sub=new_storage&engine=dropbox',
+        'storage_add_sftp_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=storage&sub=new_storage&engine=sftp'
     );
 
     /**
@@ -93,10 +95,10 @@ trait PrestashopTrait
         
         'storage_details' => array(),
         
-        'working_directory' => 'D:\ProjectFiles\mithra62\clean_cms\wp\backup_meta',
-        'local_backup_store_location' => 'D:\ProjectFiles\mithra62\clean_cms\wp\backups',
+        'working_directory' => 'D:\ProjectFiles\mithra62\clean_cms\prestashop\backup_meta',
+        'local_backup_store_location' => 'D:\ProjectFiles\mithra62\clean_cms\prestashop\backups',
         'backup_file_location' => array(
-            'D:\ProjectFiles\mithra62\clean_cms\wp\html'
+            'D:\ProjectFiles\mithra62\clean_cms\prestashop\html'
         ),
         
         'max_file_backups' => '3',
@@ -177,9 +179,7 @@ trait PrestashopTrait
      */
     public function install_addon()
     {
-        $this->session->visit('http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminModules&install=backup_pro&tab_module=administration&module_name=backup_pro&anchor=Backup_pro');
-        $page = $this->session->getPage();
-        $page->find('xpath', '/body/div/div[2]/a[1]')->click();
+
     }
 
     /**
@@ -187,10 +187,11 @@ trait PrestashopTrait
      */
     public function uninstall_addon()
     {
-        $this->session->visit('http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminModules');
-        $page = $this->session->getPage();
-        $checkbox = $page->find('xpath', '/body/div[1]/div[2]/div[2]/div[1]/div[3]/form[2]/table/tbody/tr[2]/th/input')->check();
-        $action_select = $page->find('xpath', '/body/div[1]/div[2]/div[2]/div[1]/div[3]/form[2]/div[2]/div[1]/select')->selectOption('deactivate-selected');
-        $page->findButton('doaction2')->submit();
+        $db = new Db();
+        $creds = $this->getDbCreds();
+        $db->setCredentials($creds)
+        ->setDbName('clean_presta')
+        ->emptyTable('ps_backup_pro_settings');
+        $db->setDbName($creds['database']);
     }
 }
