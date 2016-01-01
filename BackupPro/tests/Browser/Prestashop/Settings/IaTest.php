@@ -7,7 +7,7 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/tests/Browser/Prestashop/Settings/IaTest.php
  */
-namespace mithra62\BackupPro\tests\Browser\Prestashop;
+namespace mithra62\BackupPro\tests\Browser\Prestashop\Settings;
 
 use mithra62\BackupPro\tests\Browser\AbstractBase\Settings\Ia;
 use mithra62\BackupPro\tests\Browser\PrestashopTrait;

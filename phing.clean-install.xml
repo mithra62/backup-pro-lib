@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Backup Pro Clean Install" default="move_zip" description="Removes the testing folder so we start with a clean slate...">
     <target name="clean-install" depends="m62-files">
+    	
+		<if>
+		 <equals arg1="${platform_name}" arg2="Prestashop" />
+		 <then>
+		   <echo message="Adding index.php file to PrestaShop directories..." />
+		 	<foreach param="dirname" absparam="absname" target="copy_index">
+		 	  <fileset dir="${build_container_dir}">
+		 	  	<include name="**"></include>
+		        <type type="dir" />
+		        <depth max="100" min="0" />
+		 	  </fileset>
+		 	</foreach>
+		 </then>
+		 <else>
+		   <echo message="Skipping stupid index.php nonsense" />
+		 </else>
+		</if>      	
+    	
     	<echo msg="" />
         <echo msg="(${platform_name}) Setting up clean instalation for testing..." />
     	<delete dir="${clean_install_bp_core_file_path}" /> 
@@ -18,26 +36,6 @@
 			</fileset>
 		</copy>
         <echo msg="(${platform_name}) Files copied to build directory OK!" />
-    	
-    	
-		<if>
-		 <equals arg1="${platform_name}" arg2="Prestashop" />
-		 <then>
-		   <echo message="Adding index.php file to PrestaShop directories..." />
-		 	<foreach param="dirname" absparam="absname" target="copy_index">
-		 	  <fileset dir="${build_container_dir}">
-		 	  	<include name="**"></include>
-		        <type type="dir" />
-		        <depth max="100" min="0" />
-		 	  </fileset>
-		 	</foreach>
-		 </then>
-		 <else>
-		   <echo message="Skipping stupid index.php nonsense" />
-		 </else>
-		</if>    	
-    	
-    	
     </target>
 	
 	<target name="copy_index" >

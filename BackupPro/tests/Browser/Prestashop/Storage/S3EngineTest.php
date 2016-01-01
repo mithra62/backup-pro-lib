@@ -5,22 +5,22 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/tests/Browser/Prestashop/Settings/CronBackupTest.php
+ * @filesource 	./mithra62/BackupPro/tests/Browser/Prestashop/Storage/S3Engine.php
  */
-namespace mithra62\BackupPro\tests\Browser\Prestashop\Settings;
+namespace mithra62\BackupPro\tests\Browser\Prestashop\Storage;
 
-use mithra62\BackupPro\tests\Browser\AbstractBase\Settings\CronBackup;
+use mithra62\BackupPro\tests\Browser\AbstractBase\Storage\S3Engine;
 use mithra62\BackupPro\tests\Browser\PrestashopTrait;
 
 /**
- * mithra62 - (Selenium) Cron Backup Settings object Unit Tests
+ * mithra62 - (Selenium) Amazon S3 Storage object Unit Tests
  *
- * Executes all teh tests by platform using the below definitions
+ * Executes all the tests by platform using the below definitions
  *
  * @package mithra62\Tests
  * @author Eric Lamb <eric@mithra62.com>
  */
-class CronBackupTest extends CronBackup
+class S3EngineTest extends S3Engine
 {
     use PrestashopTrait;
 

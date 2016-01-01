@@ -7,7 +7,7 @@
  * @version		3.0
  * @filesource 	./mithra62/BackupPro/tests/Browser/Prestashop/Settings/DbTest.php
  */
-namespace mithra62\BackupPro\tests\Browser\Prestashop;
+namespace mithra62\BackupPro\tests\Browser\Prestashop\Settings;
 
 use mithra62\BackupPro\tests\Browser\AbstractBase\Settings\FileBackup;
 use mithra62\BackupPro\tests\Browser\PrestashopTrait;
