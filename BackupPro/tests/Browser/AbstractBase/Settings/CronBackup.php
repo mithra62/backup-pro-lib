@@ -68,6 +68,34 @@ abstract class CronBackup extends TestFixture
     /**
      * @depends testCronBackupNotifyEmailBadValue
      */
+    public function testCronEmailFormatTextValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit($this->url('settings_cron'));
+        $page = $this->session->getPage();
+        $page->findById('cron_notify_email_mailtype')->setValue('text');
+        $page->findButton('m62_settings_submit')->submit();
+        
+        $this->assertEquals('text', $this->session->getPage()->findById('cron_notify_email_mailtype')->getValue());
+    }
+
+    /**
+     * @depends testCronEmailFormatTextValue
+     */
+    public function testCronEmailFormatHtmlValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit($this->url('settings_cron'));
+        $page = $this->session->getPage();
+        $page->findById('cron_notify_email_mailtype')->setValue('html');
+        $page->findButton('m62_settings_submit')->submit();
+        
+        $this->assertEquals('html', $this->session->getPage()->findById('cron_notify_email_mailtype')->getValue());
+    }
+
+    /**
+     * @depends testCronEmailFormatHtmlValue
+     */
     public function testCronBackupNotifyEmailSubjectNoValue()
     {
         $this->session = $this->getSession();

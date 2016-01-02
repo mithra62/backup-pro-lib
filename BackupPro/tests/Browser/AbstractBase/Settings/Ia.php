@@ -183,6 +183,34 @@ abstract class Ia extends TestFixture
     /**
      * @depends testIaBackupMissedScheduleNotifyEmailsBadValue
      */
+    public function testIaBackupMissedScheduleEmailFormatTextValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit($this->url('settings_ia'));
+        $page = $this->session->getPage();
+        $page->findById('backup_missed_schedule_notify_email_mailtype')->setValue('text');
+        $page->findButton('m62_settings_submit')->submit();
+        
+        $this->assertEquals('text', $this->session->getPage()->findById('backup_missed_schedule_notify_email_mailtype')->getValue());
+    }
+
+    /**
+     * @depends testIaBackupMissedScheduleEmailFormatTextValue
+     */
+    public function testIaBackupMissedScheduleEmailFormatHtmlValue()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit($this->url('settings_ia'));
+        $page = $this->session->getPage();
+        $page->findById('backup_missed_schedule_notify_email_mailtype')->setValue('html');
+        $page->findButton('m62_settings_submit')->submit();
+        
+        $this->assertEquals('html', $this->session->getPage()->findById('backup_missed_schedule_notify_email_mailtype')->getValue());
+    }
+
+    /**
+     * @depends testIaBackupMissedScheduleEmailFormatHtmlValue
+     */
     public function testIaBackupMissedScheduleEmailSubjectNoValue()
     {
         $this->session = $this->getSession();

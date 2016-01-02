@@ -318,6 +318,17 @@ abstract class DropboxEngine extends TestFixture
             ->hasContent('Created Date'));
         $this->assertNotTrue($this->session->getPage()
             ->hasContent('No Storage Locations have been setup yet!'));
+    }
+
+    /**
+     * @depends testAddCompleteDropboxStorage
+     */
+    public function testBackupDatabaseDropboxStorage()
+    {
+        $page = $this->takeDatabaseBackup();
+        $this->assertNotEmpty($page->findById('__note_url')->getValue() );
+        
+        $this->removeDatabaseBackup();
         
         $this->uninstall_addon();
     }

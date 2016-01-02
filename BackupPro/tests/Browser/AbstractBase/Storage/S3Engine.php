@@ -168,15 +168,64 @@ abstract class S3Engine extends TestFixture
         $this->session = $this->getSession();
         $this->session->visit($this->url('storage_add_s3storage'));
         $page = $this->session->getPage();
-        $page->findById('s3_bucket')->setValue($rcf_creds['s3_bucket']);
+        $page->findById('s3_optional_prefix')->setValue('fdsafdsa');
         $page->findButton('m62_settings_submit')->submit();
         
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('S3 Bucket is required'));
+        $this->assertEquals('fdsafdsa', $page->findById('s3_optional_prefix')->getValue());
     }
 
     /**
      * @depends testAddS3BucketGoodValue
+     */
+    public function testAddS3OptionalPrefixNoValue()
+    {
+        $rcf_creds = $this->getS3Creds();
+        $this->session = $this->getSession();
+        $this->session->visit($this->url('storage_add_s3storage'));
+        $page = $this->session->getPage();
+        $page->findById('s3_bucket')->setValue('');
+        $page->findButton('m62_settings_submit')->submit();
+        
+        $this->assertTrue($this->session->getPage()
+            ->hasContent('S3 Bucket is required'));
+    }
+    
+    /**
+     * @depends testAddS3OptionalPrefixNoValue
+     */
+    public function testAddS3ReducedRedundancyChecked()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit($this->url('storage_add_s3storage'));
+        
+        $page = $this->session->getPage();
+        $page->findById('s3_reduced_redundancy')->check();
+        $page->findButton('m62_settings_submit')->submit();
+        
+        $this->assertTrue($this->session->getPage()
+            ->findById('s3_reduced_redundancy')
+            ->isChecked());
+    }
+
+    /**
+     * @depends testAddS3ReducedRedundancyChecked
+     */
+    public function testAddS3ReducedRedundancyUnChecked()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit($this->url('storage_add_s3storage'));
+        
+        $page = $this->session->getPage();
+        $page->findById('s3_reduced_redundancy')->uncheck();
+        $page->findButton('m62_settings_submit')->submit();
+        
+        $this->assertNotTrue($this->session->getPage()
+            ->findById('s3_reduced_redundancy')
+            ->isChecked());
+    }
+
+    /**
+     * @depends testAddS3ReducedRedundancyUnChecked
      */
     public function testAddS3StorageStatusChecked()
     {

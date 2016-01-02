@@ -292,4 +292,30 @@ class TestFixture extends BrowserTestCase
         
         return $page;
     }
+    
+    public function takeDatabaseBackup()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit($this->url('db_backup'));
+        $page = $this->session->getPage();
+        $page->findById('_backup_direct')->click();
+        
+        return $page;
+    }
+    
+    public function removeDatabaseBackup($confirm = true)
+    {
+        $this->session = $this->getSession();
+        $this->session->visit($this->url('db_backups'));
+        
+        $page = $this->session->getPage();
+        $page->findById('backup_check_0')->check();
+        $page->findButton('_remove_backup_button')->submit();
+        
+        $page = $this->session->getPage();
+        $page->findButton('_remove_backup_button')->submit();
+        
+        return $page;
+    }
+    
 }

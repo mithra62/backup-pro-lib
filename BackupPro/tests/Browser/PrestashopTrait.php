@@ -32,32 +32,32 @@ trait PrestashopTrait
     public $urls = array(
         
         // dashboards
-        'dashboard' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProDashboard&token=acf7f967edb8f6d110f616fbad5c44b8',
-        'db_backups' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProDashboard&token=acf7f967edb8f6d110f616fbad5c44b8&section=db_backups',
-        'file_backups' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProDashboard&token=acf7f967edb8f6d110f616fbad5c44b8&section=file_backups',
+        'dashboard' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProDashboard&token=dd38c6ddc45f6ed4022847c3843ea6f0',
+        'db_backups' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProDashboard&token=dd38c6ddc45f6ed4022847c3843ea6f0&section=db_backups',
+        'file_backups' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProDashboard&token=dd38c6ddc45f6ed4022847c3843ea6f0&section=file_backups',
         
         // backup types
-        'db_backup' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProBackupDatabase&token=e86101a8457bed89e27f19129ff631d6',
-        'file_backup' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProBackupFiles&token=65f50372bf1cedae0225bb6b47c0bc41',
+        'db_backup' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProBackupDatabase&token=553f8ab62afe169c390cf2a8209e0fad',
+        'file_backup' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProBackupFiles&token=5970084636ed696090977401ec088d19',
         
         // settings
-        'settings_general' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=general',
-        'settings_db' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=db_backups',
-        'settings_files' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=file_backups',
-        'settings_cron' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=cron',
-        'settings_ia' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=integrity_agent',
-        'settings_license' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=license',
+        'settings_general' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=7e6e42da7c9146d0c2626d22a5298366&section=general',
+        'settings_db' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=7e6e42da7c9146d0c2626d22a5298366&section=db_backups',
+        'settings_files' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=7e6e42da7c9146d0c2626d22a5298366&section=file_backups',
+        'settings_cron' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=7e6e42da7c9146d0c2626d22a5298366&section=cron',
+        'settings_ia' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=7e6e42da7c9146d0c2626d22a5298366&section=integrity_agent',
+        'settings_license' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=7e6e42da7c9146d0c2626d22a5298366&section=license',
         
         // storage engines
-        'storage_view_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=storage',
-        'storage_add_email_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=storage&sub=new_storage&engine=email',
-        'storage_add_ftp_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=storage&sub=new_storage&engine=ftp',
-        'storage_add_gcs_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=storage&sub=new_storage&engine=gcs',
-        'storage_add_local_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=storage&sub=new_storage&engine=local',
-        'storage_add_rcf_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=storage&sub=new_storage&engine=rcf',
-        'storage_add_s3storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=storage&sub=new_storage&engine=s3',
-        'storage_add_dropbox_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=storage&sub=new_storage&engine=dropbox',
-        'storage_add_sftp_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=faba0b3887963085c30e5b4d54d7c4e9&section=storage&sub=new_storage&engine=sftp'
+        'storage_view_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=7e6e42da7c9146d0c2626d22a5298366&section=storage',
+        'storage_add_email_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=7e6e42da7c9146d0c2626d22a5298366&section=storage&sub=new_storage&engine=email',
+        'storage_add_ftp_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=7e6e42da7c9146d0c2626d22a5298366&section=storage&sub=new_storage&engine=ftp',
+        'storage_add_gcs_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=7e6e42da7c9146d0c2626d22a5298366&section=storage&sub=new_storage&engine=gcs',
+        'storage_add_local_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=7e6e42da7c9146d0c2626d22a5298366&section=storage&sub=new_storage&engine=local',
+        'storage_add_rcf_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=7e6e42da7c9146d0c2626d22a5298366&section=storage&sub=new_storage&engine=rcf',
+        'storage_add_s3storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=7e6e42da7c9146d0c2626d22a5298366&section=storage&sub=new_storage&engine=s3',
+        'storage_add_dropbox_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=7e6e42da7c9146d0c2626d22a5298366&section=storage&sub=new_storage&engine=dropbox',
+        'storage_add_sftp_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=7e6e42da7c9146d0c2626d22a5298366&section=storage&sub=new_storage&engine=sftp'
     );
 
     /**
