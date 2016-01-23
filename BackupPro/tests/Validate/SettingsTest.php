@@ -1,10 +1,10 @@
 <?php
 /**
- * mithra62
+ * mithra62 - Backup Pro
  *
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
- * @version		1.0
+ * @version		3.0
  * @filesource 	./mithra62/tests/SettingsTest.php
  */
 namespace mithra62\BackupPro\tests\Validate;
@@ -13,9 +13,9 @@ use mithra62\tests\TestFixture;
 use mithra62\BackupPro\Validate\Settings;
 
 /**
- * mithra62 - Settings object Unit Tests
+ * Backup Pro - Settings object Unit Tests
  *
- * Contains all the unit tests for the \mithra62\Settings object
+ * Contains all the unit tests for the \mithra62\BackupPro\Validate\Settings object
  *
  * @package mithra62\Tests
  * @author Eric Lamb <eric@mithra62.com>
