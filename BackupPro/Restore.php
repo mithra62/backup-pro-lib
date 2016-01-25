@@ -55,9 +55,10 @@ class Restore extends Backup
      *            Any specific optoins the drivers need
      * @param \mithra62\Shell $shell            
      */
-    public function database($database, $file_name, array $options, \mithra62\Shell $shell)
+    public function database($database, array $options, \mithra62\Shell $shell)
     {
         try {
+            $file_name = $options['file_name'];
             $file_details = pathinfo($file_name);
             $path = $file_details['dirname'] . DIRECTORY_SEPARATOR . 'tmp';
             if (! file_exists($path)) {

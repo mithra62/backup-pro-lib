@@ -85,10 +85,7 @@ class Php extends DbAbstract
     public function getDb()
     {
         if (is_null($this->db)) {
-            $credentials = $this->context->getBackup()
-                ->getDb()
-                ->getCredentials();
-            $this->db = new Mysql($credentials['user'], $credentials['password'], $credentials['database'], $credentials['host']);
+            $this->db = $this->getContext()->getBackup()->getDb();
         }
         
         return $this->db;
@@ -104,9 +101,7 @@ class Php extends DbAbstract
     public function backupTable($table)
     {
         // first, the create statement
-        $statement = $this->getContext()
-            ->getBackup()
-            ->getDb()
+        $statement = $this->getDb()
             ->getCreateTable($table, false);
         $statement = $this->removeWhiteSpace($statement);
         
@@ -145,13 +140,15 @@ class Php extends DbAbstract
         $db->clear();
         if ($total_rows >= 1) {
             $total_pages = ceil($total_rows / $this->getSqlGroupBy());
-            $column_data = $db->getColumnns($table);
+            $column_data = $db->getColumns($table);
+            
             $offset = 0;
             for ($i = 0; $i < $total_pages; $i ++) {
-                $db->queryConstant($this->buildSelectStatement($column_data, $table, $offset, $this->getSqlGroupBy()));
+                $data = $db->query($this->buildSelectStatement($column_data, $table, $offset, $this->getSqlGroupBy()), true);
+                
                 $columns = '';
                 $rows = array();
-                while ($value = $db->fetchAssoc()) {
+                foreach ($data AS $key => $value) {
                     if ($columns == '') {
                         $columns = '`' . implode('`, `', array_keys($value)) . '`';
                     }

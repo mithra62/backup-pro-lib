@@ -70,7 +70,6 @@ class Php extends DbAbstract
         while (! feof($file)) {
             $theQuery = fgets($file);
             $theQuery = substr($theQuery, 0, strlen($theQuery) - 1);
-            
             if (trim($theQuery) != '') {
                 $db->query($theQuery);
             }
