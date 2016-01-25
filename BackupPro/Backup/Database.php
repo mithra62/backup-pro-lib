@@ -339,7 +339,7 @@ class Database extends AbstractBackup
         if ($this->getOutput() === null) {
             echo $s;
         } else {
-            fputs($this->getOutput(), $this->toUtf8($s));
+            fputs($this->getOutput(), $s);
         }
     }
 
