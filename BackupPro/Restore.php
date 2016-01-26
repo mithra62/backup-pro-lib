@@ -72,7 +72,6 @@ class Restore extends Backup
                     ->setEngine($options['db_restore_method'])
                     ->setEngineCmd($options['mysqlcli_command'])
                     ->setShell($shell);
-                
                 $restore_file = $path . DIRECTORY_SEPARATOR . $file_details['filename'];
                 if ($db->restore($database, $restore_file)) {}
                 

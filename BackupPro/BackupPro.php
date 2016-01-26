@@ -26,7 +26,7 @@ interface BackupPro
      * 
      * @var float
      */
-    const version = '3.2.1';
+    const version = '3.2.2';
 
     /**
      * The Build version
