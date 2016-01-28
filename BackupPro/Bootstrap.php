@@ -102,6 +102,8 @@ class Bootstrap extends m62Boostrap
         $this->container['settings_validate'] = function ($c) {
             $validate = new valSettings();
             $validate->setRegex($this->container['regex']);
+            $validate->setDb($c['db']);
+            //$validate
             return $validate;
         };
         

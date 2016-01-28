@@ -11,7 +11,6 @@ namespace mithra62\BackupPro\Validate;
 
 use mithra62\BackupPro\Validate;
 use Aws\CloudFront\Exception\Exception;
-use mysqli;
 
 /**
  * Backup Pro - Settings Validation Object
@@ -23,7 +22,12 @@ use mysqli;
  */
 class Settings extends Validate
 {
-
+    /**
+     * The database object
+     * @var mithra62\Db
+     */
+    protected $db = null;
+    
     /**
      * The previously set settings
      * 
@@ -51,6 +55,28 @@ class Settings extends Validate
     public function getExistingSettings()
     {
         return $this->existing_settings;
+    }
+
+    /**
+     * Sets the database object
+     * 
+     * @param \mithra62\Db $db           
+     * @return \mithra62\BackupPro\Validate\Settings
+     */
+    public function setDb(\mithra62\Db $db)
+    {
+        $this->db = $db;
+        return $this;
+    }
+
+    /**
+     * Returns the db object
+     * 
+     * @return \mithra62\Db
+     */
+    public function getDb()
+    {
+        return $this->db;
     }
 
     /**
@@ -463,16 +489,21 @@ class Settings extends Validate
                 $this->rule('false', 'db_verification_db_name')->message('"' . $name . '" is the site db; you can\'t use that for verification');
             } else {
                 try {
-                    $link = @new mysqli($credentials['host'], $credentials['user'], $credentials['password'], $name);
+                    
+                    $db = clone ($this->getDb());
+                    
+                    print_R($db->setDbName($name));
+                    exit;
+                    
                     if ($link->connect_errno) {
                         $this->rule('false', 'db_verification_db_name')->message('"' . $name . '" isn\'t available to your configured database connection');
                     } else {
-                        $tables = $link->query("SHOW TABLES");
+                        $tables = $db->query("SHOW TABLES");
                         if ($tables->num_rows != '0') {
                             $this->rule('false', 'db_verification_db_name')->message('"' . $name . '" isn\'t an empty database; remove all the tables and try again.');
                         }
                         
-                        @$link->close();
+                        $db->close();
                     }
                 } catch (Exception $e) {
                     $this->rule('false', 'db_verification_db_name')->message('"' . $name . '" isn\'t available to your configured database connection');

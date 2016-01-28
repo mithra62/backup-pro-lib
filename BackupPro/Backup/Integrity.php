@@ -336,10 +336,12 @@ class Integrity
     {
         if (file_exists($path) && $this->getDbConf()) {
             $success = false;
+            $options = $this->getSettings();
+            $options['file_name'] = $path;
             if ($this->getRestore()
                 ->setDbInfo($this->getDbConf())
                 ->setBackupInfo($this->getBackupInfo())
-                ->database($this->getTestDbName(), $path, $this->getSettings(), $this->getShell())) {
+                ->database($this->getTestDbName(), $options, $this->getShell())) {
                 $this->clearTestDb();
                 $success = true;
             }
