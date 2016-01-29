@@ -4,6 +4,20 @@
 		<echo msg="(${platform_name}) Deleting Vendor Folder..." />
 		<delete dir="${vendor_path}" />
 		
+        <echo msg="(${platform_name}) Copying Aura SQL Files..." />
+		<copy todir="${vendor_path}/aura/sql/src">
+			<fileset dir="../mithra62-lib/vendor/aura/sql/src">
+				<include name="**"></include>
+			</fileset>
+		</copy>	
+		
+        <echo msg="(${platform_name}) Copying Aura SQL Query Files..." />
+		<copy todir="${vendor_path}/aura/sqlquery/src">
+			<fileset dir="../mithra62-lib/vendor/aura/sqlquery/src">
+				<include name="**"></include>
+			</fileset>
+		</copy>	
+		
         <echo msg="(${platform_name}) Copying AWS Common Files..." />
 		<copy todir="${vendor_path}/aws/aws-sdk-php/src/Aws/Common">
 			<fileset dir="../mithra62-lib/vendor/aws/aws-sdk-php/src/Aws/Common">
@@ -28,13 +42,6 @@
         <echo msg="(${platform_name}) Copying Dropbox Files..." />
 		<copy todir="${vendor_path}/dropbox/dropbox-sdk/lib/Dropbox">
 			<fileset dir="../mithra62-lib/vendor/dropbox/dropbox-sdk/lib/Dropbox">
-				<include name="**"></include>
-			</fileset>
-		</copy>	
-					
-        <echo msg="(${platform_name}) Copying Eher oAuth Files..." />
-		<copy todir="${vendor_path}/eher/oauth/src/Eher/OAuth">
-			<fileset dir="../mithra62-lib/vendor/eher/oauth/src/Eher/OAuth">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
@@ -201,6 +208,13 @@
 				<include name="**"></include>
 			</fileset>
 		</copy>
+			
+		<echo msg="(${platform_name}) Copying Voku Arrayy Files..." />
+		<copy todir="${vendor_path}/voku/arrayy/src">
+		<fileset dir="../mithra62-lib/vendor/voku/arrayy/src">
+			<include name="**"></include>
+		</fileset>
+		</copy>
 					
         <echo msg="(${platform_name}) Copying Voku Cache Files..." />
 		<copy todir="${vendor_path}/voku/simple-cache/src/voku/cache">
@@ -222,6 +236,13 @@
 			<include name="**"></include>
 		</fileset>
 		</copy>		
+		
+		<echo msg="(${platform_name}) Copying Escaper Files..." />
+		<copy todir="${vendor_path}/zendframework/zend-escaper/src">
+		<fileset dir="../mithra62-lib/vendor/zendframework/zend-escaper/src">
+			<include name="**"></include>
+		</fileset>
+		</copy>	
 					
         <echo msg="(${platform_name}) Copying Autoload File..." />
 		<copy toFile="${vendor_path}/autoload.php" file="../mithra62-lib/vendor/autoload.php" />

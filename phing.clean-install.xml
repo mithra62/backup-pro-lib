@@ -13,6 +13,7 @@
 		        <depth max="100" min="0" />
 		 	  </fileset>
 		 	</foreach>
+		 	<delete file="${build_container_dir}/index.php" /> 
 		 </then>
 		 <else>
 		   <echo message="Skipping stupid index.php nonsense" />

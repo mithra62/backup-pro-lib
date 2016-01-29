@@ -103,7 +103,7 @@ class Settings extends m62Settings
         'backup_state_notify_email_message' => '',
         'backup_state_notify_email_mailtype' => 'html',
         
-        'backup_missed_schedule_notify_member_ids' => array(),
+        //'backup_missed_schedule_notify_member_ids' => array(),
         'backup_missed_schedule_notify_email_mailtype' => 'html',
         'backup_missed_schedule_notify_email_subject' => '',
         'backup_missed_schedule_notify_email_message' => '',

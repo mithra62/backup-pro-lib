@@ -490,22 +490,22 @@ class Settings extends Validate
             } else {
                 try {
                     
-                    $db = clone ($this->getDb());
-                    
-                    print_R($db->setDbName($name));
-                    exit;
-                    
-                    if ($link->connect_errno) {
+                    if( !$this->getDb()->checkDbExists($name) )
+                    {
                         $this->rule('false', 'db_verification_db_name')->message('"' . $name . '" isn\'t available to your configured database connection');
-                    } else {
-                        $tables = $db->query("SHOW TABLES");
-                        if ($tables->num_rows != '0') {
+                    }
+                    else
+                    {
+                        
+                        $tables = $this->getDb()->setDbName($name)->getTables();
+                        if (count($tables) != '0') {
                             $this->rule('false', 'db_verification_db_name')->message('"' . $name . '" isn\'t an empty database; remove all the tables and try again.');
                         }
                         
-                        $db->close();
+                        $this->getDb()->setDbName($credentials['database']); //set back to the main db
                     }
-                } catch (Exception $e) {
+                    
+                } catch (\PDOException $e) {
                     $this->rule('false', 'db_verification_db_name')->message('"' . $name . '" isn\'t available to your configured database connection');
                 }
             }
