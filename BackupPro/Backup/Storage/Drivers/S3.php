@@ -49,6 +49,7 @@ class S3 extends AbstractStorage
         's3_access_key' => '',
         's3_secret_key' => '',
         's3_bucket' => '',
+        's3_region' => '',
         's3_optional_prefix' => '',
         's3_reduced_redundancy' => 0
     );
@@ -200,7 +201,8 @@ class S3 extends AbstractStorage
      */
     public function getFileSystem()
     {
-        $client = m62S3::getRemoteClient($this->settings['s3_access_key'], $this->settings['s3_secret_key']);
+        $region = (isset($this->settings['s3_region']) ? $this->settings['s3_region'] : '');
+        $client = m62S3::getRemoteClient($this->settings['s3_access_key'], $this->settings['s3_secret_key'], $region);
         $options = array();
         if ($this->settings['s3_reduced_redundancy'] == '1') {
             $options['StorageClass'] = 'REDUCED_REDUNDANCY';
