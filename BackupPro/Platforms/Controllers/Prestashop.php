@@ -11,7 +11,7 @@ namespace mithra62\BackupPro\Platforms\Controllers;
 
 use mithra62\BackupPro\Platforms\Prestashop as Platform;
 use mithra62\BackupPro\Traits\Controller;
-use mithra62\Platforms\View\Smarty;
+use mithra62\BackupPro\Platforms\View\Smarty;
 
 /**
  * Backup Pro - Prestashop Base Controller
