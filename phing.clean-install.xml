@@ -13,7 +13,7 @@
 		        <depth max="100" min="0" />
 		 	  </fileset>
 		 	</foreach>
-		 	<delete file="${build_container_dir}/index.php" /> 
+		 	<delete file="${cms_root_path}/index.php" /> 
 		 </then>
 		 <else>
 		   <echo message="Skipping stupid index.php nonsense" />
@@ -36,6 +36,18 @@
 				<include name="**"></include>
 			</fileset>
 		</copy>
+    	
+		<if>
+		 <equals arg1="${platform_name}" arg2="Prestashop" />
+		 <then>
+		 	<delete file="${cms_root_path}/backup_pro/views/icon.svg" /> 
+			<delete file="${cms_root_path}/backup_pro/views/icon-mask.svg" /> 
+		 </then>
+		 <else>
+		   <echo message="Skipping removal of svg icons" />
+		 </else>
+		</if>
+    	
         <echo msg="(${platform_name}) Files copied to build directory OK!" />
     </target>
 	

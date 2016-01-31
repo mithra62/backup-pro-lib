@@ -305,7 +305,7 @@ class Backup
             $this->getStorage()->save($compressed_file, $options['storage_details'], 'files', $this->getDetails());
             
             @unlink($compressed_file); // remove the original
-            return true;
+            return $compressed_file;
         } catch (FilesException $e) {
             $e->logException($e);
             throw new FilesException($e->getMessage());

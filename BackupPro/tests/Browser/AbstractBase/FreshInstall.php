@@ -56,8 +56,8 @@ abstract class FreshInstall extends TestFixture
             ->hasContent('No backups exist yet.'));
         $this->assertTrue($this->session->getPage()
             ->hasContent('No Storage Locations have been setup yet!'));
-        $this->assertTrue($this->session->getPage()
-            ->hasContent('Please enter your license number.'));
+        //$this->assertTrue($this->session->getPage()
+        //    ->hasContent('Please enter your license number.'));
         $this->assertTrue($this->session->getPage()
             ->hasContent('Would you like to take a database backup now?'));
     }

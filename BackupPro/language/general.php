@@ -259,7 +259,7 @@ Your backup has ran successfully.<br /><br />
 
 Backup Type: {{ backup_details.backup_type }}<br />
 Total Items: {{ backup_details.item_count }}<br />
-Archive Filesize: {{ backup_details.file_size | m62.file_size }}<br />
+Archive Filesize: {{ backup_details.compressed_size | m62.file_size }}<br />
 Extracted Filsize: {{ backup_details.uncompressed_size | m62.file_size }}<br />
 Memory Used: {{ backup_details.max_memory | m62.file_size }}<br />
 Filename: {{ backup_details.file_name }}<br /><br />
