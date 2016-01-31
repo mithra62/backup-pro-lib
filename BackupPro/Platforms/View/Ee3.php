@@ -10,7 +10,9 @@
 namespace mithra62\BackupPro\Platforms\View;
 
 use mithra62\Platforms\View\Ee3 as Ee3View;
+use mithra62\BackupPro\Traits\View\Helpers As ViewHelpers;
 
 class Ee3 extends Ee3View
 {
+    use ViewHelpers;
 }
