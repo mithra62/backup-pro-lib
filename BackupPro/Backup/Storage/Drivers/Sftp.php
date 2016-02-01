@@ -191,7 +191,7 @@ class Sftp extends AbstractStorage
         }
         
         if ($settings['sftp_username'] != '' || $settings['sftp_private_key'] != '') {
-            $validate->rule('sftp_connect', 'sftp_hostname', $settings)->message('Can\'t connect to entered {field}');
+            $validate->rule('sftp_connect', 'sftp_host', $settings)->message('Can\'t connect to entered {field}');
             if (! empty($settings['sftp_root'])) {
                 $settings['sftp_root'] = $settings['sftp_root'];
                 $validate->rule('sftp_writable', 'sftp_root', $settings)->message('{field} has to be writable by the SFTP user');
