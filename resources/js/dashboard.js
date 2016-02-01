@@ -14,35 +14,19 @@ jQuery(document).ready(function() {
 	});
 
 	//check all checkboxes
-	jQuery(".toggle_all_db").toggle(
+	jQuery(".bp_toggle_all").toggle(
 		function(){
-			jQuery("input.toggle_db").each(function() {
+			jQuery("input.bp_toggle_check").each(function() {
 				this.checked = true;
 			});
 		}, function (){
 			var checked_status = this.checked;
-			jQuery("input.toggle_db").each(function() {
-				this.checked = false;
-			});
-		}
-	);
-
-	jQuery(".toggle_all_files").toggle(
-		function(){
-			jQuery("input.toggle_files").each(function() {
-				this.checked = true;
-			});
-		}, function (){
-			var checked_status = this.checked;
-			jQuery("input.toggle_files").each(function() {
+			jQuery("input.bp_toggle_check").each(function() {
 				this.checked = false;
 			});
 		}
 	);
 	//end checkboxes
-
-	//$('#existing_backups').dragCheck('td');
-	//alert('fdsa');
 	
 	//backup note editable
 	jQuery(".bp_editable").on("click", function(e) {

@@ -49,7 +49,8 @@ class Rcf extends AbstractStorage
         'rcf_username' => '',
         'rcf_api' => '',
         'rcf_container' => '',
-        'rcf_location' => 'us'
+        'rcf_location' => 'us',
+        'rcf_optional_prefix' => ''
     );
 
     /**
@@ -206,7 +207,7 @@ class Rcf extends AbstractStorage
     public function getFileSystem()
     {
         $container = m62Rcf::getRemoteClient($this->settings);
-        $filesystem = new Remote(new m62Rcf($container));
+        $filesystem = new Remote(new m62Rcf($container, $this->settings['rcf_optional_prefix']));
         $filesystem->checkBackupDirs();
         
         return $filesystem;
