@@ -52,9 +52,9 @@ class MagentoFrontend extends \Mage_Core_Controller_Front_Action
      * @param unknown $id            
      * @param string $module            
      */
-    public function __construct()
+    public function __construct(\Zend_Controller_Request_Abstract $request, \Zend_Controller_Response_Abstract $response, array $invokeArgs = array())
     {
-        parent::__construct();
+        parent::__construct($request, $response, $invokeArgs);
         $this->initController();
         $this->platform = new Platform();
         $this->m62->setService('platform', function ($c) { 
@@ -77,5 +77,6 @@ class MagentoFrontend extends \Mage_Core_Controller_Front_Action
         $this->m62->setService('view_helpers', function ($c) {
             return $this->view_helper;
         });
+        
     }
 }
