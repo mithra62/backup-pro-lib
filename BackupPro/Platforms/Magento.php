@@ -23,5 +23,13 @@ use mithra62\BackupPro\Platforms\PlatformInterface;
  */
 class Magento extends m62Mag implements PlatformInterface
 {
+    public function getBackupCronCommands(array $settings)
+    {
+        
+    }
     
+    public function getIaCronCommands(array $settings)
+    {
+        
+    }
 }
