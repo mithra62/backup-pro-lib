@@ -80,4 +80,16 @@ class Concrete5Admin extends DashboardPageController
         });
         
     }
+    
+    public function prepView($template, array $vars)
+    {
+        $this->set('view_helper', $this->view_helper);
+        $this->set('bp_errors', $this->bp_errors);
+        foreach($vars AS $key => $value)
+        {
+            $this->set($key, $value);
+        }
+        
+        $this->render('/dashboard/backup_pro/'.$template);
+    }
 }
