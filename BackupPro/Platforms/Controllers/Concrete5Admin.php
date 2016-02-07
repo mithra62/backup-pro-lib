@@ -90,6 +90,7 @@ class Concrete5Admin extends DashboardPageController
             $this->set($key, $value);
         }
         
+        $this->requireAsset('b3_ui_assets');
         $this->render('/dashboard/backup_pro/'.$template);
     }
 }
