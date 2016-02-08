@@ -89,7 +89,7 @@ class Settings extends m62Settings
         'mysqldump_command' => 'mysqldump',
         'mysqlcli_command' => 'mysql',
         
-        'php_backup_method_select_chunk_limit' => 2500,
+        'php_backup_method_select_chunk_limit' => 250,
         'php_backup_method_select_chunk_limit_tables' => array(), // array of key (table) to chunk limit to allow for table specific chunking
         
         'system_command_function' => 'proc_open', // exec
