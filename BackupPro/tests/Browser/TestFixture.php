@@ -299,7 +299,7 @@ class TestFixture extends BrowserTestCase
         $this->session->visit($this->url('db_backup'));
         $page = $this->session->getPage();
         $page->findById('_backup_direct')->click();
-        
+        sleep(10);
         return $page;
     }
     
