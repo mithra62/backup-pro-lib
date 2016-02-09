@@ -83,8 +83,15 @@ class Concrete5Admin extends DashboardPageController
     
     public function prepView($template, array $vars)
     {
-        $this->set('view_helper', $this->view_helper);
+        if(isset($vars['pageTitle']))
+        {
+            $vars['pageTitle'] = 'Backup Pro - '.$vars['pageTitle'];
+        }
+        
+        $this->set('view_helper', $this->view_helper->setPartialsPath(\Config::get('backup_pro.partial_path'))
+                                                    ->setStaticAssetsUrlBase(\Config::get('backup_pro.static_assets.url_base')));
         $this->set('bp_errors', $this->bp_errors);
+        $this->set('bp_static_path', '/packages/backup_pro/assets');
         foreach($vars AS $key => $value)
         {
             $this->set($key, $value);
