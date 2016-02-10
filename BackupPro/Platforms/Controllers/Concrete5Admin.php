@@ -29,7 +29,7 @@ class Concrete5Admin extends DashboardPageController
     /**
      * The abstracted platform object
      * 
-     * @var \mithra62\Platforms\Craft
+     * @var \mithra62\Platforms\Concrete5
      */
     protected $platform = null;
 
