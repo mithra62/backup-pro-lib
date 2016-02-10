@@ -5,24 +5,24 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Controllers/Concrete5Admin.php
+ * @filesource 	./mithra62/BackupPro/Controllers/Concrete5Front.php
  */
 namespace mithra62\BackupPro\Platforms\Controllers;
 
 use mithra62\BackupPro\Platforms\Concrete5 as Platform;
 use mithra62\BackupPro\Traits\Controller;
 use mithra62\BackupPro\Platforms\View\Concrete5 AS Concrete5View;
-use \Concrete\Core\Page\Controller\DashboardPageController;
+use \Concrete\Core\Page\Controller\PageController;
 
 /**
- * Backup Pro - Magento Base Controller
+ * Backup Pro - Concrete5 Base Front Controller
  *
  * Starts the Controllers up
  *
  * @package BackupPro\Controllers
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Concrete5Admin extends DashboardPageController
+class Concrete5Front extends PageController
 {
     use Controller;
 
@@ -79,26 +79,5 @@ class Concrete5Admin extends DashboardPageController
             return $this->view_helper;
         });
         
-    }
-    
-    public function prepView($template, array $vars)
-    {
-        if(isset($vars['pageTitle']))
-        {
-            $vars['pageTitle'] = 'Backup Pro - '.$vars['pageTitle'];
-        }
-        
-        $this->set('view_helper', $this->view_helper->setPartialsPath(\Config::get('backup_pro.partial_path'))
-                                                    ->setStaticAssetsUrlBase(\Config::get('backup_pro.static_assets.url_base')));
-        $this->set('bp_errors', $this->bp_errors);
-        $this->set('bp_static_path', '/packages/backup_pro/assets');
-        //$this->set('__note_url', $this->url('/dashboard/backup_pro/manage/update_backup_note'));
-        foreach($vars AS $key => $value)
-        {
-            $this->set($key, $value);
-        }
-        
-        $this->requireAsset('b3_ui_assets');
-        $this->render('/dashboard/backup_pro/'.$template);
     }
 }

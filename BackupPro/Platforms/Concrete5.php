@@ -31,8 +31,11 @@ class Concrete5 extends m62C5 implements PlatformInterface
      */
     public function getBackupCronCommands(array $settings)
     {
-        ee()->load->library('backup_pro_lib', null, 'backup_pro');
-        return ee()->backup_pro->get_cron_commands($settings);
+        $url = '/backup_pro/cron';
+        return array(
+			 'file_backup' => array('url' => $url.'?type=file&backup_pro='.$settings['cron_query_key'], 'cmd' => 'curl "'.$url.'?type=file"'),
+			 'db_backup' => array('url' => $url.'?type=db&backup_pro='.$settings['cron_query_key'], 'cmd' => 'curl "'.$url.'?type=db"')
+		);
     }
 
     /**
@@ -44,7 +47,9 @@ class Concrete5 extends m62C5 implements PlatformInterface
      */
     public function getIaCronCommands(array $settings)
     {
-        ee()->load->library('backup_pro_lib', null, 'backup_pro');
-        return ee()->backup_pro->get_ia_cron_commands($settings);
+        $url = '/backup_pro/cron/integrity?backup_pro='.$settings['cron_query_key'];
+		return array(
+			'verify_backup_stability' => array('url' => $url, 'cmd' => '0 * * * * * curl "'.$url.'"')
+		);
     }
 }
