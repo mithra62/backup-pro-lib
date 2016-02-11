@@ -10,6 +10,7 @@
 namespace mithra62\BackupPro\tests\Browser;
 
 use mithra62\Db;
+use mithra62\Files;
 
 /**
  * Backup Pro - Prestashop Trait
@@ -190,8 +191,11 @@ trait C5Trait
         $db = new Db();
         $creds = $this->getDbCreds();
         $db->setCredentials($creds)
-        ->setDbName('clean_c5')
-        ->emptyTable('backup_pro_settings');
+            ->setDbName('clean_c5')
+            ->emptyTable('backup_pro_settings');
         $db->setDbName($creds['database']);
+        
+        $files = new Files;
+        $files->deleteDir($this->test_settings['working_directory']);
     }
 }

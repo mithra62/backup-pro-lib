@@ -295,6 +295,7 @@ class TestFixture extends BrowserTestCase
     
     public function takeDatabaseBackup()
     {
+        $this->setupGoodWorkingDirectory();
         $this->session = $this->getSession();
         $this->session->visit($this->url('db_backup'));
         $page = $this->session->getPage();
@@ -309,6 +310,7 @@ class TestFixture extends BrowserTestCase
         $this->session->visit($this->url('db_backups'));
         
         $page = $this->session->getPage();
+        sleep(1); 
         $page->findById('backup_check_0')->check();
         $page->findButton('_remove_backup_button')->submit();
         
