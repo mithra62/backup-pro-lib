@@ -308,6 +308,10 @@ Please don\'t respond to this email; all emails are automatically deleted.',
     'regex_file_exclude_instructions' => 'If you like, Backup Pro allows for regular expression use for defining what files to exclude. Be careful though! This can increase your file backup time depending on your setup.',
     'uh_oh_there_are_issues' => 'Uh-oh... There are some issues...',
     'fix_console_errors_instructions' => 'You\'ll have to log into your site and configure Backup Pro to remove the above errors before you can continue. ',
+    'extras' => 'Extras',
+    'advanced_options' => 'Advanced Options',
+    'path_to_prefix_example' => '/path/to/prefix',
+    
     '' => ''
 )
 ;

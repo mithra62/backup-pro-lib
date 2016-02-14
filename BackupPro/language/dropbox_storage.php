@@ -23,5 +23,6 @@ $lang = array(
     'dropbox_app_secret' => 'App Secret',
     'dropbox_app_secret_instructions' => 'When you create your Dropbox App, you\'ll receive an App Secret. Enter that so Dropbox knows where to put your files. ',
     'dropbox_prefix' => 'Prefix',
-    'dropbox_prefix_instructions' => 'Basically, what folder do you want to store your backups in?'
+    'dropbox_prefix_instructions' => 'Basically, what folder do you want to store your backups in?',
+    'dropbox_details' => 'Dropbox Details',
 );

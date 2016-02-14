@@ -32,5 +32,6 @@ $lang = array(
     'sftp_root_instructions' => 'Where on the remote server do you want to store the files. This directory has to exist before the settings can be saved.',
     'sftp_root' => 'SFTP Store Location',
     'sftp_private_key' => 'Private Key Path',
-    'sftp_private_key_instructions' => 'The full system path to where your private key file is stored if you\'d like to use that for authentication instead of username and password. '
+    'sftp_private_key_instructions' => 'The full system path to where your private key file is stored if you\'d like to use that for authentication instead of username and password. ',
+    'sftp_connection_details' => 'SFTP Connection Details',
 );

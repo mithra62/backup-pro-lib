@@ -31,5 +31,5 @@ $lang = array(
     'rcf_connect_fail' => 'The Rackspace Cloud Files credentials aren\'t correct.',
     'rcf_location' => 'Account Location',
     'rcf_location_instructions' => 'You can determine the location to use based on the Rackspace retail site which was used to create your account. <a href="http://www.rackspacecloud.com">US</a> or <a href="http://www.rackspace.co.uk">UK</a>.',
-    
+    'rcf_connection_details' => 'Rackspace Cloud Files Connection Details'
 );

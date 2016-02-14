@@ -45,12 +45,13 @@ class MagentoFrontend extends \Mage_Core_Controller_Front_Action
      * @var array
      */
     protected $bp_errors = array();
-
+    
     /**
      * Set it up
-     * 
-     * @param unknown $id            
-     * @param string $module            
+     * @param \Zend_Controller_Request_Abstract $request
+     * @param \Zend_Controller_Response_Abstract $response
+     * @param array $invokeArgs
+     * @return \mithra62\Platforms\Craft|\mithra62\BackupPro\Platforms\View\Magento
      */
     public function __construct(\Zend_Controller_Request_Abstract $request, \Zend_Controller_Response_Abstract $response, array $invokeArgs = array())
     {

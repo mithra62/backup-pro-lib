@@ -19,5 +19,6 @@ $lang = array(
     'backup_pro_local_storage_driver_name' => 'Local Storage',
     'backup_pro_local_storage_driver_description' => 'This Driver will store backups anywhere on your local webserver.',
     'backup_store_location' => 'Backup Store Location',
-    'backup_store_location_instructions' => 'Where do you want to store your backups? Ideally, this wouldn\'t be in your site\'s document root (for security) but if it is it won\'t be included within the file backup. Remember to make this directory writable by your webserver so chmod it to either 0666 or 0777.'
+    'backup_store_location_instructions' => 'Where do you want to store your backups? Ideally, this wouldn\'t be in your site\'s document root (for security) but if it is it won\'t be included within the file backup. Remember to make this directory writable by your webserver so chmod it to either 0666 or 0777.',
+    'local_storage_details' => 'Local Storage Details',
 );

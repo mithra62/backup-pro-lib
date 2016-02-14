@@ -31,5 +31,6 @@ $lang = array(
     'gcs_optional_prefix_instructions' => 'If you want to store your files in a sub directory within your bucket just enter that here.',
     'gcs_reduced_redundancy' => 'Reduced Redundancy',
     'gcs_reduced_redundancy_instructions' => 'Reduced Redundancy Storage (<a href="http://aws.amazon.com/s3/details/#RRS" target="_blank">RRS</a>) is an Amazon S3 storage option that enables customers to reduce their costs by storing noncritical, reproducible data at lower levels of redundancy than Amazon S3\'s standard storage.',
+    'gcs_connection_details' => 'Google Cloud Storage Connection Details',
     
 );

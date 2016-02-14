@@ -65,8 +65,8 @@ class Concrete5Admin extends DashboardPageController
         $this->m62->setDbConfig($this->platform->getDbCredentials());
         $this->settings = $this->services['settings']->get();
         $errors = $this->services['errors']->checkWorkingDirectory($this->settings['working_directory'])
-            ->checkStorageLocations($this->settings['storage_details'])
-            ->licenseCheck($this->settings['license_number'], $this->services['license']);
+            ->checkStorageLocations($this->settings['storage_details']);
+            //->licenseCheck($this->settings['license_number'], $this->services['license']);
         
         if ($errors->totalErrors() == '0') {
             $errors = $errors->checkBackupState($this->services['backups'], $this->settings);

@@ -31,5 +31,5 @@ $lang = array(
     's3_optional_prefix_instructions' => 'If you want to store your files in a sub directory within your bucket just enter that here.',
     's3_reduced_redundancy' => 'Reduced Redundancy',
     's3_reduced_redundancy_instructions' => 'Reduced Redundancy Storage (<a href="http://aws.amazon.com/s3/details/#RRS" target="_blank">RRS</a>) is an Amazon S3 storage option that enables customers to reduce their costs by storing noncritical, reproducible data at lower levels of redundancy than Amazon S3\'s standard storage.',
-        
+    's3_connection_details' => 'Amazon S3 Connection Details',
 );
