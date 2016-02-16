@@ -87,7 +87,7 @@ class Console implements BackupPro
         $this->settings = $this->services['settings']->get();
         $this->errors = $this->services['errors']->checkWorkingDirectory($this->settings['working_directory'])
             ->checkStorageLocations($this->settings['storage_details'])
-            ->licenseCheck($this->settings['license_number'], $this->services['license'])
+            //->licenseCheck($this->settings['license_number'], $this->services['license'])
             ->getErrors();
         
         $this->view_helper = new WordpressView($this->services['lang'], $this->services['files'], $this->services['settings'], $this->services['encrypt'], $this->platform);
