@@ -403,12 +403,10 @@ class Storage
     public function getSpaceUsed(array $backups)
     {
         $amount = 0;
-        foreach ($backups as $type => $_backup) {
-            if (is_array($_backup)) {
-                foreach ($_backup as $backup) {
-                    if (isset($backup['compressed_size'])) {
-                        $amount = ($amount + (int) $backup['compressed_size']);
-                    }
+        foreach ($backups as $type => $backup) {
+            if (is_array($backup)) {
+                if (isset($backup['compressed_size'])) {
+                    $amount = ($amount + (int) $backup['compressed_size']);
                 }
             }
         }

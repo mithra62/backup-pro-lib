@@ -133,8 +133,6 @@ class Cleanup
         ksort($arr);
         while ($this->getContext()->getSpaceUsed($arr) > $max_size) {
             $backup = array_shift($arr);
-            print_R($backup);
-            exit();
             if ($backup != '') {
                 $this->getContext()->remove($backup, $this->getDetails(), true);
             }
