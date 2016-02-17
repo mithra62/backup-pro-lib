@@ -14,18 +14,9 @@ jQuery(document).ready(function() {
 	});
 
 	//check all checkboxes
-	jQuery(".bp_toggle_all").toggle(
-		function(){
-			jQuery("input.bp_toggle_check").each(function() {
-				this.checked = true;
-			});
-		}, function (){
-			var checked_status = this.checked;
-			jQuery("input.bp_toggle_check").each(function() {
-				this.checked = false;
-			});
-		}
-	);
+	jQuery('.bp_toggle_all').change(function () {
+	    $("input:checkbox").prop('checked', $(this).prop("checked"));
+	});
 	//end checkboxes
 	
 	//backup note editable
