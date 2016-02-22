@@ -243,6 +243,13 @@
 			<include name="**"></include>
 		</fileset>
 		</copy>	
+		
+		<echo msg="(${platform_name}) Copying Ramsy Files..." />
+		<copy todir="${vendor_path}/ramsey/array_column/src">
+		<fileset dir="../mithra62-lib/vendor/ramsey/array_column/src">
+			<include name="**"></include>
+		</fileset>
+		</copy>	
 					
         <echo msg="(${platform_name}) Copying Autoload File..." />
 		<copy toFile="${vendor_path}/autoload.php" file="../mithra62-lib/vendor/autoload.php" />

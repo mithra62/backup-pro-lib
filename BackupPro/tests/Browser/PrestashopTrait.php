@@ -151,6 +151,7 @@ trait PrestashopTrait
         $this->session->maximizeWindow();
         
         // log in
+        sleep(1);
         $page = $this->session->getPage();
         $page->findById('email')->setValue('eric@mithra62.com');
         $page->findById('passwd')->setValue('dimens35');
