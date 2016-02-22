@@ -1,8 +1,9 @@
 <?php
 namespace mithra62\BackupPro\Rest\Routes;
 use Respect\Rest\Routable; 
+use mithra62\BackupPro\Platforms\Controllers\Rest;
 
-class Backups implements Routable {
+class Backups extends Rest implements Routable {
     public function get($id = false) { 
         echo $id;
     }
