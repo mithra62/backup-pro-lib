@@ -57,16 +57,25 @@ class Rest
      * 
      * @param \mithra62\Platforms\AbstractPlatform $platform
      */
-    public function __construct(\mithra62\Platforms\AbstractPlatform $platform)
+    public function __construct(\mithra62\Platforms\AbstractPlatform $platform, \mithra62\BackupPro\Rest $rest)
     {
         $this->initController();
         $this->platform = $platform;
+        $this->rest = $rest;
         $this->m62->setService('platform', function ($c) {
             return $this->platform;
         });
         
         $this->m62->setDbConfig($this->platform->getDbCredentials());
         $this->settings = $this->services['settings']->get();
+        
+        //is the API even on?!?
+        if($this->settings['enable_rest_api'] !== '1')
+        {
+            http_response_code(404);
+            exit;
+        }
+        
         $errors = $this->services['errors']->checkWorkingDirectory($this->settings['working_directory'])
             ->checkStorageLocations($this->settings['storage_details'])
             ->licenseCheck($this->settings['license_number'], $this->services['license']);
@@ -80,5 +89,7 @@ class Rest
         $this->m62->setService('view_helpers', function ($c) {
             return $this->view_helper;
         });
+        
+        //verify request auth
     }
 }

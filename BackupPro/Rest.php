@@ -5,10 +5,17 @@ class Rest
 {
     protected $lang = null;
     protected $platform = null;
+    protected $server = null;
     
     public function getServer()
     {
-        return new Rest\Server($this->platform);
+        if(is_null($this->server))
+        {
+            $this->server = new Rest\Server($this->platform, $this);
+            //$this->server
+        }
+        
+        return $this->server;
     }
     
     public function setPlatform(\mithra62\Platforms\AbstractPlatform $platform)

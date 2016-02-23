@@ -1,20 +1,28 @@
 <?php
 namespace mithra62\BackupPro\Rest\Routes;
-use Respect\Rest\Routable; 
-use mithra62\BackupPro\Platforms\Controllers\Rest;
 
-class Backups extends Rest implements Routable {
+use Respect\Rest\Routable; 
+use mithra62\BackupPro\Platforms\Controllers\Rest AS RestController;
+
+class Backups extends RestController implements Routable {
     public function get($id = false) { 
-        echo $id;
+        
+        //$accept = (array) explode(';', $_SERVER['HTTP_ACCEPT']);
+        //print_r($accept);
+        echo __METHOD__;
     }
     
     public function post()
     {
-        echo 'fff';
+        echo __METHOD__;
     }
     
-    public function delete($id) { }
+    public function delete($id) 
+    { 
+        echo __METHOD__;
+    }
+    
     public function put($id) { 
-        echo $id.'eric';
+        echo __METHOD__;
     }
 }

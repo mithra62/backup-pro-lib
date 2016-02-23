@@ -114,7 +114,11 @@ class Settings extends m62Settings
         'last_verification_type' => 'database', // either "database" or "files" to alternate between which backup to verify at any given time
         'last_verification_time' => '0', // timestamp last time a verification happened
         'total_verifications_per_execution' => '2', // the number of backups to check in a given run
-        'check_backup_state_cp_login' => '1'
+        'check_backup_state_cp_login' => '1',
+        
+        'enable_rest_api' => '0',
+        'api_key' => '',
+        'api_secret' => '',
     );
 
     /**
@@ -134,7 +138,9 @@ class Settings extends m62Settings
      * @var array
      */
     protected $encrypted = array(
-        'storage_details'
+        'storage_details',
+        'api_key' => '',
+        'api_secret' => '',
     );
 
     /**
@@ -195,7 +201,6 @@ class Settings extends m62Settings
         $this->_defaults['cron_notify_email_subject'] = $this->lang->__('default_cron_subject');
         $this->_defaults['backup_missed_schedule_notify_email_subject'] = $this->lang->__('default_backup_missed_schedule_notify_email_subject');
         $this->_defaults['backup_missed_schedule_notify_email_message'] = $this->lang->__('default_backup_missed_schedule_notify_email_message');
-        
         $this->setDefaults($this->_defaults);
     }
 
@@ -277,6 +282,17 @@ class Settings extends m62Settings
         // we have to ensure storage_details is always an array since if the encryption key is changed we'll get a bad return. Rare, but it happens.
         $this->settings['storage_details'] = (is_array($this->settings['storage_details']) ? $this->settings['storage_details'] : array());
         
+        if($this->settings['api_key'] == '')
+        {
+            $this->settings['api_key'] = $this->getEncrypt()->guid();
+        }
+        
+        if($this->settings['api_secret'] == '')
+        {
+            $this->settings['api_secret'] = $this->getEncrypt()->guid();
+        }
+        
         return $this->settings;
     }
+    
 }
