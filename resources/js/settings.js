@@ -28,7 +28,12 @@ jQuery(document).ready(function() {
 	if(jQuery("#db_restore_method").val() == "mysql")
 	{
 		jQuery("#mysqlcli_command_wrap").show();
-	}				
+	}	
+
+	if(jQuery("#enable_rest_api").is(':checked'))
+	{
+		jQuery("#rest_api_wrap").show();
+	}			
 	
 	var def_assign = "0";
 	jQuery("#auto_threshold").change(function(){
@@ -70,6 +75,19 @@ jQuery(document).ready(function() {
 			jQuery("#mysqlcli_command_wrap").show();
 		}
 	});
+
+	var def_assign = "0";
+	jQuery("#enable_rest_api").change(function(){
+		var new_assign = jQuery("#enable_rest_api").val();
+		if(this.checked)
+		{
+			jQuery("#rest_api_wrap").show();
+		}
+		else
+		{
+			jQuery("#rest_api_wrap").hide();
+		}
+	});
 	//end settings form
 	
 
@@ -107,5 +125,7 @@ jQuery(document).ready(function() {
 	
 	//and now all the chosen 
 	jQuery("#db_backup_ignore_table_data, #db_backup_ignore_tables").chosen({width: "100%"}); 
+	
+	
 	
 });
