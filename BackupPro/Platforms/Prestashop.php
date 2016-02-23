@@ -43,13 +43,10 @@ class Prestashop extends m62Prestashop implements PlatformInterface
             )
         );
     }
-
+    
     /**
      * (non-PHPdoc)
-     * 
-     * @ignore
-     *
-     * @see \mithra62\BackupPro\Platforms\PlatformInterface::getEmailDetails()
+     * @see \mithra62\BackupPro\Platforms\PlatformInterface::getIaCronCommands()
      */
     public function getIaCronCommands(array $settings)
     {
@@ -60,5 +57,14 @@ class Prestashop extends m62Prestashop implements PlatformInterface
                 'cmd' => '0 * * * * * curl "' . $url . '?backup_pro=' . $settings['cron_query_key'] . '&integrity=check"'
             )
         );
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\BackupPro\Platforms\PlatformInterface::getRestApiRouteEntry()
+     */
+    public function getRestApiRouteEntry(array $settings)
+    {
+        return $this->presta_context->link->getModuleLink('backup_pro', 'api').'?bp_method=';
     }
 }

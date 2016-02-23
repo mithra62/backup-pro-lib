@@ -34,4 +34,11 @@ interface PlatformInterface
      * @param array $settings            
      */
     public function getIaCronCommands(array $settings);
+
+    /**
+     * Returns the REST API route entry
+     * 
+     * @param array $settings            
+     */
+    public function getRestApiRouteEntry(array $settings);
 }

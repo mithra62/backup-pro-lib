@@ -11,6 +11,8 @@ namespace mithra62\BackupPro\Platforms\Controllers;
 
 use mithra62\BackupPro\Traits\Controller;
 use mithra62\Platforms\View\Rest as RestView;
+use Crell\ApiProblem\ApiProblem;
+use Respect\Rest\Routable;
 
 /**
  * Backup Pro - Eecms Base Controller
@@ -20,7 +22,7 @@ use mithra62\Platforms\View\Rest as RestView;
  * @package BackupPro\Controllers
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Rest
+class Rest implements Routable
 {
     use Controller;
 
@@ -76,6 +78,12 @@ class Rest
             exit;
         }
         
+        if(!$this->authenticate())
+        {
+            http_response_code(403);
+            exit;
+        }
+        
         $errors = $this->services['errors']->checkWorkingDirectory($this->settings['working_directory'])
             ->checkStorageLocations($this->settings['storage_details'])
             ->licenseCheck($this->settings['license_number'], $this->services['license']);
@@ -92,4 +100,195 @@ class Rest
         
         //verify request auth
     }
+    
+    public function authenticate()
+    {
+        return true;
+    }
+    
+    /**
+     * Wrapper to handle error output
+     *
+     * Note that $detail should be a key for language translation
+     *
+     * @param int $code
+     * @param string $detail
+     * @param string $type
+     * @param string $title
+     * @param array $additional
+     * @return \ZF\ApiProblem\ApiProblemResponse
+     */
+    public function setError($code, $detail, $type = null, $title = null, array $additional = array())
+    {
+        //header('Content-Type: application/problem+json', false);
+        http_response_code($code);
+        
+        return new ApiProblem($code, $detail, $type, $title, $additional);
+    }
+    
+    /**
+     * Handy little method to disable unused HTTP verb methods
+     *
+     * @return \ZF\ApiProblem\ApiProblemResponse
+     */
+    protected function methodNotAllowed()
+    {
+        return $this->setError(405, 'method_not_allowed')->asJson();
+    }    
+    
+    /**
+     * Event to handle OPTION requests
+     *
+     * @param \Zend\Mvc\MvcEvent $e
+     * @return void|\Zend\Stdlib\ResponseInterface
+     */
+    public function checkOptions(\Zend\Mvc\MvcEvent $e)
+    {
+        if ($this->params()->fromRoute('id', false)) {
+            $options = $this->resourceOptions;
+        } else {
+            $options = $this->collectionOptions;
+        }
+    
+        if (in_array($e->getRequest()->getMethod(), $options)) {
+            return;
+        }
+    
+        $response = $this->getResponse();
+        $response->setStatusCode(405);
+        return $response;
+    }
+    
+    /**
+     * Sets the HTTP header code that's passed
+     *
+     * @param int $code
+     */
+    public function setStatusCode($code)
+    {
+        $response = $this->getResponse();
+        $response->setStatusCode($code);
+    }
+    
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \Zend\Mvc\Controller\AbstractRestfulController::options()
+     */
+    public function options($id = false)
+    {
+        return;
+        if ($id) {
+            echo 'fdsa';
+            $options = $this->resourceOptions;
+        } else {
+            $options = $this->collectionOptions;
+        }
+   
+        echo $id;
+        exit;
+        print_R($this->resourceOptions);
+        header('Allow: '. implode(',', $options));
+        exit;
+    }
+    
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \Zend\Mvc\Controller\AbstractRestfulController::create()
+     */
+    public function create($data)
+    {
+        return $this->methodNotAllowed();
+    }
+    
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \Zend\Mvc\Controller\AbstractRestfulController::delete()
+     */
+    public function delete($id)
+    {
+        return $this->methodNotAllowed();
+    }
+    
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \Zend\Mvc\Controller\AbstractRestfulController::deleteList()
+     */
+    public function deleteList()
+    {
+        return $this->methodNotAllowed();
+    }
+    
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \Zend\Mvc\Controller\AbstractRestfulController::get()
+     */
+    public function get($id)
+    {
+        return $this->methodNotAllowed();
+    }
+    
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \Zend\Mvc\Controller\AbstractRestfulController::getList()
+     */
+    public function getList()
+    {
+        return $this->methodNotAllowed();
+    }
+    
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \Zend\Mvc\Controller\AbstractRestfulController::head()
+     */
+    public function head($id = null)
+    {
+        return $this->methodNotAllowed();
+    }
+    
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \Zend\Mvc\Controller\AbstractRestfulController::patch()
+     */
+    public function patch($id, $data)
+    {
+        return $this->methodNotAllowed();
+    }
+    
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \Zend\Mvc\Controller\AbstractRestfulController::replaceList()
+     */
+    public function replaceList($data)
+    {
+        return $this->methodNotAllowed();
+    }
+    
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \Zend\Mvc\Controller\AbstractRestfulController::patchList()
+     */
+    public function patchList($data)
+    {
+        return $this->methodNotAllowed();
+    }
+    
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \Zend\Mvc\Controller\AbstractRestfulController::update()
+     */
+    public function update($id, $data)
+    {
+        return $this->methodNotAllowed();
+    }    
 }
