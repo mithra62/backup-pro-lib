@@ -30,5 +30,6 @@ $lang = array(
     'storage_location_bp_settings_menu' => 'Storage Locations',
     'license_bp_settings_menu' => 'License Details',
     'storage_bp_settings_menu' => 'Storage Locations',
+    'rest_api_bp_settings_menu' => 'Rest API',
     '' => ''
 );
