@@ -107,6 +107,9 @@ class Craft extends m62Craft implements PlatformInterface
      */
     public function getRestApiRouteEntry(array $settings)
     {
-        
+        $config = \Craft\craft()->config;
+        $trigger = $config->get('actionTrigger');
+        $url = UrlHelper::getSiteUrl() . $trigger . '/backupPro/api?bp_method=';
+        return $url;
     }
 }
