@@ -47,4 +47,13 @@ class Eecms extends m62Eecms implements PlatformInterface
         ee()->load->library('backup_pro_lib', null, 'backup_pro');
         return ee()->backup_pro->get_ia_cron_commands($settings);
     }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\BackupPro\Platforms\PlatformInterface::getRestApiRouteEntry()
+     */
+    public function getRestApiRouteEntry(array $settings)
+    {
+    
+    }    
 }

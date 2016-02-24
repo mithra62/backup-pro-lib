@@ -76,7 +76,7 @@ class Craft extends BaseController
 
     /**
      * (non-PHPdoc)
-     * 
+     * @ignore
      * @see \Craft\BaseController::renderTemplate()
      */
     public function renderTemplate($template, $variables = array(), $return = false, $processOutput = false)

@@ -100,4 +100,13 @@ class Craft extends m62Craft implements PlatformInterface
         
         return array();
     }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\BackupPro\Platforms\PlatformInterface::getRestApiRouteEntry()
+     */
+    public function getRestApiRouteEntry(array $settings)
+    {
+        
+    }
 }

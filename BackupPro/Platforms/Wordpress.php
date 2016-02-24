@@ -61,4 +61,13 @@ class Wordpress extends m62Wp implements PlatformInterface
             )
         );
     }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\BackupPro\Platforms\PlatformInterface::getRestApiRouteEntry()
+     */
+    public function getRestApiRouteEntry(array $settings)
+    {
+    
+    }    
 }

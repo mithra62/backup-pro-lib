@@ -12,6 +12,14 @@ namespace mithra62\BackupPro\Platforms\View;
 use mithra62\Platforms\View\Concrete5 as C5View;
 use mithra62\BackupPro\Traits\View\Helpers As ViewHelpers;
 
+/**
+ * Backup Pro - Concrete5 View abstraction
+ *
+ * Contains the Concrete5 specific view helpers
+ *
+ * @package mithra62\BackupPro
+ * @author Eric Lamb <eric@mithra62.com>
+ */
 class Concrete5 extends C5View
 {
     use ViewHelpers;

@@ -1,15 +1,32 @@
 <?php
+/**
+ * mithra62 - Backup Pro
+ *
+ * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
+ * @link		http://mithra62.com/
+ * @version		3.0
+ * @filesource 	./mithra62/BackupPro/Platforms/View/Rest.php
+ */
+ 
 namespace mithra62\BackupPro\Platforms\View;
 
 use mithra62\Platforms\View\Rest as RestView;
 use mithra62\BackupPro\Traits\View\Helpers As ViewHelpers;
 
+/**
+ * Backup Pro - REST View abstraction
+ *
+ * Contains the REST specific view helpers
+ *
+ * @package mithra62\BackupPro
+ * @author Eric Lamb <eric@mithra62.com>
+ */
 class Rest extends RestView
 {
     use ViewHelpers;
 
     /**
-     * The mapping of resource variables to their output name
+     * The mapping of backup resource variables to their output name
      * @var array
      */
     protected $backup_output_map = array(
@@ -30,7 +47,7 @@ class Rest extends RestView
     
 
     /**
-     * The mapping of resource variables to their output name
+     * The mapping of backup resource variables to their output name
      * @var array
      */
     protected $backups_output_map = array(
@@ -41,6 +58,22 @@ class Rest extends RestView
         'available_space' => 'available_space',
     );
     
+    protected $backup_storage_location_output_map = array(
+        'storage_location_name' => 'storage_location_name',
+        'location_id' => 'storage_location_id',
+        'storage_location_driver' => 'storage_location_driver',
+        'storage_location_file_use' => 'storage_location_db_use',
+        'storage_location_include_prune' => 'storage_location_include_prune',
+        'storage_location_create_date' => 'storage_location_create_date',
+    );
+    
+    /**
+     * Prepares the Hal object for a Backup collection output
+     * @param string $route The API route to access resources from
+     * @param array $collection The actual collection
+     * @param array $resources Any sub resources (if any)
+     * @return \Nocarrier\Hal
+     */
     public function prepareBackupCollection($route, array $collection, array $resources = array())
     {
         $data = array();
@@ -59,7 +92,14 @@ class Rest extends RestView
         return $hal;
     }
     
-    public function prepareBackupResource($hal, $route, array $item)
+    /**
+     * Prepares the Hal object for a Backup resource output
+     * @param \Nocarrier\Hal $hal
+     * @param string $route The API route to access the resource from
+     * @param array $item The resource data
+     * @return \Nocarrier\Hal
+     */
+    public function prepareBackupResource(\Nocarrier\Hal $hal, $route, array $item)
     {
         $data = array();
         foreach($this->backup_output_map AS $key => $value)
@@ -68,9 +108,40 @@ class Rest extends RestView
                 $data[$value] = $item[$key];
             }
         }
-        $resource = $this->getHal($route.'/'.urlencode($this->m62Encode($item['details_file_name'])), $data);
-        $resource->addLink('storage', '/customer/bob', array('title' => 'Bob Jones <bob@jones.com>'));
+        
+        $resource = $this->getHal($route.'?id='.urlencode($this->m62Encode($item['details_file_name'])), $data);
+        if(isset($item['storage_locations']) && is_array($item['storage_locations']))
+        {
+            foreach($item['storage_locations'] As $storage)
+            {
+                $resource = $this->prepareStorageLocationResource($resource, '/storage', $storage);
+            }
+        }        
         $hal->addResource('backups', $resource);
+        return $hal;
+    }
+    
+    public function prepareStorageLocationCollection($route, array $collection, array $resources = array())
+    {
+        $hal = $this->getHal($route);
+        foreach($resources AS $key => $item)
+        {
+            $hal = $this->prepareBackupResource($hal, $route, $item);
+        }
+        return $hal;
+    }
+    
+    public function prepareStorageLocationResource(\Nocarrier\Hal $hal, $route, array $item)
+    {
+        foreach($this->backup_storage_location_output_map AS $key => $value)
+        {
+            if(isset($item[$key])){
+                $data[$value] = $item[$key];
+            }
+        }
+        
+        $resource = $this->getHal($route.'/'.urlencode($item['location_id']), $data);
+        $hal->addResource('storage', $resource);
         return $hal;
     }
 }

@@ -29,6 +29,10 @@ class Backups extends RestController {
         'OPTIONS'
     );
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\BackupPro\Platforms\Controllers\Rest::get()
+     */
     public function get($id = false) 
     { 
         $backup = $this->services['backups'];
@@ -71,11 +75,19 @@ class Backups extends RestController {
         echo $hal->asJson(true);
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\BackupPro\Platforms\Controllers\Rest::delete()
+     */
     public function delete($id) 
     { 
         echo __METHOD__;
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\BackupPro\Platforms\Controllers\Rest::put()
+     */
     public function put($id) { 
         echo __METHOD__;
     }

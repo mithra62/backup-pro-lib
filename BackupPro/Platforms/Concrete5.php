@@ -52,4 +52,13 @@ class Concrete5 extends m62C5 implements PlatformInterface
 			'verify_backup_stability' => array('url' => $url, 'cmd' => '0 * * * * * curl "'.$url.'"')
 		);
     }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\BackupPro\Platforms\PlatformInterface::getRestApiRouteEntry()
+     */
+    public function getRestApiRouteEntry(array $settings)
+    {
+        
+    }
 }

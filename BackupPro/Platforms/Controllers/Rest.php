@@ -67,8 +67,8 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
      */
     public function __construct(\mithra62\Platforms\AbstractPlatform $platform, \mithra62\BackupPro\Rest $rest)
     {
-        header('Content-Type: application/hal+json');
-        header('Powered-By: Backup Pro '.self::version);
+        //header('Content-Type: application/hal+json');
+        //header('Powered-By: Backup Pro '.self::version);
         
         $this->initController();
         $this->platform = $platform;
@@ -185,9 +185,8 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
     }
     
     /**
-     * (non-PHPdoc)
-     *
-     * @see \Zend\Mvc\Controller\AbstractRestfulController::options()
+     * Prepares the OPTIONS verb
+     * @param string $id
      */
     public function options($id = false)
     {
@@ -251,7 +250,7 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
      *
      * @see \Zend\Mvc\Controller\AbstractRestfulController::get()
      */
-    public function get($id)
+    public function get($id = false)
     {
         return $this->methodNotAllowed();
     }
@@ -281,7 +280,17 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
      *
      * @see \Zend\Mvc\Controller\AbstractRestfulController::patch()
      */
-    public function patch($id, $data)
+    public function patch($id)
+    {
+        return $this->methodNotAllowed();
+    }
+    
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \Zend\Mvc\Controller\AbstractRestfulController::patch()
+     */
+    public function put($id)
     {
         return $this->methodNotAllowed();
     }
