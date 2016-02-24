@@ -22,7 +22,7 @@ use Respect\Rest\Routable;
  * @package BackupPro\Controllers
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Rest implements Routable
+class Rest implements Routable, \mithra62\BackupPro\BackupPro
 {
     use Controller;
 
@@ -67,6 +67,9 @@ class Rest implements Routable
      */
     public function __construct(\mithra62\Platforms\AbstractPlatform $platform, \mithra62\BackupPro\Rest $rest)
     {
+        header('Content-Type: application/hal+json');
+        header('Powered-By: Backup Pro '.self::version);
+        
         $this->initController();
         $this->platform = $platform;
         $this->rest = $rest;

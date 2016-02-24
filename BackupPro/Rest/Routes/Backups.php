@@ -67,7 +67,7 @@ class Backups extends RestController {
         {
             $hal = $this->view_helper->prepareBackupCollection('/backups', $backup_meta, $backups);
         }
-        
+
         echo $hal->asJson(true);
     }
     
