@@ -12,6 +12,7 @@ namespace mithra62\BackupPro\Platforms\View;
 
 use mithra62\Platforms\View\Rest as RestView;
 use mithra62\BackupPro\Traits\View\Helpers As ViewHelpers;
+use mithra62\BackupPro\BackupPro;
 
 /**
  * Backup Pro - REST View abstraction
@@ -21,7 +22,7 @@ use mithra62\BackupPro\Traits\View\Helpers As ViewHelpers;
  * @package mithra62\BackupPro
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Rest extends RestView
+class Rest extends RestView implements BackupPro
 {
     use ViewHelpers;
 
@@ -66,6 +67,21 @@ class Rest extends RestView
         'storage_location_include_prune' => 'storage_location_include_prune',
         'storage_location_create_date' => 'storage_location_create_date',
     );
+    
+    public function renderOutput(\Nocarrier\Hal $hal)
+    {
+        header('Powered-By: Backup Pro '.self::version);
+        if(isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos(strtolower($_SERVER['HTTP_ACCEPT_ENCODING']), 'xml') !== false)
+        {
+            header('Content-Type: application/hal+xml');
+            return $hal->asXml(true);
+        }
+        else
+        {
+            header('Content-Type: application/hal+json');
+            return $hal->asJson(true);
+        }
+    }
     
     /**
      * Prepares the Hal object for a Backup collection output
@@ -121,6 +137,13 @@ class Rest extends RestView
         return $hal;
     }
     
+    /**
+     * Prepares the Hal object for a Storage Location Collection
+     * @param unknown $route
+     * @param array $collection
+     * @param array $resources
+     * @return \Nocarrier\Hal
+     */
     public function prepareStorageLocationCollection($route, array $collection, array $resources = array())
     {
         $hal = $this->getHal($route);
@@ -130,7 +153,14 @@ class Rest extends RestView
         }
         return $hal;
     }
-    
+
+    /**
+     * Prepares the Hal object for a Backup resource output
+     * @param \Nocarrier\Hal $hal
+     * @param unknown $route
+     * @param array $item
+     * @return \Nocarrier\Hal
+     */
     public function prepareStorageLocationResource(\Nocarrier\Hal $hal, $route, array $item)
     {
         foreach($this->backup_storage_location_output_map AS $key => $value)

@@ -66,10 +66,7 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
      * @param \mithra62\Platforms\AbstractPlatform $platform
      */
     public function __construct(\mithra62\Platforms\AbstractPlatform $platform, \mithra62\BackupPro\Rest $rest)
-    {
-        //header('Content-Type: application/hal+json');
-        //header('Powered-By: Backup Pro '.self::version);
-        
+    {   
         $this->initController();
         $this->platform = $platform;
         $this->rest = $rest;
@@ -134,10 +131,20 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
      */
     public function setError($code, $detail, $type = null, $title = null, array $additional = array())
     {
-        //header('Content-Type: application/problem+json', false);
         http_response_code($code);
         
-        return new ApiProblem($code, $detail, $type, $title, $additional);
+        $problem = new ApiProblem($this->services['lang']->__($detail), $type, $title, $additional);
+        header('Powered-By: Backup Pro '.self::version);
+        if(isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos(strtolower($_SERVER['HTTP_ACCEPT_ENCODING']), 'xml') !== false)
+        {
+            header('Content-Type: application/problem+xml');
+            return $problem->asXml(true);
+        }
+        else
+        {
+            header('Content-Type: application/problem+json');
+            return $problem->asJson(true);
+        }
     }
     
     /**
@@ -147,7 +154,7 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
      */
     protected function methodNotAllowed()
     {
-        return $this->setError(405, 'method_not_allowed')->asJson();
+        return $this->setError(405, 'method_not_allowed');
     }    
     
     /**
