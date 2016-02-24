@@ -10,7 +10,7 @@ class Backups extends RestController {
      *
      * @var array
      */
-    protected $collectionOptions = array(
+    protected $collection_options = array(
         'GET',
         'POST',
         'OPTIONS'
@@ -21,7 +21,7 @@ class Backups extends RestController {
      *
      * @var array
     */
-    protected $resourceOptions = array(
+    protected $resource_options = array(
         'GET',
         'POST',
         'DELETE',
@@ -29,14 +29,46 @@ class Backups extends RestController {
         'OPTIONS'
     );
     
-    public function get($id = false) { 
+    public function get($id = false) 
+    { 
+        $backup = $this->services['backups'];
+        $backups = $backup->setBackupPath($this->settings['working_directory'])->getAllBackups($this->settings['storage_details']);
+        $available_space = $backup->getAvailableSpace($this->settings['auto_threshold'], $backups);
+        $backup_meta = $backup->getBackupMeta($backups);
         
-        echo __METHOD__;
-    }
-    
-    public function post()
-    {
-        echo __METHOD__;
+        if(!$id && $this->platform->getPost('type'))
+        {
+            if($this->platform->getPost('type') == 'db')
+            {
+                $backups = $backups['database'];
+                $backup_meta = $backup_meta['database'];
+            }
+            else
+            {
+                $backups = $backups['files'];
+                $backup_meta = $backup_meta['files'];
+            }
+            
+        }
+        else
+        {
+            $backups = $backups['database'] + $backups['files'];
+            $backup_meta = $backup_meta['global'];
+        }
+        
+        krsort($backups, SORT_NUMERIC);
+        $backup_meta = $backup_meta + $available_space;
+        
+        if($id)
+        {
+            $hal = $this->view_helper->prepareBackupCollection('/backups', $backups);
+        }
+        else
+        {
+            $hal = $this->view_helper->prepareBackupCollection('/backups', $backup_meta, $backups);
+        }
+        
+        echo $hal->asJson(true);
     }
     
     public function delete($id) 

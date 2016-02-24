@@ -5,17 +5,17 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Platforms/Controllers/Eecms.php
+ * @filesource 	./mithra62/BackupPro/Platforms/Controllers/Rest.php
  */
 namespace mithra62\BackupPro\Platforms\Controllers;
 
 use mithra62\BackupPro\Traits\Controller;
-use mithra62\Platforms\View\Rest as RestView;
+use mithra62\BackupPro\Platforms\View\Rest as RestView;
 use Crell\ApiProblem\ApiProblem;
 use Respect\Rest\Routable;
 
 /**
- * Backup Pro - Eecms Base Controller
+ * Backup Pro - Rest Base Controller
  *
  * Starts the Controllers up
  *
@@ -53,7 +53,13 @@ class Rest implements Routable
      * @var \mithra62\Platforms\View\Rest
      */
     protected $view_helper = null;
-
+   
+    /**
+     * The Hal Object for creating the output
+     * @var Nocarrier\Hal
+     */
+    protected $hal = null;
+    
     /**
      * Set it up
      * 
@@ -101,6 +107,11 @@ class Rest implements Routable
         //verify request auth
     }
     
+    /**
+     * Authenticates the requeset
+     * @todo implement ;)
+     * @return boolean
+     */
     public function authenticate()
     {
         return true;
@@ -198,6 +209,16 @@ class Rest implements Routable
      * @see \Zend\Mvc\Controller\AbstractRestfulController::create()
      */
     public function create($data)
+    {
+        return $this->methodNotAllowed();
+    }
+    
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \Zend\Mvc\Controller\AbstractRestfulController::create()
+     */
+    public function post()
     {
         return $this->methodNotAllowed();
     }
