@@ -11,7 +11,6 @@ namespace mithra62\BackupPro\Platforms\Controllers;
 
 use mithra62\BackupPro\Traits\Controller;
 use mithra62\BackupPro\Platforms\View\Rest as RestView;
-use Crell\ApiProblem\ApiProblem;
 use Respect\Rest\Routable;
 
 /**
@@ -115,36 +114,6 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
     public function authenticate()
     {
         return true;
-    }
-    
-    /**
-     * Wrapper to handle error output
-     *
-     * Note that $detail should be a key for language translation
-     *
-     * @param int $code
-     * @param string $detail
-     * @param string $type
-     * @param string $title
-     * @param array $additional
-     * @return \ZF\ApiProblem\ApiProblemResponse
-     */
-    public function setError($code, $detail, $type = null, $title = null, array $additional = array())
-    {
-        http_response_code($code);
-        
-        $problem = new ApiProblem($this->services['lang']->__($detail), $type, $title, $additional);
-        header('Powered-By: Backup Pro '.self::version);
-        if(isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos(strtolower($_SERVER['HTTP_ACCEPT_ENCODING']), 'xml') !== false)
-        {
-            header('Content-Type: application/problem+xml');
-            return $problem->asXml(true);
-        }
-        else
-        {
-            header('Content-Type: application/problem+json');
-            return $problem->asJson(true);
-        }
     }
     
     /**
@@ -298,26 +267,6 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
      * @see \Zend\Mvc\Controller\AbstractRestfulController::patch()
      */
     public function put($id)
-    {
-        return $this->methodNotAllowed();
-    }
-    
-    /**
-     * (non-PHPdoc)
-     *
-     * @see \Zend\Mvc\Controller\AbstractRestfulController::replaceList()
-     */
-    public function replaceList($data)
-    {
-        return $this->methodNotAllowed();
-    }
-    
-    /**
-     * (non-PHPdoc)
-     *
-     * @see \Zend\Mvc\Controller\AbstractRestfulController::patchList()
-     */
-    public function patchList($data)
     {
         return $this->methodNotAllowed();
     }

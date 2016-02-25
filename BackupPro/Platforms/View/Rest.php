@@ -13,6 +13,7 @@ namespace mithra62\BackupPro\Platforms\View;
 use mithra62\Platforms\View\Rest as RestView;
 use mithra62\BackupPro\Traits\View\Helpers As ViewHelpers;
 use mithra62\BackupPro\BackupPro;
+use Crell\ApiProblem\ApiProblem;
 
 /**
  * Backup Pro - REST View abstraction
@@ -59,6 +60,10 @@ class Rest extends RestView implements BackupPro
         'available_space' => 'available_space',
     );
     
+    /**
+     * The mapping of storage location resource variables to their output name
+     * @var array
+     */
     protected $backup_storage_location_output_map = array(
         'storage_location_name' => 'storage_location_name',
         'location_id' => 'storage_location_id',
@@ -68,6 +73,22 @@ class Rest extends RestView implements BackupPro
         'storage_location_create_date' => 'storage_location_create_date',
     );
     
+    /**
+     * We return ALL settings, so instead of mapping to what we want
+     * we map to what we DON'T want instead
+     * @var array
+     */
+    protected $settings_remove_vars = array(
+        'api_key',
+        'api_secret',
+        'storage_details',
+        'mysqldump_command'
+    );
+    
+    /**
+     * Returns the data for output and sets the appropriate headers 
+     * @param \Nocarrier\Hal $hal
+     */
     public function renderOutput(\Nocarrier\Hal $hal)
     {
         header('Powered-By: Backup Pro '.self::version);
@@ -80,6 +101,42 @@ class Rest extends RestView implements BackupPro
         {
             header('Content-Type: application/hal+json');
             return $hal->asJson(true);
+        }
+    }
+    
+    /**
+     * Wrapper to handle error output
+     *
+     * Note that $detail should be a key for language translation
+     * 
+     * @param int $code The HTTP response code to send
+     * @param unknown $title The title to display 
+     * @param array $errors Any errors to explain what went wrong
+     * @param string $detail A human readable explanation of what happened
+     * @param string $type A URI resource to deaper explanations on what happened
+     */
+    public function renderError($code, $title, array $errors = array(), $detail = null, $type = null)
+    {
+        http_response_code($code);
+        
+        $problem = new ApiProblem($this->m62Lang($title), $type);
+        $problem->setStatus($code);
+        $problem->setDetail($detail);
+        if($errors)
+        {
+            $problem['errors'] = $errors;
+        }
+        
+        header('Powered-By: Backup Pro '.self::version);
+        if(isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos(strtolower($_SERVER['HTTP_ACCEPT_ENCODING']), 'xml') !== false)
+        {
+            header('Content-Type: application/problem+xml');
+            return $problem->asXml(true);
+        }
+        else
+        {
+            header('Content-Type: application/problem+json');
+            return $problem->asJson(true);
         }
     }
     
@@ -172,6 +229,29 @@ class Rest extends RestView implements BackupPro
         
         $resource = $this->getHal($route.'/'.urlencode($item['location_id']), $data);
         $hal->addResource('storage', $resource);
+        return $hal;
+    }
+    
+    /**
+     * Prepares the Hal object for a Settings Collection
+     * @param string $route
+     * @param array $collection
+     * @param array $resources
+     * @return \Nocarrier\Hal
+     */
+    public function prepareSettingsCollection($route, array $collection, array $resources = array())
+    {
+        foreach($collection AS $key => $value)
+        {
+            if(in_array($key, $this->settings_remove_vars)){
+                unset($collection[$key]);
+            }
+        }
+        $hal = $this->getHal($route, $collection);
+        foreach($resources AS $key => $item)
+        {
+            $hal = $this->prepareBackupResource($hal, $route, $item);
+        }
         return $hal;
     }
 }

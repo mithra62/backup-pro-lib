@@ -1,8 +1,25 @@
 <?php
+/**
+ * mithra62 - Backup Pro
+ *
+ * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
+ * @link		http://mithra62.com/
+ * @version		3.0
+ * @filesource 	./mithra62/BackupPro/Rest/Routes/Backups.php
+ */
+ 
 namespace mithra62\BackupPro\Rest\Routes;
 
 use mithra62\BackupPro\Platforms\Controllers\Rest AS RestController;
 
+/**
+ * Backup Pro - Backups REST Route
+ *
+ * Contains the REST specific verbs for teh API
+ *
+ * @package mithra62\BackupPro
+ * @author Eric Lamb <eric@mithra62.com>
+ */
 class Backups extends RestController {
 
     /**
