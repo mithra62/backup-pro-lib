@@ -52,7 +52,7 @@ class Backups extends RestController {
      */
     public function get($id = false) 
     { 
-        $id = ($id ? $id : urldecode($this->platform->getPost('id')));
+        $id = ($id ? $id : $this->platform->getPost('id'));
         $backup = $this->services['backups'];
         $backups = $backup->setBackupPath($this->settings['working_directory'])->getAllBackups($this->settings['storage_details']);
         $available_space = $backup->getAvailableSpace($this->settings['auto_threshold'], $backups);
@@ -106,7 +106,7 @@ class Backups extends RestController {
      * @see \mithra62\BackupPro\Platforms\Controllers\Rest::put()
      */
     public function put($id = false) { 
-        $id = urldecode($this->platform->getPost('id'));
+        $id = $this->platform->getPost('id');
         $backup_type = $this->platform->getPost('type');
         $data = json_decode(file_get_contents("php://input"), true);
         

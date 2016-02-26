@@ -59,6 +59,6 @@ class Concrete5 extends m62C5 implements PlatformInterface
      */
     public function getRestApiRouteEntry(array $settings)
     {
-        
+        return '/backup_pro/api?bp_method=';
     }
 }
