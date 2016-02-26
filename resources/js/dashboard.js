@@ -15,7 +15,7 @@ jQuery(document).ready(function() {
 
 	//check all checkboxes
 	jQuery('.bp_toggle_all').change(function () {
-	    $("input:checkbox").prop('checked', $(this).prop("checked"));
+		jQuery("input:checkbox").prop('checked', jQuery(this).prop("checked"));
 	});
 	//end checkboxes
 	

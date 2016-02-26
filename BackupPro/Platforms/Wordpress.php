@@ -68,6 +68,7 @@ class Wordpress extends m62Wp implements PlatformInterface
      */
     public function getRestApiRouteEntry(array $settings)
     {
-    
+        $url = $this->getSiteUrl();
+        return $url.'?bp_method=';
     }    
 }
