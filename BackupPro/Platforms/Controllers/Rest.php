@@ -124,7 +124,7 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
      */
     protected function methodNotAllowed()
     {
-        return $this->setError(405, 'method_not_allowed');
+        return $this->view_helper->renderError(405, 'method_not_allowed');
     }    
     
     /**
@@ -222,7 +222,7 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
      *
      * @see \Zend\Mvc\Controller\AbstractRestfulController::delete()
      */
-    public function delete($id)
+    public function delete($id = false)
     {
         return $this->methodNotAllowed();
     }

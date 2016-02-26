@@ -104,12 +104,12 @@ class Backups extends RestController {
         //ensure params
         if(!$id)
         {
-            $error = array('errors' => array('\'id\' must be defined in the query string...'));
+            $error = array('\'id\' must be defined in the query string...');
             return $this->view_helper->renderError(422, 'unprocessable_entity', $error);
         }
         
         if(!$backup_type){
-            $error = array('errors' => array('\'type\' must be defined in the query string...'));
+            $error = array('\'type\' must be defined in the query string...');
             return $this->view_helper->renderError(422, 'unprocessable_entity', $error);
         }   
         
@@ -136,12 +136,12 @@ class Backups extends RestController {
         //ensure params
         if(!$id)
         {
-            $error = array('errors' => array('\'id\' must be defined in the query string...'));
+            $error = array('\'id\' must be defined in the query string...');
             return $this->view_helper->renderError(422, 'unprocessable_entity', $error);
         }
         
         if(!$backup_type){
-            $error = array('errors' => array('\'type\' must be defined in the query string...'));
+            $error = array('\'type\' must be defined in the query string...');
             return $this->view_helper->renderError(422, 'unprocessable_entity', $error);
         }
         

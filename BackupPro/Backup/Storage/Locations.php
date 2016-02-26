@@ -121,7 +121,10 @@ class Locations
         $_settings['storage_details'][$location_id] = $obj->prepCreate($data);
         $_settings['storage_details'][$location_id]['location_id'] = $location_id;
         $update['storage_details'] = $_settings['storage_details'];
-        return $this->getSetting()->update($update);
+        if( $this->getSetting()->update($update) )
+        {
+            return $location_id;
+        }
     }
 
     /**

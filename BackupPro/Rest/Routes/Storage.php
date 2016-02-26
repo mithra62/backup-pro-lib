@@ -79,6 +79,53 @@ class Storage extends RestController {
         return $this->view_helper->renderOutput($hal);
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\BackupPro\Platforms\Controllers\Rest::post()
+     */
+    public function post()
+    {
+        $data = json_decode(file_get_contents("php://input"), true);
+        if(!$data || !is_array($data) || count($data) == '0')
+        {
+            return $this->view_helper->renderError(422, 'unprocessable_entity');
+        }
+        
+        if(!isset($data['engine'])){
+            $error = array('\'engine\' must be included in the POST data...');
+            return $this->view_helper->renderError(422, 'unprocessable_entity', $error);
+        }
+        
+        $available_storage_engines = $this->services['backup']->getStorage()->getAvailableStorageDrivers();
+        if( !isset($available_storage_engines[$data['engine']]) )
+        {
+            $error = array('\''.$data['engine'].'\' isn\'t a valid storage engine...');
+            return $this->view_helper->renderError(422, 'unprocessable_entity', $error);
+        }   
+
+        $data = array_merge($this->storage_form_data_defaults, $data);
+        $settings_errors = $this->services['backup']->getStorage()->validateDriver($this->services['validate'], $data['engine'], $data, $this->settings['storage_details']);
+        if( $settings_errors )
+        {
+            return $this->view_helper->renderError(422, 'unprocessable_entity', $settings_errors);
+        }
+        
+        $location_id = $this->services['backup']->getStorage()->getLocations()->setSetting($this->services['settings'])->create($data['engine'], $data);
+        if( $location_id )
+        {
+            $settings = $this->services['settings']->get(true);
+            $storage_data = $settings['storage_details'][$location_id];
+            $hal = $this->view_helper->prepareStorageLocationCollection('/storage/'.$location_id, $storage_data);
+            return $this->view_helper->renderOutput($hal);            
+        }   
+        
+        return $this->view_helper->renderError(500, 'unprocessable_entity');
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\BackupPro\Platforms\Controllers\Rest::put()
+     */
     public function put($id = false) 
     {
         if(!$id || !$this->settings['storage_details'][$id])
@@ -117,5 +164,33 @@ class Storage extends RestController {
             return $this->view_helper->renderOutput($hal);
         }
         
+        return $this->view_helper->renderError(500, 'unprocessable_entity');
+        
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\BackupPro\Platforms\Controllers\Rest::delete()
+     */
+    public function delete($id = false)
+    {
+        if(!$id || !$this->settings['storage_details'][$id])
+        {
+            return $this->view_helper->renderError(404, 'not_found');
+        }
+        
+        if( count($this->settings['storage_details']) <= 1 )
+        {
+            $settings_errors = array($this->services['lang']->__('min_storage_location_needs'));
+            return $this->view_helper->renderError(422, 'unprocessable_entity', $settings_errors);
+        }
+        
+        $backups = $this->services['backups']->setBackupPath($this->settings['working_directory'])
+                                             ->getAllBackups($this->settings['storage_details'], $this->services['backup']->getStorage()->getAvailableStorageDrivers());   
+        
+        if( !$this->services['backup']->getStorage()->getLocations()->setSetting($this->services['settings'])->remove($id, array(), $backups) )
+        {
+            return $this->view_helper->renderError(500, 'unprocessable_entity');
+        }
     }
 }
