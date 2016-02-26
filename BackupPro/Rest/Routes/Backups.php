@@ -98,7 +98,30 @@ class Backups extends RestController {
      */
     public function delete($id = false) 
     { 
-        echo __METHOD__;
+        $id = $this->platform->getPost('id');
+        $backup_type = $this->platform->getPost('type');
+        
+        //ensure params
+        if(!$id)
+        {
+            $error = array('errors' => array('\'id\' must be defined in the query string...'));
+            return $this->view_helper->renderError(422, 'unprocessable_entity', $error);
+        }
+        
+        if(!$backup_type){
+            $error = array('errors' => array('\'type\' must be defined in the query string...'));
+            return $this->view_helper->renderError(422, 'unprocessable_entity', $error);
+        }   
+        
+        try {
+            $delete_backups = array($id);
+            $backups = $this->validateBackups($delete_backups, $backup_type);
+        }
+        catch (\mithra62\BackupPro\Exceptions\Backup\DetailsException $e) { 
+            return $this->view_helper->renderError(404, 'not_found');
+        }
+        
+        $this->services['backups']->setBackupPath($this->settings['working_directory'])->removeBackups($backups);
     }
     
     /**

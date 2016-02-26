@@ -90,8 +90,8 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
         }
         
         $errors = $this->services['errors']->checkWorkingDirectory($this->settings['working_directory'])
-            ->checkStorageLocations($this->settings['storage_details'])
-            ->licenseCheck($this->settings['license_number'], $this->services['license']);
+            ->checkStorageLocations($this->settings['storage_details']);
+            //->licenseCheck($this->settings['license_number'], $this->services['license']);
         
         if ($errors->totalErrors() == '0') {
             $errors = $errors->checkBackupState($this->services['backups'], $this->settings);
@@ -99,6 +99,7 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
         
         $this->errors = $errors->getErrors();
         $this->view_helper = new RestView($this->services['lang'], $this->services['files'], $this->services['settings'], $this->services['encrypt'], $this->platform);
+        $this->view_helper->setSystemErrors($this->errors);
         $this->m62->setService('view_helpers', function ($c) {
             return $this->view_helper;
         });
@@ -127,38 +128,53 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
     }    
     
     /**
-     * Event to handle OPTION requests
-     *
-     * @param \Zend\Mvc\MvcEvent $e
-     * @return void|\Zend\Stdlib\ResponseInterface
+     * Validates the POST'd backup data and returns the clean array
+     * @param array $delete_backups
+     * @param string $type
+     * @return multitype:array
      */
-    public function checkOptions(\Zend\Mvc\MvcEvent $e)
+    protected function validateBackups($delete_backups, $type)
     {
-        if ($this->params()->fromRoute('id', false)) {
-            $options = $this->resourceOptions;
-        } else {
-            $options = $this->collectionOptions;
+        if(!$delete_backups || count($delete_backups) == 0)
+        {
+            $error = array('errors' => array('No backups sent...'));
+            echo $this->view_helper->renderError(422, 'unprocessable_entity', $error);
+            exit;
         }
-    
-        if (in_array($e->getRequest()->getMethod(), $options)) {
-            return;
+        
+        $encrypt = $this->services['encrypt'];
+        $backups = array();
+         
+        $locations = $this->settings['storage_details'];
+        $drivers = $this->services['backup']->getStorage()->getAvailableStorageDrivers();
+        foreach($delete_backups AS $file_name)
+        {
+            $file_name = $encrypt->decode($file_name);
+            if( $file_name != '' )
+            {
+                $path = rtrim($this->settings['working_directory'], DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$type;
+                $file_data = $this->services['backup']->getDetails()->getDetails($file_name, $path);
+                if(!$file_data)
+                {
+                    $error = array('errors' => array('No valid backups sent...'));
+                    echo $this->view_helper->renderError(422, 'unprocessable_entity', $error);
+                    exit;
+                }
+                
+                $file_data = $this->services['backups']->getBackupStorageData($file_data, $locations, $drivers);
+                $backups[] = $file_data;
+            }
         }
-    
-        $response = $this->getResponse();
-        $response->setStatusCode(405);
-        return $response;
-    }
-    
-    /**
-     * Sets the HTTP header code that's passed
-     *
-     * @param int $code
-     */
-    public function setStatusCode($code)
-    {
-        $response = $this->getResponse();
-        $response->setStatusCode($code);
-    }
+         
+        if(count($backups) == 0)
+        {
+            $error = array('errors' => array('No valid backups sent...'));
+            echo $this->view_helper->renderError(422, 'unprocessable_entity', $error);
+            exit;
+        }
+         
+        return $backups;
+    }    
     
     /**
      * Prepares the OPTIONS verb

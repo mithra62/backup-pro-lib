@@ -85,6 +85,27 @@ class Rest extends RestView implements BackupPro
     );
     
     /**
+     * The Backup Pro system errors 
+     * @var array
+     */
+    protected $system_errors = array();
+    
+    public function setSystemErrors(array $errors = array())
+    {
+        $this->system_errors = $errors;
+        return $this;
+    }
+    
+    /**
+     * Returns any set system errors
+     * @return array
+     */
+    public function getSystemErrors()
+    {
+        return $this->system_errors;
+    }
+    
+    /**
      * Returns the data for output and sets the appropriate headers 
      * @param \Nocarrier\Hal $hal
      * @return string
@@ -92,6 +113,11 @@ class Rest extends RestView implements BackupPro
     public function renderOutput(\Nocarrier\Hal $hal)
     {
         header('Powered-By: Backup Pro '.self::version);
+        if($this->getSystemErrors())
+        {
+            $hal->setData($hal->getData() + array('_system_errors' => $this->getSystemErrors()));
+            
+        }
         if(isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos(strtolower($_SERVER['HTTP_ACCEPT_ENCODING']), 'xml') !== false)
         {
             header('Content-Type: application/hal+xml');
