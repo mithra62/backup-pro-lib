@@ -115,7 +115,11 @@ class Rest extends RestView implements BackupPro
         header('Powered-By: Backup Pro '.self::version);
         if($this->getSystemErrors())
         {
-            $hal->setData($hal->getData() + array('_system_errors' => $this->getSystemErrors()));
+            $system_errors = array();
+            foreach($this->getSystemErrors() As $key => $value) {
+                $system_errors[$key] = $this->m62Lang($key);
+            }
+            $hal->setData($hal->getData() + array('_system_errors' => $system_errors));
             
         }
         if(isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos(strtolower($_SERVER['HTTP_ACCEPT_ENCODING']), 'xml') !== false)
@@ -229,11 +233,12 @@ class Rest extends RestView implements BackupPro
      */
     public function prepareStorageLocationCollection($route, array $collection, array $resources = array())
     {
-        $hal = $this->getHal($route);
+        $hal = $this->getHal($route, $collection);
         foreach($resources AS $key => $item)
         {
-            $hal = $this->prepareBackupResource($hal, $route, $item);
+            $hal = $this->prepareStorageLocationResource($hal, $route, $item);
         }
+        
         return $hal;
     }
 
@@ -273,6 +278,23 @@ class Rest extends RestView implements BackupPro
                 unset($collection[$key]);
             }
         }
+        $hal = $this->getHal($route, $collection);
+        foreach($resources AS $key => $item)
+        {
+            $hal = $this->prepareBackupResource($hal, $route, $item);
+        }
+        return $hal;
+    }
+    
+    public function prepareStorageCollection($route, array $collection, array $resources = array())
+    {
+        foreach($collection AS $key => $value)
+        {
+            if(in_array($key, $this->settings_remove_vars)){
+                unset($collection[$key]);
+            }
+        }
+        
         $hal = $this->getHal($route, $collection);
         foreach($resources AS $key => $item)
         {
