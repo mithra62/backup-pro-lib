@@ -52,6 +52,7 @@ class Backups extends RestController {
      */
     public function get($id = false) 
     { 
+        $id = ($id ? $id : urldecode($this->platform->getPost('id')));
         $backup = $this->services['backups'];
         $backups = $backup->setBackupPath($this->settings['working_directory'])->getAllBackups($this->settings['storage_details']);
         $available_space = $backup->getAvailableSpace($this->settings['auto_threshold'], $backups);
@@ -69,7 +70,6 @@ class Backups extends RestController {
                 $backups = $backups['files'];
                 $backup_meta = $backup_meta['files'];
             }
-            
         }
         else
         {
@@ -96,7 +96,7 @@ class Backups extends RestController {
      * (non-PHPdoc)
      * @see \mithra62\BackupPro\Platforms\Controllers\Rest::delete()
      */
-    public function delete($id) 
+    public function delete($id = false) 
     { 
         echo __METHOD__;
     }
@@ -105,7 +105,36 @@ class Backups extends RestController {
      * (non-PHPdoc)
      * @see \mithra62\BackupPro\Platforms\Controllers\Rest::put()
      */
-    public function put($id) { 
-        echo __METHOD__;
+    public function put($id = false) { 
+        $id = urldecode($this->platform->getPost('id'));
+        $backup_type = $this->platform->getPost('type');
+        $data = json_decode(file_get_contents("php://input"), true);
+        
+        //ensure params
+        if(!$id)
+        {
+            $error = array('errors' => array('\'id\' must be defined in the query string...'));
+            return $this->view_helper->renderError(422, 'unprocessable_entity', $error);
+        }
+        
+        if(!$backup_type){
+            $error = array('errors' => array('\'type\' must be defined in the query string...'));
+            return $this->view_helper->renderError(422, 'unprocessable_entity', $error);
+        }
+        
+        //ensure backup exists
+        $encrypt = $this->services['encrypt'];
+        $file_name = $encrypt->decode($id);
+        if($file_name && isset($data['backup_note']))
+        {
+            $path = rtrim($this->settings['working_directory'], DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$backup_type;
+            //$file_data = $this->services['backup']->getDetails()->getDetails($file_name, $path);
+            //print_r($file_data);
+            $this->services['backup']->getDetails()->addDetails($file_name, $path, array('note' => $data['backup_note']));
+        }
+        
+        $file_data = $this->services['backup']->getDetails()->getDetails($file_name, $path);
+        $hal = $this->view_helper->prepareBackupCollection('/backups', array(), array($file_data));
+        return $this->view_helper->renderOutput($hal);
     }
 }

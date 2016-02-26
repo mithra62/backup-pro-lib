@@ -69,12 +69,12 @@ class Settings extends RestController {
      * (non-PHPdoc)
      * @see \mithra62\BackupPro\Platforms\Controllers\Rest::put()
      */
-    public function put() {
+    public function put($id = false) {
         
         $data = json_decode(file_get_contents("php://input"), true);  
         if(!$data || !is_array($data) || count($data) == '0')
         {
-            return $this->sendError(422, 'unprocessable_entity');
+            return $this->view_helper->renderError(422, 'unprocessable_entity');
         }
         
         $variables['form_data'] = array_merge(array('db_backup_ignore_tables' => '', 'db_backup_ignore_table_data' => ''), $data);

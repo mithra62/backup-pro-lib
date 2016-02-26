@@ -54,6 +54,7 @@ class Ee3 extends m62Ee3 implements PlatformInterface
      */
     public function getRestApiRouteEntry(array $settings)
     {
-    
+        ee()->load->library('backup_pro_lib', null, 'backup_pro');
+        return ee()->backup_pro->get_api_route_entry($settings);
     }    
 }

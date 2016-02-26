@@ -13,7 +13,6 @@ namespace mithra62\BackupPro\Platforms\View;
 use mithra62\Platforms\View\Rest as RestView;
 use mithra62\BackupPro\Traits\View\Helpers As ViewHelpers;
 use mithra62\BackupPro\BackupPro;
-use Crell\ApiProblem\ApiProblem;
 
 /**
  * Backup Pro - REST View abstraction
@@ -88,6 +87,7 @@ class Rest extends RestView implements BackupPro
     /**
      * Returns the data for output and sets the appropriate headers 
      * @param \Nocarrier\Hal $hal
+     * @return string
      */
     public function renderOutput(\Nocarrier\Hal $hal)
     {
@@ -110,7 +110,7 @@ class Rest extends RestView implements BackupPro
      * Note that $detail should be a key for language translation
      * 
      * @param int $code The HTTP response code to send
-     * @param unknown $title The title to display 
+     * @param string $title The title to display 
      * @param array $errors Any errors to explain what went wrong
      * @param string $detail A human readable explanation of what happened
      * @param string $type A URI resource to deaper explanations on what happened
@@ -119,7 +119,7 @@ class Rest extends RestView implements BackupPro
     {
         http_response_code($code);
         
-        $problem = new ApiProblem($this->m62Lang($title), $type);
+        $problem = $this->getApiProblem($title, $type);
         $problem->setStatus($code);
         $problem->setDetail($detail);
         if($errors)
@@ -182,7 +182,7 @@ class Rest extends RestView implements BackupPro
             }
         }
         
-        $resource = $this->getHal($route.'?id='.urlencode($this->m62Encode($item['details_file_name'])), $data);
+        $resource = $this->getHal($route.'&id='.urlencode($this->m62Encode($item['file_name'])), $data);
         if(isset($item['storage_locations']) && is_array($item['storage_locations']))
         {
             foreach($item['storage_locations'] As $storage)

@@ -266,7 +266,7 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
      *
      * @see \Zend\Mvc\Controller\AbstractRestfulController::patch()
      */
-    public function put($id)
+    public function put($id = false)
     {
         return $this->methodNotAllowed();
     }
