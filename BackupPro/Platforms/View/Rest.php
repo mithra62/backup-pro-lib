@@ -106,13 +106,24 @@ class Rest extends RestView implements BackupPro
     }
     
     /**
+     * Sends the HTTP Headers defining the request
+     * @return void
+     */
+    public function sendHeaders()
+    {
+        $parts = explode('\\', get_class($this->platform));
+        header('X-BP-Powered-By: Backup Pro '.self::version);
+        header('X-BP-Platform: '.end($parts));
+    }
+    
+    /**
      * Returns the data for output and sets the appropriate headers 
      * @param \Nocarrier\Hal $hal
      * @return string
      */
     public function renderOutput(\Nocarrier\Hal $hal)
     {
-        header('Powered-By: Backup Pro '.self::version);
+        $this->sendHeaders();
         if($this->getSystemErrors())
         {
             $system_errors = array();
@@ -157,7 +168,7 @@ class Rest extends RestView implements BackupPro
             $problem['errors'] = $errors;
         }
         
-        header('Powered-By: Backup Pro '.self::version);
+        $this->sendHeaders();
         if(isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos(strtolower($_SERVER['HTTP_ACCEPT_ENCODING']), 'xml') !== false)
         {
             header('Content-Type: application/problem+xml');
@@ -295,6 +306,16 @@ class Rest extends RestView implements BackupPro
             }
         }
         
+        $hal = $this->getHal($route, $collection);
+        foreach($resources AS $key => $item)
+        {
+            $hal = $this->prepareBackupResource($hal, $route, $item);
+        }
+        return $hal;
+    }
+    
+    public function prepareSystemInfoCollection($route, array $collection, array $resources = array())
+    {
         $hal = $this->getHal($route, $collection);
         foreach($resources AS $key => $item)
         {

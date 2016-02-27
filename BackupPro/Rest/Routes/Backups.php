@@ -160,4 +160,114 @@ class Backups extends RestController {
         $hal = $this->view_helper->prepareBackupCollection('/backups', array(), array($file_data));
         return $this->view_helper->renderOutput($hal);
     }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \mithra62\BackupPro\Platforms\Controllers\Rest::post()
+     */
+    public function post()
+    {
+        $backup_type = $this->platform->getPost('type', 'database');
+        
+        switch($backup_type)
+        {
+            case 'database':
+                $this->backup_database();
+            break;
+            
+            case 'files':
+            case 'file':
+                $this->backup_files();
+            break;
+            
+        }
+    }
+    
+    protected function backup_database()
+    {
+        $error = $this->services['errors'];
+        $backup = $this->services['backup']->setStoragePath($this->settings['working_directory']);
+        $error->clearErrors()->checkStorageLocations($this->settings['storage_details'])
+              ->checkWorkingDirectory($this->settings['working_directory'])
+              ->checkBackupDirs($backup->getStorage());
+        if( $error->totalErrors() == '0' )
+        {
+            ini_set('memory_limit', -1);
+            set_time_limit(0);
+    
+            $db_info = $this->platform->getDbCredentials();
+            if( $backup->setDbInfo($db_info)->database($db_info['database'], $this->settings, $this->services['shell']) )
+            {
+                $backups = $this->services['backups']->setBackupPath($this->settings['working_directory'])
+                                                     ->getAllBackups($this->settings['storage_details']);
+    
+                $backup->getStorage()->getCleanup()->setStorageDetails($this->settings['storage_details'])
+                                     ->setBackups($backups)
+                                     ->setDetails($this->services['backups']->getDetails())
+                                     ->autoThreshold($this->settings['auto_threshold'])
+                                     ->counts($this->settings['max_db_backups'])
+                                     ->duplicates($this->settings['allow_duplicates']);
+                
+                
+                //output backup details
+                exit;
+            }
+        }
+        else
+        {
+            //output errors
+            
+            exit;
+            ee()->session->set_flashdata('message_error', $this->services['lang']->__($error->getError()));
+            $this->platform->redirect($this->url_base.'db_backups');
+        }
+    
+        exit;
+    }
+    
+    public function backup_files()
+    {
+        $error = $this->services['errors'];
+        $backup = $this->services['backup']->setStoragePath($this->settings['working_directory']);
+        $error->clearErrors()->checkStorageLocations($this->settings['storage_details'])
+                             ->checkBackupDirs($backup->getStorage())
+                             ->checkWorkingDirectory($this->settings['working_directory'])
+                             ->checkFileBackupLocations($this->settings['backup_file_location']);
+        if( $error->totalErrors() == 0 )
+        {
+            ini_set('memory_limit', -1);
+            set_time_limit(0);
+            if( $backup->files($this->settings, $this->services['files'], $this->services['regex']) )
+            {
+                $backups = $this->services['backups']->setBackupPath($this->settings['working_directory'])
+                ->getAllBackups($this->settings['storage_details']);
+    
+                $backup->getStorage()->getCleanup()->setStorageDetails($this->settings['storage_details'])
+                                     ->setBackups($backups)
+                                     ->setDetails($this->services['backups']->getDetails())
+                                     ->autoThreshold($this->settings['auto_threshold'])
+                                     ->counts($this->settings['max_file_backups'], 'files')
+                                     ->duplicates($this->settings['allow_duplicates']);
+                
+                //output backup details
+                
+                exit;
+            }
+        }
+        else
+        {
+            //output errors
+            
+            exit;
+            
+            $url = $this->url_base.'file_backups';
+            if( $error->getError() == 'no_backup_file_location' )
+            {
+                $url = $this->url_base.'settings&section=files';
+            }
+    
+            ee()->session->set_flashdata('message_error', $this->services['lang']->__($error->getError()));
+            $this->platform->redirect($url);
+        }
+    }
 }
