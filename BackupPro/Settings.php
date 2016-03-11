@@ -115,10 +115,6 @@ class Settings extends m62Settings
         'last_verification_time' => '0', // timestamp last time a verification happened
         'total_verifications_per_execution' => '2', // the number of backups to check in a given run
         'check_backup_state_cp_login' => '1',
-        
-        'enable_rest_api' => '0',
-        'api_key' => '',
-        'api_secret' => '',
     );
 
     /**
