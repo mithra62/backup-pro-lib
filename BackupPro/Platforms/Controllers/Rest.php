@@ -64,7 +64,7 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
      * 
      * @param \mithra62\Platforms\AbstractPlatform $platform
      */
-    public function __construct(\mithra62\Platforms\AbstractPlatform $platform, \mithra62\BackupPro\Rest $rest)
+    public function __construct(\mithra62\Platforms\AbstractPlatform $platform, \mithra62\Rest $rest)
     {   
         $this->initController();
         $this->platform = $platform;
@@ -114,7 +114,43 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
      */
     public function authenticate()
     {
-        return true;
+        $hmac = $this->rest->getServer()->getHmac();
+        return $hmac->setData($this->getRequestHeaders())->setRoute('/fdsa')->setMethod($_SERVER['REQUEST_METHOD'])->auth($this->settings['api_key'], $this->settings['api_secret']);
+    }
+    
+    /**
+     * Returns the input data as an array
+     * @return array
+     */
+    public function getBodyData()
+    {
+        $data = json_decode(file_get_contents("php://input"), true);
+        if(!$data)
+        {
+            return array();
+        }
+        
+        return $data;
+    }
+    
+    /**
+     * Returns an associative array of the request headers
+     * @return multitype:unknown
+     */
+    public function getRequestHeaders() 
+    {
+        $headers = array();
+        foreach($_SERVER as $key => $value) 
+        {
+            if (substr($key, 0, 5) <> 'HTTP_') 
+            {
+                continue;
+            }
+            
+            $header = str_replace(' ', '-', ucwords(str_replace('_', ' ', strtolower(substr($key, 5)))));
+            $headers[$header] = $value;
+        }
+        return $headers;
     }
     
     /**
