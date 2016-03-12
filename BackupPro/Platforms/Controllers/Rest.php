@@ -82,7 +82,8 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
             http_response_code(404);
             exit;
         }
-        
+
+        //verify request auth
         if(!$this->authenticate())
         {
             http_response_code(403);
@@ -91,7 +92,6 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
         
         $errors = $this->services['errors']->checkWorkingDirectory($this->settings['working_directory'])
             ->checkStorageLocations($this->settings['storage_details']);
-            //->licenseCheck($this->settings['license_number'], $this->services['license']);
         
         if ($errors->totalErrors() == '0') {
             $errors = $errors->checkBackupState($this->services['backups'], $this->settings);
@@ -103,19 +103,20 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
         $this->m62->setService('view_helpers', function ($c) {
             return $this->view_helper;
         });
-        
-        //verify request auth
     }
     
     /**
-     * Authenticates the requeset
-     * @todo implement ;)
+     * Authenticates the request
      * @return boolean
      */
     public function authenticate()
     {
+        $data = $this->getRequestHeaders();
         $hmac = $this->rest->getServer()->getHmac();
-        return $hmac->setData($this->getRequestHeaders())->setRoute('/fdsa')->setMethod($_SERVER['REQUEST_METHOD'])->auth($this->settings['api_key'], $this->settings['api_secret']);
+        return $hmac->setData($data)
+                    ->setRoute($this->platform->getPost('bp_method'))
+                    ->setMethod($_SERVER['REQUEST_METHOD'])
+                    ->auth($this->settings['api_key'], $this->settings['api_secret']);
     }
     
     /**
