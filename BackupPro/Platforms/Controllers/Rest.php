@@ -9,6 +9,7 @@
  */
 namespace mithra62\BackupPro\Platforms\Controllers;
 
+use mithra62\Platforms\Controllers\Rest AS m62Rest;
 use mithra62\BackupPro\Traits\Controller;
 use mithra62\BackupPro\Platforms\View\Rest as RestView;
 use Respect\Rest\Routable;
@@ -21,7 +22,7 @@ use Respect\Rest\Routable;
  * @package BackupPro\Controllers
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Rest implements Routable, \mithra62\BackupPro\BackupPro
+class Rest extends m62Rest implements Routable, \mithra62\BackupPro\BackupPro
 {
     use Controller;
 
@@ -106,54 +107,6 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
     }
     
     /**
-     * Authenticates the request
-     * @return boolean
-     */
-    public function authenticate()
-    {
-        $data = $this->getRequestHeaders();
-        $hmac = $this->rest->getServer()->getHmac();
-        return $hmac->setData($data)
-                    ->setRoute($this->platform->getPost('bp_method'))
-                    ->setMethod($_SERVER['REQUEST_METHOD'])
-                    ->auth($this->settings['api_key'], $this->settings['api_secret']);
-    }
-    
-    /**
-     * Returns the input data as an array
-     * @return array
-     */
-    public function getBodyData()
-    {
-        $data = json_decode(file_get_contents("php://input"), true);
-        if(!$data)
-        {
-            return array();
-        }
-        
-        return $data;
-    }
-    
-    /**
-     * Returns an associative array of the request headers
-     * @return multitype:unknown
-     */
-    public function getRequestHeaders() 
-    {
-        return \getallheaders();
-    }
-    
-    /**
-     * Handy little method to disable unused HTTP verb methods
-     *
-     * @return \ZF\ApiProblem\ApiProblemResponse
-     */
-    protected function methodNotAllowed()
-    {
-        return $this->view_helper->renderError(405, 'method_not_allowed');
-    }    
-    
-    /**
      * Validates the POST'd backup data and returns the clean array
      * @param array $delete_backups
      * @param string $type
@@ -167,7 +120,7 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
             echo $this->view_helper->renderError(422, 'unprocessable_entity', $error);
             exit;
         }
-        
+    
         $encrypt = $this->services['encrypt'];
         $backups = array();
          
@@ -186,7 +139,7 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
                     echo $this->view_helper->renderError(422, 'unprocessable_entity', $error);
                     exit;
                 }
-                
+    
                 $file_data = $this->services['backups']->getBackupStorageData($file_data, $locations, $drivers);
                 $backups[] = $file_data;
             }
@@ -200,126 +153,5 @@ class Rest implements Routable, \mithra62\BackupPro\BackupPro
         }
          
         return $backups;
-    }    
-    
-    /**
-     * Prepares the OPTIONS verb
-     * @param string $id
-     */
-    public function options($id = false)
-    {
-        return;
-        if ($id) {
-            echo 'fdsa';
-            $options = $this->resourceOptions;
-        } else {
-            $options = $this->collectionOptions;
-        }
-   
-        echo $id;
-        exit;
-        print_R($this->resourceOptions);
-        header('Allow: '. implode(',', $options));
-        exit;
     }
-    
-    /**
-     * (non-PHPdoc)
-     *
-     * @see \Zend\Mvc\Controller\AbstractRestfulController::create()
-     */
-    public function create($data)
-    {
-        return $this->methodNotAllowed();
-    }
-    
-    /**
-     * (non-PHPdoc)
-     *
-     * @see \Zend\Mvc\Controller\AbstractRestfulController::create()
-     */
-    public function post()
-    {
-        return $this->methodNotAllowed();
-    }
-    
-    /**
-     * (non-PHPdoc)
-     *
-     * @see \Zend\Mvc\Controller\AbstractRestfulController::delete()
-     */
-    public function delete($id = false)
-    {
-        return $this->methodNotAllowed();
-    }
-    
-    /**
-     * (non-PHPdoc)
-     *
-     * @see \Zend\Mvc\Controller\AbstractRestfulController::deleteList()
-     */
-    public function deleteList()
-    {
-        return $this->methodNotAllowed();
-    }
-    
-    /**
-     * (non-PHPdoc)
-     *
-     * @see \Zend\Mvc\Controller\AbstractRestfulController::get()
-     */
-    public function get($id = false)
-    {
-        return $this->methodNotAllowed();
-    }
-    
-    /**
-     * (non-PHPdoc)
-     *
-     * @see \Zend\Mvc\Controller\AbstractRestfulController::getList()
-     */
-    public function getList()
-    {
-        return $this->methodNotAllowed();
-    }
-    
-    /**
-     * (non-PHPdoc)
-     *
-     * @see \Zend\Mvc\Controller\AbstractRestfulController::head()
-     */
-    public function head($id = null)
-    {
-        return $this->methodNotAllowed();
-    }
-    
-    /**
-     * (non-PHPdoc)
-     *
-     * @see \Zend\Mvc\Controller\AbstractRestfulController::patch()
-     */
-    public function patch($id)
-    {
-        return $this->methodNotAllowed();
-    }
-    
-    /**
-     * (non-PHPdoc)
-     *
-     * @see \Zend\Mvc\Controller\AbstractRestfulController::patch()
-     */
-    public function put($id = false)
-    {
-        return $this->methodNotAllowed();
-    }
-    
-    /**
-     * (non-PHPdoc)
-     *
-     * @see \Zend\Mvc\Controller\AbstractRestfulController::update()
-     */
-    public function update($id, $data)
-    {
-        return $this->methodNotAllowed();
-    }    
 }
