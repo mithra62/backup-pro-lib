@@ -77,6 +77,12 @@ class Rest extends m62Rest implements Routable, \mithra62\BackupPro\BackupPro
         $this->m62->setDbConfig($this->platform->getDbCredentials());
         $this->settings = $this->services['settings']->get();
         
+        $this->view_helper = new RestView($this->services['lang'], $this->services['files'], $this->services['settings'], $this->services['encrypt'], $this->platform);
+        $this->view_helper->setSystemErrors($this->errors);
+        $this->m62->setService('view_helpers', function ($c) {
+            return $this->view_helper;
+        });
+        
         //is the API even on?!?
         if($this->settings['enable_rest_api'] !== '1')
         {
@@ -87,7 +93,8 @@ class Rest extends m62Rest implements Routable, \mithra62\BackupPro\BackupPro
         //verify request auth
         if(!$this->authenticate())
         {
-            http_response_code(403);
+            $error = array('errors' => array('Invalid authorization'));
+            echo $this->view_helper->renderError(403, 'Unauthorized', $error);            
             exit;
         }
         
@@ -99,11 +106,7 @@ class Rest extends m62Rest implements Routable, \mithra62\BackupPro\BackupPro
         }
         
         $this->errors = $errors->getErrors();
-        $this->view_helper = new RestView($this->services['lang'], $this->services['files'], $this->services['settings'], $this->services['encrypt'], $this->platform);
-        $this->view_helper->setSystemErrors($this->errors);
-        $this->m62->setService('view_helpers', function ($c) {
-            return $this->view_helper;
-        });
+
     }
     
     /**
