@@ -198,7 +198,7 @@ class Rest extends RestView implements BackupPro
             }
         }
         
-        $hal = $this->getHal($route, $data);
+        $hal = $this->getHal($route, $collection);
         foreach($resources AS $key => $item)
         {
             $hal = $this->prepareBackupResource($hal, $route, $item);
@@ -297,6 +297,13 @@ class Rest extends RestView implements BackupPro
         return $hal;
     }
     
+    /**
+     * Prepares the Hal object for a Storage Collection
+     * @param string $route
+     * @param array $collection
+     * @param array $resources
+     * @return \Nocarrier\Hal
+     */
     public function prepareStorageCollection($route, array $collection, array $resources = array())
     {
         foreach($collection AS $key => $value)
@@ -314,6 +321,13 @@ class Rest extends RestView implements BackupPro
         return $hal;
     }
     
+    /**
+     * Prepares the Hal object for a System Info Collection
+     * @param string $route
+     * @param array $collection
+     * @param array $resources
+     * @return \Nocarrier\Hal
+     */
     public function prepareSystemInfoCollection($route, array $collection, array $resources = array())
     {
         $hal = $this->getHal($route, $collection);

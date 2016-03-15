@@ -26,12 +26,29 @@ class Info extends RestController {
         switch($id)
         {
             case 'constants':
-               $this->phpConstants(); 
+               return $this->phpConstants(); 
             break;
+            
+            case 'site':
+                return $this->siteDetails();
+            break;
+            
             default: 
                 return $this->iniAll();
             break;
         }
+    }
+    
+    private function siteDetails()
+    {
+        $parts = explode('\\', get_class($this->platform));
+        $data = array(
+            'site_url' => $this->platform->getSiteUrl(),
+            'site_name' => $this->platform->getSiteName(),
+            'platform' => end($parts)
+        );
+        $hal = $this->view_helper->prepareSystemInfoCollection('/info/site', $data);
+        return $this->view_helper->renderOutput($hal);
     }
     
     private function iniAll()

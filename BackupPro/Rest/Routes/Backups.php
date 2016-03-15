@@ -63,22 +63,19 @@ class Backups extends RestController {
             if($this->platform->getPost('type') == 'db')
             {
                 $backups = $backups['database'];
-                $backup_meta = $backup_meta['database'];
             }
             else
             {
                 $backups = $backups['files'];
-                $backup_meta = $backup_meta['files'];
             }
         }
         else
         {
             $backups = $backups['database'] + $backups['files'];
-            $backup_meta = $backup_meta['global'];
         }
         
         krsort($backups, SORT_NUMERIC);
-        $backup_meta = $backup_meta + $available_space;
+        $backup_meta = array_merge($backup_meta, array('available_space' => $available_space));
         
         if($id)
         {
