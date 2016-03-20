@@ -55,8 +55,7 @@ class Cleanup
      * Removes the backups on the system so the total == $total for backup $type
      * 
      * @param string $total            
-     * @param string $type            
-     * @return void|boolean
+     * @param string $type    
      * @return \mithra62\BackupPro\Backup\Cleanup
      */
     public function counts($total = '0', $type = 'database')

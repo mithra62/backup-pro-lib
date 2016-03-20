@@ -136,7 +136,7 @@ class Settings extends m62Settings
     protected $encrypted = array(
         'storage_details',
         'api_key' => '',
-        'api_secret' => '',
+        'api_secret' => ''        
     );
 
     /**

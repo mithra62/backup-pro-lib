@@ -118,7 +118,7 @@ class SettingsTest extends TestFixture
         $this->assertObjectHasAttribute('auto_prune_threshold_options', $settings);
         
         $this->assertTrue(is_array($settings->getDefaults()));
-        $this->assertCount(65, $settings->getDefaults());
+        $this->assertCount(69, $settings->getDefaults());
         
         $this->assertTrue(is_array($settings->getCustomOptions()));
         $this->assertCount(1, $settings->getCustomOptions());
@@ -127,7 +127,7 @@ class SettingsTest extends TestFixture
         $this->assertCount(0, $settings->getOverrides());
         
         $this->assertTrue(is_array($settings->getEncrypted()));
-        $this->assertCount(1, $settings->getEncrypted());
+        $this->assertCount(3, $settings->getEncrypted());
         
         $this->assertTrue($settings->getTable() == $this->expected_settings_table);
     }

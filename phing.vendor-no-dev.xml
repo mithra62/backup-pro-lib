@@ -38,6 +38,13 @@
 				<include name="**"></include>
 			</fileset>
 		</copy>	
+		
+		<echo msg="(${platform_name}) Copying Crell API Problem Files..." />
+		<copy todir="${vendor_path}/crell/api-problem/src">
+		<fileset dir="../mithra62-lib/vendor/crell/api-problem/src">
+			<include name="**"></include>
+		</fileset>
+		</copy>	
 					
         <echo msg="(${platform_name}) Copying Dropbox Files..." />
 		<copy todir="${vendor_path}/dropbox/dropbox-sdk/lib/Dropbox">
@@ -88,18 +95,25 @@
 			</fileset>
 		</copy>	
 					
-        <echo msg="(${platform_name}) Copying Force UFT8 Files..." />
+        <echo msg="(${platform_name}) Copying Neitanod Force UFT8 Files..." />
 		<copy todir="${vendor_path}/neitanod/forceutf8/src/ForceUTF8">
 			<fileset dir="../mithra62-lib/vendor/neitanod/forceutf8/src/ForceUTF8">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
 					
-        <echo msg="(${platform_name}) Copying Carbon Files..." />
+        <echo msg="(${platform_name}) Copying Nesbot Carbon Files..." />
 		<copy todir="${vendor_path}/nesbot/carbon/src/Carbon">
 			<fileset dir="../mithra62-lib/vendor/nesbot/carbon/src/Carbon">
 				<include name="**"></include>
 			</fileset>
+		</copy>	
+		
+		<echo msg="(${platform_name}) Copying Nocarrier Hal Files..." />
+		<copy todir="${vendor_path}/nocarrier/hal/src">
+		<fileset dir="../mithra62-lib/vendor/nocarrier/hal/src">
+			<include name="**"></include>
+		</fileset>
 		</copy>	
 					
         <echo msg="(${platform_name}) Copying Phine Files..." />
@@ -136,6 +150,13 @@
 			<include name="**"></include>
 		</fileset>
 		</copy>	
+		
+		<echo msg="(${platform_name}) Copying PhilipBrown Signature Files..." />
+		<copy todir="${vendor_path}/philipbrown/signature-php/src">
+		<fileset dir="../mithra62-lib/vendor/philipbrown/signature-php/src">
+			<include name="**"></include>
+		</fileset>
+		</copy>	
 					
         <echo msg="(${platform_name}) Copying PSR Files..." />
 		<copy todir="${vendor_path}/psr/log/Psr/Log">
@@ -168,6 +189,13 @@
 		<echo msg="(${platform_name}) Copying Relative Time Files..." />
 		<copy todir="${vendor_path}/mpratt/relativetime/Lib/RelativeTime">
 			<fileset dir="../mithra62-lib/vendor/mpratt/relativetime/Lib/RelativeTime">
+				<include name="**"></include>
+			</fileset>
+		</copy>
+		
+		<echo msg="(${platform_name}) Copying Respect Rest Files..." />
+		<copy todir="${vendor_path}/respect/rest/library">
+			<fileset dir="../mithra62-lib/vendor/respect/rest/library">
 				<include name="**"></include>
 			</fileset>
 		</copy>
