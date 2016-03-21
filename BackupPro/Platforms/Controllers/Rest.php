@@ -77,6 +77,15 @@ class Rest extends m62Rest implements Routable, \mithra62\BackupPro\BackupPro
         $this->m62->setDbConfig($this->platform->getDbCredentials());
         $this->settings = $this->services['settings']->get();
         
+        $errors = $this->services['errors']->checkWorkingDirectory($this->settings['working_directory'])
+        ->checkStorageLocations($this->settings['storage_details']);
+        
+        if ($errors->totalErrors() == '0') {
+            $errors = $errors->checkBackupState($this->services['backups'], $this->settings);
+        }
+        
+        $this->errors = $errors->getErrors();
+        
         $this->view_helper = new RestView($this->services['lang'], $this->services['files'], $this->services['settings'], $this->services['encrypt'], $this->platform);
         $this->view_helper->setSystemErrors($this->errors);
         $this->m62->setService('view_helpers', function ($c) {
@@ -98,14 +107,7 @@ class Rest extends m62Rest implements Routable, \mithra62\BackupPro\BackupPro
             exit;
         }
         
-        $errors = $this->services['errors']->checkWorkingDirectory($this->settings['working_directory'])
-            ->checkStorageLocations($this->settings['storage_details']);
-        
-        if ($errors->totalErrors() == '0') {
-            $errors = $errors->checkBackupState($this->services['backups'], $this->settings);
-        }
-        
-        $this->errors = $errors->getErrors();
+
 
     }
     

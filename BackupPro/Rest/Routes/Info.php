@@ -41,11 +41,21 @@ class Info extends RestController {
     
     private function siteDetails()
     {
+        
+        $backup = $this->services['backups'];
+        $backups = $backup->setBackupPath($this->settings['working_directory'])->getAllBackups($this->settings['storage_details']);
+        $available_space = $backup->getAvailableSpace($this->settings['auto_threshold'], $backups);
+        $backup_meta = $backup->getBackupMeta($backups);
+        
         $parts = explode('\\', get_class($this->platform));
         $data = array(
             'site_url' => $this->platform->getSiteUrl(),
             'site_name' => $this->platform->getSiteName(),
-            'platform' => end($parts)
+            'platform' => end($parts),
+            'file_backup_total' => count($backups['files']),
+            'database_backup_total' => count($backups['database']),
+            'first_backup' => date('Y-m-d H:i:s', $backup_meta['global']['oldest_backup_taken_raw']),
+            'last_backup' => date('Y-m-d H:i:s', $backup_meta['global']['newest_backup_taken_raw'])
         );
         $hal = $this->view_helper->prepareSystemInfoCollection('/info/site', $data);
         return $this->view_helper->renderOutput($hal);
