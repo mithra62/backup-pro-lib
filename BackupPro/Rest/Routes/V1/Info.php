@@ -5,10 +5,10 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Rest/Routes/Info.php
+ * @filesource 	./mithra62/BackupPro/Rest/Routes/V1/Info.php
  */
  
-namespace mithra62\BackupPro\Rest\Routes;
+namespace mithra62\BackupPro\Rest\Routes\V1;
 use mithra62\BackupPro\Platforms\Controllers\Rest AS RestController;
 
 /**
