@@ -23,7 +23,7 @@ use Respect\Rest\Router;
  */
 class Server extends AbstractServer
 {
-    protected $api_versions = array('1','1.1', '2');
+    protected $api_versions = array('1');
     
     /**
      * (non-PHPdoc)
