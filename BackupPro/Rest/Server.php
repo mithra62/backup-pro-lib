@@ -23,6 +23,10 @@ use Respect\Rest\Router;
  */
 class Server extends AbstractServer
 {
+    /**
+     * The available versions our API supports
+     * @var array
+     */
     protected $api_versions = array('1');
     
     /**
@@ -31,6 +35,7 @@ class Server extends AbstractServer
      */
     public function run()
     {
+        //determine the version
         $headers = \getallheaders();
         if(isset($headers['m62_bp_version']) && is_numeric($headers['m62_bp_version']) && in_array($headers['m62_bp_version'], $this->api_versions)) 
         {
@@ -41,6 +46,8 @@ class Server extends AbstractServer
             $version = 'V1';
         }
         
+        
+        //now define the routes
         $r3 = new Router('/backup_pro/api');
         $r3->any('/backups/*', 'mithra62\BackupPro\Rest\Routes\\'.$version.'\Backups', array($this->platform, $this->rest));
         $r3->any('/settings/*', 'mithra62\BackupPro\Rest\Routes\\'.$version.'\Settings', array($this->platform, $this->rest));
