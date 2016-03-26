@@ -46,7 +46,6 @@ class Info extends RestController {
         $backups = $backup->setBackupPath($this->settings['working_directory'])->getAllBackups($this->settings['storage_details']);
         $available_space = $backup->getAvailableSpace($this->settings['auto_threshold'], $backups);
         $backup_meta = $backup->getBackupMeta($backups);
-        
         $parts = explode('\\', get_class($this->platform));
         $data = array(
             'site_url' => $this->platform->getSiteUrl(),
@@ -54,6 +53,7 @@ class Info extends RestController {
             'platform' => end($parts),
             'file_backup_total' => count($backups['files']),
             'database_backup_total' => count($backups['database']),
+            'backup_prevention_errors' => $this->backupPreventionErrors(),
             'first_backup' => ($backup_meta['global']['oldest_backup_taken_raw'] != '' ? date('Y-m-d H:i:s', $backup_meta['global']['oldest_backup_taken_raw']) : ''),
             'last_backup' => ($backup_meta['global']['newest_backup_taken_raw'] != '' ? date('Y-m-d H:i:s', $backup_meta['global']['newest_backup_taken_raw']) : '')
         );
@@ -76,5 +76,19 @@ class Info extends RestController {
         //exit;
         $hal = $this->view_helper->prepareSystemInfoCollection('/info', $data);
         return $this->view_helper->renderOutput($hal);
+    }
+    
+    private function backupPreventionErrors()
+    {
+        $errors = $this->services['errors']->clearErrors()->checkWorkingDirectory($this->settings['working_directory'])
+                                            ->checkStorageLocations($this->settings['storage_details'])
+                                            ->checkFileBackupLocations($this->settings['backup_file_location'])
+                                            ->getErrors();
+        
+        foreach($errors As $key => $value) {
+            $errors[$key] = $this->services['lang']->__($value);
+        }
+        
+        return $errors;
     }
 }
