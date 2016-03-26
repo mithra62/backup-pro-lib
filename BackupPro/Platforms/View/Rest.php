@@ -337,4 +337,21 @@ class Rest extends RestView implements BackupPro
         }
         return $hal;
     }
+    
+    /**
+     * Prepares teh Hal object for a Validation Error Collection
+     * @param string $route
+     * @param array $collection
+     * @param array $resources
+     * @return \Nocarrier\Hal
+     */
+    public function prepareValidateCollection($route, array $collection, array $resources = array())
+    {
+        $hal = $this->getHal($route, array('total_failures' => count($collection), 'failures' => $collection));
+        foreach($resources AS $key => $item)
+        {
+            $hal = $this->prepareBackupResource($hal, $route, $item);
+        }
+        return $hal;
+    }
 }

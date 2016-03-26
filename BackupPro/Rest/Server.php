@@ -53,5 +53,6 @@ class Server extends AbstractServer
         $r3->any('/settings/*', 'mithra62\BackupPro\Rest\Routes\\'.$version.'\Settings', array($this->platform, $this->rest));
         $r3->any('/storage/*', 'mithra62\BackupPro\Rest\Routes\\'.$version.'\Storage', array($this->platform, $this->rest));
         $r3->any('/info/*', 'mithra62\BackupPro\Rest\Routes\\'.$version.'\Info', array($this->platform, $this->rest));
+        $r3->any('/validate/*', 'mithra62\BackupPro\Rest\Routes\\'.$version.'\Validate', array($this->platform, $this->rest));
     }
 }
