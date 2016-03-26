@@ -37,7 +37,7 @@ $lang = array(
     'db_backup_alert_threshold_instructions' => 'How many days are backups supposed to be ran? If a bacukp hasn\'t been ran in as many days as set here a notification will be sent alerting the system administrators. Enter 0 to disable.',
     
     'db_backup_past_expectation' => 'A database backup hasn\'t happened in %1$s! You should take a <a href="%2$s">database backup</a> ASAP to ensure system stability. ',
-    'files_backup_past_expectation' => 'A file backup hasn\'t happened in %1$s! You should take a <a href="%2$s">file backup</a> ASAP to ensure system stability. ',
+    'file_backup_past_expectation' => 'A file backup hasn\'t happened in %1$s! You should take a <a href="%2$s">file backup</a> ASAP to ensure system stability. ',
     'db_backup_past_expectation_stub' => '',
     'file_backup_past_expectation_stub' => '',
     'php_backup_method_select_chunk_limit' => 'SELECT Chunk Limit',
