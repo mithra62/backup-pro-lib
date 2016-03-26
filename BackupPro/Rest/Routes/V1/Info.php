@@ -54,10 +54,11 @@ class Info extends RestController {
             'platform' => end($parts),
             'file_backup_total' => count($backups['files']),
             'database_backup_total' => count($backups['database']),
-            'first_backup' => date('Y-m-d H:i:s', $backup_meta['global']['oldest_backup_taken_raw']),
-            'last_backup' => date('Y-m-d H:i:s', $backup_meta['global']['newest_backup_taken_raw'])
+            'first_backup' => ($backup_meta['global']['oldest_backup_taken_raw'] != '' ? date('Y-m-d H:i:s', $backup_meta['global']['oldest_backup_taken_raw']) : ''),
+            'last_backup' => ($backup_meta['global']['newest_backup_taken_raw'] != '' ? date('Y-m-d H:i:s', $backup_meta['global']['newest_backup_taken_raw']) : '')
         );
         $hal = $this->view_helper->prepareSystemInfoCollection('/info/site', $data);
+        
         return $this->view_helper->renderOutput($hal);
     }
     
