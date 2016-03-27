@@ -25,18 +25,25 @@ class Info extends RestController {
     {
         switch($id)
         {
-            case 'constants':
-               return $this->phpConstants(); 
+            case 'options':
+                return $this->settingsOptions();
             break;
             
             case 'site':
                 return $this->siteDetails();
             break;
             
-            default: 
+            case 'ini':
                 return $this->iniAll();
             break;
         }
+        
+        return $this->view_helper->renderError(404, 'not_found');
+    }
+    
+    private function settingsOptions()
+    {
+        
     }
     
     private function siteDetails()
@@ -65,15 +72,6 @@ class Info extends RestController {
     private function iniAll()
     {
         $data = ini_get_all();
-        $hal = $this->view_helper->prepareSystemInfoCollection('/info', $data);
-        return $this->view_helper->renderOutput($hal);
-    }
-    
-    private function phpConstants()
-    {
-        $data = get_defined_constants();
-        print_r($data);
-        //exit;
         $hal = $this->view_helper->prepareSystemInfoCollection('/info', $data);
         return $this->view_helper->renderOutput($hal);
     }

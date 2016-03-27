@@ -46,7 +46,6 @@ class Server extends AbstractServer
             $version = 'V1';
         }
         
-        
         //now define the routes
         $r3 = new Router('/backup_pro/api');
         $r3->any('/backups/*', 'mithra62\BackupPro\Rest\Routes\\'.$version.'\Backups', array($this->platform, $this->rest));

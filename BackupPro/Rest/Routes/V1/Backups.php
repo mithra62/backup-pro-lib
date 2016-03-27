@@ -164,7 +164,8 @@ class Backups extends RestController {
      */
     public function post()
     {
-        $backup_type = $this->platform->getPost('type', 'database');
+        $data = $this->getBodyData();
+        $backup_type = (isset($data['type']) ? $data['type'] : 'database');
         
         switch($backup_type)
         {
