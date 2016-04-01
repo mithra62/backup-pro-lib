@@ -398,6 +398,7 @@ abstract class General extends TestFixture
         $page->findById('relative_time')->uncheck();
         $page->findButton('m62_settings_submit')->submit();
         
+        sleep(90);
         $this->assertNotTrue($this->session->getPage()
             ->findById('relative_time')
             ->isChecked());

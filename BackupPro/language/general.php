@@ -204,7 +204,7 @@ $lang = array(
     'settings_breadcrumb_files' => 'File Backup',
     'settings_breadcrumb_cron' => 'Cron Backup',
     'settings_breadcrumb_integrity_agent' => 'Integrity Agent',
-    'settings_breadcrumb_api' => 'Rest AP',
+    'settings_breadcrumb_api' => 'Rest API',
     'settings_breadcrumb_license' => 'License Details',
     'settings_breadcrumb_storage' => 'Storage Locations',
     

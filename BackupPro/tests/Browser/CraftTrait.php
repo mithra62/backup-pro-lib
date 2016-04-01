@@ -183,7 +183,7 @@ trait CraftTrait
         sleep(2);
         $page = $this->session->getPage();
         
-        $form = $page->find('xpath', '/body/div/main/div/div/div/table/tbody/tr/td[3]/form/input[2]')->click();
+        $form = $page->find('xpath', '/body/div/main/div/div/div/div/table/tbody/tr/td[3]/form/input[2]')->click();
     }
 
     /**
@@ -194,7 +194,7 @@ trait CraftTrait
         $this->session->visit('http://eric.craft.clean.mithra62.com/admin/settings/plugins');
         sleep(2);
         $page = $this->session->getPage();
-        $form = $page->find('xpath', '/body/div/main/div/div/div/table/tbody/tr/td[3]/form/input[2]')->click();
+        $form = $page->find('xpath', '/body/div/main/div/div/div/div/table/tbody/tr/td[3]/form/input[2]')->click();
         
         $db = new Db();
         $creds = $this->getDbCreds();
