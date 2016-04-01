@@ -221,6 +221,8 @@ abstract class DbBackup extends TestFixture
         $this->session->visit($this->url('settings_db'));
         $page = $this->session->getPage();
         $page->findById('db_backup_method')->selectOption('php');
+        
+        sleep(1);
         $page->findById('php_backup_method_select_chunk_limit')->setValue('');
         $page->findButton('m62_settings_submit')->submit();
         
@@ -239,6 +241,8 @@ abstract class DbBackup extends TestFixture
         $this->session->visit($this->url('settings_db'));
         $page = $this->session->getPage();
         $page->findById('db_backup_method')->selectOption('php');
+        
+        sleep(1);
         $page->findById('php_backup_method_select_chunk_limit')->setValue('fdsafdsa');
         $page->findButton('m62_settings_submit')->submit();
         
@@ -257,6 +261,8 @@ abstract class DbBackup extends TestFixture
         $this->session->visit($this->url('settings_db'));
         $page = $this->session->getPage();
         $page->findById('db_backup_method')->selectOption('php');
+        
+        sleep(1);
         $page->findById('php_backup_method_select_chunk_limit')->setValue(300);
         $page->findButton('m62_settings_submit')->submit();
         
