@@ -43,7 +43,13 @@ class Info extends RestController {
     
     private function settingsOptions()
     {
+        $options = array(
+            'db_tables' => $this->services['db']->getTables(),
+            'backup_cron_commands' => $this->platform->getBackupCronCommands($this->settings),
+        );
         
+        $hal = $this->view_helper->prepareSystemInfoCollection('/info/options', $options);
+        return $this->view_helper->renderOutput($hal);
     }
     
     private function siteDetails()
