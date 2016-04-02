@@ -46,6 +46,10 @@ class Info extends RestController {
         $options = array(
             'db_tables' => $this->services['db']->getTables(),
             'backup_cron_commands' => $this->platform->getBackupCronCommands($this->settings),
+            'ia_cron_commands' => $this->platform->getIaCronCommands($this->settings),
+            'rest_api_route_entry' => $this->platform->getRestApiRouteEntry($this->settings),
+            'threshold_options' => $this->services['settings']->getAutoPruneThresholdOptions(),
+            'available_db_backup_engines' => $this->services['backup']->getDataBase()->getAvailableEnginesOptions()
         );
         
         $hal = $this->view_helper->prepareSystemInfoCollection('/info/options', $options);
