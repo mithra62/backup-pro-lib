@@ -330,12 +330,7 @@ class Rest extends RestView implements BackupPro
      */
     public function prepareSystemInfoCollection($route, array $collection, array $resources = array())
     {
-        $hal = $this->getHal($route, $collection);
-        foreach($resources AS $key => $item)
-        {
-            $hal = $this->prepareBackupResource($hal, $route, $item);
-        }
-        return $hal;
+        return $this->getHal($route, $collection);
     }
     
     /**
