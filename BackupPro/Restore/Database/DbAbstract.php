@@ -38,6 +38,13 @@ abstract class DbAbstract implements DbInterface
      * @var string
      */
     protected $short_name = '';
+    
+    /**
+     * A description of the Database Restore Engine
+     *
+     * @var string
+     */
+    protected $desc = null;
 
     /**
      * The Database connection details
@@ -145,6 +152,20 @@ abstract class DbAbstract implements DbInterface
         }
         
         return (in_array($engine, $this->getAllowedBackupTypes()));
+    }
+
+    /**
+     * (non-PHPdoc)
+     * 
+     * @see \mithra62\BackupPro\Backup\Database\DbInterface::getEngineDetails()
+     */
+    public function getEngineDetails()
+    {
+        return array(
+            'name' => $this->getName(),
+            'short_name' => $this->getShortName(),
+            'desc' => $this->getDescription()
+        );
     }
 
     /**

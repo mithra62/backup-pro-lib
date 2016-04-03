@@ -33,6 +33,20 @@ interface DbInterface
     public function restore($database, $restore_file);
 
     /**
+     * Sets the parent interface for use in processing
+     * 
+     * @param \mithra62\BackupPro\Restore\Database $context            
+     */
+    public function setContext(\mithra62\BackupPro\Restore\Database $context);
+
+    /**
+     * Should return an array with the details for the Driver
+     * 
+     * @return array
+     */
+    public function getEngineDetails();
+
+    /**
      * Should return the short name for the driver
      * 
      * @return string
