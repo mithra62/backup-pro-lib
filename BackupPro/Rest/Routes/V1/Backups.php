@@ -95,23 +95,24 @@ class Backups extends RestController {
      */
     public function delete($id = false) 
     { 
-        $id = $this->platform->getPost('id');
-        $backup_type = $this->platform->getPost('type');
+        $data = $this->getBodyData();
+        $id = (isset($data['id']) ? $data['id'] : $this->platform->getPost('id'));
+        $backup_type = (isset($data['type']) ? $data['type'] : $this->platform->getPost('type'));
         
         //ensure params
         if(!$id)
         {
-            $error = array('\'id\' must be defined in the query string...');
+            $error = array('\'id\' must be defined in the query string or an array in body json...');
             return $this->view_helper->renderError(422, 'unprocessable_entity', $error);
         }
         
         if(!$backup_type){
-            $error = array('\'type\' must be defined in the query string...');
+            $error = array('\'type\' must be defined in the query string or in the body json...');
             return $this->view_helper->renderError(422, 'unprocessable_entity', $error);
         }   
         
         try {
-            $delete_backups = array($id);
+            $delete_backups = (!is_array($id) ? array($id) : $id);
             $backups = $this->validateBackups($delete_backups, $backup_type);
         }
         catch (\mithra62\BackupPro\Exceptions\Backup\DetailsException $e) { 
@@ -119,6 +120,7 @@ class Backups extends RestController {
         }
         
         $this->services['backups']->setBackupPath($this->settings['working_directory'])->removeBackups($backups);
+        return $this->get();
     }
     
     /**

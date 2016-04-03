@@ -125,15 +125,12 @@ class Rest extends m62Rest implements Routable, \mithra62\BackupPro\BackupPro
             echo $this->view_helper->renderError(422, 'unprocessable_entity', $error);
             exit;
         }
-    
-        $encrypt = $this->services['encrypt'];
+        
         $backups = array();
-         
         $locations = $this->settings['storage_details'];
         $drivers = $this->services['backup']->getStorage()->getAvailableStorageDrivers();
         foreach($delete_backups AS $file_name)
         {
-            $file_name = $encrypt->decode($file_name);
             if( $file_name != '' )
             {
                 $path = rtrim($this->settings['working_directory'], DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$type;
@@ -149,7 +146,7 @@ class Rest extends m62Rest implements Routable, \mithra62\BackupPro\BackupPro
                 $backups[] = $file_data;
             }
         }
-         
+        
         if(count($backups) == 0)
         {
             $error = array('errors' => array('No valid backups sent...'));
