@@ -98,6 +98,7 @@ class Progress
      */
     public function writeLog($msg, $total_items = 0, $item_number = 0)
     {
+        return;
         if ($item_number > $total_items) {
             $item_number = $total_items;
         }
