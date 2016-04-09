@@ -105,36 +105,6 @@ class Settings extends Validate
     }
 
     /**
-     * Validates the backup store location rules
-     * 
-     * @return \mithra62\BackupPro\Validate\Settings
-     */
-    public function workingDirectory($path)
-    {
-        // ensure we don't have a local storage location setup for this path already
-        $existing_settings = $this->getExistingSettings();
-        if (! empty($existing_settings['storage_details']) && is_array($existing_settings['storage_details'])) {
-            foreach ($existing_settings['storage_details'] as $key => $value) {
-                if ($value['storage_location_driver'] == 'local' && $value['backup_store_location'] == $path) {
-                    $this->rule('false', 'working_directory')->message('{field} can\'t be set as a Local Storage path');
-                    break;
-                }
-            }
-        }
-        
-        if ($existing_settings['working_directory'] != $path) {
-            $this->rule('dir_empty', 'working_directory')->message('{field} has to be an empty directory');
-        }
-        
-        $this->rule('required', 'working_directory')->message('{field} is required');
-        $this->rule('writable', 'working_directory')->message('{field} has to be writable');
-        $this->rule('dir', 'working_directory')->message('{field} has to be a directory');
-        $this->rule('readable', 'working_directory')->message('{field} has to be readable');
-        
-        return $this;
-    }
-
-    /**
      * Validates the date format rules
      * 
      * @return \mithra62\BackupPro\Validate\Settings
@@ -142,46 +112,6 @@ class Settings extends Validate
     public function dateFormat()
     {
         $this->rule('required', 'date_format')->message('{field} is required');
-        return $this;
-    }
-
-    /**
-     * Validates the Dashboard Recent Total setting value
-     * 
-     * @return \mithra62\BackupPro\Validate\Settings
-     */
-    public function dashboardRecentTotal()
-    {
-        $this->rule('required', 'dashboard_recent_total')->message('{field} is required');
-        $this->rule('min', 'dashboard_recent_total', '1')->message('{field} must be a number greater than 1');
-        return $this;
-    }
-
-    /**
-     * Validates the Auto Theshold setting value
-     * 
-     * @param array $data
-     *            The form data
-     * @return \mithra62\BackupPro\Validate\Settings
-     */
-    public function autoThreshold(array $data)
-    {
-        $this->rule('required', 'auto_threshold')->message('{field} is required');
-        if (! empty($data['auto_threshold']) && $data['auto_threshold'] == 'custom') {
-            $this->rule('required', 'auto_threshold_custom')->message('{field} is required');
-            $this->rule('numeric', 'auto_threshold_custom')->message('{field} must be a number');
-            
-            if ($data['meta']['global']['total_space_used_raw'] > 100000000) {
-                $this->rule('min', 'auto_threshold_custom', $data['meta']['global']['total_space_used_raw'])->message('You\'re already using ' . $data['meta']['global']['total_space_used'] . ' so {field} must be at least "' . $data['meta']['global']['total_space_used_raw'] . '"');
-            } else {
-                $this->rule('min', 'auto_threshold_custom', 100000000)->message('{field} must be at least 100MB (100000000)');
-            }
-        } else {
-            if ($data['auto_threshold'] != '0') {
-                $this->rule('numeric', 'auto_threshold')->message('{field} must be a number');
-                $this->rule('min', 'auto_threshold', $data['meta']['global']['total_space_used_raw'])->message('You\'re already using ' . $data['meta']['global']['total_space_used'] . ' so {field} must be at least that or a custom value over "' . $data['meta']['global']['total_space_used_raw'] . '"');
-            }
-        }
         return $this;
     }
 
@@ -567,16 +497,34 @@ class Settings extends Validate
      */
     public function check(array $data, array $extra = array())
     {
-        if (isset($data['working_directory'])) {
-            $this->workingDirectory($data['working_directory']);
+        $fields = scandir(__DIR__.DIRECTORY_SEPARATOR.'Settings');
+        $rules = array();
+        if($fields) {
+            foreach($fields AS $field)
+            {
+                if($field == '.' || $field == '..') {
+                    continue;
+                }
+                
+                $name = '\\mithra62\\BackupPro\\Validate\\Settings\\' . str_replace('/', '\\', str_replace('.php', '', $field));
+                $class = $name;
+                if (class_exists($class)) {
+                    $rule = new $class($data, $extra);
+                    if ($rule instanceof AbstractField) {
+                        $val = $rule->setContext($this)->getRules();
+                        if(is_array($val)) {
+                            $rules = array_merge($rules, $val);
+                        }
+                    }
+                }   
+            }
         }
         
-        if (isset($data['dashboard_recent_total'])) {
-            $this->dashboardRecentTotal();
-        }
-        
-        if (isset($data['auto_threshold'])) {
-            $this->autoThreshold($data);
+        if($rules) {
+            foreach($rules AS $rule) 
+            {
+                $this->rule($rule['rule_name'], $rule['rule_field'], (isset($rule['rule_value']) ? $rule['rule_value'] : false))->message($rule['rule_message']);
+            }
         }
         
         if (isset($data['date_format'])) {
