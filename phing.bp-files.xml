@@ -7,6 +7,7 @@
 			<fileset dir="../mithra62-lib/mithra62">
 				<include name="**"></include>
 				<exclude name="**/BackupPro/**"></exclude>
+				<exclude name="**/ExportIt**"></exclude>
 				<exclude name="**.phar**"></exclude>
 				<exclude name="**/docs/**"></exclude>
 				<exclude name="**/tests**"></exclude>

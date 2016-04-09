@@ -88,8 +88,7 @@ class Concrete5Admin extends DashboardPageController
             $vars['pageTitle'] = 'Backup Pro - '.$vars['pageTitle'];
         }
         
-        $this->set('view_helper', $this->view_helper->setPartialsPath(\Config::get('backup_pro.partial_path'))
-                                                    ->setStaticAssetsUrlBase(\Config::get('backup_pro.static_assets.url_base')));
+        $this->set('view_helper', $this->view_helper);
         $this->set('bp_errors', $this->bp_errors);
         $this->set('bp_static_path', '/packages/backup_pro/assets');
         //$this->set('__note_url', $this->url('/dashboard/backup_pro/manage/update_backup_note'));
