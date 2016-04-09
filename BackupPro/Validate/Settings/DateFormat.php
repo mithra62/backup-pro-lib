@@ -19,13 +19,13 @@ use mithra62\BackupPro\Validate\AbstractField;
  * @package BackupPro\Validate
  * @author Eric Lamb <eric@mithra62.com>
  */
-class DashboardRecentTotal extends AbstractField
+class DateFormat extends AbstractField
 {
     /**
      * The name of the field
      * @var string
      */
-    protected $field_name = 'dashboard_recent_total';
+    protected $field_name = 'date_format';
     
     /**
      * (non-PHPdoc)
@@ -34,7 +34,6 @@ class DashboardRecentTotal extends AbstractField
     public function compileRules()
     {
         $this->setupRule('required', '{field} is required');
-        $this->setupRule('min', '{field} must be a number greater than 1', 1);
         return $this;
     }
 }

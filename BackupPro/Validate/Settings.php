@@ -105,24 +105,6 @@ class Settings extends Validate
     }
 
     /**
-     * Validates the date format rules
-     * 
-     * @return \mithra62\BackupPro\Validate\Settings
-     */
-    public function dateFormat()
-    {
-        $this->rule('required', 'date_format')->message('{field} is required');
-        return $this;
-    }
-
-    public function cronQueryKey($string)
-    {
-        $this->rule('required', 'cron_query_key')->message('{field} is required');
-        $this->rule('alphanum', 'cron_query_key')->message('{field} must be alpha-numeric only');
-        return $this;
-    }
-
-    /**
      * Validates the database backup method setting value
      * 
      * @param array $data
@@ -530,18 +512,6 @@ class Settings extends Validate
             }
         }
         
-        if (isset($data['date_format'])) {
-            $this->dateFormat();
-        }
-        
-        if (isset($data['ftp_hostname'])) {
-            $this->ftpConnectionInfo($data);
-        }
-        
-        if (isset($data['s3_access_key'])) {
-            $this->s3ConnectionInfo($data);
-        }
-        
         if (isset($data['backup_file_location'])) {
             $this->backupFileLocation($data['backup_file_location']);
         }
@@ -612,10 +582,6 @@ class Settings extends Validate
         
         if (isset($data['db_verification_db_name'])) {
             $this->dbVerificationDbName($data['db_verification_db_name'], $extra['db_creds']);
-        }
-        
-        if (isset($data['cron_query_key'])) {
-            $this->cronQueryKey($data['cron_query_key']);
         }
         
         if (isset($data['php_backup_method_select_chunk_limit'])) {
