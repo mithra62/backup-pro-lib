@@ -22,58 +22,40 @@ use mithra62\BackupPro\Validate\AbstractField;
 class WorkingDirectory extends AbstractField
 {
     /**
+     * The name of the field
+     * @var string
+     */
+    protected $field_name = 'working_directory';
+    
+    /**
      * (non-PHPdoc)
      * @see \mithra62\BackupPro\Validate\AbstractField::compileRules()
      */
     public function compileRules()
     {
+        $data = $this->getData();
         $path = $data['working_directory'];
-        $rules = array();
         
         // ensure we don't have a local storage location setup for this path already
         $existing_settings = $this->getContext()->getExistingSettings();
         if (! empty($existing_settings['storage_details']) && is_array($existing_settings['storage_details'])) {
             foreach ($existing_settings['storage_details'] as $key => $value) {
                 if ($value['storage_location_driver'] == 'local' && $value['backup_store_location'] == $path) {
-                    $rules[] = array(
-                        'rule_name' => 'false',
-                        'rule_field' => 'working_directory',
-                        'rule_message' => '{field} can\'t be set as a Local Storage path'
-                    );
+                    $this->setupRule('false', '{field} can\'t be set as a Local Storage path');
                     break;
                 }
             }
         }
         
         if ($existing_settings['working_directory'] != $path) {
-            $rules[] = array(
-                'rule_name' => 'dir_empty',
-                'rule_field' => 'working_directory',
-                'rule_message' => '{field} has to be an empty directory'
-            );
+            $this->setupRule('dir_empty', '{field} has to be an empty directory');
+            
         }
+        $this->setupRule('required', '{field} is required');
+        $this->setupRule('writable', '{field} has to be writable');
+        $this->setupRule('dir', '{field} has to be a directory');
+        $this->setupRule('readable', '{field} has to be readable');
         
-        $rules[] = array(
-            'rule_name' => 'required',
-            'rule_field' => 'working_directory',
-            'rule_message' => '{field} is required'
-        );
-        $rules[] = array(
-            'rule_name' => 'writable',
-            'rule_field' => 'working_directory',
-            'rule_message' => '{field} has to be writable'
-        );
-        $rules[] = array(
-            'rule_name' => 'dir',
-            'rule_field' => 'working_directory',
-            'rule_message' => '{field} has to be a directory'
-        );
-        $rules[] = array(
-            'rule_name' => 'readable',
-            'rule_field' => 'working_directory',
-            'rule_message' => '{field} has to be readable'
-        );
-        
-        return $rules;
+        return $this;
     }
 }

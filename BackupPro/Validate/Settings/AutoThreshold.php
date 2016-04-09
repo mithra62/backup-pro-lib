@@ -21,6 +21,10 @@ use mithra62\BackupPro\Validate\AbstractField;
  */
 class AutoThreshold extends AbstractField
 {
+    /**
+     * The name of the field
+     * @var string
+     */
     protected $field_name = 'auto_threshold';
     
     /**
@@ -29,6 +33,7 @@ class AutoThreshold extends AbstractField
      */
     public function compileRules()
     {
+        $data = $this->getData();
         $this->setupRule('required', '{field} is required');
         if (! empty($data['auto_threshold']) && $data['auto_threshold'] == 'custom') {
             $this->setupRule('required', '{field} is required', false, 'auto_threshold_custom');

@@ -511,9 +511,12 @@ class Settings extends Validate
                 if (class_exists($class)) {
                     $rule = new $class($data, $extra);
                     if ($rule instanceof AbstractField) {
-                        $val = $rule->setContext($this)->getRules();
-                        if(is_array($val)) {
-                            $rules = array_merge($rules, $val);
+                        if(isset($data[$rule->getFieldName()]))
+                        {
+                            $val = $rule->setContext($this)->getRules();
+                            if(is_array($val)) {
+                                $rules = array_merge($rules, $val);
+                            }
                         }
                     }
                 }   
