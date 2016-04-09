@@ -10,7 +10,6 @@
 namespace mithra62\BackupPro\Validate;
 
 use mithra62\BackupPro\Validate;
-use Aws\CloudFront\Exception\Exception;
 
 /**
  * Backup Pro - Settings Validation Object
@@ -27,6 +26,12 @@ class Settings extends Validate
      * @var mithra62\Db
      */
     protected $db = null;
+    
+    /**
+     * The SQL Parser Object
+     * @var PHPSQL\Parser
+     */
+    protected $sql_parser = null;
     
     /**
      * The previously set settings
@@ -55,6 +60,26 @@ class Settings extends Validate
     public function getExistingSettings()
     {
         return $this->existing_settings;
+    }
+    
+    /**
+     * Sets the SQL Parser to use
+     * @param \PHPSQL\Parser $parser
+     * @return \mithra62\BackupPro\Validate\Settings
+     */
+    public function setSqlParser(\PHPSQL\Parser $parser) 
+    {
+        $this->sql_parser = $parser;
+        return $this;
+    }
+    
+    /**
+     * Returns the instance of the SQL Parser
+     * @return \PHPSQL\Parser
+     */
+    public function getSqlParser() 
+    {
+        return $this->sql_parser;
     }
 
     /**
@@ -209,6 +234,28 @@ class Settings extends Validate
         if (! empty($data['db_restore_method']) && $data['db_restore_method'] == 'mysql') {
             $this->rule('required', 'mysqlcli_command')->message('{field} is required');
         }
+        
+        return $this;
+    }
+    
+    public function dbBackupArchivePreSql($statements, $field_name)
+    {
+        if(!$statements) {
+            return $this;
+        }
+        if (! is_array($statements)) {
+            $statements = explode("\n", $statements);
+        }
+
+        foreach ($statements as $statement) {
+            $path = trim($statement);
+            $parts = $this->getSqlParser()->parse($statement);
+            
+            if (! $parts ) {
+                $this->rule('false', $field_name)->message('"' . $statement . '" isn\'t a valid SQL statement');
+            }
+        }
+        
         
         return $this;
     }
@@ -622,6 +669,22 @@ class Settings extends Validate
         
         if (isset($data['php_backup_method_select_chunk_limit'])) {
             $this->phpBackupMethodSelectChunkLimit($data['php_backup_method_select_chunk_limit']);
+        }
+        
+        if( isset($data['db_backup_archive_pre_sql']) ) {
+            $this->dbBackupArchivePreSql($data['db_backup_archive_pre_sql'], 'db_backup_archive_pre_sql');
+        }
+        
+        if( isset($data['db_backup_archive_post_sql']) ) {
+            $this->dbBackupArchivePreSql($data['db_backup_archive_post_sql'], 'db_backup_archive_post_sql');
+        }
+        
+        if( isset($data['db_backup_execute_pre_sql']) ) {
+            $this->dbBackupArchivePreSql($data['db_backup_execute_pre_sql'], 'db_backup_execute_pre_sql');
+        }
+        
+        if( isset($data['db_backup_execute_post_sql']) ) {
+            $this->dbBackupArchivePreSql($data['db_backup_execute_post_sql'], 'db_backup_execute_post_sql');
         }
         
         $this->val($data);

@@ -20,6 +20,7 @@ use mithra62\BackupPro\Notify;
 use mithra62\BackupPro\Console;
 use mithra62\BackupPro\Rest;
 use mithra62\BackupPro\Validate\Settings as valSettings;
+use PHPSQL\Parser;
 
 /**
  * Backup Pro - Bootstrap Object
@@ -104,6 +105,7 @@ class Bootstrap extends m62Boostrap
             $validate = new valSettings();
             $validate->setRegex($this->container['regex']);
             $validate->setDb($c['db']);
+            $validate->setSqlParser(new Parser);
             //$validate
             return $validate;
         };
