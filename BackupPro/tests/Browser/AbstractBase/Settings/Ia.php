@@ -90,7 +90,7 @@ abstract class Ia extends TestFixture
         $this->assertTrue($this->session->getPage()
             ->hasContent('Total Verifications Per Execution is required'));
         $this->assertTrue($this->session->getPage()
-            ->hasContent('Total Verifications Per Execution must be a whole number'));
+            ->hasContent('Total Verifications Per Execution must be a number only'));
     }
 
     /**
@@ -107,7 +107,7 @@ abstract class Ia extends TestFixture
         $this->assertNotTrue($this->session->getPage()
             ->hasContent('Total Verifications Per Execution is required'));
         $this->assertTrue($this->session->getPage()
-            ->hasContent('Total Verifications Per Execution must be a whole number'));
+            ->hasContent('Total Verifications Per Execution must be a number only'));
     }
 
     /**
@@ -124,7 +124,7 @@ abstract class Ia extends TestFixture
         $this->assertNotTrue($this->session->getPage()
             ->hasContent('Total Verifications Per Execution is required'));
         $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Total Verifications Per Execution must be a whole number'));
+            ->hasContent('Total Verifications Per Execution must be a number only'));
     }
 
     /**
@@ -141,7 +141,7 @@ abstract class Ia extends TestFixture
         $this->assertTrue($this->session->getPage()
             ->hasContent('Backup Missed Schedule Notify Email Interval is required'));
         $this->assertTrue($this->session->getPage()
-            ->hasContent('Backup Missed Schedule Notify Email Interval must be a whole number'));
+            ->hasContent('Backup Missed Schedule Notify Email Interval must be a number only'));
     }
 
     /**
@@ -158,7 +158,7 @@ abstract class Ia extends TestFixture
         $this->assertNotTrue($this->session->getPage()
             ->hasContent('Backup Missed Schedule Notify Email Interval is required'));
         $this->assertTrue($this->session->getPage()
-            ->hasContent('Backup Missed Schedule Notify Email Interval must be a whole number'));
+            ->hasContent('Backup Missed Schedule Notify Email Interval must be a number only'));
     }
 
     /**

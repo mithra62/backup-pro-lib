@@ -227,9 +227,9 @@ abstract class DbBackup extends TestFixture
         $page->findButton('m62_settings_submit')->submit();
         
         $this->assertTrue($this->session->getPage()
-            ->hasContent('SELECT Chunk Limit is required'));
+            ->hasContent('Php Backup Method Select Chunk Limit is required'));
         $this->assertTrue($this->session->getPage()
-            ->hasContent('SELECT Chunk Limit must be a number'));
+            ->hasContent('Php Backup Method Select Chunk Limit must be a number only'));
     }
 
     /**
@@ -247,9 +247,9 @@ abstract class DbBackup extends TestFixture
         $page->findButton('m62_settings_submit')->submit();
         
         $this->assertNotTrue($this->session->getPage()
-            ->hasContent('SELECT Chunk Limit is required'));
+            ->hasContent('Php Backup Method Select Chunk Limit is required'));
         $this->assertTrue($this->session->getPage()
-            ->hasContent('SELECT Chunk Limit must be a number'));
+            ->hasContent('Php Backup Method Select Chunk Limit must be a number only'));
     }
 
     /**
@@ -267,9 +267,9 @@ abstract class DbBackup extends TestFixture
         $page->findButton('m62_settings_submit')->submit();
         
         $this->assertNotTrue($this->session->getPage()
-            ->hasContent('SELECT Chunk Limit is required'));
+            ->hasContent('Php Backup Method Select Chunk Limit is required'));
         $this->assertNotTrue($this->session->getPage()
-            ->hasContent('SELECT Chunk Limit must be a number'));
+            ->hasContent('Php Backup Method Select Chunk Limit must be a number only'));
         $this->uninstall_addon();
     }
 }

@@ -9,8 +9,6 @@
  */
 namespace mithra62\BackupPro\Validate\Settings;
 
-use mithra62\BackupPro\Validate\AbstractField;
-
 /**
  * Backup Pro - Php Backup Method Select Chunk Limit Validation Object
  *
@@ -19,25 +17,11 @@ use mithra62\BackupPro\Validate\AbstractField;
  * @package BackupPro\Validate
  * @author Eric Lamb <eric@mithra62.com>
  */
-class PhpBackupMethodSelectChunkLimit extends AbstractField
+class PhpBackupMethodSelectChunkLimit extends MaxDbBackups
 {
     /**
      * The name of the field
      * @var string
      */
     protected $field_name = 'php_backup_method_select_chunk_limit';
-    
-    /**
-     * (non-PHPdoc)
-     * @see \mithra62\BackupPro\Validate\AbstractField::getRules()
-     */
-    public function compileRules()
-    {
-        $this->setupRule('required', '{field} is required');
-        $this->setupRule('numeric', '{field} must be a number only');
-        return $this;
-    }
-}
-{
-    
 }

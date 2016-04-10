@@ -177,7 +177,7 @@ abstract class FileBackup extends TestFixture
         $this->assertNotTrue($this->session->getPage()
             ->hasContent('Backup File Location is required'));
         $this->assertTrue($this->session->getPage()
-            ->hasContent('"fdsafdsa" isn\'t a valid regular expression or path on the system.'));
+            ->hasContent('"fdsafdsa" isn\'t a valid path on the system.'));
     }
 
     /**
@@ -189,7 +189,7 @@ abstract class FileBackup extends TestFixture
         $this->assertNotTrue($this->session->getPage()
             ->hasContent('Backup File Location is required'));
         $this->assertNotTrue($this->session->getPage()
-            ->hasContent('"fdsafdsa" isn\'t a valid regular expression or path on the system.'));
+            ->hasContent('"fdsafdsa" isn\'t a valid path on the system.'));
     }
 
     /**
