@@ -105,23 +105,6 @@ class Settings extends Validate
     }
 
     /**
-     * Validates the database backup method setting value
-     * 
-     * @param array $data
-     *            The form data
-     * @return \mithra62\BackupPro\Validate\Settings
-     */
-    public function dbBackupMethod(array $data)
-    {
-        $this->rule('required', 'db_backup_method')->message('{field} is required');
-        if (! empty($data['db_backup_method']) && $data['db_backup_method'] == 'mysqldump') {
-            $this->rule('required', 'mysqldump_command')->message('{field} is required');
-        }
-        
-        return $this;
-    }
-
-    /**
      * Validates the php backup method select chunk limit
      * 
      * @param number $limit            
@@ -173,18 +156,6 @@ class Settings extends Validate
     }
 
     /**
-     * Validates the database backup alert threshold value
-     * 
-     * @return \mithra62\BackupPro\Validate\Settings
-     */
-    public function dbBackupAlertThreshold()
-    {
-        $this->rule('required', 'db_backup_alert_threshold')->message('{field} is required');
-        $this->rule('numeric', 'db_backup_alert_threshold')->message('{field} must be a number');
-        return $this;
-    }
-
-    /**
      * Validates a license number
      * 
      * @param array $data            
@@ -193,18 +164,6 @@ class Settings extends Validate
     {
         $this->rule('required', 'license_number')->message('{field} is required');
         $this->rule('license_key', 'license_number')->message('{field} isn\'t a valid license key');
-    }
-
-    /**
-     * Validates the Maximum Database Backups setting value
-     * 
-     * @return \mithra62\BackupPro\Validate\Settings
-     */
-    public function maxDbBackups()
-    {
-        $this->rule('required', 'max_db_backups')->message('{field} is required');
-        $this->rule('numeric', 'max_db_backups')->message('{field} must be a number');
-        return $this;
     }
 
     /**
@@ -426,18 +385,6 @@ class Settings extends Validate
             {
                 $this->rule($rule['rule_name'], $rule['rule_field'], (isset($rule['rule_value']) ? $rule['rule_value'] : false))->message($rule['rule_message']);
             }
-        }
-        
-        if (isset($data['db_backup_alert_threshold'])) {
-            $this->dbBackupAlertThreshold();
-        }
-        
-        if (isset($data['max_db_backups'])) {
-            $this->maxDbBackups();
-        }
-        
-        if (isset($data['db_backup_method'])) {
-            $this->dbBackupMethod($data);
         }
         
         if (isset($data['db_restore_method'])) {
