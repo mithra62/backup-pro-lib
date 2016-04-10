@@ -130,6 +130,11 @@ abstract class AbstractField
             return $this->val_data[$key];
         }
     }
+    
+    protected function getFieldData()
+    {
+        return $this->val_data[$this->getFieldName()];
+    }
 
     /**
      * Sets up the validation rules

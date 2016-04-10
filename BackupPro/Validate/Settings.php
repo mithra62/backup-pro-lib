@@ -173,18 +173,6 @@ class Settings extends Validate
     }
 
     /**
-     * Validates the File Backup Alert Frequency
-     * 
-     * @return \mithra62\BackupPro\Validate\Settings
-     */
-    public function fileBackupAlertThreshold()
-    {
-        $this->rule('required', 'file_backup_alert_threshold')->message('{field} is required');
-        $this->rule('numeric', 'file_backup_alert_threshold')->message('{field} must be a number');
-        return $this;
-    }
-
-    /**
      * Validates the database backup alert threshold value
      * 
      * @return \mithra62\BackupPro\Validate\Settings
@@ -208,66 +196,6 @@ class Settings extends Validate
     }
 
     /**
-     * Validates the file backup location setting
-     * 
-     * @param string $paths            
-     * @return \mithra62\BackupPro\Validate\Settings
-     */
-    public function backupFileLocation($paths)
-    {
-        if ($paths == '') {
-            $this->rule('required', 'backup_file_location')->message('{field} is required');
-        } else {
-            if (! is_array($paths)) {
-                $paths = explode("\n", $paths);
-            }
-            
-            foreach ($paths as $path) {
-                $path = trim($path);
-                if (! $this->regex->validate($path)) {
-                    if (file_exists($path)) {
-                        if (! is_readable($path)) {
-                            $this->rule('false', 'backup_file_location')->message('"' . $path . '" isn\'t a readable path by PHP.');
-                        }
-                    } else {
-                        $this->rule('false', 'backup_file_location')->message('"' . $path . '" isn\'t a valid regular expression or path on the system.');
-                    }
-                }
-            }
-        }
-        
-        return $this;
-    }
-
-    /**
-     * Validates the exclude paths setting
-     * 
-     * @param string $paths            
-     * @return \mithra62\BackupPro\Validate\Settings
-     */
-    public function excludePaths($paths)
-    {
-        if (! is_array($paths)) {
-            $paths = explode("\n", $paths);
-        }
-        
-        foreach ($paths as $path) {
-            $path = trim($path);
-            if (! $this->regex->validate($path)) {
-                if (file_exists($path)) {
-                    if (! is_readable($path)) {
-                        $this->rule('false', 'exclude_paths')->message('"' . $path . '" isn\'t a readable path by PHP.');
-                    }
-                } else {
-                    $this->rule('false', 'exclude_paths')->message('"' . $path . '" isn\'t a valid regular expression or path on the system.');
-                }
-            }
-        }
-        
-        return $this;
-    }
-
-    /**
      * Validates the Maximum Database Backups setting value
      * 
      * @return \mithra62\BackupPro\Validate\Settings
@@ -276,18 +204,6 @@ class Settings extends Validate
     {
         $this->rule('required', 'max_db_backups')->message('{field} is required');
         $this->rule('numeric', 'max_db_backups')->message('{field} must be a number');
-        return $this;
-    }
-
-    /**
-     * Validates the Maximum File Backups setting value
-     * 
-     * @return \mithra62\BackupPro\Validate\Settings
-     */
-    public function maxFileBackups()
-    {
-        $this->rule('required', 'max_file_backups')->message('{field} is required');
-        $this->rule('numeric', 'max_file_backups')->message('{field} must be a number');
         return $this;
     }
 
@@ -510,22 +426,6 @@ class Settings extends Validate
             {
                 $this->rule($rule['rule_name'], $rule['rule_field'], (isset($rule['rule_value']) ? $rule['rule_value'] : false))->message($rule['rule_message']);
             }
-        }
-        
-        if (isset($data['backup_file_location'])) {
-            $this->backupFileLocation($data['backup_file_location']);
-        }
-        
-        if (isset($data['exclude_paths'])) {
-            $this->excludePaths($data['exclude_paths']);
-        }
-        
-        if (isset($data['file_backup_alert_threshold'])) {
-            $this->fileBackupAlertThreshold();
-        }
-        
-        if (isset($data['max_file_backups'])) {
-            $this->maxFileBackups();
         }
         
         if (isset($data['db_backup_alert_threshold'])) {
