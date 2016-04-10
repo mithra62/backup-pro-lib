@@ -5,27 +5,27 @@
  * @copyright	Copyright (c) 2016, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Validate/Settings/DbBackupMethod.php
+ * @filesource 	./mithra62/BackupPro/Validate/Settings/PhpBackupMethodSelectChunkLimit.php
  */
 namespace mithra62\BackupPro\Validate\Settings;
 
 use mithra62\BackupPro\Validate\AbstractField;
 
 /**
- * Backup Pro - Db Backup Method Validation Object
+ * Backup Pro - Php Backup Method Select Chunk Limit Validation Object
  *
- * Validates the Db Backup Method setting value
+ * Validates the Php Backup Method Select Chunk Limit setting value
  *
  * @package BackupPro\Validate
  * @author Eric Lamb <eric@mithra62.com>
  */
-class DbBackupMethod extends AbstractField
+class PhpBackupMethodSelectChunkLimit extends AbstractField
 {
     /**
      * The name of the field
      * @var string
      */
-    protected $field_name = 'db_backup_method';
+    protected $field_name = 'php_backup_method_select_chunk_limit';
     
     /**
      * (non-PHPdoc)
@@ -34,10 +34,10 @@ class DbBackupMethod extends AbstractField
     public function compileRules()
     {
         $this->setupRule('required', '{field} is required');
-        $field_data = $this->getFieldData();
-        if (! empty($field_data) && $field_data == 'mysqldump') {
-            $this->setupRule('required', '{field} is required', false, 'mysqldump_command');
-        }
+        $this->setupRule('numeric', '{field} must be a number only');
         return $this;
     }
+}
+{
+    
 }

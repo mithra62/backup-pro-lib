@@ -105,6 +105,7 @@ abstract class AbstractField
      * @param string $message
      * @param string $rule_value
      * @param string $field_name
+     * @return \mithra62\BackupPro\Validate\AbstractField
      */
     protected function setupRule($rule_name, $message, $rule_value = false, $field_name = false)
     {
@@ -131,6 +132,10 @@ abstract class AbstractField
         }
     }
     
+    /**
+     * Returns the data the field we're working with expects
+     * @return string
+     */
     protected function getFieldData()
     {
         return $this->val_data[$this->getFieldName()];

@@ -105,57 +105,6 @@ class Settings extends Validate
     }
 
     /**
-     * Validates the php backup method select chunk limit
-     * 
-     * @param number $limit            
-     * @return \mithra62\BackupPro\Validate\Settings
-     */
-    public function phpBackupMethodSelectChunkLimit($limit)
-    {
-        $this->rule('required', 'php_backup_method_select_chunk_limit')->message('SELECT Chunk Limit is required');
-        $this->rule('numeric', 'php_backup_method_select_chunk_limit')->message('SELECT Chunk Limit must be a number');
-        return $this;
-    }
-
-    /**
-     * Validates the database restore method setting value
-     * 
-     * @param array $data            
-     * @return \mithra62\BackupPro\Validate\Settings
-     */
-    public function dbRestoreMethod(array $data)
-    {
-        $this->rule('required', 'db_restore_method')->message('{field} is required');
-        if (! empty($data['db_restore_method']) && $data['db_restore_method'] == 'mysql') {
-            $this->rule('required', 'mysqlcli_command')->message('{field} is required');
-        }
-        
-        return $this;
-    }
-    
-    public function dbBackupArchivePreSql($statements, $field_name)
-    {
-        if(!$statements) {
-            return $this;
-        }
-        if (! is_array($statements)) {
-            $statements = explode("\n", $statements);
-        }
-
-        foreach ($statements as $statement) {
-            $path = trim($statement);
-            $parts = $this->getSqlParser()->parse($statement);
-            
-            if (! $parts ) {
-                $this->rule('false', $field_name)->message('"' . $statement . '" isn\'t a valid SQL statement');
-            }
-        }
-        
-        
-        return $this;
-    }
-
-    /**
      * Validates a license number
      * 
      * @param array $data            
@@ -387,10 +336,6 @@ class Settings extends Validate
             }
         }
         
-        if (isset($data['db_restore_method'])) {
-            $this->dbRestoreMethod($data);
-        }
-        
         if (isset($data['license_number'])) {
             $this->licenseNumber($data);
         }
@@ -431,24 +376,16 @@ class Settings extends Validate
             $this->dbVerificationDbName($data['db_verification_db_name'], $extra['db_creds']);
         }
         
-        if (isset($data['php_backup_method_select_chunk_limit'])) {
-            $this->phpBackupMethodSelectChunkLimit($data['php_backup_method_select_chunk_limit']);
-        }
-        
-        if( isset($data['db_backup_archive_pre_sql']) ) {
-            $this->dbBackupArchivePreSql($data['db_backup_archive_pre_sql'], 'db_backup_archive_pre_sql');
-        }
-        
         if( isset($data['db_backup_archive_post_sql']) ) {
-            $this->dbBackupArchivePreSql($data['db_backup_archive_post_sql'], 'db_backup_archive_post_sql');
+            //$this->dbBackupArchivePreSql($data['db_backup_archive_post_sql'], 'db_backup_archive_post_sql');
         }
         
         if( isset($data['db_backup_execute_pre_sql']) ) {
-            $this->dbBackupArchivePreSql($data['db_backup_execute_pre_sql'], 'db_backup_execute_pre_sql');
+            //$this->dbBackupArchivePreSql($data['db_backup_execute_pre_sql'], 'db_backup_execute_pre_sql');
         }
         
         if( isset($data['db_backup_execute_post_sql']) ) {
-            $this->dbBackupArchivePreSql($data['db_backup_execute_post_sql'], 'db_backup_execute_post_sql');
+            ///$this->dbBackupArchivePreSql($data['db_backup_execute_post_sql'], 'db_backup_execute_post_sql');
         }
         
         $this->val($data);

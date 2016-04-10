@@ -5,27 +5,27 @@
  * @copyright	Copyright (c) 2016, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Validate/Settings/DbBackupMethod.php
+ * @filesource 	./mithra62/BackupPro/Validate/Settings/DbRestoreMethod.php
  */
 namespace mithra62\BackupPro\Validate\Settings;
 
 use mithra62\BackupPro\Validate\AbstractField;
 
 /**
- * Backup Pro - Db Backup Method Validation Object
+ * Backup Pro - Db Restore Method Validation Object
  *
- * Validates the Db Backup Method setting value
+ * Validates the Db Restore Method Threshold setting value
  *
  * @package BackupPro\Validate
  * @author Eric Lamb <eric@mithra62.com>
  */
-class DbBackupMethod extends AbstractField
+class DbRestoreMethod extends AbstractField
 {
     /**
      * The name of the field
      * @var string
      */
-    protected $field_name = 'db_backup_method';
+    protected $field_name = 'db_restore_method';
     
     /**
      * (non-PHPdoc)
@@ -35,8 +35,8 @@ class DbBackupMethod extends AbstractField
     {
         $this->setupRule('required', '{field} is required');
         $field_data = $this->getFieldData();
-        if (! empty($field_data) && $field_data == 'mysqldump') {
-            $this->setupRule('required', '{field} is required', false, 'mysqldump_command');
+        if (! empty($field_data) && $field_data == 'mysql') {
+            $this->setupRule('required', '{field} is required', false, 'mysqlcli_command');
         }
         return $this;
     }
