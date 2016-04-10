@@ -5,27 +5,27 @@
  * @copyright	Copyright (c) 2016, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Validate/Settings/MaxDbBackups.php
+ * @filesource 	./mithra62/BackupPro/Validate/Settings/LicenseNumber.php
  */
 namespace mithra62\BackupPro\Validate\Settings;
 
 use mithra62\BackupPro\Validate\AbstractField;
 
 /**
- * Backup Pro - Max Db Backups Validation Object
+ * Backup Pro - License Number Validation Object
  *
- * Validates the Max Db Backups setting value
+ * Validates the License Number setting value
  *
  * @package BackupPro\Validate
  * @author Eric Lamb <eric@mithra62.com>
  */
-class MaxDbBackups extends AbstractField
+class LicenseNumber extends AbstractField
 {
     /**
      * The name of the field
      * @var string
      */
-    protected $field_name = 'max_db_backups';
+    protected $field_name = 'license_number';
     
     /**
      * (non-PHPdoc)
@@ -34,7 +34,7 @@ class MaxDbBackups extends AbstractField
     public function compileRules()
     {
         $this->setupRule('required', '{field} is required');
-        $this->setupRule('numeric', '{field} must be a number only');
+        $this->setupRule('license_key', '{field} isn\'t a valid license key');
         return $this;
     }
 }
