@@ -5,7 +5,7 @@
  * @copyright	Copyright (c) 2016, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Validate/Settings/MaxDbBackups.php
+ * @filesource 	./mithra62/BackupPro/Validate/Settings/BackupMissedScheduleNotifyEmailInterval.php
  */
 namespace mithra62\BackupPro\Validate\Settings;
 

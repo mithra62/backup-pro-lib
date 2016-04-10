@@ -45,6 +45,8 @@ class SettingsTest extends TestFixture
         $this->assertCount(1, $settings->setExistingSettings($this->existing_settings)->getExistingSettings());
     }
     
+    /*
+    
     public function testWorkingDirectoryReturnInstance()
     {
         $settings = new Settings;
@@ -131,4 +133,5 @@ class SettingsTest extends TestFixture
         $errors = $settings->getErrorMessages();
         $this->assertCount(1, $errors);        
     }
+    */
 }

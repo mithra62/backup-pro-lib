@@ -199,6 +199,13 @@
 				<include name="**"></include>
 			</fileset>
 		</copy>
+		
+		<echo msg="(${platform_name}) Copying Sound In Theory SQL Parser Files..." />
+		<copy todir="${vendor_path}/soundintheory/php-sql-parser/src">
+			<fileset dir="../mithra62-lib/vendor/soundintheory/php-sql-parser/src">
+				<include name="**"></include>
+			</fileset>
+		</copy>
 					
         <echo msg="(${platform_name}) Copying Symfony Files..." />
 		<copy todir="${vendor_path}/symfony">
