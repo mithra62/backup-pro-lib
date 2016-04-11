@@ -37,14 +37,14 @@ class DbBackupArchivePreSql extends AbstractField
         if(!$statements) {
             return $this;
         }
+        
         if (! is_array($statements)) {
             $statements = explode("\n", $statements);
         }
         
         foreach ($statements as $statement) {
-            $path = trim($statement);
+            $statement = trim($statement);
             $parts = $this->getContext()->getSqlParser()->parse($statement);
-        
             if (! $parts ) {
                 $this->setupRule('false', '"' . $statement . '" isn\'t a valid SQL statement');
             }
