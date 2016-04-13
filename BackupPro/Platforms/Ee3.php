@@ -23,7 +23,12 @@ use mithra62\BackupPro\Platforms\PlatformInterface;
  */
 class Ee3 extends m62Ee3 implements PlatformInterface
 {
-
+    /**
+     * The key to look for within hidden config overrides
+     * @var string
+     */
+    protected $config_key = 'backup_pro';
+    
     /**
      * (non-PHPdoc)
      * 
