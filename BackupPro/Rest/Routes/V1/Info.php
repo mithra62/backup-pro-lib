@@ -36,6 +36,10 @@ class Info extends RestController {
             case 'ini':
                 return $this->iniAll();
             break;
+            
+            case 'ini':
+                return $this->iniAll();
+            break;
         }
         
         return $this->view_helper->renderError(404, 'not_found');
@@ -50,7 +54,8 @@ class Info extends RestController {
             'rest_api_route_entry' => $this->platform->getRestApiRouteEntry($this->settings),
             'threshold_options' => $this->services['settings']->getAutoPruneThresholdOptions(),
             'available_db_backup_engines' => $this->services['backup']->getDataBase()->getAvailableEnginesOptions(),
-            'available_db_restore_engines' => $this->services['restore']->getDataBase()->getAvailableEnginesOptions()
+            'available_db_restore_engines' => $this->services['restore']->getDataBase()->getAvailableEnginesOptions(),
+            'available_storage_drivers' => $this->services['backup']->getStorage()->getAvailableStorageDrivers()
         );
         
         $hal = $this->view_helper->prepareSystemInfoCollection('/info/options', $options);
