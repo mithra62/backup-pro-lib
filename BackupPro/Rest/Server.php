@@ -33,7 +33,7 @@ class Server extends AbstractServer
      * (non-PHPdoc)
      * @see \mithra62\Rest\AbstractServer::run()
      */
-    public function run()
+    public function run(array $routes = array())
     {
         //determine the version
         $headers = \getallheaders();
