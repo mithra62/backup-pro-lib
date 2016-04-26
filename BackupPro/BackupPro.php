@@ -33,7 +33,7 @@ interface BackupPro
      * 
      * @var string
      */
-    const build = '170220161447';
+    const build = '1461698762';
 
     /**
      * The language key of the add-on name
