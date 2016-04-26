@@ -20,7 +20,7 @@ $lang = array(
     'backup_pro_gcs_storage_driver_description' => 'This Driver will store backups on the Google Cloud Storage service.',
     'configure_gcs' => 'Configure Google Cloud Storage',
     'gcs_access_key' => 'Access Key ID',
-    'gcs_access_key_instructions' => 'Your Access Key ID identifies you as the party responsible for your Google Cloud Storage service requests. You can find this by signing into your <a href="http://aws.amazon.com" target="_blank">Amazon Web Services account</a>',
+    'gcs_access_key_instructions' => 'Your Access Key ID identifies you as the party responsible for your Google Cloud Storage service requests. You can find this by signing into your <a href="https://console.cloud.google.com/storage/settings" target="_blank">Google Cloud Storage Settings page</a>',
     'gcs_secret_key' => 'Secret Access Key',
     'gcs_secret_key_instructions' => 'This key is just a long string of characters (and not a file) that you use to calculate the digital signature that you include in the request. For security, both your Access key and Secret key are encrypted before storage.',
     'gcs_bucket' => 'Bucket Name',
