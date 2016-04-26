@@ -197,7 +197,7 @@ class Console implements BackupPro
         $backup_paths = array();
         $backup_paths['database'] = $backup->setDbInfo($db_info)->database($db_info['database'], $this->settings, $this->services['shell']);
         
-        $this->cleanup($backup)->notify($notify, $backup_paths, $backup);
+        $this->cleanup($backup, 'database')->notify($notify, $backup_paths, $backup);
     }
 
     /**
@@ -219,7 +219,7 @@ class Console implements BackupPro
         $this->displayErrors();
         $backup_paths = array();
         $backup_paths['files'] = $backup->files($this->settings, $this->services['files'], $this->services['regex']);
-        $this->cleanup($backup)->notify($notify, $backup_paths, $backup);
+        $this->cleanup($backup, 'files')->notify($notify, $backup_paths, $backup);
     }
 
     /**
@@ -299,8 +299,9 @@ class Console implements BackupPro
      * @param \mithra62\BackupPro\Backup $backup            
      * @return \Craft\BackupCommand
      */
-    private function cleanup($backup)
+    private function cleanup($backup, $type = 'database')
     {
+        $limit = ($type == 'database' ? $this->settings['max_db_backups'] : $this->settings['max_file_backups']);
         $backups = $this->services['backups']->setBackupPath($this->settings['working_directory'])->getAllBackups($this->settings['storage_details']);
         $backup->getStorage()
             ->getCleanup()
@@ -308,7 +309,7 @@ class Console implements BackupPro
             ->setBackups($backups)
             ->setDetails($this->services['backups']->getDetails())
             ->autoThreshold($this->settings['auto_threshold'])
-            ->counts($this->settings['max_file_backups'], 'files')
+            ->counts($limit, $type)
             ->duplicates($this->settings['allow_duplicates']);
         
         return $this;

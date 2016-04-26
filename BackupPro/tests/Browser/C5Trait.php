@@ -196,6 +196,7 @@ trait C5Trait
         $db->setDbName($creds['database']);
         
         $files = new Files;
-        $files->deleteDir($this->test_settings['working_directory'], false, 3);
+        $files->deleteDir($this->test_settings['working_directory'], true, 3);
+        @mkdir($this->test_settings['working_directory']);
     }
 }
