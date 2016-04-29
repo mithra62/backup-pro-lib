@@ -323,7 +323,15 @@ abstract class RcfEngine extends TestFixture
             ->hasContent('Created Date'));
         $this->assertNotTrue($this->session->getPage()
             ->hasContent('No Storage Locations have been setup yet!'));
-        
+    }
+
+    /**
+     * @depends testAddCompleteRcfStorage
+     */
+    public function testBackupDatabaseRcfStorage()
+    {
+        $page = $this->takeDatabaseBackup();
+        $this->removeDatabaseBackup();
         $this->uninstall_addon();
     }
 }

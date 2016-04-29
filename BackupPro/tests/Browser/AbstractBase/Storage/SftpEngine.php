@@ -512,4 +512,14 @@ abstract class SftpEngine extends TestFixture
             ->hasContent('No Storage Locations have been setup yet!'));
         $this->uninstall_addon();
     }
+
+    /**
+     * @depends testAddSftpStorageLocationComplete
+     */
+    public function testBackupDatabaseSftpStorage()
+    {
+        $page = $this->takeDatabaseBackup();
+        $this->removeDatabaseBackup();
+        $this->uninstall_addon();
+    }
 }

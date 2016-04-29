@@ -142,7 +142,7 @@ class Local extends AbstractStorage
         $filesystem = new Remote(new m62Local($this->settings['backup_store_location']));
         $path = $backup_type . DIRECTORY_SEPARATOR . $file_name;
         if ($filesystem->has($path)) {
-            return $this->settings['backup_store_location'] . DIRECTORY_SEPARATOR . $path;
+            return realpath($this->settings['backup_store_location']) . DIRECTORY_SEPARATOR . $path;
         }
     }
 

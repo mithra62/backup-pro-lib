@@ -263,6 +263,10 @@ class Settings extends m62Settings
             $this->settings['backup_file_location'] = $this->_defaults['backup_file_location'];
         }
         
+        if($this->settings['working_directory'] != '') {
+            $this->settings['working_directory'] = realpath($this->settings['working_directory']);
+        }
+        
         if ($this->settings['working_directory'] == '') {
             $this->settings['working_directory'] = $this->_defaults['working_directory'];
         }

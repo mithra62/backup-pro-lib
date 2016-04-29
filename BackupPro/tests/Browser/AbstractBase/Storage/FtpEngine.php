@@ -551,6 +551,15 @@ abstract class FtpEngine extends TestFixture
             ->hasContent('Created Date'));
         $this->assertNotTrue($this->session->getPage()
             ->hasContent('No Storage Locations have been setup yet!'));
-        $this->uninstall_addon();
     }
+    
+    /**
+     * @depends testAddFtpStorageLocationCompleteWorking
+     */
+    public function testBackupDatabaseFtpStorage()
+    {
+        $page = $this->takeDatabaseBackup();
+        $this->removeDatabaseBackup();
+        $this->uninstall_addon();
+    }    
 }

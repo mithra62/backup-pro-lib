@@ -291,7 +291,15 @@ abstract class LocalEngine extends TestFixture
             ->hasContent('Created Date'));
         $this->assertNotTrue($this->session->getPage()
             ->hasContent('No Storage Locations have been setup yet!'));
-        
+    }
+
+    /**
+     * @depends testAddCompleteLocalStorage
+     */
+    public function testBackupDatabaseLocalStorage()
+    {
+        $page = $this->takeDatabaseBackup();
+        $this->removeDatabaseBackup();
         $this->uninstall_addon();
     }
 }
