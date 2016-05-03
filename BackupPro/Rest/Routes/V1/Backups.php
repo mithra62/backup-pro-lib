@@ -128,9 +128,9 @@ class Backups extends RestController {
      * @see \mithra62\BackupPro\Platforms\Controllers\Rest::put()
      */
     public function put($id = false) { 
-        $id = $this->platform->getPost('id');
-        $backup_type = $this->platform->getPost('type');
-        $data = json_decode(file_get_contents("php://input"), true);
+        $data = $this->getBodyData();
+        $id = (isset($data['id']) ? $data['id'] : $this->platform->getPost('id'));
+        $backup_type = (isset($data['type']) ? $data['type'] : $this->platform->getPost('type'));
         
         //ensure params
         if(!$id)
@@ -145,8 +145,7 @@ class Backups extends RestController {
         }
         
         //ensure backup exists
-        $encrypt = $this->services['encrypt'];
-        $file_name = $encrypt->decode($id);
+        $file_name = $id;
         if($file_name && isset($data['backup_note']))
         {
             $path = rtrim($this->settings['working_directory'], DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$backup_type;
