@@ -510,7 +510,6 @@ abstract class SftpEngine extends TestFixture
             ->hasContent('Created Date'));
         $this->assertNotTrue($this->session->getPage()
             ->hasContent('No Storage Locations have been setup yet!'));
-        $this->uninstall_addon();
     }
 
     /**

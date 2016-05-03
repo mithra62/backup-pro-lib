@@ -96,7 +96,7 @@ trait C5Trait
         
         'storage_details' => array(),
         
-        'working_directory' => 'D:\ProjectFiles\mithra62\clean_cms\c5\backup_meta',
+        'working_directory' => 'D:\ProjectFiles\mithra62\clean_cms\c5\html\packages\backup_pro\backups',
         'local_backup_store_location' => 'D:\ProjectFiles\mithra62\clean_cms\c5\backups',
         'backup_file_location' => array(
             'D:\ProjectFiles\mithra62\clean_cms\c5\html'
@@ -196,7 +196,7 @@ trait C5Trait
         $db->setDbName($creds['database']);
         
         $files = new Files;
-        $files->deleteDir($this->test_settings['working_directory'], true, 3);
+        $files->deleteDir($this->test_settings['working_directory'], true, 0);
         @mkdir($this->test_settings['working_directory']);
     }
 }
