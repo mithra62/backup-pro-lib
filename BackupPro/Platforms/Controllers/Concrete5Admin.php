@@ -81,6 +81,12 @@ class Concrete5Admin extends DashboardPageController
         
     }
     
+    /**
+     * Prepares the View layer for rendering
+     * @param string $template The path to the view script to render 
+     * @param array $vars Any variables to pass to the view
+     * @return void
+     */
     public function prepView($template, array $vars)
     {
         if(isset($vars['pageTitle']))
@@ -90,7 +96,7 @@ class Concrete5Admin extends DashboardPageController
         
         $this->set('view_helper', $this->view_helper);
         $this->set('bp_errors', $this->bp_errors);
-        $this->set('bp_static_path', '/packages/backup_pro/assets');
+        $this->set('bp_static_path', rtrim($this->platform->getSiteUrl(), '/').'/packages/backup_pro/assets');
         //$this->set('__note_url', $this->url('/dashboard/backup_pro/manage/update_backup_note'));
         foreach($vars AS $key => $value)
         {

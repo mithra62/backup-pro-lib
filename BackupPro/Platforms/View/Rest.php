@@ -67,7 +67,8 @@ class Rest extends RestView implements BackupPro
         'storage_location_name' => 'storage_location_name',
         'location_id' => 'storage_location_id',
         'storage_location_driver' => 'storage_location_driver',
-        'storage_location_file_use' => 'storage_location_db_use',
+        'storage_location_file_use' => 'storage_location_file_use',
+        'storage_location_status' => 'storage_location_status',
         'storage_location_include_prune' => 'storage_location_include_prune',
         'storage_location_create_date' => 'storage_location_create_date',
     );
