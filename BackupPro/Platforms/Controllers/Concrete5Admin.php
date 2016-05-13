@@ -106,4 +106,18 @@ class Concrete5Admin extends DashboardPageController
         $this->requireAsset('b3_ui_assets');
         $this->render('/dashboard/backup_pro/'.$template);
     }
+    
+    /**
+     * Returns an instance of the Concrete5 facade object
+     * @return \Concrete\Core\Application\Application
+     */
+    public function getApp()
+    {
+        if(isset($this->app) && $this->app instanceof \Concrete\Core\Application\Application) {
+            return $this->app;
+        }
+        
+        $this->app = \Concrete\Core\Support\Facade\Application::getFacadeApplication();
+        return $this->app;
+    }
 }
