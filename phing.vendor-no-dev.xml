@@ -143,13 +143,13 @@
 			<include name="**"></include>
 		</fileset>
 		</copy>	
-		
-		<echo msg="(${platform_name}) Copying Patchwork UTF-8 Files..." />
-		<copy todir="${vendor_path}/patchwork/utf8/src">
-		<fileset dir="../mithra62-lib/vendor/patchwork/utf8/src">
-			<include name="**"></include>
-		</fileset>
-		</copy>	
+			 
+        <echo msg="(${platform_name}) Copying ircmaxell Files..." />
+		<copy todir="${vendor_path}/ircmaxell">
+			<fileset dir="../mithra62-lib/vendor/ircmaxell">
+				<include name="**"></include>
+			</fileset>
+		</copy>
 		
 		<echo msg="(${platform_name}) Copying PhilipBrown Signature Files..." />
 		<copy todir="${vendor_path}/philipbrown/signature-php/src">
@@ -238,8 +238,8 @@
 		</copy>
 					
         <echo msg="(${platform_name}) Copying Voku Portable UTF-8 Files..." />
-		<copy todir="${vendor_path}/voku/portable-utf8/src">
-			<fileset dir="../mithra62-lib/vendor/voku/portable-utf8/src">
+		<copy todir="${vendor_path}/voku/portable-utf8">
+			<fileset dir="../mithra62-lib/vendor/voku/portable-utf8">
 				<include name="**"></include>
 			</fileset>
 		</copy>
