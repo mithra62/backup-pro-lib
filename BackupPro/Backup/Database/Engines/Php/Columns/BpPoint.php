@@ -6,44 +6,40 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Longblob.php
+ * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Point.php
  */
 namespace mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
 
 use mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
 
 /**
- * Backup Pro - Longblob Column Object
+ * Backup Pro - Point Column Object
  *
- * Handles processing data from a MySQL Longblob column
+ * Handles processing data from a MySQL Point column
  *
  * @package Backup\Database\Engines\Php
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Blob extends Columns
+class BpPoint extends Columns
 {
 
     /**
      * (non-PHPdoc)
      * 
-     * @ignore
-     *
      * @see \mithra62\BackupPro\Backup\Database\Engines\Php\Columns::getFieldName()
      */
     public function getFieldName(array $column)
     {
-        return '`' . $column['Field'] . '`';
+        return $this->asTextCol($column['Field']);
     }
 
     /**
      * (non-PHPdoc)
      * 
-     * @ignore
-     *
      * @see \mithra62\BackupPro\Backup\Database\Engines\Php\Columns::getFieldValue()
      */
     public function getFieldValue($value)
     {
-        return $this->fromBase64Val($value);
+        return $this->geomFromTextVal($value);
     }
 }

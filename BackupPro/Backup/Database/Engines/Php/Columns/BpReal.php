@@ -6,20 +6,20 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Tinyint.php
+ * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Real.php
  */
 namespace mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
 
-use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\Int;
+use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\BpDouble;
 
 /**
- * Backup Pro - Tinyint Column Object
+ * Backup Pro - Real Column Object
  *
- * Handles processing data from a MySQL Tinyint column
+ * Handles processing data from a MySQL Real column
  *
  * @package Backup\Database\Engines\Php
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Tinyint extends Int
+class BpReal extends BpDouble
 {
 }

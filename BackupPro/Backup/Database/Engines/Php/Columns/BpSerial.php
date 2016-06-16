@@ -6,20 +6,20 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Polygon.php
+ * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Serial.php
  */
 namespace mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
 
-use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\Point;
+use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\BpBigint;
 
 /**
- * Backup Pro - Polygon Column Object
+ * Backup Pro - Serial Column Object
  *
- * Handles processing data from a MySQL Polygon column
+ * Handles processing data from a MySQL Serial column
  *
  * @package Backup\Database\Engines\Php
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Polygon extends Point
+class BpSerial extends BpBigint
 {
 }

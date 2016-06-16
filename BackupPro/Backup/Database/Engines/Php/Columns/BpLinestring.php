@@ -6,20 +6,20 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Decimal.php
+ * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Linestring.php
  */
 namespace mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
 
-use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\Int;
+use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\BpPoint;
 
 /**
- * Backup Pro - Decimal Column Object
+ * Backup Pro - Geometry Column Object
  *
- * Handles processing data from a MySQL Decimal column
+ * Handles processing data from a MySQL Linestring column
  *
  * @package Backup\Database\Engines\Php
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Decimal extends Int
+class BpLinestring extends BpPoint
 {
 }

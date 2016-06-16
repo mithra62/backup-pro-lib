@@ -187,7 +187,7 @@ class Php extends DbAbstract
         $columns = array();
         foreach ($column_data as $column) {
             $column_type = $this->determineColumnType($column['Type']);
-            $class = "\\mithra62\\BackupPro\\Backup\\Database\\Engines\\Php\\Columns\\" . $column_type;
+            $class = "\\mithra62\\BackupPro\\Backup\\Database\\Engines\\Php\\Columns\\Bp" . $column_type;
             if (class_exists($class)) {
                 $obj = new $class();
                 if ($obj instanceof Php\Columns) {

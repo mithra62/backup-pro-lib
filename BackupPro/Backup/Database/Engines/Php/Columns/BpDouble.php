@@ -6,20 +6,20 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Serial.php
+ * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Double.php
  */
 namespace mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
 
-use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\Bigint;
+use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\BpInt;
 
 /**
- * Backup Pro - Serial Column Object
+ * Backup Pro - Double Column Object
  *
- * Handles processing data from a MySQL Serial column
+ * Handles processing data from a MySQL Double column
  *
  * @package Backup\Database\Engines\Php
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Serial extends Bigint
+class BpDouble extends BpInt
 {
 }

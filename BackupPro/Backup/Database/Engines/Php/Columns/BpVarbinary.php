@@ -6,20 +6,20 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Mediumblob.php
+ * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Varbinary.php
  */
 namespace mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
 
-use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\Blob;
+use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\BpBlob;
 
 /**
- * Backup Pro - Tinyblob Column Object
+ * Backup Pro - Varbinary Column Object
  *
- * Handles processing data from a MySQL Mediumblob column
+ * Handles processing data from a MySQL Varbinary column
  *
  * @package Backup\Database\Engines\Php
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Mediumblob extends Blob
+class BpVarbinary extends BpBlob
 {
 }

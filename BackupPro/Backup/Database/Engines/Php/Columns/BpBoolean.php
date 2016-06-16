@@ -6,20 +6,20 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Linestring.php
+ * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Boolean.php
  */
 namespace mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
 
-use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\Point;
+use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\BpTinyint;
 
 /**
- * Backup Pro - Geometry Column Object
+ * Backup Pro - Boolean Column Object
  *
- * Handles processing data from a MySQL Linestring column
+ * Handles processing data from a MySQL Boolean column
  *
  * @package Backup\Database\Engines\Php
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Linestring extends Point
+class BpBoolean extends BpTinyint
 {
 }

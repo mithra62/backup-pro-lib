@@ -6,20 +6,20 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Geometry.php
+ * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Multipolygon.php
  */
 namespace mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
 
-use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\Point;
+use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\BpPoint;
 
 /**
- * Backup Pro - Geometry Column Object
+ * Backup Pro - Multipolygon Column Object
  *
- * Handles processing data from a MySQL Geometry column
+ * Handles processing data from a MySQL Multipolygon column
  *
  * @package Backup\Database\Engines\Php
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Geometry extends Point
+class BpMultipolygon extends BpPoint
 {
 }

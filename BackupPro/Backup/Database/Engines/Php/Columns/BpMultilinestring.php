@@ -6,20 +6,20 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Smallint.php
+ * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Multilinestring.php
  */
 namespace mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
 
-use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\Int;
+use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\BpPoint;
 
 /**
- * Backup Pro - Smallint Column Object
+ * Backup Pro - Multilinestring Column Object
  *
- * Handles processing data from a MySQL Smallint column
+ * Handles processing data from a MySQL Multilinestring column
  *
  * @package Backup\Database\Engines\Php
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Smallint extends Int
+class BpMultilinestring extends BpPoint
 {
 }

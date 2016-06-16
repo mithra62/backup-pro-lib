@@ -6,20 +6,20 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Real.php
+ * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Mediumblob.php
  */
 namespace mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
 
-use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\Double;
+use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\BpBlob;
 
 /**
- * Backup Pro - Real Column Object
+ * Backup Pro - Tinyblob Column Object
  *
- * Handles processing data from a MySQL Real column
+ * Handles processing data from a MySQL Mediumblob column
  *
  * @package Backup\Database\Engines\Php
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Real extends Double
+class BpMediumblob extends BpBlob
 {
 }

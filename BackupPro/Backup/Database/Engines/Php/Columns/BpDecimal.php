@@ -6,20 +6,20 @@
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Boolean.php
+ * @filesource 	./mithra62/BackupPro/Backup/Database/Php/Columns/Decimal.php
  */
 namespace mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
 
-use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\Tinyint;
+use mithra62\BackupPro\Backup\Database\Engines\Php\Columns\BpInt;
 
 /**
- * Backup Pro - Boolean Column Object
+ * Backup Pro - Decimal Column Object
  *
- * Handles processing data from a MySQL Boolean column
+ * Handles processing data from a MySQL Decimal column
  *
  * @package Backup\Database\Engines\Php
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Boolean extends Tinyint
+class BpDecimal extends BpInt
 {
 }

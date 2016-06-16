@@ -20,7 +20,7 @@ use mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
  * @package Backup\Database\Engines\Php
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Int extends Columns
+class BpInt extends Columns
 {
 
     /**
