@@ -11,6 +11,7 @@
 namespace mithra62\BackupPro\Backup\Database\Engines;
 
 use \mithra62\BackupPro\Backup\Database\DbAbstract;
+use \mithra62\BackupPro\Exceptions\Backup\DatabaseException;
 use \mithra62\Traits\MySQL\Mycnf;
 
 /**
@@ -54,7 +55,7 @@ class Mysqldump extends DbAbstract
             ->getDbInfo(), $path_details['dirname']);
         $temp_store = $path_details['dirname'] . DIRECTORY_SEPARATOR . $table . '.txt';
         
-        $command = $this->getEngineCmd() . " --defaults-extra-file=\"$cnf\" --skip-comments " . $this->db_info['database'] . " $table > $temp_store";
+        $command = $this->getEngineCmd() . " --defaults-extra-file=\"$cnf\" --skip-comments " . $this->db_info['database'] . " $table > \"$temp_store\"";
         if (! $this->getShell(true)
             ->setCommand($command)
             ->execute()) {
@@ -63,8 +64,12 @@ class Mysqldump extends DbAbstract
             // exit;
         }
         
+        if(!file_exists($temp_store)) {
+            throw new DatabaseException('Can\'t find  "' . $temp_store . '"!');
+        }
+        
         // now merge the table output with database output
-        $handle = fopen($temp_store, "rtb");
+        $handle = fopen($temp_store, "r");
         while (($buffer = fgets($handle)) !== false) {
             $this->getContext()->writeOut($buffer);
         }
