@@ -97,7 +97,7 @@ class Wordpress
             return $this->view_helper;
         });
         
-        $this->url_base = '/wp-admin/admin.php?page=backup_pro/';
+        $this->url_base = admin_url('admin.php?page=backup_pro/');
     }
 
     /**

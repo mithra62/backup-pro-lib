@@ -10,7 +10,7 @@
  */
 namespace mithra62\BackupPro\Platforms;
 
-use mithra62\Platforms\Wordpress as m62Wp;
+use mithra62\Platforms\WordPress as m62Wp;
 use mithra62\BackupPro\Platforms\PlatformInterface;
 
 /**
@@ -21,7 +21,7 @@ use mithra62\BackupPro\Platforms\PlatformInterface;
  * @package mithra62\BackupPro
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Wordpress extends m62Wp implements PlatformInterface
+class WordPress extends m62Wp implements PlatformInterface
 {
 
     /**
