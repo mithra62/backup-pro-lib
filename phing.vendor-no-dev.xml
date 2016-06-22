@@ -172,13 +172,38 @@
 			</fileset>
 		</copy>	
 		
+		<!--
+		Removed in 3.3.1
 		<echo msg="(${platform_name}) Copying React Files..." />
 		<copy todir="${vendor_path}/react/promise/src">
 		<fileset dir="../mithra62-lib/vendor/react/promise/src">
 			<include name="**"></include>
 		</fileset>
 		</copy>	
-							
+			
+		-->
+		
+		<echo msg="(${platform_name}) Copying Guzzle Promise Files..." />
+		<copy todir="${vendor_path}/guzzlehttp/promises/src">
+		<fileset dir="../mithra62-lib/vendor/guzzlehttp/promises/src">
+			<include name="**"></include>
+		</fileset>
+		</copy>	
+		
+		<echo msg="(${platform_name}) Copying Guzzle PSR7 Files..." />
+		<copy todir="${vendor_path}/guzzlehttp/psr7/src">
+		<fileset dir="../mithra62-lib/vendor/guzzlehttp/psr7/src">
+			<include name="**"></include>
+		</fileset>
+		</copy>	
+		
+		<echo msg="(${platform_name}) Copying Guzzle Files..." />
+		<copy todir="${vendor_path}/guzzlehttp/guzzle/src">
+		<fileset dir="../mithra62-lib/vendor/guzzlehttp/guzzle/src">
+			<include name="**"></include>
+		</fileset>
+		</copy>			
+		
         <echo msg="(${platform_name}) Copying Regex Guard Files..." />
 		<copy todir="${vendor_path}/regex-guard/regex-guard/src">
 			<fileset dir="../mithra62-lib/vendor/regex-guard/regex-guard/src">

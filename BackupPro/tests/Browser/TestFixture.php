@@ -23,21 +23,22 @@ use mithra62\tests\TestTrait;
 class TestFixture extends BrowserTestCase
 {
     use TestTrait;
-
+    
     /**
      * The browser config
-     * 
+     *
      * @var array
      */
     public static $browsers = array(
-        array(
+        '0' => array(
             'driver' => 'selenium2',
             'host' => 'localhost',
             'port' => 4444,
             'browserName' => 'firefox',
-            'baseUrl' => 'http://eric.ee2.clean.mithra62.com'
+            'baseUrl' => 'http://eric.craft.clean.mithra62.com',
+            'sessionStrategy' => 'shared'
         )
-    );
+    );    
 
     /**
      * Simple abstraction to determine the Platform specific URL we're attempting to hit

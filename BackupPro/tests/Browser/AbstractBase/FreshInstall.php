@@ -29,22 +29,6 @@ abstract class FreshInstall extends TestFixture
      */
     public $session = null;
 
-    /**
-     * The browser config
-     * 
-     * @var array
-     */
-    public static $browsers = array(
-        array(
-            'driver' => 'selenium2',
-            'host' => 'localhost',
-            'port' => 4444,
-            'browserName' => 'firefox',
-            'baseUrl' => 'http://eric.ee2.clean.mithra62.com',
-            'sessionStrategy' => 'shared'
-        )
-    );
-
     public function testDashboardDefault()
     {
         $this->login();

@@ -22,7 +22,22 @@ use mithra62\Files;
  */
 trait C5Trait
 {
-
+    /**
+     * The browser config
+     *
+     * @var array
+     */
+    public static $browsers = array(
+        array(
+            'driver' => 'selenium2',
+            'host' => 'localhost',
+            'port' => 4444,
+            'browserName' => 'firefox',
+            'baseUrl' => 'http://eric.ee2.clean.mithra62.com',
+            'sessionStrategy' => 'shared'
+        )
+    );
+    
     /**
      * The URLs to test the WordPress Settings page
      *

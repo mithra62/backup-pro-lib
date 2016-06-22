@@ -20,8 +20,7 @@ use mithra62\Db;
  * @author Eric Lamb <eric@mithra62.com>
  */
 trait CraftTrait
-{
-
+{   
     /**
      * The URLs to test the Craft Settings page
      *
