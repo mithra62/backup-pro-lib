@@ -31,7 +31,7 @@ class Concrete5 extends m62C5 implements PlatformInterface
      */
     public function getBackupCronCommands(array $settings)
     {
-        $url = rtrim(BASE_URL, '/').'/index.php/backup_pro/cron';
+        $url = rtrim($this->getSiteUrl(), '/').'/index.php/backup_pro/cron';
         return array(
 			 'file_backup' => array('url' => $url.'?type=file&backup_pro='.$settings['cron_query_key'], 'cmd' => 'curl "'.$url.'?type=file"'),
 			 'db_backup' => array('url' => $url.'?type=db&backup_pro='.$settings['cron_query_key'], 'cmd' => 'curl "'.$url.'?type=db"')
@@ -47,7 +47,7 @@ class Concrete5 extends m62C5 implements PlatformInterface
      */
     public function getIaCronCommands(array $settings)
     {
-        $url = rtrim(BASE_URL, '/').'/index.php/backup_pro/cron/integrity?backup_pro='.$settings['cron_query_key'];
+        $url = rtrim($this->getSiteUrl(), '/').'/index.php/backup_pro/cron/integrity?backup_pro='.$settings['cron_query_key'];
 		return array(
 			'verify_backup_stability' => array('url' => $url, 'cmd' => '0 * * * * * curl "'.$url.'"')
 		);
@@ -59,6 +59,6 @@ class Concrete5 extends m62C5 implements PlatformInterface
      */
     public function getRestApiRouteEntry(array $settings)
     {
-        return rtrim(BASE_URL, '/').'/index.php/backup_pro/api?bp_method=';
+        return rtrim($this->getSiteUrl(), '/').'/index.php/backup_pro/api?bp_method=';
     }
 }
