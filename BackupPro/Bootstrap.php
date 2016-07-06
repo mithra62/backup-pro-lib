@@ -10,7 +10,7 @@
  */
 namespace mithra62\BackupPro;
 
-use mithra62\Bootstrap as m62Boostrap;
+use JaegerApp\Bootstrap as m62Boostrap;
 use mithra62\BackupPro\Settings;
 use mithra62\BackupPro\Backups;
 use mithra62\BackupPro\Backup;

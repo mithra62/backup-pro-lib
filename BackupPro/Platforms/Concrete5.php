@@ -10,7 +10,7 @@
  */
 namespace mithra62\BackupPro\Platforms;
 
-use mithra62\Platforms\Concrete5 as m62C5;
+use JaegerApp\Platforms\Concrete5 as m62C5;
 use mithra62\BackupPro\Platforms\PlatformInterface;
 
 /**

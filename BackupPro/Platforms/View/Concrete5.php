@@ -9,7 +9,7 @@
  */
 namespace mithra62\BackupPro\Platforms\View;
 
-use mithra62\Platforms\View\Concrete5 as C5View;
+use JaegerApp\Platforms\View\Concrete5 as C5View;
 use mithra62\BackupPro\Traits\View\Helpers As ViewHelpers;
 
 /**
