@@ -111,7 +111,7 @@ interface StorageInterface
      * @param array $drivers            
      * @return \mithra62\Validate
      */
-    public function validateSettings(\mithra62\Validate $validate, array $settings, array $drivers = array());
+    public function validateSettings(\JaegerApp\Validate $validate, array $settings, array $drivers = array());
 
     /**
      * Should return an array with the details for the Driver

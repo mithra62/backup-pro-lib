@@ -10,7 +10,7 @@
  */
 namespace mithra62\BackupPro\Platforms;
 
-use mithra62\Platforms\Magento as m62Mag;
+use JaegerApp\Platforms\Magento as m62Mag;
 use mithra62\BackupPro\Platforms\PlatformInterface;
 
 /**

@@ -10,9 +10,9 @@
  */
 namespace mithra62\BackupPro\Backup;
 
-use \mithra62\Traits\Log;
-use \mithra62\Traits\Encoding;
-use \mithra62\Traits\DateTime;
+use \JaegerApp\Traits\Log;
+use \JaegerApp\Traits\Encoding;
+use \JaegerApp\Traits\DateTime;
 
 /**
  * Backup Pro - Abstract Backup Object
@@ -81,7 +81,7 @@ abstract class AbstractBackup implements BackupInterface
      * @param \mithra62\Regex $regex            
      * @return \mithra62\BackupPro\Backup\AbstractBackup
      */
-    public function setRegex(\mithra62\Regex $regex)
+    public function setRegex(\JaegerApp\Regex $regex)
     {
         $this->regex = $regex;
         return $this;

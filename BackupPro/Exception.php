@@ -10,7 +10,7 @@
  */
 namespace mithra62\BackupPro;
 
-use mithra62\Exception as m62Exception;
+use JaegerApp\Exception as m62Exception;
 
 /**
  * Backup Pro - Exception Object

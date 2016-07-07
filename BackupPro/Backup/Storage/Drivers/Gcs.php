@@ -74,7 +74,7 @@ class Gcs extends S3
      * @param array $drivers            
      * @return \mithra62\Validate
      */
-    public function validateSettings(\mithra62\Validate $validate, array $settings, array $drivers = array())
+    public function validateSettings(\JaegerApp\Validate $validate, array $settings, array $drivers = array())
     {
         $validate->rule('required', 'gcs_access_key')->message('{field} is required');
         $validate->rule('required', 'gcs_secret_key')->message('{field} is required');

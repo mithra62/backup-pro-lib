@@ -13,7 +13,7 @@ namespace mithra62\BackupPro;
 use mithra62\BackupPro\Exceptions\Backup\DatabaseException;
 use mithra62\BackupPro\Exceptions\Backup\ProgressException;
 use mithra62\BackupPro\Exceptions\Backup\StorageException;
-use mithra62\Exceptions\CompressException;
+use JaegerApp\Exceptions\CompressException;
 
 /**
  * Backup Pro - Restore Object

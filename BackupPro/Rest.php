@@ -11,7 +11,7 @@
  
 namespace mithra62\BackupPro;
 
-use mithra62\Rest AS m62Rest;
+use JaegerApp\Rest AS m62Rest;
 
 /**
  * Backup Pro - Rest Object

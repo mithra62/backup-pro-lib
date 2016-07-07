@@ -10,7 +10,7 @@
  
 namespace mithra62\BackupPro\Rest;
 
-use mithra62\Rest\AbstractServer;
+use JaegerApp\Rest\AbstractServer;
 use Respect\Rest\Router;
 
 /**

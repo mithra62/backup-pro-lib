@@ -10,7 +10,7 @@
  */
 namespace mithra62\BackupPro;
 
-use mithra62\Remote as m62Remote;
+use JaegerApp\Remote as m62Remote;
 
 /**
  * Backup Pro - Remote Object

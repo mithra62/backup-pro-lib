@@ -88,7 +88,7 @@ class Settings extends Validate
      * @param \mithra62\Db $db           
      * @return \mithra62\BackupPro\Validate\Settings
      */
-    public function setDb(\mithra62\Db $db)
+    public function setDb(\JaegerApp\Db $db)
     {
         $this->db = $db;
         return $this;

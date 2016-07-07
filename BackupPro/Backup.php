@@ -14,8 +14,8 @@ use mithra62\BackupPro\Exceptions\Backup\DatabaseException;
 use mithra62\BackupPro\Exceptions\Backup\FilesException;
 use mithra62\BackupPro\Exceptions\Backup\ProgressException;
 use mithra62\BackupPro\Exceptions\Backup\StorageException;
-use mithra62\Exceptions\CompressException;
-use mithra62\Exceptions\RegexException;
+use JaegerApp\Exceptions\CompressException;
+use JaegerApp\Exceptions\RegexException;
 
 /**
  * Backup Pro - Backup Object
@@ -130,7 +130,7 @@ class Backup
      * 
      * @param \mithra62\Db $db            
      */
-    public function __construct(\mithra62\Db $db)
+    public function __construct(\JaegerApp\Db $db)
     {
         $this->db = $db;
     }
@@ -226,7 +226,7 @@ class Backup
      * @param \mithra62\Shell $shell            
      * @return string The path to where the backup is stored locally
      * @throws \mithra62\BackupPro\Exceptions\Backup\DatabaseException
-     * @throws \mithra62\Exceptions\CompressException
+     * @throws \JaegerApp\Exceptions\CompressException
      * @throws \mithra62\BackupPro\Exceptions\Backup\StorageException
      * @throws \Exception
      */
@@ -287,7 +287,7 @@ class Backup
      * @throws CompressException
      * @throws \Exception
      */
-    public function files(array $options, \mithra62\Files $file, \mithra62\Regex $regex)
+    public function files(array $options, \JaegerApp\Files $file, \JaegerApp\Regex $regex)
     {
         try {
             $file_name = $this->getStorage()->makeFileFilename();
@@ -394,7 +394,7 @@ class Backup
     public function getCompress()
     {
         if (is_null($this->compress)) {
-            $this->compress = new \mithra62\Compress();
+            $this->compress = new \JaegerApp\Compress();
         }
         
         return $this->compress;

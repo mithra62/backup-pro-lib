@@ -10,7 +10,7 @@
  */
 namespace mithra62\BackupPro;
 
-use mithra62\Errors as m62Errors;
+use JaegerApp\Errors as m62Errors;
 
 /**
  * Backup Pro - Error Object

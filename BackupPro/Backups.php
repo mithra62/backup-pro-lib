@@ -89,7 +89,7 @@ class Backups
      * 
      * @param \mithra62\Files $file            
      */
-    public function __construct(\mithra62\Files $file)
+    public function __construct(\JaegerApp\Files $file)
     {
         $this->file = $file;
     }

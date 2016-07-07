@@ -10,7 +10,7 @@
  */
 namespace mithra62\BackupPro;
 
-use mithra62\Exceptions\EmailException;
+use JaegerApp\Exceptions\EmailException;
 
 /**
  * Backup Pro - Notification Object

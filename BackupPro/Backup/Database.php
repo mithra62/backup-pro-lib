@@ -628,7 +628,7 @@ class Database extends AbstractBackup
      * @param \mithra62\Shell $shell            
      * @return \mithra62\BackupPro\Backup\Database
      */
-    public function setShell(\mithra62\Shell $shell)
+    public function setShell(\JaegerApp\Shell $shell)
     {
         $this->shell = $shell;
         return $this;

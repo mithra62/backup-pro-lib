@@ -10,7 +10,7 @@
  */
 namespace mithra62\BackupPro\Platforms;
 
-use mithra62\Platforms\Craft as m62Craft;
+use JaegerApp\Platforms\Craft as m62Craft;
 use mithra62\BackupPro\Platforms\PlatformInterface;
 use Craft\UrlHelper;
 

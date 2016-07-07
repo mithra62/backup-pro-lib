@@ -9,7 +9,7 @@
  */
 namespace mithra62\BackupPro;
 
-use mithra62\Validate as m62Validate;
+use JaegerApp\Validate as m62Validate;
 
 /**
  * Backup Pro - Validation Object

@@ -78,7 +78,7 @@ class Files extends AbstractBackup
      * @param \mithra62\Files $file            
      * @return \mithra62\BackupPro\Backup\Files
      */
-    public function setFile(\mithra62\Files $file)
+    public function setFile(\JaegerApp\Files $file)
     {
         $this->file = $file;
         return $this;
@@ -218,7 +218,7 @@ class Files extends AbstractBackup
      *            The compression object
      * @return string The path to the newly created archive file
      */
-    public function backup($file_name, \mithra62\Compress $compress)
+    public function backup($file_name, \JaegerApp\Compress $compress)
     {
         $path = $this->backup->startTimer()
             ->getStorage()

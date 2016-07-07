@@ -10,7 +10,7 @@
  */
 namespace mithra62\BackupPro\Platforms;
 
-use mithra62\Platforms\Eecms as m62Eecms;
+use JaegerApp\Platforms\Eecms as m62Eecms;
 use mithra62\BackupPro\Platforms\PlatformInterface;
 
 /**

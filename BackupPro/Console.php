@@ -9,7 +9,7 @@
  */
 namespace mithra62\BackupPro;
 
-use mithra62\Console as m62Console;
+use JaegerApp\Console as m62Console;
 
 /**
  * Backup Pro - Console Object

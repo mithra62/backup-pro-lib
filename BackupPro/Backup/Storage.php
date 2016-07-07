@@ -233,7 +233,7 @@ class Storage
      *            The existing locations we may want to validate against
      * @return array
      */
-    public function validateDriver(\mithra62\Validate $validate, $driver, array $data, array $locations = array())
+    public function validateDriver(\JaegerApp\Validate $validate, $driver, array $data, array $locations = array())
     {
         $storage_drivers = $this->getAvailableStorageOptions();
         $validate->rule('required', 'storage_location_name')->message('{field} is required');

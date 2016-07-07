@@ -12,7 +12,7 @@ namespace mithra62\BackupPro\Backup\Database\Engines;
 
 use \mithra62\BackupPro\Backup\Database\DbAbstract;
 use \mithra62\BackupPro\Exceptions\Backup\DatabaseException;
-use \mithra62\Traits\MySQL\Mycnf;
+use \JaegerApp\Traits\MySQL\Mycnf;
 
 /**
  * Backup Pro - Mysqldump Backup Engine

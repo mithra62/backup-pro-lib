@@ -181,7 +181,7 @@ class Ftp extends AbstractStorage
      * @param array $drivers            
      * @return \mithra62\Validate
      */
-    public function validateSettings(\mithra62\Validate $validate, array $settings, array $drivers = array())
+    public function validateSettings(\JaegerApp\Validate $validate, array $settings, array $drivers = array())
     {
         $validate->rule('required', 'ftp_hostname')->message('{field} is required');
         $validate->rule('required', 'ftp_username')->message('{field} is required');

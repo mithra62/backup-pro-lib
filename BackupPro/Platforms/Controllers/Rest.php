@@ -9,7 +9,7 @@
  */
 namespace mithra62\BackupPro\Platforms\Controllers;
 
-use mithra62\Platforms\Controllers\Rest AS m62Rest;
+use JaegerApp\Platforms\Controllers\Rest AS m62Rest;
 use mithra62\BackupPro\Traits\Controller;
 use mithra62\BackupPro\Platforms\View\Rest as RestView;
 use Respect\Rest\Routable;

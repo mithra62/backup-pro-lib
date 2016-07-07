@@ -9,7 +9,7 @@
  */
 namespace mithra62\BackupPro;
 
-use mithra62\Settings as m62Settings;
+use JaegerApp\Settings as m62Settings;
 
 /**
  * Backup Pro - Settings Object
@@ -188,7 +188,7 @@ class Settings extends m62Settings
      * @param \mithra62\Db $db            
      * @param \mithra62\Language $lang            
      */
-    public function __construct(\mithra62\Db $db, \mithra62\Language $lang)
+    public function __construct(\JaegerApp\Db $db, \JaegerApp\Language $lang)
     {
         parent::__construct($db, $lang);
         $this->setTable($this->table);
@@ -245,7 +245,7 @@ class Settings extends m62Settings
      * @param \mithra62\Validate $validate            
      * @return \mithra62\BackupPro\Settings
      */
-    public function setValidate(\mithra62\Validate $validate)
+    public function setValidate(\JaegerApp\Validate $validate)
     {
         $this->validate = $validate;
         return $this;

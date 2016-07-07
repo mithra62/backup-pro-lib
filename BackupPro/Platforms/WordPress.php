@@ -10,7 +10,7 @@
  */
 namespace mithra62\BackupPro\Platforms;
 
-use mithra62\Platforms\WordPress as m62Wp;
+use JaegerApp\Platforms\WordPress as m62Wp;
 use mithra62\BackupPro\Platforms\PlatformInterface;
 
 /**

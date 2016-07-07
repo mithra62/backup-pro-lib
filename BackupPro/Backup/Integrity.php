@@ -10,7 +10,7 @@
  */
 namespace mithra62\BackupPro\Backup;
 
-use mithra62\Traits\DateTime;
+use JaegerApp\Traits\DateTime;
 
 /**
  * Backup Pro - Integrity Agent Object

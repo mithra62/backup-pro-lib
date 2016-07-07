@@ -10,7 +10,7 @@
  */
 namespace mithra62\BackupPro\Backup;
 
-use mithra62\Files as m62Files;
+use JaegerApp\Files as m62Files;
 use mithra62\BackupPro\Exceptions\Backup\ProgressException;
 
 /**

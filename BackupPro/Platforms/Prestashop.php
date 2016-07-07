@@ -10,7 +10,7 @@
  */
 namespace mithra62\BackupPro\Platforms;
 
-use mithra62\Platforms\Prestashop as m62Prestashop;
+use JaegerApp\Platforms\Prestashop as m62Prestashop;
 use mithra62\BackupPro\Platforms\PlatformInterface;
 
 /**

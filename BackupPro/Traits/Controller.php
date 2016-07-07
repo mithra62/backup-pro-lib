@@ -11,7 +11,7 @@
 namespace mithra62\BackupPro\Traits;
 
 use mithra62\BackupPro\Bootstrap;
-use mithra62\Traits\Log;
+use JaegerApp\Traits\Log;
 
 /**
  * Backup Pro - Controller Trait
