@@ -4,6 +4,13 @@
 		<echo msg="(${platform_name}) Deleting Vendor Folder..." />
 		<delete dir="${vendor_path}" />
 		
+        <echo msg="(${platform_name}) Copying Jaeger Files..." />
+		<copy todir="${vendor_path}/aura/jaeger-app">
+			<fileset dir="../mithra62-lib/vendor/jaeger-app">
+				<include name="**"></include>
+			</fileset>
+		</copy>	
+			
         <echo msg="(${platform_name}) Copying Aura SQL Files..." />
 		<copy todir="${vendor_path}/aura/sql/src">
 			<fileset dir="../mithra62-lib/vendor/aura/sql/src">
