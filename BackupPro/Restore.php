@@ -55,7 +55,7 @@ class Restore extends Backup
      *            Any specific optoins the drivers need
      * @param \mithra62\Shell $shell            
      */
-    public function database($database, array $options, \mithra62\Shell $shell)
+    public function database($database, array $options, \JaegerApp\Shell $shell)
     {
         try {
             $file_name = $options['file_name'];
@@ -104,7 +104,7 @@ class Restore extends Backup
      * @param array $options            
      * @param \mithra62\Files $file            
      */
-    public function files(array $options, \mithra62\Files $file, \mithra62\Regex $regex)
+    public function files(array $options, \JaegerApp\Files $file, \JaegerApp\Regex $regex)
     {}
 
     /**

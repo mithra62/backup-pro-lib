@@ -22,7 +22,6 @@ use JaegerApp\Exceptions\EmailException;
  */
 class Notify
 {
-
     /**
      * The mail object
      * 
@@ -57,7 +56,7 @@ class Notify
      * @param \mithra62\Email $mail            
      * @return \mithra62\BackupPro\Notify
      */
-    public function setMail(\mithra62\Email $mail)
+    public function setMail(\JaegerApp\Email $mail)
     {
         $this->mail = $mail;
         return $this;

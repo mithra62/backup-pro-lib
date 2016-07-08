@@ -230,7 +230,7 @@ class Backup
      * @throws \mithra62\BackupPro\Exceptions\Backup\StorageException
      * @throws \Exception
      */
-    public function database($database, array $options, \mithra62\Shell $shell)
+    public function database($database, array $options, \JaegerApp\Shell $shell)
     {
         try {
             $file_name = $this->getStorage()->makeDbFilename($options['db_backup_method'], $database);

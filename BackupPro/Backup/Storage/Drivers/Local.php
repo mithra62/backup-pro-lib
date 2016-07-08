@@ -12,7 +12,7 @@ namespace mithra62\BackupPro\Backup\Storage\Drivers;
 
 use mithra62\BackupPro\Backup\Storage\AbstractStorage;
 use mithra62\BackupPro\Remote;
-use mithra62\Remote\Local as m62Local;
+use JaegerApp\Remote\Local as m62Local;
 
 /**
  * Backup Pro - Local Storage Object

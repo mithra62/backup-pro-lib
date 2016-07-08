@@ -10,8 +10,8 @@
  */
 namespace mithra62\BackupPro\Restore\Database;
 
-use mithra62\Traits\DateTime;
-use mithra62\Traits\Log;
+use JaegerApp\Traits\DateTime;
+use JaegerApp\Traits\Log;
 
 /**
  * Backup Pro - Database Backup Interface
@@ -111,7 +111,7 @@ abstract class DbAbstract implements DbInterface
      * @param \mithra62\Shell $shell            
      * @return \mithra62\BackupPro\Backup\Database
      */
-    public function setShell(\mithra62\Shell $shell)
+    public function setShell(\JaegerApp\Shell $shell)
     {
         $this->shell = $shell;
         return $this;
