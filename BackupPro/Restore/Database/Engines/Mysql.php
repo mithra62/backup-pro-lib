@@ -11,7 +11,7 @@
 namespace mithra62\BackupPro\Restore\Database\Engines;
 
 use \mithra62\BackupPro\Restore\Database\DbAbstract;
-use \mithra62\Traits\MySQL\Mycnf;
+use \JaegerApp\Traits\MySQL\Mycnf;
 
 /**
  * Backup Pro - MySQL Database Restore Engine
