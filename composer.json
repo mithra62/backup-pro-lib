@@ -2,7 +2,7 @@
     "name": "mithra62/backup-pro-lib",
     "homepage": "https://backup-pro.com",
     "description": "Base libraries for Backup Pro",
-    "keywords": ["wordpress","eecms","prestashop","craftcms"],
+    "keywords": ["backup"],
     "authors": [
         {
             "name": "Eric Lamb",
