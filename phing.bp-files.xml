@@ -2,23 +2,12 @@
 <project name="Backup Pro Files" default="move_zip" description="Compiles the Jaeger files, Backup Pro library files, and static asssets together...">
 	<target name="m62-files" depends="vendor-no-dev-files">
 		<echo msg="" />
-		<echo msg="Copying files to mithra62 directory..." />
-		<copy todir="${jaeger_base}">
-			<fileset dir="../mithra62-lib/mithra62">
-				<include name="**"></include>
-				<exclude name="**/BackupPro/**"></exclude>
-				<exclude name="**/ExportIt**"></exclude>
-				<exclude name="**.phar**"></exclude>
-				<exclude name="**/docs/**"></exclude>
-				<exclude name="**/tests**"></exclude>
-			</fileset>
-		</copy>
-	
-		<echo msg="" />
 		<echo msg="Copying BackupPro files..." />
 		<copy todir="${backup_pro_logic_base}">
-			<fileset dir="../backup-pro-lib/BackupPro">
+			<fileset dir="../backup-pro-lib/mithra62">
 				<include name="**"></include>
+				<exclude name="**.phar**"></exclude>
+				<exclude name="**/docs/**"></exclude>
 				<exclude name="**/tests**"></exclude>
 			</fileset>
 		</copy>
