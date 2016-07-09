@@ -9,7 +9,7 @@
  */
 namespace mithra62\BackupPro\tests\Validate;
 
-use mithra62\tests\TestFixture;
+use mithra62\BackupPro\tests\TestFixture;
 use mithra62\BackupPro\Validate\Settings;
 
 /**
@@ -35,7 +35,7 @@ class SettingsTest extends TestFixture
         $settings = new Settings;
         $this->assertInstanceOf('mithra62\BackupPro\Validate\Settings', $settings->setExistingSettings(array()));
         $this->assertInstanceOf('mithra62\BackupPro\Validate', $settings->setExistingSettings(array()));
-        $this->assertInstanceOf('mithra62\Validate', $settings->setExistingSettings(array()));
+        $this->assertInstanceOf('JaegerApp\Validate', $settings->setExistingSettings(array()));
         $this->assertInstanceOf('Valitron\Validator', $settings->setExistingSettings(array()));
     }
     

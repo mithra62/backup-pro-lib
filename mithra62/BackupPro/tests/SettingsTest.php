@@ -10,9 +10,9 @@
 namespace mithra62\BackupPro\tests;
 
 use mithra62\BackupPro\Settings;
-use mithra62\Db;
-use mithra62\Language;
-use mithra62\tests\TestFixture;
+use JaegerApp\Db;
+use JaegerApp\Language;
+use mithra62\BackupPro\tests\TestFixture;
 
 /**
  * mithra62 - Settings object Unit Tests

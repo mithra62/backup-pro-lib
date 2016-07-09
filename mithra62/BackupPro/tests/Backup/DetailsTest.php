@@ -10,7 +10,7 @@
 namespace mithra62\BackupPro\tests\Backup;
 
 use \mithra62\BackupPro\Backup\Details;
-use \mithra62\tests\TestFixture;
+use mithra62\BackupPro\tests\TestFixture;
 
 class DetailsTest extends TestFixture
 {

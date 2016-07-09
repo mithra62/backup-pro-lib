@@ -9,10 +9,10 @@
  */
 namespace mithra62\BackupPro\tests\Backup;
 
-use \mithra62\Db;
+use \JaegerApp\Db;
 use \mithra62\BackupPro\Backup;
 use \mithra62\BackupPro\Backup\Database;
-use \mithra62\tests\TestFixture;
+use mithra62\BackupPro\tests\TestFixture;
 
 class DatabaseTest extends TestFixture
 {

@@ -9,7 +9,7 @@
  */
 namespace mithra62\BackupPro\tests;
 
-use TestTrait;
+use mithra62\BackupPro\tests\TestTrait;
 
 /**
  * mithra62 - Unit Test Fixture

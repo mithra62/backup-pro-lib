@@ -12,8 +12,8 @@
 namespace mithra62\BackupPro\tests;
 
 use mithra62\BackupPro\Backup;
-use mithra62\Db;
-use mithra62\tests\TestFixture;
+use JaegerApp\Db;
+use mithra62\BackupPro\tests\TestFixture;
 
 class BackupTest extends TestFixture
 {
@@ -39,7 +39,7 @@ class BackupTest extends TestFixture
         $backup = $this->getBackupObj();
         $this->assertClassHasAttribute('db', '\\mithra62\\BackupPro\Backup');
         $this->assertObjectHasAttribute('db', $backup);
-        $this->assertInstanceOf('\\mithra62\\Db', $backup->getDb());
+        $this->assertInstanceOf('\\JaegerApp\\Db', $backup->getDb());
     }
     
     public function testStoragePropertyDefaults()
@@ -74,7 +74,7 @@ class BackupTest extends TestFixture
     {
         $this->assertClassHasAttribute('compress', '\\mithra62\\BackupPro\Backup');
         $this->assertObjectHasAttribute('compress', $this->getBackupObj());
-        $this->assertInstanceOf('\\mithra62\\Compress', $this->getBackupObj()->getCompress());
+        $this->assertInstanceOf('\\JaegerApp\\Compress', $this->getBackupObj()->getCompress());
     }
     
     public function testDetailsPropertyDefaults()

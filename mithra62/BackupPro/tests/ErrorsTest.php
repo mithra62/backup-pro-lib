@@ -12,7 +12,7 @@
 namespace mithra62\BackupPro\tests;
 
 use mithra62\BackupPro\Errors;
-use mithra62\tests\TestFixture;
+use mithra62\BackupPro\tests\TestFixture;
 
 class ErrorsTest extends TestFixture
 {
@@ -83,7 +83,7 @@ class ErrorsTest extends TestFixture
     {
         $errors = new Errors;
         $this->assertInstanceOf('mithra62\BackupPro\Errors', $errors->checkBackupState(
-            new \mithra62\BackupPro\Backups(new \mithra62\Files ), 
+            new \mithra62\BackupPro\Backups(new \JaegerApp\Files ), 
             array('working_directory' => '', 'storage_details' => array(), 'file_backup_alert_threshold' => '', 'db_backup_alert_threshold' => ''))
         );
     }
@@ -93,7 +93,7 @@ class ErrorsTest extends TestFixture
         $this->setExpectedException('\InvalidArgumentException');
         $errors = new Errors;
         $this->assertInstanceOf('mithra62\BackupPro\Errors', $errors->checkBackupState(
-            new \mithra62\BackupPro\Backups(new \mithra62\Files ),
+            new \mithra62\BackupPro\Backups(new \JaegerApp\Files ),
             array())
         );
     }
