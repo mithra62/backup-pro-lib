@@ -11,3 +11,10 @@
 /mithra62/BackupPro/tests/data/s3creds.config.php
 /mithra62/BackupPro/tests/data/sftpcreds.config.php
 /vendor
+/tests/data/s3creds.config.php
+/tests/data/sftpcreds.config.php
+/tests/data/db.config.php
+/tests/data/dropboxcreds.config.php
+/tests/data/ftpcreds.config.php
+/tests/data/gcscreds.config.php
+/tests/data/rcfcreds.config.php
