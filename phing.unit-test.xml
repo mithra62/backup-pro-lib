@@ -7,19 +7,16 @@
 			haltonskipped="true"
 			haltonerror="true"
 			printsummary="true" 
-			bootstrap="../mithra62-lib/mithra62/tests/autoload.php"
-			pharlocation="../mithra62-lib/mithra62/bin/phpunit.phar"
+			bootstrap="../backup-pro-lib/tests/autoload.php"
+			pharlocation="../backup-pro-lib/vendor/bin/phpunit"
 		>
 			<formatter type="plain" usefile="false"/>
 			<batchtest>
-				<fileset dir="../mithra62-lib/mithra62/tests">
-					<include name="**/*Test.php"/>
-				</fileset>
-				<fileset dir="../mithra62-lib/mithra62/BackupPro/tests">
+				<fileset dir="../backup-pro-lib/tests">
 					<include name="**/*Test.php"/>
 					<exclude name="**/Browser/**"></exclude>
 				</fileset>
-				<fileset dir="../mithra62-lib/mithra62/BackupPro/tests/Browser/${mink_test_dir}">
+				<fileset dir="../backup-pro-lib/tests/Browser/${mink_test_dir}">
 					<include name="**/*Test.php"/>
 				</fileset>
 				
