@@ -10,7 +10,7 @@
 namespace mithra62\BackupPro\tests\Browser;
 
 use aik099\PHPUnit\BrowserTestCase;
-use mithra62\tests\TestTrait;
+use mithra62\BackupPro\tests\TestTrait;
 
 /**
  * mithra62 - (Selenium) Unit Test Fixture
