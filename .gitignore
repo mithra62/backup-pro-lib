@@ -1,3 +1,13 @@
 /*.project
 /*.buildpath
 /*.settings
+/composer.phar
+/composer.lock
+/mithra62/BackupPro/tests/data/db.config.php
+/mithra62/BackupPro/tests/data/dropboxcreds.config.php
+/mithra62/BackupPro/tests/data/ftpcreds.config.php
+/mithra62/BackupPro/tests/data/gcscreds.config.php
+/mithra62/BackupPro/tests/data/rcfcreds.config.php
+/mithra62/BackupPro/tests/data/s3creds.config.php
+/mithra62/BackupPro/tests/data/sftpcreds.config.php
+/vendor

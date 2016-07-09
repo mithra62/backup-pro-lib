@@ -1,0 +1,46 @@
+{
+    "name": "mithra62/backup-pro-lib",
+    "homepage": "https://backup-pro.com",
+    "description": "Base libraries for Backup Pro",
+    "keywords": ["wordpress","eecms","prestashop","craftcms"],
+    "authors": [
+        {
+            "name": "Eric Lamb",
+            "homepage": "https://mithra62.com"
+        }
+    ],
+    "license": "proprietary",
+	"require": {
+		"jaeger-app/jaeger": "^0.1",
+		"jaeger-app/platforms-c5": "^0.1",
+		"jaeger-app/view": "^0.1",
+		"jaeger-app/remote": "^0.1",
+		"jaeger-app/remote-s3": "^0.1",
+		"jaeger-app/remote-rcf": "^0.1",
+		"jaeger-app/remote-gcs": "^0.1",
+		"jaeger-app/remote-ftp": "^0.1",
+		"jaeger-app/remote-sftp": "^0.1",
+		"jaeger-app/remote-dropbox": "^0.1",
+		"jaeger-app/encoding": "^0.1",
+		"jaeger-app/db-mysql": "^0.1",
+		"jaeger-app/validate-sftp": "^0.1",
+		"jaeger-app/validate-ftp": "^0.1",
+		"jaeger-app/validate-s3": "^0.1",
+		"jaeger-app/validate-gcs": "^0.1",
+		"jaeger-app/validate-rcf": "^0.1",
+		"jaeger-app/validate-dropbox": "^0.1",
+        "soundintheory/php-sql-parser": "^1.0"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "4.*",
+		"behat/mink": "^1.7",
+		"behat/mink-goutte-driver": "^1.2",
+		"behat/mink-selenium2-driver": "^1.3",
+		"aik099/phpunit-mink": "~2.0"
+	},
+	"autoload": {
+		"psr-0": {
+			"mithra62": ""
+		}
+	}
+}
