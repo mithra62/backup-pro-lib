@@ -12,7 +12,7 @@
 namespace mithra62\BackupPro\tests;
 
 use mithra62\BackupPro\BackupPro;
-use mithra62\tests\TestFixture;
+use TestFixture;
 
 class _bp_interface_test implements BackupPro
 {

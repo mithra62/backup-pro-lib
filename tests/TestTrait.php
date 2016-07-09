@@ -1,5 +1,5 @@
 <?php
-namespace mithra62\tests;
+namespace mithra62\BackupPro\tests;
 
 trait TestTrait
 {

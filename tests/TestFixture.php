@@ -7,9 +7,9 @@
  * @version		1.0
  * @filesource 	./mithra62/tests/TestFixture.php
  */
-namespace mithra62\tests;
+namespace mithra62\BackupPro\tests;
 
-use mithra62\tests\TestTrait;
+use TestTrait;
 
 /**
  * mithra62 - Unit Test Fixture
