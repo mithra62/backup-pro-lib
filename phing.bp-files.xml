@@ -42,12 +42,6 @@
 		 <equals arg1="${platform_name}" arg2="Concrete5" />
 		 <then>
 		   <echo message="Removing non Concrete5 Platform objects" />
-		 	<delete file="${jaeger_base}/Platforms/Eecms.php" />
-		 	<delete file="${jaeger_base}/Platforms/Ee3.php" />
-		 	<delete file="${jaeger_base}/Platforms/Wordpress.php" />
-			<delete file="${jaeger_base}/Platforms/Prestashop.php" />
-		 	<delete file="${jaeger_base}/Platforms/Craft.php" />
-		 	<delete file="${jaeger_base}/Platforms/Magento.php" />
 		 	<delete file="${jaeger_base}/BackupPro/Platforms/Eecms.php" />
 		 	<delete file="${jaeger_base}/BackupPro/Platforms/Ee3.php" />
 		 	<delete file="${jaeger_base}/BackupPro/Platforms/Wordpress.php" />
@@ -67,14 +61,6 @@
 			<delete file="${jaeger_base}/BackupPro/Platforms/View/Smarty.php" />
 			<delete file="${jaeger_base}/BackupPro/Platforms/View/Magento.php" />
 			<delete file="${jaeger_base}/BackupPro/Platforms/View/m62TwigExtension.php" />
-			<delete file="${jaeger_base}/Platforms/View/Ee3.php" />
-			<delete file="${jaeger_base}/Platforms/View/Eecms.php" />
-			<delete file="${jaeger_base}/Platforms/View/Prestashop.php" />
-			<delete file="${jaeger_base}/Platforms/View/Magento.php" />
-			<delete file="${jaeger_base}/Platforms/View/m62TwigExtension.php" />
-			<delete file="${jaeger_base}/Platforms/View/Smarty.php" />
-			<delete file="${jaeger_base}/Platforms/View/Wordpress.php" />
-			<delete dir="${jaeger_base}/Platforms/Craft" includeemptydirs="true" />
 			<delete dir="${jaeger_base}/BackupPro/Platforms/Console" includeemptydirs="true" />
 		 </then>
 		 <else>
