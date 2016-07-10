@@ -13,6 +13,10 @@
 	"require": {
 		"jaeger-app/jaeger": "^0.1",
 		"jaeger-app/platforms-c5": "^0.1",
+		"jaeger-app/platforms-craft": "^0.1",
+		"jaeger-app/platforms-ee3": "^0.1",
+		"jaeger-app/platforms-prestashop": "^0.1",
+		"jaeger-app/platforms-wp": "^0.1",
 		"jaeger-app/view": "^0.1",
 		"jaeger-app/remote": "^0.1",
 		"jaeger-app/remote-s3": "^0.1",
