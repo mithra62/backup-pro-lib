@@ -9,8 +9,8 @@
  */
 namespace mithra62\BackupPro\tests\Browser;
 
-use mithra62\Db;
-use mithra62\Files;
+use JaegerApp\Db;
+use JaegerApp\Files;
 
 /**
  * Backup Pro - Prestashop Trait
