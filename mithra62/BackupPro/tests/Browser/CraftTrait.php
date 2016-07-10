@@ -9,7 +9,7 @@
  */
 namespace mithra62\BackupPro\tests\Browser;
 
-use mithra62\Db;
+use JaegerApp\Db;
 
 /**
  * Backup Pro - Craft Trait
