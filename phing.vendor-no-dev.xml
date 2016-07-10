@@ -6,175 +6,175 @@
 		
         <echo msg="(${platform_name}) Copying Jaeger Files..." />
 		<copy todir="${vendor_path}/jaeger-app">
-			<fileset dir="../mithra62-lib/vendor/jaeger-app">
+			<fileset dir="../backup-pro-lib/vendor/jaeger-app">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
 			
         <echo msg="(${platform_name}) Copying Aura SQL Files..." />
 		<copy todir="${vendor_path}/aura/sql/src">
-			<fileset dir="../mithra62-lib/vendor/aura/sql/src">
+			<fileset dir="../backup-pro-lib/vendor/aura/sql/src">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
 		
         <echo msg="(${platform_name}) Copying Aura SQL Query Files..." />
 		<copy todir="${vendor_path}/aura/sqlquery/src">
-			<fileset dir="../mithra62-lib/vendor/aura/sqlquery/src">
+			<fileset dir="../backup-pro-lib/vendor/aura/sqlquery/src">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
 		
         <echo msg="(${platform_name}) Copying AWS Common Files..." />
 		<copy todir="${vendor_path}/aws/aws-sdk-php/src/Aws/Common">
-			<fileset dir="../mithra62-lib/vendor/aws/aws-sdk-php/src/Aws/Common">
+			<fileset dir="../backup-pro-lib/vendor/aws/aws-sdk-php/src/Aws/Common">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
 					
         <echo msg="(${platform_name}) Copying AWS S3 Files..." />
 		<copy todir="${vendor_path}/aws/aws-sdk-php/src/Aws/S3">
-			<fileset dir="../mithra62-lib/vendor/aws/aws-sdk-php/src/Aws/S3">
+			<fileset dir="../backup-pro-lib/vendor/aws/aws-sdk-php/src/Aws/S3">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
 					
         <echo msg="(${platform_name}) Copying Composer Files..." />
 		<copy todir="${vendor_path}/composer">
-			<fileset dir="../mithra62-lib/vendor/composer">
+			<fileset dir="../backup-pro-lib/vendor/composer">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
 		
 		<echo msg="(${platform_name}) Copying Crell API Problem Files..." />
 		<copy todir="${vendor_path}/crell/api-problem/src">
-		<fileset dir="../mithra62-lib/vendor/crell/api-problem/src">
+		<fileset dir="../backup-pro-lib/vendor/crell/api-problem/src">
 			<include name="**"></include>
 		</fileset>
 		</copy>	
 					
         <echo msg="(${platform_name}) Copying Dropbox Files..." />
 		<copy todir="${vendor_path}/dropbox/dropbox-sdk/lib/Dropbox">
-			<fileset dir="../mithra62-lib/vendor/dropbox/dropbox-sdk/lib/Dropbox">
+			<fileset dir="../backup-pro-lib/vendor/dropbox/dropbox-sdk/lib/Dropbox">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
 					
         <echo msg="(${platform_name}) Copying Guzzle Files..." />
 		<copy todir="${vendor_path}/guzzle/guzzle/src/Guzzle">
-			<fileset dir="../mithra62-lib/vendor/guzzle/guzzle/src/Guzzle">
+			<fileset dir="../backup-pro-lib/vendor/guzzle/guzzle/src/Guzzle">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
 					
         <echo msg="(${platform_name}) Copying League Files..." />
 		<copy todir="${vendor_path}/league">
-			<fileset dir="../mithra62-lib/vendor/league">
+			<fileset dir="../backup-pro-lib/vendor/league">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
 					
         <echo msg="(${platform_name}) Copying PHP Shell Files..." />
 		<copy todir="${vendor_path}/mikehaertl/php-shellcommand/src">
-			<fileset dir="../mithra62-lib/vendor/mikehaertl/php-shellcommand/src">
+			<fileset dir="../backup-pro-lib/vendor/mikehaertl/php-shellcommand/src">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
 					
         <echo msg="Copying JSON Patch Files..." />
 		<copy todir="${vendor_path}/mikemccabe/json-patch-php/src">
-			<fileset dir="../mithra62-lib/vendor/mikemccabe/json-patch-php/src">
+			<fileset dir="../backup-pro-lib/vendor/mikemccabe/json-patch-php/src">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
 					
         <echo msg="(${platform_name}) Copying Monolog Files..." />
 		<copy todir="${vendor_path}/monolog/monolog/src/Monolog">
-			<fileset dir="../mithra62-lib/vendor/monolog/monolog/src/Monolog">
+			<fileset dir="../backup-pro-lib/vendor/monolog/monolog/src/Monolog">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
 					
         <echo msg="(${platform_name}) Copying Mustache Files..." />
 		<copy todir="${vendor_path}/mustache/mustache/src/Mustache">
-			<fileset dir="../mithra62-lib/vendor/mustache/mustache/src/Mustache">
+			<fileset dir="../backup-pro-lib/vendor/mustache/mustache/src/Mustache">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
 					
         <echo msg="(${platform_name}) Copying Neitanod Force UFT8 Files..." />
 		<copy todir="${vendor_path}/neitanod/forceutf8/src/ForceUTF8">
-			<fileset dir="../mithra62-lib/vendor/neitanod/forceutf8/src/ForceUTF8">
+			<fileset dir="../backup-pro-lib/vendor/neitanod/forceutf8/src/ForceUTF8">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
 					
         <echo msg="(${platform_name}) Copying Nesbot Carbon Files..." />
 		<copy todir="${vendor_path}/nesbot/carbon/src/Carbon">
-			<fileset dir="../mithra62-lib/vendor/nesbot/carbon/src/Carbon">
+			<fileset dir="../backup-pro-lib/vendor/nesbot/carbon/src/Carbon">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
 		
 		<echo msg="(${platform_name}) Copying Nocarrier Hal Files..." />
 		<copy todir="${vendor_path}/nocarrier/hal/src">
-		<fileset dir="../mithra62-lib/vendor/nocarrier/hal/src">
+		<fileset dir="../backup-pro-lib/vendor/nocarrier/hal/src">
 			<include name="**"></include>
 		</fileset>
 		</copy>	
 					
         <echo msg="(${platform_name}) Copying Phine Files..." />
 		<copy todir="${vendor_path}/phine/exception/src/lib/Phine/Exception">
-			<fileset dir="../mithra62-lib/vendor/phine/exception/src/lib/Phine/Exception">
+			<fileset dir="../backup-pro-lib/vendor/phine/exception/src/lib/Phine/Exception">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
 					
         <echo msg="(${platform_name}) Copying PHP Sec Lib Files..." />
 		<copy todir="${vendor_path}/phpseclib/phpseclib/phpseclib">
-			<fileset dir="../mithra62-lib/vendor/phpseclib/phpseclib/phpseclib">
+			<fileset dir="../backup-pro-lib/vendor/phpseclib/phpseclib/phpseclib">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
 					
         <echo msg="(${platform_name}) Copying Pimple Files..." />
 		<copy todir="${vendor_path}/pimple/pimple/src/Pimple">
-			<fileset dir="../mithra62-lib/vendor/pimple/pimple/src/Pimple">
+			<fileset dir="../backup-pro-lib/vendor/pimple/pimple/src/Pimple">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
 		
 		<echo msg="(${platform_name}) Copying Random Compat Files..." />
 		<copy todir="${vendor_path}/paragonie/random_compat/lib">
-		<fileset dir="../mithra62-lib/vendor/paragonie/random_compat/lib">
+		<fileset dir="../backup-pro-lib/vendor/paragonie/random_compat/lib">
 			<include name="**"></include>
 		</fileset>
 		</copy>	
 			 
         <echo msg="(${platform_name}) Copying ircmaxell Files..." />
 		<copy todir="${vendor_path}/ircmaxell">
-			<fileset dir="../mithra62-lib/vendor/ircmaxell">
+			<fileset dir="../backup-pro-lib/vendor/ircmaxell">
 				<include name="**"></include>
 			</fileset>
 		</copy>
 		
 		<echo msg="(${platform_name}) Copying PhilipBrown Signature Files..." />
 		<copy todir="${vendor_path}/philipbrown/signature-php/src">
-		<fileset dir="../mithra62-lib/vendor/philipbrown/signature-php/src">
+		<fileset dir="../backup-pro-lib/vendor/philipbrown/signature-php/src">
 			<include name="**"></include>
 		</fileset>
 		</copy>	
 					
         <echo msg="(${platform_name}) Copying PSR Files..." />
 		<copy todir="${vendor_path}/psr/log/Psr/Log">
-			<fileset dir="../mithra62-lib/vendor/psr/log/Psr/Log">
+			<fileset dir="../backup-pro-lib/vendor/psr/log/Psr/Log">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
 					
         <echo msg="(${platform_name}) Copying Rackspace Files..." />
 		<copy todir="${vendor_path}/rackspace/php-opencloud/lib">
-			<fileset dir="../mithra62-lib/vendor/rackspace/php-opencloud/lib">
+			<fileset dir="../backup-pro-lib/vendor/rackspace/php-opencloud/lib">
 				<include name="**"></include>
 			</fileset>
 		</copy>	
@@ -183,7 +183,7 @@
 		Removed in 3.3.1
 		<echo msg="(${platform_name}) Copying React Files..." />
 		<copy todir="${vendor_path}/react/promise/src">
-		<fileset dir="../mithra62-lib/vendor/react/promise/src">
+		<fileset dir="../backup-pro-lib/vendor/react/promise/src">
 			<include name="**"></include>
 		</fileset>
 		</copy>	
@@ -192,56 +192,56 @@
 		
 		<echo msg="(${platform_name}) Copying Guzzle Promise Files..." />
 		<copy todir="${vendor_path}/guzzlehttp/promises/src">
-		<fileset dir="../mithra62-lib/vendor/guzzlehttp/promises/src">
+		<fileset dir="../backup-pro-lib/vendor/guzzlehttp/promises/src">
 			<include name="**"></include>
 		</fileset>
 		</copy>	
 		
 		<echo msg="(${platform_name}) Copying Guzzle PSR7 Files..." />
 		<copy todir="${vendor_path}/guzzlehttp/psr7/src">
-		<fileset dir="../mithra62-lib/vendor/guzzlehttp/psr7/src">
+		<fileset dir="../backup-pro-lib/vendor/guzzlehttp/psr7/src">
 			<include name="**"></include>
 		</fileset>
 		</copy>	
 		
 		<echo msg="(${platform_name}) Copying Guzzle Files..." />
 		<copy todir="${vendor_path}/guzzlehttp/guzzle/src">
-		<fileset dir="../mithra62-lib/vendor/guzzlehttp/guzzle/src">
+		<fileset dir="../backup-pro-lib/vendor/guzzlehttp/guzzle/src">
 			<include name="**"></include>
 		</fileset>
 		</copy>			
 		
         <echo msg="(${platform_name}) Copying Regex Guard Files..." />
 		<copy todir="${vendor_path}/regex-guard/regex-guard/src">
-			<fileset dir="../mithra62-lib/vendor/regex-guard/regex-guard/src">
+			<fileset dir="../backup-pro-lib/vendor/regex-guard/regex-guard/src">
 				<include name="**"></include>
 			</fileset>
 		</copy>
 		
 		<echo msg="(${platform_name}) Copying Relative Time Files..." />
 		<copy todir="${vendor_path}/mpratt/relativetime/Lib/RelativeTime">
-			<fileset dir="../mithra62-lib/vendor/mpratt/relativetime/Lib/RelativeTime">
+			<fileset dir="../backup-pro-lib/vendor/mpratt/relativetime/Lib/RelativeTime">
 				<include name="**"></include>
 			</fileset>
 		</copy>
 		
 		<echo msg="(${platform_name}) Copying Respect Rest Files..." />
 		<copy todir="${vendor_path}/respect/rest/library">
-			<fileset dir="../mithra62-lib/vendor/respect/rest/library">
+			<fileset dir="../backup-pro-lib/vendor/respect/rest/library">
 				<include name="**"></include>
 			</fileset>
 		</copy>
 		
 		<echo msg="(${platform_name}) Copying Sound In Theory SQL Parser Files..." />
 		<copy todir="${vendor_path}/soundintheory/php-sql-parser/src">
-			<fileset dir="../mithra62-lib/vendor/soundintheory/php-sql-parser/src">
+			<fileset dir="../backup-pro-lib/vendor/soundintheory/php-sql-parser/src">
 				<include name="**"></include>
 			</fileset>
 		</copy>
 					
         <echo msg="(${platform_name}) Copying Symfony Files..." />
 		<copy todir="${vendor_path}/symfony">
-			<fileset dir="../mithra62-lib/vendor/symfony">
+			<fileset dir="../backup-pro-lib/vendor/symfony">
 				<include name="**"></include>
 				<exclude name="**/Tests/**"></exclude>
 				<exclude name="**.md"></exclude>
@@ -249,77 +249,70 @@
 				<exclude name="**phpunit.xml.dist"></exclude>
 			</fileset>
 		</copy>
-		
-		<echo msg="(${platform_name}) Copying Swiftmailer Files..." />
-		<copy todir="${vendor_path}/swiftmailer/swiftmailer/lib">
-			<fileset dir="../mithra62-lib/vendor/swiftmailer/swiftmailer/lib">
-				<include name="**"></include>
-			</fileset>
-		</copy>
 					
         <echo msg="(${platform_name}) Copying Valitron Files..." />
 		<copy todir="${vendor_path}/vlucas/valitron/src/Valitron">
-			<fileset dir="../mithra62-lib/vendor/vlucas/valitron/src/Valitron">
+			<fileset dir="../backup-pro-lib/vendor/vlucas/valitron/src/Valitron">
 				<include name="**"></include>
 			</fileset>
 		</copy>
 		<copy todir="${vendor_path}/vlucas/valitron/lang">
-			<fileset dir="../mithra62-lib/vendor/vlucas/valitron/lang">
+			<fileset dir="../backup-pro-lib/vendor/vlucas/valitron/lang">
 				<include name="**"></include>
 			</fileset>
 		</copy>
 					
         <echo msg="(${platform_name}) Copying Voku Portable UTF-8 Files..." />
 		<copy todir="${vendor_path}/voku/portable-utf8">
-			<fileset dir="../mithra62-lib/vendor/voku/portable-utf8">
+			<fileset dir="../backup-pro-lib/vendor/voku/portable-utf8">
 				<include name="**"></include>
 			</fileset>
 		</copy>
 			
 		<echo msg="(${platform_name}) Copying Voku Arrayy Files..." />
 		<copy todir="${vendor_path}/voku/arrayy/src">
-		<fileset dir="../mithra62-lib/vendor/voku/arrayy/src">
+		<fileset dir="../backup-pro-lib/vendor/voku/arrayy/src">
 			<include name="**"></include>
 		</fileset>
 		</copy>
 					
         <echo msg="(${platform_name}) Copying Voku Cache Files..." />
 		<copy todir="${vendor_path}/voku/simple-cache/src/voku/cache">
-			<fileset dir="../mithra62-lib/vendor/voku/simple-cache/src/voku/cache">
+			<fileset dir="../backup-pro-lib/vendor/voku/simple-cache/src/voku/cache">
 				<include name="**"></include>
 			</fileset>
 		</copy>
 					
         <echo msg="(${platform_name}) Copying Voku Db Files..." />
 		<copy todir="${vendor_path}/voku/simple-mysqli/src/voku/db">
-			<fileset dir="../mithra62-lib/vendor/voku/simple-mysqli/src/voku/db">
+			<fileset dir="../backup-pro-lib/vendor/voku/simple-mysqli/src/voku/db">
 				<include name="**"></include>
 			</fileset>
 		</copy>
 		
 		<echo msg="(${platform_name}) Copying WP CLI Files..." />
 		<copy todir="${vendor_path}/wp-cli/php-cli-tools/lib/cli">
-		<fileset dir="../mithra62-lib/vendor/wp-cli/php-cli-tools/lib/cli">
+		<fileset dir="../backup-pro-lib/vendor/wp-cli/php-cli-tools/lib/cli">
 			<include name="**"></include>
 		</fileset>
 		</copy>		
 		
 		<echo msg="(${platform_name}) Copying Escaper Files..." />
 		<copy todir="${vendor_path}/zendframework/zend-escaper/src">
-		<fileset dir="../mithra62-lib/vendor/zendframework/zend-escaper/src">
+		<fileset dir="../backup-pro-lib/vendor/zendframework/zend-escaper/src">
 			<include name="**"></include>
 		</fileset>
 		</copy>	
 		
 		<echo msg="(${platform_name}) Copying Ramsy Files..." />
 		<copy todir="${vendor_path}/ramsey/array_column/src">
-		<fileset dir="../mithra62-lib/vendor/ramsey/array_column/src">
+		<fileset dir="../backup-pro-lib/vendor/ramsey/array_column/src">
 			<include name="**"></include>
 		</fileset>
 		</copy>	
 					
         <echo msg="(${platform_name}) Copying Autoload File..." />
-		<copy toFile="${vendor_path}/autoload.php" file="../mithra62-lib/vendor/autoload.php" />
+		<copy toFile="${vendor_path}/autoload.php" file="../backup-pro-lib/vendor/autoload.php" />
 
 	</target>
 </project> 
