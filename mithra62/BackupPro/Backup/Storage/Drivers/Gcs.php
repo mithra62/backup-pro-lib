@@ -11,7 +11,7 @@
 namespace mithra62\BackupPro\Backup\Storage\Drivers;
 
 use mithra62\BackupPro\Remote;
-use mithra62\Remote\Gcs as m62Gcs;
+use JaegerApp\Remote\Gcs as m62Gcs;
 
 /**
  * Backup Pro - Google Cloud Storage Storage Object

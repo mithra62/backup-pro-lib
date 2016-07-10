@@ -13,7 +13,7 @@ namespace mithra62\BackupPro\Backup\Storage\Drivers;
 use mithra62\BackupPro\Backup\Storage\AbstractStorage;
 use mithra62\BackupPro\Exceptions\Backup\StorageException;
 use mithra62\BackupPro\Remote;
-use mithra62\Remote\Dropbox as m62Dropbox;
+use JaegerApp\Remote\Dropbox as m62Dropbox;
 
 /**
  * Backup Pro - Dropbox Storage Object

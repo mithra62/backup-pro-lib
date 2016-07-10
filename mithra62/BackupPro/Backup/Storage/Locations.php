@@ -74,7 +74,7 @@ class Locations
      * @param \mithra62\Settings $setting            
      * @return \mithra62\BackupPro\Backup\Storage\Locations
      */
-    public function setSetting(\mithra62\Settings $setting)
+    public function setSetting(\JaegerApp\Settings $setting)
     {
         $this->setting = $setting;
         return $this;
@@ -106,8 +106,6 @@ class Locations
     /**
      * Creates a Location storage item in the Settings data
      * 
-     * @param \mithra62\Settings $settings
-     *            The Settings object to save the Location data
      * @param string $driver
      *            The name of the driver we're using
      * @param array $data            
@@ -130,8 +128,6 @@ class Locations
     /**
      * Updates a Location storage item in the Settings data
      * 
-     * @param \mithra62\Settings $settings
-     *            The Settings object to save the Location data
      * @param string $storage_id
      *            The storage location we're updating
      * @param array $data
@@ -153,16 +149,6 @@ class Locations
         
         return false;
     }
-
-    /**
-     *
-     * @param \mithra62\Settings $settings
-     *            The Settings object to save the Location data
-     * @param string $storage_id            
-     * @param array $data
-     *            The name of the driver we're using
-     * @return boolean
-     */
     
     /**
      * Removes a Location storage item in the Settings data

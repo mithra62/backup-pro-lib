@@ -13,7 +13,7 @@ namespace mithra62\BackupPro\Backup\Storage\Drivers;
 use mithra62\BackupPro\Backup\Storage\AbstractStorage;
 use mithra62\BackupPro\Exceptions\Backup\StorageException;
 use mithra62\BackupPro\Remote;
-use mithra62\Remote\S3 as m62S3;
+use JaegerApp\Remote\S3 as m62S3;
 
 /**
  * Backup Pro - S3 Storage Object
