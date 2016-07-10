@@ -5,7 +5,7 @@
 		<delete dir="${vendor_path}" />
 		
         <echo msg="(${platform_name}) Copying Jaeger Files..." />
-		<copy todir="${vendor_path}/aura/jaeger-app">
+		<copy todir="${vendor_path}/jaeger-app">
 			<fileset dir="../mithra62-lib/vendor/jaeger-app">
 				<include name="**"></include>
 			</fileset>
