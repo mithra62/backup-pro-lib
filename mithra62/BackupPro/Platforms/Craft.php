@@ -24,6 +24,11 @@ use Craft\UrlHelper;
  */
 class Craft extends m62Craft implements PlatformInterface
 {
+    /**
+     * The settings table name
+     * @var string
+     */
+    protected $settings_table = '_backup_pro_settings';
 
     /**
      * (non-PHPdoc)
