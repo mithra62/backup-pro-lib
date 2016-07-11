@@ -30,6 +30,12 @@ class Eecms extends m62Eecms implements PlatformInterface
     protected $config_key = 'backup_pro';
     
     /**
+     * The settings table name
+     * @var string
+     */
+    protected $settings_table = 'backup_pro_settings';
+    
+    /**
      * (non-PHPdoc)
      * 
      * @see \mithra62\BackupPro\Platforms\PlatformInterface::getCronCommands()

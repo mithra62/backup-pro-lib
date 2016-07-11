@@ -9,8 +9,8 @@
  */
 namespace mithra62\BackupPro\Platforms\View;
 
-use mithra62\Platforms\View\Ee3 as Ee3View;
-use mithra62\BackupPro\Traits\View\Helpers As ViewHelpers;
+use JaegerApp\Platforms\View\Ee3 as Ee3View;
+use JaegerApp\BackupPro\Traits\View\Helpers As ViewHelpers;
 
 /**
  * Backup Pro - ExpressionEngine 3 View abstraction
