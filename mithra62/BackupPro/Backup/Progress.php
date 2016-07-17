@@ -123,19 +123,29 @@ class Progress
      */
     public function writeLog($msg, $total_items = 0, $item_number = 0)
     {
-        return;
-        if ($item_number > $total_items) {
-            $item_number = $total_items;
+        try {
+            if( $this->shouldLog() ) {
+                if ($item_number > $total_items) {
+                    $item_number = $total_items;
+                }
+                
+                $log = array(
+                    'total_items' => $total_items,
+                    'item_number' => $item_number,
+                    'msg' => $msg
+                );
+                $log = json_encode($log);
+                
+                $this->getFile()->write($this->getProgressLogFile(), $log, 'a+');
+            }
         }
-        
-        $log = array(
-            'total_items' => $total_items,
-            'item_number' => $item_number,
-            'msg' => $msg
-        );
-        $log = json_encode($log);
-        
-        $this->getFile()->write($this->getProgressLogFile(), $log, 'a+');
+        catch (ProgressException $e) {
+            $e->logException($e);
+            throw new ProgressException($e->getMessage());
+        } catch (\Exception $e) {
+            $e->logException($e);
+            throw new \Exception($e->getMessage());
+        }
     }
 
     /**
@@ -149,7 +159,7 @@ class Progress
     /**
      * Creates an instance of the File object
      * 
-     * @return \mithra62\BackupPro\Backup\Files
+     * @return \JaegerApp\\Files
      */
     public function getFile()
     {
@@ -160,28 +170,60 @@ class Progress
         return $this->file;
     }
     
+    /**
+     * Determine's if progress should be logged
+     * @return bool
+     */
+    protected function shouldLog()
+    {
+        return true;
+    }
+    
+    /**
+     * Calculates the execution time for the progress writing
+     * @return int
+     */
     protected function computeElapsedTime() {
         return $this->timer_stop - $this->timer_start;
     }
     
-    protected function getElapsedTime() {
+    /**
+     * Returns the current time
+     * @return int
+     */
+    protected function getTime() {
         $mtime = microtime();
         $mtime = explode( " ", $mtime );
         return $mtime[1] + $mtime[0];
     }    
 
+    /**
+     * Starts the timer
+     * @return \mithra62\BackupPro\Backup\Progress
+     */
     protected function startTimer() {
-        $this->timer_start = $this->getElapsedTime();
+        $this->timer_start = $this->getTime();
+        return $this;
     }
     
+    /**
+     * Stops the timer
+     * @return \mithra62\BackupPro\Backup\Progress
+     */
     protected function stopTimer() {
-        $this->timer_stop = $this->getElapsedTime();
+        $this->timer_stop = $this->getTime();
         $this->timer_elapsed = $this->computeElapsedTime();
+        return $this;
     }
     
+    /**
+     * Resets the timer back to defaults
+     * @return \mithra62\BackupPro\Backup\Progress
+     */
     protected function resetTimer() {
         $this->timer_start   = 0;
         $this->timer_stop    = 0;
         $this->timer_elapsed = 0;
+        return $this;
     }    
 }
