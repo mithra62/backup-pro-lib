@@ -225,7 +225,8 @@ class Files extends AbstractBackup
             ->getFileBackupNamePath($file_name);
         $backup_paths = $this->getBackupPaths();
         $progress = $this->backup->getProgress();
-        $progress->writeLog('backup_progress_bar_start_file_list', 'na', 1);
+        $item_count = 1;
+        $progress->writeLog('backup_progress_bar_start_file_list', '', 'na', $item_count);
         $backup_files = array();
         foreach ($backup_paths as $dir) {
             $dir = trim($dir);
@@ -268,14 +269,20 @@ class Files extends AbstractBackup
             throw new FilesException("Nothing to backup. No files. Nothing... Lame... Check your Exclude Paths since they matched all files...");
         }
         
-        $progress->writeLog('backup_progress_bar_stop_file_list', count($backup_files), 2);
+        $item_count++;
+        $total_files = count($backup_files);
+        $progress->writeLog('backup_progress_bar_stop_file_list', '', $total_files, $item_count);
         $compress->create($path);
         
         foreach ($backup_files as $file) {
+            $item_count++;
             $compress->add($file['path'], $file['rel']);
+            $progress->writeLog('backup_progress_bar_add_file', $file['rel'], $total_files, $item_count);
         }
         
         $path = $compress->close();
+        $item_count++;
+        $progress->writeLog('backup_progress_bar_backup_archive_complete', '', $total_files, $item_count);
         
         return $path;
     }

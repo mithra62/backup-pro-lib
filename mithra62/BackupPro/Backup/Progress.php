@@ -121,7 +121,7 @@ class Progress
      * @param int $total_items            
      * @param int $item_number            
      */
-    public function writeLog($msg, $total_items = 0, $item_number = 0)
+    public function writeLog($msg, $item = false, $total_items = 0, $item_number = 0)
     {
         try {
             if( $this->shouldLog() ) {
@@ -132,11 +132,12 @@ class Progress
                 $log = array(
                     'total_items' => $total_items,
                     'item_number' => $item_number,
-                    'msg' => $msg
+                    'msg' => $msg,
+                    'item' => $item
                 );
-                $log = json_encode($log);
                 
-                $this->getFile()->write($this->getProgressLogFile(), $log, 'a+');
+                $log = json_encode($log);
+                $this->getFile()->write($this->getProgressLogFile(), $log, 'w+');
             }
         }
         catch (ProgressException $e) {
@@ -176,7 +177,12 @@ class Progress
      */
     protected function shouldLog()
     {
-        return true;
+        $this->stopTimer();
+        if( $this->computeElapsedTime() >= 1) {
+            $this->computeElapsedTime();
+            $this->startTimer();
+            return true;
+        }
     }
     
     /**
@@ -221,8 +227,8 @@ class Progress
      * @return \mithra62\BackupPro\Backup\Progress
      */
     protected function resetTimer() {
-        $this->timer_start   = 0;
-        $this->timer_stop    = 0;
+        $this->timer_start = 0;
+        $this->timer_stop = 0;
         $this->timer_elapsed = 0;
         return $this;
     }    
