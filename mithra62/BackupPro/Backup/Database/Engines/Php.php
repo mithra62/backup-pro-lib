@@ -232,7 +232,7 @@ class Php extends DbAbstract
                 if ($data == '') {
                     if (is_null($value)) {
                         $data = 'NULL';
-                    } elseif (!$obj instanceof Php\Columns) { //we have to escape strings
+                    } elseif (isset($obj) && !$obj instanceof Php\Columns) { //we have to escape strings that haven't been abstracted
                         $data = "'" . $this->getContext()
                             ->getBackup()
                             ->getDb()
