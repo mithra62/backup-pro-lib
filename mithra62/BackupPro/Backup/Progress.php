@@ -22,8 +22,7 @@ use mithra62\BackupPro\Exceptions\Backup\ProgressException;
  * @author Eric Lamb <eric@mithra62.com>
  */
 class Progress
-{
-
+{   
     /**
      * The File object
      * 
@@ -51,6 +50,30 @@ class Progress
      * @var string
      */
     protected $progress_log_file = null;
+    
+    /**
+     * Timer start time
+     * @var int
+     */
+    protected $timer_start = 0;
+    
+    /**
+     * Timer end time
+     * @var int
+     */
+    protected $timer_stop = 0;
+    
+    /**
+     * The complete elapsed time
+     * @var int
+     */
+    protected $timer_elapsed = 0;
+    
+    /**
+     * How often should we write to the progress log in seconds
+     * @var int
+     */
+    protected $log_interval = 1;
 
     /**
      * set it up
@@ -64,6 +87,8 @@ class Progress
         if (! is_null($log_path)) {
             $this->setProgressLogFile($log_path);
         }
+        
+        $this->startTimer();
     }
 
     /**
@@ -134,4 +159,29 @@ class Progress
         
         return $this->file;
     }
+    
+    protected function computeElapsedTime() {
+        return $this->timer_stop - $this->timer_start;
+    }
+    
+    protected function getElapsedTime() {
+        $mtime = microtime();
+        $mtime = explode( " ", $mtime );
+        return $mtime[1] + $mtime[0];
+    }    
+
+    protected function startTimer() {
+        $this->timer_start = $this->getElapsedTime();
+    }
+    
+    protected function stopTimer() {
+        $this->timer_stop = $this->getElapsedTime();
+        $this->timer_elapsed = $this->computeElapsedTime();
+    }
+    
+    protected function resetTimer() {
+        $this->timer_start   = 0;
+        $this->timer_stop    = 0;
+        $this->timer_elapsed = 0;
+    }    
 }
