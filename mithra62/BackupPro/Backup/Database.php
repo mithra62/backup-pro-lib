@@ -174,7 +174,7 @@ class Database extends AbstractBackup
         // no go through the tables and back them up
         $count = 1;
         $total = count($tables);
-        $progress->writeLog('backup_progress_bar_start', $total, 0);
+        $progress->writeLog('backup_progress_bar_start', '', $total, 0);
         foreach ($tables as $table) {
             if ($table['Engine'] == '' || $table['Comment'] == 'View') {
                 continue; // we have a View most likely or something else silly
@@ -185,7 +185,7 @@ class Database extends AbstractBackup
                 continue;
             }
             
-            $progress->writeLog('backup_progress_bar_table_start' . $table['Name'], $total, $count);
+            $progress->writeLog('backup_progress_bar_table_start', $table['Name'], $total, $count);
             $engine->writeCommentBlock('Table Data For: ' . $table['Name'] . ' (' . $table['Rows'] . ' Rows)');
             $include_data = true;
             
@@ -204,7 +204,7 @@ class Database extends AbstractBackup
                 $engine->backupTable($table['Name']);
             }
             
-            $progress->writeLog('backup_progress_bar_table_stop' . $table['Name'], $total, $count);
+            $progress->writeLog('backup_progress_bar_table_stop', $table['Name'], $total, $count);
             $count ++;
         }
         
@@ -214,7 +214,7 @@ class Database extends AbstractBackup
             ->stop();
         $this->closeOutput();
         
-        $progress->writeLog('backup_progress_bar_database_stop', $total, $count);
+        $progress->writeLog('backup_progress_bar_database_stop', '', $total, $count);
         return $path;
     }
 
