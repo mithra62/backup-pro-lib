@@ -220,8 +220,9 @@ class Php extends DbAbstract
             if ($column['Field'] == $column_name) {
                 
                 $column_type = $this->determineColumnType($column['Type']);
-                $class = "\\mithra62\\BackupPro\\Backup\\Database\\Engines\\Php\\Columns\\" . $column_type;
+                $class = "\\mithra62\\BackupPro\\Backup\\Database\\Engines\\Php\\Columns\\Bp" . $column_type;
                 $data = '';
+                $obj = null;
                 if (class_exists($class)) {
                     $obj = new $class();
                     if ($obj instanceof Php\Columns) {
@@ -229,10 +230,11 @@ class Php extends DbAbstract
                     }
                 }
                 
+                //we didn't parse out a value so we're doing some more testing
                 if ($data == '') {
                     if (is_null($value)) {
                         $data = 'NULL';
-                    } elseif (isset($obj) && !$obj instanceof Php\Columns) { //we have to escape strings that haven't been abstracted
+                    } else {
                         $data = "'" . $this->getContext()
                             ->getBackup()
                             ->getDb()
