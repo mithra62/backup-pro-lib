@@ -80,4 +80,71 @@ class ErrorHandler
         restore_error_handler();
         restore_exception_handler();
     }    
+    
+    /**
+     * Handles uncaught PHP exceptions.
+     *
+     * This method is implemented as a PHP exception handler.
+     *
+     * @param \Exception $exception the exception that is not caught
+     */
+    public function handleException($exception)
+    {
+        
+        $this->exception = $exception;
+        
+        // disable error capturing to avoid recursive errors while handling exceptions
+        $this->unregister();
+        
+        // set preventive HTTP status code to 500 in case error handling somehow fails and headers are sent
+        // HTTP exceptions will override this value in renderException()
+        if (PHP_SAPI !== 'cli') {
+            http_response_code(500);
+        }
+        
+        try {
+            $this->logException($exception);
+            if ($this->discard_existing_output) {
+                $this->clearOutput();
+            }
+            
+            $this->renderException($exception);
+
+        } catch (\Exception $e) {
+            // an other exception could be thrown while displaying the exception
+            $msg = "An Error occurred while handling another error:\n";
+            $msg .= (string) $e;
+            $msg .= "\nPrevious exception:\n";
+            $msg .= (string) $exception;
+            if (YII_DEBUG) {
+                if (PHP_SAPI === 'cli') {
+                    echo $msg . "\n";
+                } else {
+                    echo '<pre>' . htmlspecialchars($msg, ENT_QUOTES, Yii::$app->charset) . '</pre>';
+                }
+            } else {
+                echo 'An internal server error occurred.';
+            }
+            $msg .= "\n\$_SERVER = " . VarDumper::export($_SERVER);
+            error_log($msg);
+            if (defined('HHVM_VERSION')) {
+                flush();
+            }
+            exit(1);
+        }
+        $this->exception = null;
+    }    
+    
+    /**
+     * Removes all output echoed before calling this method.
+     */
+    public function clearOutput()
+    {
+        // the following manual level counting is to deal with zlib.output_compression set to On
+        for ($level = ob_get_level(); $level > 0; --$level) {
+            if (!@ob_end_clean()) {
+                ob_clean();
+            }
+        }
+    }    
 }
