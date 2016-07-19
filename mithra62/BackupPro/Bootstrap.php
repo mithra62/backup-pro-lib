@@ -19,6 +19,7 @@ use mithra62\BackupPro\Errors;
 use mithra62\BackupPro\Notify;
 use mithra62\BackupPro\Console;
 use mithra62\BackupPro\Rest;
+use mithra62\BackupPro\ErrorHandler;
 use mithra62\BackupPro\Validate\Settings as valSettings;
 use PHPSQL\Parser;
 
@@ -121,6 +122,12 @@ class Bootstrap extends m62Boostrap
             $rest->setLang($c['lang']);
             return $rest;
         };
+        
+        $this->container['error_handler'] = function ($c) {
+            $eh = new ErrorHandler();
+            return $eh;
+        };
+        
         
         return $this->container;
     }

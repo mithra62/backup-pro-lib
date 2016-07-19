@@ -10,6 +10,8 @@
  */
 namespace mithra62\BackupPro;
 
+use JaegerApp\Traits\Log;
+
 /**
  * Backup Pro - Error Handler Object
  *
@@ -20,9 +22,12 @@ namespace mithra62\BackupPro;
  *
  * @package BackupPro
  * @author Eric Lamb <eric@mithra62.com>
+ * @since 3.4
  */
 class ErrorHandler 
 {
+    use Log;
+    
     /**
      * @var boolean whether to discard any existing page output before error display. Defaults to true.
      */
@@ -70,6 +75,7 @@ class ErrorHandler
         }
         
         register_shutdown_function([$this, 'handleFatalError']);
+        return $this;
     }   
     
     /**
@@ -133,6 +139,110 @@ class ErrorHandler
             exit(1);
         }
         $this->exception = null;
+    }   
+    
+    /**
+     * Handles HHVM execution errors such as warnings and notices.
+     *
+     * This method is used as a HHVM error handler. It will store exception that will
+     * be used in fatal error handler
+     *
+     * @param integer $code the level of the error raised.
+     * @param string $message the error message.
+     * @param string $file the filename that the error was raised in.
+     * @param integer $line the line number the error was raised at.
+     * @param mixed $context
+     * @param mixed $backtrace trace of error
+     * @return boolean whether the normal error handler continues.
+     *
+     * @throws ErrorException
+     * @since 2.0.6
+     */
+    public function handleHhvmError($code, $message, $file, $line, $context, $backtrace)
+    {
+        if ($this->handleError($code, $message, $file, $line)) {
+            return true;
+        }
+        if (E_ERROR & $code) {
+            $exception = new ErrorException($message, $code, $code, $file, $line);
+            $ref = new \ReflectionProperty('\Exception', 'trace');
+            $ref->setAccessible(true);
+            $ref->setValue($exception, $backtrace);
+            $this->_hhvmException = $exception;
+        }
+        return false;
+    }
+    /**
+     * Handles PHP execution errors such as warnings and notices.
+     *
+     * This method is used as a PHP error handler. It will simply raise an [[ErrorException]].
+     *
+     * @param integer $code the level of the error raised.
+     * @param string $message the error message.
+     * @param string $file the filename that the error was raised in.
+     * @param integer $line the line number the error was raised at.
+     * @return boolean whether the normal error handler continues.
+     *
+     * @throws ErrorException
+     */
+    public function handleError($code, $message, $file, $line)
+    {
+        if (error_reporting() & $code) {
+            // load ErrorException manually here because autoloading them will not work
+            // when error occurs while autoloading a class
+            if (!class_exists('yii\\base\\ErrorException', false)) {
+                require_once(__DIR__ . '/ErrorException.php');
+            }
+            $exception = new ErrorException($message, $code, $code, $file, $line);
+            // in case error appeared in __toString method we can't throw any exception
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+            array_shift($trace);
+            foreach ($trace as $frame) {
+                if ($frame['function'] === '__toString') {
+                    $this->handleException($exception);
+                    if (defined('HHVM_VERSION')) {
+                        flush();
+                    }
+                    exit(1);
+                }
+            }
+            throw $exception;
+        }
+        return false;
+    }
+    
+    /**
+     * Handles fatal PHP errors
+     */
+    public function handleFatalError()
+    {
+        unset($this->_memoryReserve);
+        // load ErrorException manually here because autoloading them will not work
+        // when error occurs while autoloading a class
+        if (!class_exists('mithra62\\BackupPro\\ErrorHandler\\ErrorException', false)) {
+            require_once(__DIR__ . '/ErrorHandler/ErrorException.php');
+        }
+        
+        $error = error_get_last();
+        if (ErrorHandler\ErrorException::isFatalError($error)) {
+            if (!empty($this->_hhvmException)) {
+                $exception = $this->_hhvmException;
+            } else {
+                $exception = new ErrorHandler\ErrorException($error['message'], $error['type'], $error['type'], $error['file'], $error['line']);
+            }
+            $this->exception = $exception;
+            $this->logException($exception);
+            if ($this->discardExistingOutput) {
+                $this->clearOutput();
+            }
+            $this->renderException($exception);
+            // need to explicitly flush logs because exit() next will terminate the app immediately
+            Yii::getLogger()->flush(true);
+            if (defined('HHVM_VERSION')) {
+                flush();
+            }
+            exit(1);
+        }
     }    
     
     /**
@@ -184,6 +294,5 @@ class ErrorHandler
             $message = 'Error: ' . $exception->getMessage();
         }
         return $message;
-    }
-    }    
+    }  
 }
