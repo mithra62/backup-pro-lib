@@ -94,7 +94,26 @@ class ErrorHandler
         restore_error_handler();
         restore_exception_handler();
         return $this;
-    }    
+    } 
+    
+    public function renderException($exception) 
+    {
+        // an other exception could be thrown while displaying the exception
+        $msg = "An Error occurred while backing up
+                -:\n";
+        $msg .= (string) $exception;
+        if ($this->getDebugMode()) {
+            if (PHP_SAPI === 'cli') {
+                echo $msg . "\n";
+            } else {
+                echo '<pre>' . htmlspecialchars($msg, ENT_QUOTES) . '</pre>';
+                $msg .= "\n\$_SERVER = " . print_r($_SERVER, true);
+                echo '<pre>'.$msg.'</pre>';
+            }
+        } else {
+            echo 'An internal server error occurred.';
+        }
+    }
     
     /**
      * Handles uncaught PHP exceptions.
@@ -123,25 +142,13 @@ class ErrorHandler
                 $this->clearOutput();
             }
             
-            // an other exception could be thrown while displaying the exception
-            $msg = "An Error occurred while backing up
-                -:\n";
-            $msg .= (string) $exception;
+            $this->renderException($exception);
             if ($this->getDebugMode()) {
-                if (PHP_SAPI === 'cli') {
-                    echo $msg . "\n";
-                } else {
-                    echo '<pre>' . htmlspecialchars($msg, ENT_QUOTES) . '</pre>';
+                if (defined('HHVM_VERSION')) {
+                    flush();
                 }
-            } else {
-                echo 'An internal server error occurred.';
+                exit(1);
             }
-            $msg .= "\n\$_SERVER = " . print_r($_SERVER, true);
-            error_log($msg);
-            if (defined('HHVM_VERSION')) {
-                flush();
-            }
-            exit(1);
 
         } catch (\Exception $e) {
             // an other exception could be thrown while displaying the exception
