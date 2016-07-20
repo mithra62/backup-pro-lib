@@ -233,6 +233,10 @@ class Backup
     public function database($database, array $options, \JaegerApp\Shell $shell)
     {
         try {
+            
+            $services = $this->getServices();
+            $services['error_handler']->register();
+            
             $file_name = $this->getStorage()->makeDbFilename($options['db_backup_method'], $database);
             $db = $this->getDatabase()
                 ->setBackup($this)
@@ -290,6 +294,10 @@ class Backup
     public function files(array $options, \JaegerApp\Files $file, \JaegerApp\Regex $regex)
     {
         try {
+
+            $services = $this->getServices();
+            $services['error_handler']->register();
+            
             $file_name = $this->getStorage()->makeFileFilename();
             $file_backup = $this->getFile()
                 ->setRegex($regex)

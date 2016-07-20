@@ -57,7 +57,14 @@ class ErrorHandler
     private $hhvm_exception;
     
     /**
+     * Is debug mode enabled
+     * @var bool
+     */
+    private $debug_mode = false;
+
+    /**
      * Register this error handler
+     * @return ErrorHandler
      */
     public function register()
     {
@@ -80,11 +87,13 @@ class ErrorHandler
     
     /**
      * Unregisters this error handler by restoring the PHP error and exception handlers.
+     * @return ErrorHandler
      */
     public function unregister()
     {
         restore_error_handler();
         restore_exception_handler();
+        return $this;
     }    
     
     /**
@@ -109,12 +118,30 @@ class ErrorHandler
         }
         
         try {
-            $this->logException($exception);
+            $this->logError($exception);
             if ($this->discard_existing_output) {
                 $this->clearOutput();
             }
             
-            $this->renderException($exception);
+            // an other exception could be thrown while displaying the exception
+            $msg = "An Error occurred while backing up
+                -:\n";
+            $msg .= (string) $exception;
+            if ($this->getDebugMode()) {
+                if (PHP_SAPI === 'cli') {
+                    echo $msg . "\n";
+                } else {
+                    echo '<pre>' . htmlspecialchars($msg, ENT_QUOTES) . '</pre>';
+                }
+            } else {
+                echo 'An internal server error occurred.';
+            }
+            $msg .= "\n\$_SERVER = " . print_r($_SERVER, true);
+            error_log($msg);
+            if (defined('HHVM_VERSION')) {
+                flush();
+            }
+            exit(1);
 
         } catch (\Exception $e) {
             // an other exception could be thrown while displaying the exception
@@ -122,16 +149,16 @@ class ErrorHandler
             $msg .= (string) $e;
             $msg .= "\nPrevious exception:\n";
             $msg .= (string) $exception;
-            if (YII_DEBUG) {
+            if ($this->getDebugMode()) {
                 if (PHP_SAPI === 'cli') {
                     echo $msg . "\n";
                 } else {
-                    echo '<pre>' . htmlspecialchars($msg, ENT_QUOTES, Yii::$app->charset) . '</pre>';
+                    echo '<pre>' . htmlspecialchars($msg, ENT_QUOTES) . '</pre>';
                 }
             } else {
                 echo 'An internal server error occurred.';
             }
-            $msg .= "\n\$_SERVER = " . VarDumper::export($_SERVER);
+            $msg .= "\n\$_SERVER = " .print_r($_SERVER, true);
             error_log($msg);
             if (defined('HHVM_VERSION')) {
                 flush();
@@ -156,7 +183,6 @@ class ErrorHandler
      * @return boolean whether the normal error handler continues.
      *
      * @throws ErrorException
-     * @since 2.0.6
      */
     public function handleHhvmError($code, $message, $file, $line, $context, $backtrace)
     {
@@ -164,7 +190,7 @@ class ErrorHandler
             return true;
         }
         if (E_ERROR & $code) {
-            $exception = new ErrorException($message, $code, $code, $file, $line);
+            $exception = new ErrorHandler\ErrorException($message, $code, $code, $file, $line);
             $ref = new \ReflectionProperty('\Exception', 'trace');
             $ref->setAccessible(true);
             $ref->setValue($exception, $backtrace);
@@ -190,10 +216,10 @@ class ErrorHandler
         if (error_reporting() & $code) {
             // load ErrorException manually here because autoloading them will not work
             // when error occurs while autoloading a class
-            if (!class_exists('yii\\base\\ErrorException', false)) {
-                require_once(__DIR__ . '/ErrorException.php');
+            if (!class_exists('mithra62\\BackupPro\\ErrorHandler\\ErrorException', false)) {
+                require_once(__DIR__ . '/ErrorHandler/ErrorException.php');
             }
-            $exception = new ErrorException($message, $code, $code, $file, $line);
+            $exception = new ErrorHandler\ErrorException($message, $code, $code, $file, $line);
             // in case error appeared in __toString method we can't throw any exception
             $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
             array_shift($trace);
@@ -231,13 +257,12 @@ class ErrorHandler
                 $exception = new ErrorHandler\ErrorException($error['message'], $error['type'], $error['type'], $error['file'], $error['line']);
             }
             $this->exception = $exception;
-            $this->logException($exception);
-            if ($this->discardExistingOutput) {
+            $this->logError($exception);
+            if ($this->discard_existing_output) {
                 $this->clearOutput();
             }
             $this->renderException($exception);
             // need to explicitly flush logs because exit() next will terminate the app immediately
-            Yii::getLogger()->flush(true);
             if (defined('HHVM_VERSION')) {
                 flush();
             }
@@ -277,12 +302,12 @@ class ErrorHandler
      */
     public static function convertExceptionToString($exception)
     {
-        if ($exception instanceof Exception && ($exception instanceof UserException || !YII_DEBUG)) {
+        if ($exception instanceof Exception) {
             $message = "{$exception->getName()}: {$exception->getMessage()}";
-        } elseif (YII_DEBUG) {
+        } elseif ($this->getDebugMode()) {
             if ($exception instanceof Exception) {
                 $message = "Exception ({$exception->getName()})";
-            } elseif ($exception instanceof ErrorException) {
+            } elseif ($exception instanceof ErrorHandler\ErrorException) {
                 $message = "{$exception->getName()}";
             } else {
                 $message = 'Exception';
@@ -295,4 +320,24 @@ class ErrorHandler
         }
         return $message;
     }  
+    
+
+    /**
+     * @return the $debug_mode
+     */
+    public function getDebugMode()
+    {
+        return $this->debug_mode;
+    }
+    
+    /**
+     * Enable debug mode
+     * @param boolean $debug_mode
+     * @return ErrorHandler
+     */
+    public function setDebugMode($debug_mode)
+    {
+        $this->debug_mode = $debug_mode;
+        return $this;
+    }    
 }

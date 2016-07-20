@@ -125,6 +125,14 @@ class Bootstrap extends m62Boostrap
         
         $this->container['error_handler'] = function ($c) {
             $eh = new ErrorHandler();
+            $settings = $c['settings']->get();
+            
+            $log_path = $settings['error_log_file_path'];
+            if($log_path == '') {
+                $log_path = $settings['working_directory'].'/error.log';
+            }
+            $eh->setPathToLogFile($log_path);
+            $eh->setDebugMode( $settings['debug_mode'] === '1' ? true : false);
             return $eh;
         };
         
