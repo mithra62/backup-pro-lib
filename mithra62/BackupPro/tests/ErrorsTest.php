@@ -82,8 +82,10 @@ class ErrorsTest extends TestFixture
     public function testCheckBackupStateReturnInstance()
     {
         $errors = new Errors;
+        $backups = new \mithra62\BackupPro\Backups(new \JaegerApp\Files );
+        $backups->setServices(new \Pimple\Container());
         $this->assertInstanceOf('mithra62\BackupPro\Errors', $errors->checkBackupState(
-            new \mithra62\BackupPro\Backups(new \JaegerApp\Files ), 
+            $backups, 
             array('working_directory' => '', 'storage_details' => array(), 'file_backup_alert_threshold' => '', 'db_backup_alert_threshold' => ''))
         );
     }
