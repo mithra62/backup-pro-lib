@@ -25,6 +25,7 @@ $lang = array(
     'api_key' => 'API Key',
     'api_key_instructions' => '',
     'api_secret' => 'API Secret',
+    'api_secret_instructions' => '',
     'rest_api_credentials' => 'REST API Credentials',
     'rest_api_credentials_instructions' => 'When you setup your Backup Pro installation with a management client, you\'ll need to supply the API Credentials so your installation knows everything is valid and ok to proceed. Note that if you don\'t have any credentials set, a pair is randomized until you do.',
     
