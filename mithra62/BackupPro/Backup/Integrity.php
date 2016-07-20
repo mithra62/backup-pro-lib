@@ -88,6 +88,13 @@ class Integrity
     private $db_conf = array();
 
     /**
+     * The Services array
+     *
+     * @var array
+     */
+    private $services = array();    
+
+    /**
      *
      * @ignore
      *
@@ -178,7 +185,7 @@ class Integrity
      * @param \mithra62\Files $file            
      * @return \mithra62\BackupPro\Backup\Integrity
      */
-    public function setFile(\mithra62\Files $file)
+    public function setFile(\JaegerApp\Files $file)
     {
         $this->file = $file;
         return $this;
@@ -202,7 +209,7 @@ class Integrity
     public function getCompress()
     {
         if (is_null($this->compress)) {
-            $this->compress = new \mithra62\Compress();
+            $this->compress = new \JaegerApp\Compress();
         }
         
         return $this->compress;
@@ -236,7 +243,7 @@ class Integrity
      * @param Storage $storage            
      * @return \mithra62\BackupPro\Backup\Integrity
      */
-    public function setShell(\mithra62\Shell $shell)
+    public function setShell(\JaegerApp\Shell $shell)
     {
         $this->shell = $shell;
         return $this;
@@ -308,6 +315,9 @@ class Integrity
         if (! is_array($backup_info['storage_locations'])) {
             return false;
         }
+        
+        $services = $this->getServices();
+        $services['error_handler']->register();
         
         foreach ($backup_info['storage_locations'] as $location) {
             if ($location['obj']->canDownload()) {
@@ -429,6 +439,25 @@ class Integrity
             $notify->setSettings($settings)->sendBackupState($settings['backup_missed_schedule_notify_emails'], $backup_meta, $errors);
         }
     }
+    
+    /**
+     * Sets the Services array
+     *
+     * @param array $services
+     */
+    public function setServices(\Pimple\Container $services)
+    {
+        $this->services = $services;
+        return $this;
+    }
+    
+    /**
+     * Returns the Serivices array
+     */
+    public function getServices()
+    {
+        return $this->services;
+    }    
 
     /**
      * Clears all the tables from the testing database

@@ -72,6 +72,7 @@ class Bootstrap extends m62Boostrap
         
         $this->container['backups'] = function ($c) {
             $backups = new Backups($c['files']);
+            $backups->setServices($c);
             return $backups;
         };
         

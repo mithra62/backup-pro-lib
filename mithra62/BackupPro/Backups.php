@@ -85,6 +85,13 @@ class Backups
     protected $locations = array();
 
     /**
+     * The Services array
+     *
+     * @var array
+     */
+    private $services = array();
+
+    /**
      * Set up the dependancies
      * 
      * @param \mithra62\Files $file            
@@ -114,6 +121,25 @@ class Backups
     {
         return $this->locations;
     }
+    
+    /**
+     * Sets the Services array
+     *
+     * @param array $services
+     */
+    public function setServices(\Pimple\Container $services)
+    {
+        $this->services = $services;
+        return $this;
+    }
+    
+    /**
+     * Returns the Serivices array
+     */
+    public function getServices()
+    {
+        return $this->services;
+    }    
 
     /**
      * Sets the backup directories using $path as a seed
@@ -183,6 +209,7 @@ class Backups
         if (is_null($this->integrity)) {
             $this->integrity = new Backup\Integrity($this->backup_dir);
             $this->integrity->setContext($this);
+            $this->integrity->setServices($this->getServices());
         }
         
         return $this->integrity;
