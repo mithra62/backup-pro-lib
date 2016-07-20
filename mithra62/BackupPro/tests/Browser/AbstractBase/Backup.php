@@ -97,18 +97,75 @@ abstract class Backup extends TestFixture
         $page->findButton('m62_settings_submit')->submit();
         
         $page = $this->takeFileBackup();
-        
         $this->session->visit($this->url('file_backups'));
         
         $page = $this->session->getPage();
         $this->assertTrue($page->hasField('backup_check_0'));
         
         $this->removeFileBackup();
-        
+        sleep(10);
         $this->session->visit($this->url('file_backups'));
         $page = $this->session->getPage();
         $this->assertFalse($page->hasField('backup_check_0'));
-        
-        $this->uninstall_addon();
+        sleep(10);
     }
+    
+    /**
+     * @depends testFileBackup
+     */
+    public function testCronDatabaseBackup()
+    {
+        
+        $this->session = $this->getSession();
+        $this->session->visit($this->url('settings_cron'));
+        
+        $page = $this->session->getPage();
+        $url = $page->findById('cron_url_db_backup');
+        $url = $url->getAttribute('href');
+        
+        $this->session->visit($url);
+        $this->iWaitForIdToDisappear('cron_url_db_backup');
+        
+        $this->session->visit($this->url('db_backups'));
+        
+        $page = $this->session->getPage();
+        $this->assertTrue($page->hasField('backup_check_0'));
+        
+        $this->removeDatabaseBackup();
+        
+        $this->session->visit($this->url('db_backups'));
+        $page = $this->session->getPage();
+        $this->assertFalse($page->hasField('backup_check_0'));
+    }
+
+    /**
+     * @depends testCronDatabaseBackup
+     */
+    public function testCronFileBackup()
+    {
+    
+        $this->session = $this->getSession();
+        $this->session->visit($this->url('settings_cron'));
+    
+        $page = $this->session->getPage();
+        $url = $page->findById('cron_url_file_backup');
+        $url = $url->getAttribute('href');
+    
+        $this->session->visit($url);
+        $context = $this;
+        $this->iWaitForIdToDisappear('cron_url_file_backup');
+    
+        $this->session->visit($this->url('file_backups'));
+    
+        $page = $this->session->getPage();
+        $this->assertTrue($page->hasField('backup_check_0'));
+    
+        $this->removeFileBackup();
+    
+        $this->session->visit($this->url('file_backups'));
+        $page = $this->session->getPage();
+        $this->assertFalse($page->hasField('backup_check_0'));
+    
+        $this->uninstall_addon();
+    }    
 }

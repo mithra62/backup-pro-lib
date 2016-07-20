@@ -9,6 +9,8 @@
  */
 namespace mithra62\BackupPro\tests\Browser;
 
+use JaegerApp\Files;
+
 /**
  * Backup Pro - ExpressionEngine 2 Selenium Browser Testing Trait
  *
@@ -191,5 +193,9 @@ trait EE2Trait
         $page = $this->session->getPage();
         $form = $page->findById('install_module')->setValue('uninstall');
         $page->findButton('submit')->submit();
+        
+        $files = new Files;
+        $files->deleteDir($this->test_settings['working_directory'], true, 0);
+        mkdir($this->test_settings['working_directory']);        
     }
 }

@@ -301,7 +301,8 @@ class TestFixture extends BrowserTestCase
         $this->session->visit($this->url('db_backup'));
         $page = $this->session->getPage();
         $page->findById('_backup_direct')->click();
-        sleep(10);
+        $this->iWaitForIdToAppear('backup_check_0');
+
         return $page;
     }
     
@@ -312,7 +313,7 @@ class TestFixture extends BrowserTestCase
         $this->session->visit($this->url('file_backup'));
         $page = $this->session->getPage();
         $page->findById('_backup_direct')->click();
-        sleep(10);
+        $this->iWaitForIdToAppear('backup_check_0');
         return $page;
     }
     
@@ -348,6 +349,71 @@ class TestFixture extends BrowserTestCase
         return $page;
     }
     
+    /**
+     * @When I wait for :text to appear
+     * @Then I should see :text appear
+     * @param $text
+     * @throws \Exception
+     */
+    public function iWaitForIdToAppear($id)
+    {
+        $context = $this;
+        $this->spin(function( $context ) use ($id) {
+            try {
+                $context->getSession()->getPage()->findById($id)->isVisible();
+                return true;
+            }
+            catch(\Exception $e) {
+                // NOOP
+            }
+            return false;
+        });
+    }
     
+    
+    /**
+     * @When I wait for :text to disappear
+     * @Then I should see :text disappear
+     * @param $text
+     * @throws \Exception
+     */
+    public function iWaitForIdToDisappear($id)
+    {
+        $context = $this;
+        $this->spin(function( $context ) use ($id) {
+            try {
+                if(!$context->getSession()->getPage()->findById($id)) {
+                    return true;
+                }
+            }
+            catch(\Exception $e) {
+                return true;
+            }
+            return false;
+        });
+    }
+    
+    public function spin ($lambda, $wait = 300)
+    {
+        for ($i = 0; $i < $wait; $i++)
+        {
+            try {
+                if ($lambda($this)) {
+                    return true;
+                }
+            } catch (\Exception $e) {
+                // do nothing
+            }
+    
+            sleep(1);
+        }
+    
+        $backtrace = debug_backtrace();
+    
+        throw new \Exception(
+            "Timeout thrown by " . $backtrace[1]['class'] . "::" . $backtrace[1]['function'] . "()\n" .
+            $backtrace[1]['file'] . ", line " . $backtrace[1]['line']
+        );
+    }
     
 }

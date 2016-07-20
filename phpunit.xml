@@ -12,6 +12,8 @@
     <testsuites>
         <testsuite name="Compress Test Suite">
             <directory suffix="Test.php">./mithra62/BackupPro/tests/Browser/EE2</directory>
+            <exclude>./mithra62/BackupPro/tests/Browser/EE2/Storage</exclude>
+            <exclude>./mithra62/BackupPro/tests/Browser/EE2/Settings</exclude>
             <!-- <exclude>./mithra62/BackupPro/tests/Browser</exclude>  -->
         </testsuite>
     </testsuites>
