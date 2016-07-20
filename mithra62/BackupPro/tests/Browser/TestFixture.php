@@ -305,6 +305,17 @@ class TestFixture extends BrowserTestCase
         return $page;
     }
     
+    public function takeFileBackup()
+    {
+        $this->setupGoodWorkingDirectory();
+        $this->session = $this->getSession();
+        $this->session->visit($this->url('file_backup'));
+        $page = $this->session->getPage();
+        $page->findById('_backup_direct')->click();
+        sleep(10);
+        return $page;
+    }
+    
     public function removeDatabaseBackup($confirm = true)
     {
         $this->session = $this->getSession();
@@ -320,5 +331,23 @@ class TestFixture extends BrowserTestCase
         
         return $page;
     }
+    
+    public function removeFileBackup($confirm = true)
+    {
+        $this->session = $this->getSession();
+        $this->session->visit($this->url('file_backups'));
+        
+        $page = $this->session->getPage();
+        sleep(1); 
+        $page->findById('backup_check_0')->check();
+        $page->findButton('_remove_backup_button')->submit();
+        
+        $page = $this->session->getPage();
+        $page->findButton('_remove_backup_button')->submit();
+        
+        return $page;
+    }
+    
+    
     
 }

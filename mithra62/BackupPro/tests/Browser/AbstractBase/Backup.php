@@ -81,7 +81,34 @@ abstract class Backup extends TestFixture
         $this->session->visit($this->url('db_backups'));
         $page = $this->session->getPage();
         $this->assertFalse($page->hasField('backup_check_0'));
-
+    }
+    
+    /**
+     * @depends testMysqldumpBackup
+     */
+    public function testFileBackup()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit($this->url('settings_files'));
+        
+        $page = $this->session->getPage();
+        $page->findById('backup_file_location')->setValue(implode("\n", $this->ts('backup_file_location')));
+        sleep(1);
+        $page->findButton('m62_settings_submit')->submit();
+        
+        $page = $this->takeFileBackup();
+        
+        $this->session->visit($this->url('file_backups'));
+        
+        $page = $this->session->getPage();
+        $this->assertTrue($page->hasField('backup_check_0'));
+        
+        $this->removeFileBackup();
+        
+        $this->session->visit($this->url('file_backups'));
+        $page = $this->session->getPage();
+        $this->assertFalse($page->hasField('backup_check_0'));
+        
         $this->uninstall_addon();
     }
 }
