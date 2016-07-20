@@ -11,8 +11,8 @@
          syntaxCheck="false">
     <testsuites>
         <testsuite name="Compress Test Suite">
-            <directory suffix="Test.php">./mithra62/BackupPro/tests/</directory>
-            <exclude>./mithra62/BackupPro/tests/Browser</exclude>
+            <directory suffix="Test.php">./mithra62/BackupPro/tests/Browser/EE2</directory>
+            <!-- <exclude>./mithra62/BackupPro/tests/Browser</exclude>  -->
         </testsuite>
     </testsuites>
 </phpunit>
