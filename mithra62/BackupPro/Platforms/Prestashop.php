@@ -71,6 +71,6 @@ class Prestashop extends m62Prestashop implements PlatformInterface
      */
     public function getRestApiRouteEntry(array $settings)
     {
-        return $this->presta_context->link->getModuleLink('backup_pro', 'api').'?bp_method=';
+        return $this->presta_context->link->getModuleLink('backup_pro', 'api').'?api_method=';
     }
 }
