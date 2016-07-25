@@ -38,6 +38,7 @@
 	},
 	"require-dev": {
 		"phpunit/phpunit": "4.*",
+		"backup-pro/rest-client": "^0.1",
 		"behat/mink": "^1.7",
 		"behat/mink-goutte-driver": "^1.2",
 		"behat/mink-selenium2-driver": "^1.3",
