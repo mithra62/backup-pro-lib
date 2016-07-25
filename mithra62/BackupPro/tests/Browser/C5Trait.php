@@ -98,7 +98,7 @@ trait C5Trait
         'working_directory' => 'D:\ProjectFiles\mithra62\clean_cms\c5\html\packages\backup_pro\backups',
         'local_backup_store_location' => 'D:\ProjectFiles\mithra62\clean_cms\c5\backups',
         'backup_file_location' => array(
-            'D:\ProjectFiles\mithra62\clean_cms\c5\html'
+            'D:\ProjectFiles\mithra62\clean_cms\c5\html\packages'
         ),
         
         'max_file_backups' => '3',
