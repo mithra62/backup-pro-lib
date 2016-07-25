@@ -2,12 +2,12 @@
 /**
  * mithra62 - Backup Pro
  * 
- * Backup Unit Tests
+ * Console Unit Tests
  *
  * @copyright	Copyright (c) 2015, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/tests/BackupTest.php
+ * @filesource 	./mithra62/BackupPro/tests/ConsoleTest.php
  */
 namespace mithra62\BackupPro\tests;
 
