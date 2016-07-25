@@ -65,7 +65,7 @@ class Rest extends m62Rest implements Routable, \mithra62\BackupPro\BackupPro
      * 
      * @param \mithra62\Platforms\AbstractPlatform $platform
      */
-    public function __construct(\mithra62\Platforms\AbstractPlatform $platform, \mithra62\Rest $rest)
+    public function __construct(\JaegerApp\Platforms\AbstractPlatform $platform, \JaegerApp\Rest $rest)
     {   
         $this->initController();
         $this->platform = $platform;
