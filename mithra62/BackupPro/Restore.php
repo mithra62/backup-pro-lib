@@ -13,6 +13,8 @@ namespace mithra62\BackupPro;
 use mithra62\BackupPro\Exceptions\Backup\DatabaseException;
 use mithra62\BackupPro\Exceptions\Backup\ProgressException;
 use mithra62\BackupPro\Exceptions\Backup\StorageException;
+use mithra62\BackupPro\Exceptions\RestoreException;
+
 use JaegerApp\Exceptions\CompressException;
 
 /**
@@ -40,6 +42,10 @@ class Restore extends Backup
      */
     public function getRestoreTime()
     {
+        if($this->timer_start === 0) {
+            throw new RestoreException("Timer hasn't been started yet! You have to start a timer to get the timer time");
+        }
+        
         $this->stopTimer();
         return $this->timer_stop - $this->timer_start;
     }
