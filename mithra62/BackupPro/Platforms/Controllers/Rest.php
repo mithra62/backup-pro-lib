@@ -78,7 +78,7 @@ class Rest extends m62Rest implements Routable, \mithra62\BackupPro\BackupPro
         $this->settings = $this->services['settings']->get();
         
         $errors = $this->services['errors']->checkWorkingDirectory($this->settings['working_directory'])
-        ->checkStorageLocations($this->settings['storage_details']);
+                                           ->checkStorageLocations($this->settings['storage_details']);
         
         if ($errors->totalErrors() == '0') {
             $errors = $errors->checkBackupState($this->services['backups'], $this->settings);
