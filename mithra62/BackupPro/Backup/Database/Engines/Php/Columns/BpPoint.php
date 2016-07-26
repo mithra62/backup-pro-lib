@@ -11,6 +11,7 @@
 namespace mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
 
 use mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
+use mithra62\BackupPro\Exceptions\BackupException;
 
 /**
  * Backup Pro - Point Column Object
@@ -30,6 +31,10 @@ class BpPoint extends Columns
      */
     public function getFieldName(array $column)
     {
+        if( empty($column['Field']) ) {
+            throw new BackupException('$column requires a key of "Field" in order to proceed... ');
+        }
+        
         return $this->asTextCol($column['Field']);
     }
 
