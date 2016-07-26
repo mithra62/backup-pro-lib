@@ -11,6 +11,7 @@
 namespace mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
 
 use mithra62\BackupPro\Backup\Database\Engines\Php\Columns;
+use mithra62\BackupPro\Exceptions\BackupException;
 
 /**
  * Backup Pro - Longblob Column Object
@@ -32,6 +33,10 @@ class BpBlob extends Columns
      */
     public function getFieldName(array $column)
     {
+        if( empty($column['Field']) ) {
+            throw new BackupException('$column requires a key of "Field" in order to proceed... ');
+        }
+        
         return '`' . $column['Field'] . '`';
     }
 
