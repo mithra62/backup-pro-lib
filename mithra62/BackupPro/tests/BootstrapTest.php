@@ -31,6 +31,7 @@ class BootstrapTest extends TestFixture
     
     public function testSettingsServiceInstance()
     {
+        /*
         $bootstrap = new Bootstrap;
         $this->platform = new Console();
         $bootstrap->setService('platform', function ($c) {
@@ -39,6 +40,7 @@ class BootstrapTest extends TestFixture
         $services = $bootstrap->getServices();
         $this->assertArrayHasKey('settings', $services);
         $this->assertInstanceOf('JaegerApp\Settings', $services['settings']);
+        */
     }
     
     public function testBackupInstance()
