@@ -11,6 +11,7 @@
 namespace mithra62\BackupPro\Backup;
 
 use JaegerApp\Traits\DateTime;
+use mithra62\BackupPro\Exceptions\Backup\IntegrityException;
 
 /**
  * Backup Pro - Integrity Agent Object
@@ -34,7 +35,7 @@ class Integrity
     /**
      * The Compress object
      * 
-     * @var \mithra62\Compress
+     * @var \JaegerApp\\Compress
      */
     protected $compress = null;
 
@@ -168,12 +169,25 @@ class Integrity
         return $this->backup_info;
     }
 
+    /**
+     * Returns the test database to use
+     * @param string $name
+     * @throws IntegrityException
+     */
     public function setTestDbName($name)
     {
+        if(!is_string($name)) {
+            throw new IntegrityException("Database name has to be a string!");
+        }
+        
         $this->test_db_name = $name;
         return $this;
     }
 
+    /**
+     * Returns the test database name
+     * @return string
+     */
     public function getTestDbName()
     {
         return $this->test_db_name;
@@ -252,7 +266,7 @@ class Integrity
     /**
      * Returns an instance of the Shell object
      * 
-     * @return \mithra62\Shell
+     * @return \JaegerApp\Shell
      */
     public function getShell()
     {
