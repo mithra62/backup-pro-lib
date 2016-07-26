@@ -21,5 +21,26 @@ class BpIntTest extends TestFixture
     {
         $column = new BpInt;
         $this->assertInstanceOf('mithra62\BackupPro\Backup\Database\Engines\Php\Columns', $column);
+    } 
+    
+    public function testGetFieldNameReturnValue()
+    {
+        $column = new BpInt;
+        $value = array('Field' => 'test_name');
+        $this->assertEquals('`test_name`', $column->getFieldName($value));
+    }    
+
+    public function testBadValueException()
+    {
+        $this->setExpectedException('mithra62\BackupPro\Exceptions\BackupException');
+        $column = new BpInt;
+        $value = array('bad_name' => 'test_name');
+        $this->assertEquals('`test_name`', $column->getFieldName($value));
     }  
+    
+    public function testGetFieldValue()
+    {
+        $column = new BpInt;
+        $this->assertEquals(1994354, $column->getFieldValue(1994354));
+    }    
 }

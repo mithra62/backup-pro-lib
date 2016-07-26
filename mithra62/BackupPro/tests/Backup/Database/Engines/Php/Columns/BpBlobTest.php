@@ -29,4 +29,18 @@ class BpBlobTest extends TestFixture
         $value = array('Field' => 'test_name');
         $this->assertEquals('`test_name`', $column->getFieldName($value));
     }    
+    
+    public function testGetFieldNameBadValueException()
+    {
+        $this->setExpectedException('mithra62\BackupPro\Exceptions\BackupException');
+        $column = new BpBlob();
+        $value = array('bad_name' => 'test_name');
+        $this->assertEquals('`test_name`', $column->getFieldName($value));
+    }  
+    
+    public function testGetFieldValue()
+    {
+        $column = new BpBlob();
+        $this->assertEquals('FROM_BASE64(\'dGVzdF92YWx1ZQ==\')', $column->getFieldValue('test_value'));
+    }
 }
