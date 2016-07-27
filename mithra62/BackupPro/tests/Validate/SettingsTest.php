@@ -45,93 +45,40 @@ class SettingsTest extends TestFixture
         $this->assertCount(1, $settings->setExistingSettings($this->existing_settings)->getExistingSettings());
     }
     
-    /*
-    
-    public function testWorkingDirectoryReturnInstance()
+    public function testSetSqlParserReturnInstance()
     {
+        $parser = $this->getMock('\PHPSQL\Parser');
         $settings = new Settings;
-        $this->assertInstanceOf('mithra62\BackupPro\Validate\Settings', $settings->setExistingSettings($this->existing_settings)->workingDirectory(__DIR__));
+        $this->assertInstanceOf('mithra62\BackupPro\Validate\Settings', $settings->setSqlParser($parser));
     }
     
-    public function testWorkingDirectoryBadValue()
+    public function testGetSqlParserReturnValue()
     {
+        $parser = $this->getMock('\PHPSQL\Parser');
         $settings = new Settings;
-        $settings->setExistingSettings($this->existing_settings)->workingDirectory($this->getWorkingDir())->val(array('working_dir' => 'fdsa'));
-        $this->assertTrue($settings->hasErrors());
-        
-        $errors = $settings->getErrorMessages();
-        $this->assertArrayHasKey('working_directory', $errors);
-        $this->assertCount(5, $errors['working_directory']);
+        $settings->setSqlParser($parser);
+        $this->assertInstanceOf('\PHPSQL\Parser', $settings->getSqlParser());
     }
     
-    public function testWorkingDirectoryDirContentValue()
+    public function testSetDbReturnInstance()
     {
+        $db = $this->getMock('\JaegerApp\Db');
         $settings = new Settings;
-        $settings->setExistingSettings($this->existing_settings)->workingDirectory($this->getWorkingDir())->val(array('working_directory' => __DIR__));
-        $this->assertTrue($settings->hasErrors());
-        
-        $errors = $settings->getErrorMessages();
-        $this->assertArrayHasKey('working_directory', $errors);
-        $this->assertCount(1, $errors['working_directory']);
+        $this->assertInstanceOf('mithra62\BackupPro\Validate\Settings', $settings->setDb($db));
     }
     
-    public function testWorkingDirectoryDirGoodValue()
+    public function testGetDbReturnValue()
     {
+        $db = $this->getMock('\JaegerApp\Db');
         $settings = new Settings;
-        $settings->setExistingSettings($this->existing_settings)->workingDirectory($this->getWorkingDir())->val(array('working_directory' => $this->getWorkingDir()));
-        $this->assertNotTrue($settings->hasErrors());
+        $settings->setDb($db);
+        $this->assertInstanceOf('\JaegerApp\Db', $settings->getDb());
     }
     
-    public function testWorkingDirectoryExistingSettingBadValue()
+    public function testCheckNoData()
     {
+        $data = array();
         $settings = new Settings;
-        $storage_details = array(
-            'working_directory' => '',
-            'storage_details' => array(array(
-                'storage_location_driver' => 'local', 
-                'backup_store_location' => $this->getWorkingDir()
-            ) )
-        );
-        $settings->setExistingSettings($storage_details);
-        $settings->workingDirectory($this->getWorkingDir())->val(array('working_directory' => $this->getWorkingDir()));
-        
-        $errors = $settings->getErrorMessages();
-        $this->assertCount(1, $errors['working_directory']);
+        $this->assertTrue($settings->check($data));
     }
-    
-    public function testWorkingDirectoryExistingSettingGoodValue()
-    {
-        $settings = new Settings;
-        $storage_details = array(
-            'working_directory' => '',
-            'storage_details' => array(array(
-                'storage_location_driver' => 'local', 
-                'backup_store_location' => __DIR__
-            ) )
-        );
-        $settings->setExistingSettings($storage_details);
-        $settings->workingDirectory($this->getWorkingDir())->val(array('working_directory' => $this->getWorkingDir()));
-        
-        $errors = $settings->getErrorMessages();
-        $this->assertCount(0, $errors);
-    }
-    
-    public function testDateFormatGoodValue()
-    {
-        $settings = new Settings;
-        $settings->dateFormat()->val(array('date_format' => "M d, Y, h:i:sA"));
-
-        $errors = $settings->getErrorMessages();
-        $this->assertCount(0, $errors);        
-    }
-    
-    public function testDateFormatNoValue()
-    {
-        $settings = new Settings;
-        $settings->dateFormat()->val(array('date_format' => ""));
-
-        $errors = $settings->getErrorMessages();
-        $this->assertCount(1, $errors);        
-    }
-    */
 }
