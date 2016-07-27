@@ -50,10 +50,23 @@ class AutoThresholdTest extends TestFixture
     {
         $field = new AutoThreshold;
         $field->compileRules();
-        $rules = $field->getRules();
-        $this->assertCount(6, $rules);
+        $rules = $field->getRuleNames();
+        $this->assertCount(3, $rules['auto_threshold']);
         foreach($this->expected_rules AS $key => $value) {
-            $this->assertArrayHasKey($key,$rules);
+            $this->assertArrayHasKey($value, $rules['auto_threshold']);
         }
     }
+    
+    public function testCustomValueEmptyValueReturnErrors()
+    {
+        $field = new AutoThreshold(array('auto_threshold' => 'custom'));
+        $field->compileRules();
+        $rules = $field->getRuleNames();
+        $this->assertCount(1, $rules['auto_threshold']);
+        $this->assertCount(3, $rules['auto_threshold_custom']);
+        foreach($this->expected_rules AS $key => $value) {
+            $this->assertArrayHasKey($value, $rules['auto_threshold_custom']);
+        }
+    }
+    
 }

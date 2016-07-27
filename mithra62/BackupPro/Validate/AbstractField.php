@@ -71,6 +71,19 @@ abstract class AbstractField
     }
     
     /**
+     * Returns the short names for all the attached rules
+     * @return array
+     */
+    public function getRuleNames()
+    {
+        $rules = array();
+        foreach($this->rules AS $key => $value) {
+            $rules[$value['rule_field']][$value['rule_name']] = $value;
+        }
+        return $rules;
+    }
+    
+    /**
      * Sets an instance of the Validation object
      * @param Settings $context
      * @return \mithra62\BackupPro\Validate\AbstractField
