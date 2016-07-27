@@ -22,6 +22,12 @@ use mithra62\BackupPro\Validate\Settings\AutoThreshold;
  */
 class AutoThresholdTest extends TestFixture
 {
+    protected $expected_rules = array(
+        'min', 
+        'required', 
+        'numeric'
+    );
+    
     public function testObjectInstance()
     {
         $field = new AutoThreshold;
@@ -45,7 +51,9 @@ class AutoThresholdTest extends TestFixture
         $field = new AutoThreshold;
         $field->compileRules();
         $rules = $field->getRules();
-        print_r($rules);
-        echo count($rules);
+        $this->assertCount(6, $rules);
+        foreach($this->expected_rules AS $key => $value) {
+            $this->assertArrayHasKey($key,$rules);
+        }
     }
 }

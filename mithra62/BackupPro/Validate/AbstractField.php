@@ -91,7 +91,7 @@ abstract class AbstractField
     }
     
     /**
-     * Returns the field names
+     * Returns the field name
      * @return string
      */
     public function getFieldName()
