@@ -16,8 +16,8 @@
     <testsuites>
         <testsuite name="Compress Test Suite">
             <directory suffix="Test.php">./mithra62/BackupPro/tests/Browser/EE2/RestApi</directory>
-            <!--<exclude>./mithra62/BackupPro/tests/Browser</exclude>
-            <exclude>./mithra62/BackupPro/tests/Browser</exclude>  -->
+            <exclude>./mithra62/BackupPro/tests/Browser/EE2/RestApi/Settings</exclude>
+            <!--<exclude>./mithra62/BackupPro/tests/Browser</exclude>  -->
         </testsuite>
     </testsuites>
 </phpunit>
