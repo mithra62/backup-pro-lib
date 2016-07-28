@@ -39,6 +39,8 @@ class TestFixture extends BrowserTestCase
             'sessionStrategy' => 'shared'
         )
     );    
+    
+    public $rest_client = array();
 
     /**
      * Simple abstraction to determine the Platform specific URL we're attempting to hit
@@ -347,6 +349,40 @@ class TestFixture extends BrowserTestCase
         $page->findButton('_remove_backup_button')->submit();
         
         return $page;
+    }
+    
+    public function setGoodRestApi()
+    {
+        $this->session = $this->getSession();
+        $this->session->visit($this->url('settings_api'));
+        
+        $page = $this->session->getPage();
+        sleep(1);
+        $page->findById('enable_rest_api')->check();
+        $page->findButton('m62_settings_submit')->submit();
+        return $page;
+    }
+    
+    public function setupRestApiClientCreds()
+    {
+        $this->rest_client_details = array();
+        
+        $this->session->visit($this->url('settings_api'));
+        $page = $this->session->getPage();
+        
+        $url = $page->findById('rest_api_url_wrap');
+        sleep(1);
+        $api_url = $url->getAttribute('href');
+        $api_key = $this->session->getPage()->findById('api_key')->getValue();
+        $api_secret = $this->session->getPage()->findById('api_secret')->getValue();
+        
+        $this->rest_client_details = array(
+            'site_url' => $api_url,
+            'api_key' => $api_key,
+            'api_secret' => $api_secret
+        );
+        
+        return $this->rest_client_details;
     }
     
     /**
