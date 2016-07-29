@@ -40,11 +40,13 @@ class AutoThresholdTest extends TestFixture
         $this->assertEquals('auto_threshold', $field->getFieldName());
     }
     
+    /**
     public function testCompileRulesReturnInstance()
     {
         $field = new AutoThreshold;
         $this->assertInstanceOf('mithra62\BackupPro\Validate\Settings\AutoThreshold', $field->compileRules());
     }
+    
     
     public function testCompiledRules()
     {
@@ -68,5 +70,7 @@ class AutoThresholdTest extends TestFixture
             $this->assertArrayHasKey($value, $rules['auto_threshold_custom']);
         }
     }
+    
+    */
     
 }
