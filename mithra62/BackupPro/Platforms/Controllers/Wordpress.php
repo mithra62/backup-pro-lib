@@ -9,7 +9,7 @@
  */
 namespace mithra62\BackupPro\Platforms\Controllers;
 
-use mithra62\BackupPro\Platforms\Wordpress as Platform;
+use mithra62\BackupPro\Platforms\WordPress as Platform;
 use mithra62\BackupPro\Traits\Controller;
 use mithra62\BackupPro\Platforms\View\Wordpress as WordpressView;
 
