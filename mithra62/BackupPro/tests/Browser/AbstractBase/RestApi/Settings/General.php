@@ -55,10 +55,17 @@ abstract class General extends TestFixture
         $this->setupRestApiClientCreds();
         
         $client = new BpApiClient($this->rest_client_details);
-        
-        
-        $this->uninstall_addon();
-        exit;
+        $settings = array('working_directory' => '');
+        $data = $client->put('/settings', $settings);
+        $this->assertInstanceOf('\JaegerApp\Rest\Client\ApiProblem', $data);
+        $this->assertEquals(422, $data->getStatus());
+        $this->assertArrayHasKey('working_directory', $data['errors']);
+        $this->assertCount(5, $data['errors']['working_directory']);
+        $this->assertTrue( in_array('Working Directory is required', $data['errors']['working_directory']) );
+        $this->assertTrue( in_array('Working Directory has to be writable', $data['errors']['working_directory']) );
+        $this->assertTrue( in_array('Working Directory has to be a directory', $data['errors']['working_directory']) );
+        $this->assertTrue( in_array('Working Directory has to be readable', $data['errors']['working_directory']) );
+        $this->assertTrue( in_array('Working Directory has to be an empty directory', $data['errors']['working_directory']) );
         
     }
 
@@ -67,20 +74,22 @@ abstract class General extends TestFixture
      */
     public function testGeneralViewWorkingdirecotryFieldBadPath()
     {
-        $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_general'));
-        $page = $this->session->getPage();
-        $page->findById('working_directory')->setValue('fdsafdsafdsa');
-        $page->findButton('m62_settings_submit')->submit();
+
+        $this->setGoodRestApi();
+        $this->setupRestApiClientCreds();
         
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Working Directory is required'));
-        $this->assertTrue($this->session->getPage()
-            ->hasContent('Working Directory has to be writable'));
-        $this->assertTrue($this->session->getPage()
-            ->hasContent('Working Directory has to be a directory'));
-        $this->assertTrue($this->session->getPage()
-            ->hasContent('Working Directory has to be readable'));
+        $client = new BpApiClient($this->rest_client_details);
+        $settings = array('working_directory' => 'fdsafdsafdsa');
+        $data = $client->put('/settings', $settings);
+        
+        $this->assertInstanceOf('\JaegerApp\Rest\Client\ApiProblem', $data);
+        $this->assertEquals(422, $data->getStatus());
+        $this->assertArrayHasKey('working_directory', $data['errors']);
+        $this->assertCount(4, $data['errors']['working_directory']); 
+        $this->assertTrue( in_array('Working Directory has to be writable', $data['errors']['working_directory']) );
+        $this->assertTrue( in_array('Working Directory has to be a directory', $data['errors']['working_directory']) );
+        $this->assertTrue( in_array('Working Directory has to be readable', $data['errors']['working_directory']) );
+        $this->assertTrue( in_array('Working Directory has to be an empty directory', $data['errors']['working_directory']) ); 
     }
 
     /**
@@ -88,16 +97,15 @@ abstract class General extends TestFixture
      */
     public function testGeneralViewWorkingdirecotryGoodValue()
     {
-        $this->setupGoodWorkingDirectory();
+        $this->setGoodRestApi();
+        $this->setupRestApiClientCreds();
         
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Working Directory is required'));
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Working Directory has to be writable'));
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Working Directory has to be a directory'));
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Working Directory has to be readable'));
+        $client = new BpApiClient($this->rest_client_details);
+        $settings = array('working_directory' => $this->ts('working_directory'));
+        $data = $client->put('/settings', $settings);
+
+        $this->assertInstanceOf('\JaegerApp\Rest\Client\Hal', $data);
+        $this->assertEquals('/settings', $data->getUri());
     }
 
     /**
@@ -105,16 +113,19 @@ abstract class General extends TestFixture
      */
     public function testGeneralCronQueryKeyEmptyField()
     {
-        $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_general'));
-        $page = $this->session->getPage();
-        $page->findById('cron_query_key')->setValue('');
-        $page->findButton('m62_settings_submit')->submit();
+        $this->setGoodRestApi();
+        $this->setupRestApiClientCreds();
         
-        $this->assertTrue($this->session->getPage()
-            ->hasContent('Cron Query Key is required'));
-        $this->assertTrue($this->session->getPage()
-            ->hasContent('Cron Query Key must be alpha-numeric only'));
+        $client = new BpApiClient($this->rest_client_details);
+        $settings = array('cron_query_key' => '');
+        $data = $client->put('/settings', $settings);
+        
+        $this->assertInstanceOf('\JaegerApp\Rest\Client\ApiProblem', $data);
+        $this->assertEquals(422, $data->getStatus());
+        $this->assertArrayHasKey('cron_query_key', $data['errors']);
+        $this->assertCount(2, $data['errors']['cron_query_key']);
+        $this->assertTrue( in_array('Cron Query Key is required', $data['errors']['cron_query_key']) );
+        $this->assertTrue( in_array('Cron Query Key must be alpha-numeric only', $data['errors']['cron_query_key']) );
     }
 
     /**
@@ -122,16 +133,18 @@ abstract class General extends TestFixture
      */
     public function testGeneralCronQueryBadValueField()
     {
-        $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_general'));
-        $page = $this->session->getPage();
-        $page->findById('cron_query_key')->setValue('my=bad&key=test');
-        $page->findButton('m62_settings_submit')->submit();
+        $this->setGoodRestApi();
+        $this->setupRestApiClientCreds();
         
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Cron Query Key is required'));
-        $this->assertTrue($this->session->getPage()
-            ->hasContent('Cron Query Key must be alpha-numeric only'));
+        $client = new BpApiClient($this->rest_client_details);
+        $settings = array('cron_query_key' => 'my=bad&key=test');
+        $data = $client->put('/settings', $settings);
+        
+        $this->assertInstanceOf('\JaegerApp\Rest\Client\ApiProblem', $data);
+        $this->assertEquals(422, $data->getStatus());
+        $this->assertArrayHasKey('cron_query_key', $data['errors']);
+        $this->assertCount(1, $data['errors']['cron_query_key']);
+        $this->assertTrue( in_array('Cron Query Key must be alpha-numeric only', $data['errors']['cron_query_key']) );
     }
 
     /**
@@ -139,16 +152,15 @@ abstract class General extends TestFixture
      */
     public function testGeneralCronQueryGoodValue()
     {
-        $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_general'));
-        $page = $this->session->getPage();
-        $page->findById('cron_query_key')->setValue($this->ts('cron_query_key'));
-        $page->findButton('m62_settings_submit')->submit();
+        $this->setGoodRestApi();
+        $this->setupRestApiClientCreds();
         
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Cron Query Key is required'));
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Cron Query Key must be alpha-numeric only'));
+        $client = new BpApiClient($this->rest_client_details);
+        $settings = array('cron_query_key' => $this->ts('cron_query_key'));
+        $data = $client->put('/settings', $settings);
+
+        $this->assertInstanceOf('\JaegerApp\Rest\Client\Hal', $data);
+        $this->assertEquals('/settings', $data->getUri());
     }
 
     /**
@@ -156,16 +168,20 @@ abstract class General extends TestFixture
      */
     public function testGeneralDashboardRecentTotalEmptyField()
     {
-        $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_general'));
-        $page = $this->session->getPage();
-        $page->findById('dashboard_recent_total')->setValue('');
-        $page->findButton('m62_settings_submit')->submit();
+
+        $this->setGoodRestApi();
+        $this->setupRestApiClientCreds();
         
-        $this->assertTrue($this->session->getPage()
-            ->hasContent('Dashboard Recent Total is required'));
-        $this->assertTrue($this->session->getPage()
-            ->hasContent('Dashboard Recent Total must be a number greater than 1'));
+        $client = new BpApiClient($this->rest_client_details);
+        $settings = array('dashboard_recent_total' => '');
+        $data = $client->put('/settings', $settings);
+        
+        $this->assertInstanceOf('\JaegerApp\Rest\Client\ApiProblem', $data);
+        $this->assertEquals(422, $data->getStatus());
+        $this->assertArrayHasKey('dashboard_recent_total', $data['errors']);
+        $this->assertCount(2, $data['errors']['dashboard_recent_total']);
+        $this->assertTrue( in_array('Dashboard Recent Total is required', $data['errors']['dashboard_recent_total']) );
+        $this->assertTrue( in_array('Dashboard Recent Total must be a number greater than 1', $data['errors']['dashboard_recent_total']) );
     }
 
     /**
@@ -173,16 +189,19 @@ abstract class General extends TestFixture
      */
     public function testGeneralDashboardRecentTotalBadValue()
     {
-        $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_general'));
-        $page = $this->session->getPage();
-        $page->findById('dashboard_recent_total')->setValue('fdsafdsa');
-        $page->findButton('m62_settings_submit')->submit();
+        $this->setGoodRestApi();
+        $this->setupRestApiClientCreds();
         
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Dashboard Recent Total is required'));
-        $this->assertTrue($this->session->getPage()
-            ->hasContent('Dashboard Recent Total must be a number greater than 1'));
+        $client = new BpApiClient($this->rest_client_details);
+        $settings = array('dashboard_recent_total' => 'fdsafdsa');
+        $data = $client->put('/settings', $settings);
+        
+        $this->assertInstanceOf('\JaegerApp\Rest\Client\ApiProblem', $data);
+        $this->assertEquals(422, $data->getStatus());
+        $this->assertArrayHasKey('dashboard_recent_total', $data['errors']);
+        $this->assertCount(1, $data['errors']['dashboard_recent_total']);
+        $this->assertTrue( in_array('Dashboard Recent Total must be a number greater than 1', $data['errors']['dashboard_recent_total']) );
+        
     }
 
     /**
@@ -190,16 +209,15 @@ abstract class General extends TestFixture
      */
     public function testGeneralDashboardRecentTotalGoodValue()
     {
-        $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_general'));
-        $page = $this->session->getPage();
-        $page->findById('dashboard_recent_total')->setValue($this->ts('dashboard_recent_total'));
-        $page->findButton('m62_settings_submit')->submit();
+        $this->setGoodRestApi();
+        $this->setupRestApiClientCreds();
         
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Dashboard Recent Total is required'));
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Dashboard Recent Total must be a number greater than 1'));
+        $client = new BpApiClient($this->rest_client_details);
+        $settings = array('dashboard_recent_total' => 10);
+        $data = $client->put('/settings', $settings);
+        
+        $this->assertInstanceOf('\JaegerApp\Rest\Client\Hal', $data);
+        $this->assertEquals('/settings', $data->getUri());
     }
 
     /**
@@ -207,16 +225,16 @@ abstract class General extends TestFixture
      */
     public function testGeneralAutoThresholdGoodValue()
     {
-        $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_general'));
-        $page = $this->session->getPage();
-        $page->findById('auto_threshold')->setValue(104857600);
-        $page->findButton('m62_settings_submit')->submit();
+        $this->setGoodRestApi();
+        $this->setupRestApiClientCreds();
         
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Auto Threshold is required'));
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Auto Threshold must be a number'));
+        $client = new BpApiClient($this->rest_client_details);
+        $settings = array('auto_threshold' => 104857600);
+        $data = $client->put('/settings', $settings);
+        
+        $this->assertInstanceOf('\JaegerApp\Rest\Client\Hal', $data);
+        $this->assertEquals('/settings', $data->getUri());
+
     }
 
     /**
@@ -224,19 +242,21 @@ abstract class General extends TestFixture
      */
     public function testGeneralAutoThresholdCustomEmptyValue()
     {
-        $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_general'));
-        $page = $this->session->getPage();
-        $page->findById('auto_threshold')->selectOption('custom');
-        $page->findById('auto_threshold_custom')->setValue('');
-        $page->findButton('m62_settings_submit')->submit();
+        $this->setGoodRestApi();
+        $this->setupRestApiClientCreds();
         
-        $this->assertTrue($this->session->getPage()
-            ->hasContent('Auto Threshold Custom is required'));
-        $this->assertTrue($this->session->getPage()
-            ->hasContent('Auto Threshold Custom must be a number'));
-        $this->assertTrue($this->session->getPage()
-            ->hasContent('Auto Threshold Custom must be at least 100MB (100000000)'));
+        $client = new BpApiClient($this->rest_client_details);
+        $settings = array('auto_threshold' => 'custom');
+        $data = $client->put('/settings', $settings);
+        
+        $this->assertInstanceOf('\JaegerApp\Rest\Client\ApiProblem', $data);
+        $this->assertEquals(422, $data->getStatus());
+        $this->assertArrayHasKey('auto_threshold_custom', $data['errors']);
+        $this->assertCount(3, $data['errors']['auto_threshold_custom']);
+        $this->assertTrue( in_array('Auto Threshold Custom is required', $data['errors']['auto_threshold_custom']) );
+        $this->assertTrue( in_array('Auto Threshold Custom must be a number', $data['errors']['auto_threshold_custom']) );
+        $this->assertTrue( in_array('Auto Threshold Custom must be at least 100MB (100000000)', $data['errors']['auto_threshold_custom']) );
+
     }
 
     /**
@@ -244,39 +264,38 @@ abstract class General extends TestFixture
      */
     public function testGeneralAutoThresholdCustomStringBadValue()
     {
-        $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_general'));
-        $page = $this->session->getPage();
-        $page->findById('auto_threshold')->selectOption('custom');
-        $page->findById('auto_threshold_custom')->setValue('fdsafdsa');
-        $page->findButton('m62_settings_submit')->submit();
+        $this->setGoodRestApi();
+        $this->setupRestApiClientCreds();
         
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Auto Threshold Custom is required'));
-        $this->assertTrue($this->session->getPage()
-            ->hasContent('Auto Threshold Custom must be a number'));
-        $this->assertTrue($this->session->getPage()
-            ->hasContent('Auto Threshold Custom must be at least 100MB (100000000)'));
+        $client = new BpApiClient($this->rest_client_details);
+        $settings = array('auto_threshold' => 'custom', 'auto_threshold_custom' => 'fdsafdsa');
+        $data = $client->put('/settings', $settings);
+        
+        $this->assertInstanceOf('\JaegerApp\Rest\Client\ApiProblem', $data);
+        $this->assertEquals(422, $data->getStatus());
+        $this->assertArrayHasKey('auto_threshold_custom', $data['errors']);
+        $this->assertCount(2, $data['errors']['auto_threshold_custom']);
+        $this->assertTrue( in_array('Auto Threshold Custom must be a number', $data['errors']['auto_threshold_custom']) );
+        $this->assertTrue( in_array('Auto Threshold Custom must be at least 100MB (100000000)', $data['errors']['auto_threshold_custom']) );
     }
 
     /**
      * @depends testGeneralAutoThresholdCustomStringBadValue
      */
     public function testGeneralAutoThresholdCustomNumberBadValue()
-    {
-        $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_general'));
-        $page = $this->session->getPage();
-        $page->findById('auto_threshold')->selectOption('custom');
-        $page->findById('auto_threshold_custom')->setValue(99);
-        $page->findButton('m62_settings_submit')->submit();
+    {   
+        $this->setGoodRestApi();
+        $this->setupRestApiClientCreds();
         
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Auto Threshold Custom is required'));
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Auto Threshold Custom must be a number'));
-        $this->assertTrue($this->session->getPage()
-            ->hasContent('Auto Threshold Custom must be at least 100MB (100000000)'));
+        $client = new BpApiClient($this->rest_client_details);
+        $settings = array('auto_threshold' => 'custom', 'auto_threshold_custom' => 99);
+        $data = $client->put('/settings', $settings);
+        
+        $this->assertInstanceOf('\JaegerApp\Rest\Client\ApiProblem', $data);
+        $this->assertEquals(422, $data->getStatus());
+        $this->assertArrayHasKey('auto_threshold_custom', $data['errors']);
+        $this->assertCount(1, $data['errors']['auto_threshold_custom']);
+        $this->assertTrue( in_array('Auto Threshold Custom must be at least 100MB (100000000)', $data['errors']['auto_threshold_custom']) );
     }
 
     /**
@@ -284,19 +303,15 @@ abstract class General extends TestFixture
      */
     public function testGeneralAutoThresholdCustomGoodValue()
     {
-        $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_general'));
-        $page = $this->session->getPage();
-        $page->findById('auto_threshold')->selectOption('custom');
-        $page->findById('auto_threshold_custom')->setValue(100000000);
-        $page->findButton('m62_settings_submit')->submit();
+        $this->setGoodRestApi();
+        $this->setupRestApiClientCreds();
         
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Auto Threshold Custom is required'));
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Auto Threshold Custom must be a number'));
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Auto Threshold Custom must be at least 100MB (100000000)'));
+        $client = new BpApiClient($this->rest_client_details);
+        $settings = array('auto_threshold' => 'custom', 'auto_threshold_custom' => 100000000);
+        $data = $client->put('/settings', $settings);
+        
+        $this->assertInstanceOf('\JaegerApp\Rest\Client\Hal', $data);
+        $this->assertEquals('/settings', $data->getUri());
     }
 
     /**
@@ -304,16 +319,15 @@ abstract class General extends TestFixture
      */
     public function testGeneralAllowDuplicatesCheck()
     {
-        $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_general'));
+        $this->setGoodRestApi();
+        $this->setupRestApiClientCreds();
         
-        $page = $this->session->getPage();
-        $page->findById('allow_duplicates')->check();
-        $page->findButton('m62_settings_submit')->submit();
+        $client = new BpApiClient($this->rest_client_details);
+        $settings = array('allow_duplicates' => 1);
+        $data = $client->put('/settings', $settings);
         
-        $this->assertTrue($this->session->getPage()
-            ->findById('allow_duplicates')
-            ->isChecked());
+        $this->assertInstanceOf('\JaegerApp\Rest\Client\Hal', $data);
+        $this->assertEquals('/settings', $data->getUri());
     }
 
     /**
@@ -321,16 +335,16 @@ abstract class General extends TestFixture
      */
     public function testGeneralAllowDuplicatesUnCheck()
     {
-        $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_general'));
+        $this->setGoodRestApi();
+        $this->setupRestApiClientCreds();
         
-        $page = $this->session->getPage();
-        $page->findById('allow_duplicates')->uncheck();
-        $page->findButton('m62_settings_submit')->submit();
+        $client = new BpApiClient($this->rest_client_details);
+        $settings = array('allow_duplicates' => 0);
+        $data = $client->put('/settings', $settings);
         
-        $this->assertNotTrue($this->session->getPage()
-            ->findById('allow_duplicates')
-            ->isChecked());
+        $this->assertInstanceOf('\JaegerApp\Rest\Client\Hal', $data);
+        $this->assertEquals('/settings', $data->getUri());
+        
     }
 
     /**
@@ -338,14 +352,19 @@ abstract class General extends TestFixture
      */
     public function testGeneralDateFormatEmptyValue()
     {
-        $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_general'));
-        $page = $this->session->getPage();
-        $page->findById('date_format')->setValue('');
-        $page->findButton('m62_settings_submit')->submit();
+        $this->setGoodRestApi();
+        $this->setupRestApiClientCreds();
         
-        $this->assertTrue($this->session->getPage()
-            ->hasContent('Date Format is required'));
+        $client = new BpApiClient($this->rest_client_details);
+        $settings = array('date_format' => '');
+        $data = $client->put('/settings', $settings);
+        
+        $this->assertInstanceOf('\JaegerApp\Rest\Client\ApiProblem', $data);
+        $this->assertEquals(422, $data->getStatus());
+        $this->assertArrayHasKey('date_format', $data['errors']);
+        $this->assertCount(1, $data['errors']['date_format']);
+        $this->assertTrue( in_array('Date Format is required', $data['errors']['date_format']) );
+
     }
 
     /**
@@ -353,54 +372,16 @@ abstract class General extends TestFixture
      */
     public function testGeneralDateFormatGoodValue()
     {
-        $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_general'));
-        $page = $this->session->getPage();
-        $page->findById('date_format')->setValue('M d, Y, h:i:sA');
-        $page->findButton('m62_settings_submit')->submit();
+        $this->setGoodRestApi();
+        $this->setupRestApiClientCreds();
         
-        $this->assertNotTrue($this->session->getPage()
-            ->hasContent('Date Format is required'));
-    }
+        $client = new BpApiClient($this->rest_client_details);
+        $settings = array('date_format' => 'M d, Y, h:i:sA');
+        $data = $client->put('/settings', $settings);
+        
+        $this->assertInstanceOf('\JaegerApp\Rest\Client\Hal', $data);
+        $this->assertEquals('/settings', $data->getUri());
 
-    /**
-     * @depends testGeneralDateFormatGoodValue
-     */
-    public function testGeneralRelativeTimeCheck()
-    {
-        $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_general'));
-        
-        $page = $this->session->getPage();
-        $page->findById('relative_time')->check();
-        $page->findButton('m62_settings_submit')->submit();
-        
-        $this->assertTrue($this->session->getPage()
-            ->findById('relative_time')
-            ->isChecked());
-        
         $this->uninstall_addon();
     }
-
-    /**
-     * @depends testGeneralRelativeTimeCheck
-    
-    public function testGeneralRelativeTimeUnCheck()
-    {
-        $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_general'));
-        
-        $page = $this->session->getPage();
-        $page->findById('relative_time')->uncheck();
-        $page->findButton('m62_settings_submit')->submit();
-        
-        $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_general'));
-        
-        //$this->assertNotTrue($this->session->getPage()
-           // ->findById('relative_time')
-           // ->isChecked());
-        $this->uninstall_addon();
-    }
-     */
 }
