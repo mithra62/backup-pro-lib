@@ -112,11 +112,12 @@ abstract class FileBackup extends TestFixture
         $settings = array('file_backup_alert_threshold' => '');
         $data = $client->put('/settings', $settings);
         $this->assertInstanceOf('\JaegerApp\Rest\Client\ApiProblem', $data);
+        
         $this->assertEquals(422, $data->getStatus());
-        $this->assertArrayHasKey('max_file_backups', $data['errors']);
-        $this->assertCount(2, $data['errors']['max_file_backups']);
-        $this->assertTrue( in_array('File Backup Alert Threshold is required', $data['errors']['max_file_backups']) );
-        $this->assertTrue( in_array('File Backup Alert Threshold must be a number', $data['errors']['max_file_backups']) );
+        $this->assertArrayHasKey('file_backup_alert_threshold', $data['errors']);
+        $this->assertCount(2, $data['errors']['file_backup_alert_threshold']);
+        $this->assertTrue( in_array('File Backup Alert Threshold is required', $data['errors']['file_backup_alert_threshold']) );
+        $this->assertTrue( in_array('File Backup Alert Threshold must be a number only', $data['errors']['file_backup_alert_threshold']) );
     }
 
     /**
@@ -132,16 +133,10 @@ abstract class FileBackup extends TestFixture
         $data = $client->put('/settings', $settings);
         $this->assertInstanceOf('\JaegerApp\Rest\Client\ApiProblem', $data);
         $this->assertEquals(422, $data->getStatus());
-        $this->assertArrayHasKey('max_file_backups', $data['errors']);
-        $this->assertCount(1, $data['errors']['max_file_backups']);
-        $this->assertNotTrue( in_array('File Backup Alert Threshold is required', $data['errors']['max_file_backups']) );
-        $this->assertTrue( in_array('File Backup Alert Threshold must be a number', $data['errors']['max_file_backups']) );
-        
-        $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_files'));
-        $page = $this->session->getPage();
-        $page->findById('file_backup_alert_threshold')->setValue('fdsafdsa');
-        $page->findButton('m62_settings_submit')->submit();
+        $this->assertArrayHasKey('file_backup_alert_threshold', $data['errors']);
+        $this->assertCount(1, $data['errors']['file_backup_alert_threshold']);
+        $this->assertNotTrue( in_array('File Backup Alert Threshold is required', $data['errors']['file_backup_alert_threshold']) );
+        $this->assertTrue( in_array('File Backup Alert Threshold must be a number only', $data['errors']['file_backup_alert_threshold']) );
     }
 
     /**
