@@ -64,8 +64,9 @@ abstract class RestApi extends TestFixture
     public function testGeneralAllowDuplicatesUnCheck()
     {
         $this->session = $this->getSession();
-        $this->session->visit($this->url('settings_general'));
+        $this->session->visit($this->url('settings_api'));
     
+        sleep(1);
         $page = $this->session->getPage();
         $page->findById('enable_rest_api')->uncheck();
         $page->findButton('m62_settings_submit')->submit();

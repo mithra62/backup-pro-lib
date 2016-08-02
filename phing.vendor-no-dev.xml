@@ -8,6 +8,9 @@
 		<copy todir="${vendor_path}/jaeger-app">
 			<fileset dir="../backup-pro-lib/vendor/jaeger-app">
 				<include name="**"></include>
+				<exclude name="**/swiftmailer/doc**"></exclude>
+				<exclude name="**/swiftmailer/notes**"></exclude>
+				<exclude name="**/swiftmailer/tests**"></exclude>
 			</fileset>
 		</copy>	
 			
@@ -195,14 +198,14 @@
 		<fileset dir="../backup-pro-lib/vendor/guzzlehttp/promises/src">
 			<include name="**"></include>
 		</fileset>
-		</copy>	
+		</copy>	 
 		
 		<echo msg="(${platform_name}) Copying Guzzle PSR7 Files..." />
 		<copy todir="${vendor_path}/guzzlehttp/psr7/src">
 		<fileset dir="../backup-pro-lib/vendor/guzzlehttp/psr7/src">
 			<include name="**"></include>
 		</fileset>
-		</copy>	
+		</copy> 	
 		
 		<echo msg="(${platform_name}) Copying Guzzle Files..." />
 		<copy todir="${vendor_path}/guzzlehttp/guzzle/src">
@@ -244,6 +247,7 @@
 			<fileset dir="../backup-pro-lib/vendor/symfony">
 				<include name="**"></include>
 				<exclude name="**/Tests/**"></exclude>
+				<exclude name="**/tests/**"></exclude>
 				<exclude name="**.md"></exclude>
 				<exclude name="**.gitignore"></exclude>
 				<exclude name="**phpunit.xml.dist"></exclude>
@@ -266,6 +270,8 @@
 		<copy todir="${vendor_path}/voku/portable-utf8">
 			<fileset dir="../backup-pro-lib/vendor/voku/portable-utf8">
 				<include name="**"></include>
+				<exclude name="**/doc**"></exclude>
+				<exclude name="**/tests**"></exclude>
 			</fileset>
 		</copy>
 			
