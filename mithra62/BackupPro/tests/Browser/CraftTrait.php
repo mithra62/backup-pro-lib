@@ -10,6 +10,7 @@
 namespace mithra62\BackupPro\tests\Browser;
 
 use JaegerApp\Db;
+use JaegerApp\Files;
 
 /**
  * Backup Pro - Craft Trait
@@ -45,6 +46,7 @@ trait CraftTrait
         'settings_cron' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings?section=cron',
         'settings_ia' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings?section=ia',
         'settings_license' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings?section=license',
+        'settings_api' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings?section=api',
         
         // storage engines
         'storage_view_storage' => 'http://eric.craft.clean.mithra62.com/admin/backuppro/settings/storage',
@@ -201,5 +203,9 @@ trait CraftTrait
             ->setDbName('clean_craft')
             ->emptyTable('craft_backup_pro_settings');
         $db->setDbName($creds['database']);
+        
+        $files = new Files;
+        $files->deleteDir($this->test_settings['working_directory'], true, 0);
+        mkdir($this->test_settings['working_directory']);        
     }
 }
