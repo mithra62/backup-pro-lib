@@ -10,6 +10,7 @@
 namespace mithra62\BackupPro\tests\Browser;
 
 use JaegerApp\Db;
+use JaegerApp\Files;
 
 /**
  * Backup Pro - Prestashop Trait
@@ -47,6 +48,7 @@ trait PrestashopTrait
         'settings_cron' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=0cf429d2f9ee73fe66d70b6bc3b7a9be&section=cron',
         'settings_ia' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=0cf429d2f9ee73fe66d70b6bc3b7a9be&section=integrity_agent',
         'settings_license' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=0cf429d2f9ee73fe66d70b6bc3b7a9be&section=license',
+        'settings_api' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=0cf429d2f9ee73fe66d70b6bc3b7a9be&section=api',
         
         // storage engines
         'storage_view_storage' => 'http://eric.prestashop.clean.mithra62.com/admin515exiszx/index.php?controller=AdminBackupProSettings&token=0cf429d2f9ee73fe66d70b6bc3b7a9be&section=storage',
@@ -194,5 +196,9 @@ trait PrestashopTrait
         ->setDbName('clean_presta')
         ->emptyTable('ps_backup_pro_settings');
         $db->setDbName($creds['database']);
+        
+        $files = new Files;
+        $files->deleteDir($this->test_settings['working_directory'], true, 0);
+        @mkdir($this->test_settings['working_directory']);
     }
 }
