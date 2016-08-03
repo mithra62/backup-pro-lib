@@ -21,7 +21,7 @@ trait EE3Trait
 {
 
     /**
-     * The URLs to test the ExpressionEngine 2 Settings page
+     * The URLs to test the ExpressionEngine 3 Settings page
      *
      * Note that the ExpressionEngine 3 site MUST be configured to use cookies only for authentication
      * 
@@ -45,6 +45,7 @@ trait EE3Trait
         'settings_cron' => 'http://eric.ee3.clean.mithra62.com/admin.php?/cp/addons/settings/backup_pro/settings/cron',
         'settings_ia' => 'http://eric.ee3.clean.mithra62.com/admin.php?/cp/addons/settings/backup_pro/settings/integrity_agent',
         'settings_license' => 'http://eric.ee3.clean.mithra62.com/admin.php?/cp/addons/settings/backup_pro/settings/license',
+        'settings_api' => 'http://eric.ee3.clean.mithra62.com/admin.php?/cp/addons/settings/backup_pro/settings/api',
         
         // storage engines
         'storage_view_storage' => 'http://eric.ee3.clean.mithra62.com/admin.php?/cp/addons/settings/backup_pro/view_storage',
