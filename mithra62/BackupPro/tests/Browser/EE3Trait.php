@@ -9,6 +9,8 @@
  */
 namespace mithra62\BackupPro\tests\Browser;
 
+use JaegerApp\Files;
+
 /**
  * mithra62 - ExpressionEngine 3 Trait
  *
@@ -195,5 +197,9 @@ trait EE3Trait
         $checkbox = $page->find('xpath', '/body/section[3]/div[2]/div/div[2]/div/form/div[2]/table/tbody/tr/td[4]/input')->check();
         $action_select = $page->find('xpath', '/body/section[3]/div[2]/div/div[2]/div/form/fieldset/select')->selectOption('remove');
         $page->find('xpath', '/body/section[3]/div[2]/div/div[2]/div/form/fieldset/button')->submit();
+        
+        $files = new Files;
+        $files->deleteDir($this->test_settings['working_directory'], true, 0);
+        @mkdir($this->test_settings['working_directory']);        
     }
 }
