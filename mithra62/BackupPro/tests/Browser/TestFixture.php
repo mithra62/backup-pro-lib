@@ -359,6 +359,7 @@ class TestFixture extends BrowserTestCase
         $page = $this->session->getPage();
         sleep(1);
         $page->findById('enable_rest_api')->check();
+        //$this->iWaitForIdToAppear('api_key');
         $page->findButton('m62_settings_submit')->submit();
         return $page;
     }

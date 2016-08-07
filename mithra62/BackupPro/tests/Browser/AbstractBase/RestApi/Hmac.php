@@ -46,7 +46,7 @@ abstract class Hmac extends TestFixture
         )
     );
 
-    public function test404OnNotEnabled()
+    public function XXtest404OnNotEnabled()
     {
         $this->login();
         sleep(2);
@@ -71,12 +71,14 @@ abstract class Hmac extends TestFixture
         $this->assertEquals('Not Found', $data->getTitle());
     }
     
-    /**
-     * @depends test404OnNotEnabled
-     */    
     public function test403NotAuthorized()
     {
+        $this->login();
+        sleep(2);
+        $this->install_addon();
         $this->setGoodRestApi();
+        $this->setupRestApiClientCreds();
+        
         $this->session->visit($this->url('settings_api'));
         $page = $this->session->getPage();
         

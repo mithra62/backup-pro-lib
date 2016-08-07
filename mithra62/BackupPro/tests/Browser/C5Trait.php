@@ -47,6 +47,7 @@ trait C5Trait
         'settings_cron' => 'http://eric.c5.clean.mithra62.com/index.php/dashboard/backup_pro/settings/cron',
         'settings_ia' => 'http://eric.c5.clean.mithra62.com/index.php/dashboard/backup_pro/settings/integrity_agent',
         'settings_license' => 'http://eric.c5.clean.mithra62.com/index.php/dashboard/backup_pro/settings/license',
+        'settings_api' => 'http://eric.c5.clean.mithra62.com/index.php/dashboard/backup_pro/settings/api',
         
         // storage engines
         'storage_view_storage' => 'http://eric.c5.clean.mithra62.com/index.php/dashboard/backup_pro/settings/storage_locations',
@@ -95,7 +96,7 @@ trait C5Trait
         
         'storage_details' => array(),
         
-        'working_directory' => 'D:\ProjectFiles\mithra62\clean_cms\c5\html\packages\backup_pro\backups',
+        'working_directory' => 'D:\ProjectFiles\mithra62\clean_cms\c5\backup_meta',
         'local_backup_store_location' => 'D:\ProjectFiles\mithra62\clean_cms\c5\backups',
         'backup_file_location' => array(
             'D:\ProjectFiles\mithra62\clean_cms\c5\html\packages'

@@ -9,6 +9,8 @@
  */
 namespace mithra62\BackupPro\tests\Browser;
 
+use JaegerApp\Files;
+
 /**
  * Backup Pro - WordPress Trait
  *
@@ -45,6 +47,7 @@ trait WpTrait
         'settings_cron' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=cron',
         'settings_ia' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=integrity_agent',
         'settings_license' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=license',
+        'settings_api' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=api',
         
         // storage engines
         'storage_view_storage' => 'http://eric.wp.clean.mithra62.com/wp-admin/admin.php?page=backup_pro%2Fsettings&section=storage',
@@ -194,5 +197,9 @@ trait WpTrait
         $checkbox = $page->find('xpath', '/body/div[1]/div[2]/div[2]/div[1]/div[3]/form[2]/table/tbody/tr[2]/th/input')->check();
         $action_select = $page->find('xpath', '/body/div[1]/div[2]/div[2]/div[1]/div[3]/form[2]/div[2]/div[1]/select')->selectOption('deactivate-selected');
         $page->findButton('doaction2')->submit();
+        
+        $files = new Files;
+        $files->deleteDir($this->test_settings['working_directory'], true, 0);
+        mkdir($this->test_settings['working_directory']);        
     }
 }

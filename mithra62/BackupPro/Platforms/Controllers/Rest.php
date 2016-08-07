@@ -93,7 +93,7 @@ class Rest extends m62Rest implements Routable, \mithra62\BackupPro\BackupPro
         });
         
         //is the API even on?!?
-        if($this->settings['enable_rest_api'] !== '1')
+        if($this->settings['enable_rest_api'] != '1')
         {
             http_response_code(404);
             exit;
