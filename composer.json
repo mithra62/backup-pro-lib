@@ -18,6 +18,7 @@
 		"jaeger-app/platforms-prestashop": "^0.1",
 		"jaeger-app/platforms-wp": "^0.1",
 		"jaeger-app/platforms-console": "^0.1",
+		"jaeger-app/platforms-drupal8": "^0.1",
 		"jaeger-app/view": "^0.1",
 		"jaeger-app/remote": "^0.1",
 		"jaeger-app/remote-s3": "^0.1",
