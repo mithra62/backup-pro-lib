@@ -10,6 +10,7 @@
  */
 namespace mithra62\BackupPro\Platforms;
 
+use Drupal\Core\Database;
 use JaegerApp\Platforms\AbstractPlatform;
 use mithra62\BackupPro\Platforms\PlatformInterface;
 
@@ -28,6 +29,8 @@ class Drupal8 extends AbstractPlatform implements PlatformInterface
      * @var string
      */
     protected $settings_table = 'backup_pro_settings';
+    
+    protected $context = null;
     
     public function getBackupCronCommands(array $settings)
     {
@@ -50,7 +53,17 @@ class Drupal8 extends AbstractPlatform implements PlatformInterface
     
     public function getDbCredentials()
     {
-        
+        //$config = \Drupal::config('system.mail');
+        $db = \Drupal::database();
+        $connection = $db->getConnectionOptions();
+        return array(
+            'user' => $connection['username'],
+            'password' => $connection['password'],
+            'database' => $connection['database'],
+            'host' => $connection['host'],
+            'prefix' => $connection['prefix']['default'],
+            'settings_table_name' => $connection['prefix']['default'] . $this->getSettingsTable()
+        );        
     }
     
     public function getEmailConfig()
@@ -85,7 +98,7 @@ class Drupal8 extends AbstractPlatform implements PlatformInterface
     
     public function getConfigOverrides()
     {
-        
+        return array();
     }
     
     public function redirect($url)
