@@ -6,18 +6,17 @@
  * @copyright	Copyright (c) 2016, mithra62, Eric Lamb.
  * @link		http://mithra62.com/
  * @version		3.0
- * @filesource 	./mithra62/BackupPro/Platforms/Craft.php
+ * @filesource 	./mithra62/BackupPro/Platforms/Drupal8.php
  */
 namespace mithra62\BackupPro\Platforms;
 
-use Drupal\Core\Database;
 use JaegerApp\Platforms\AbstractPlatform;
 use mithra62\BackupPro\Platforms\PlatformInterface;
 
 /**
- * Backup Pro - Craft Bridge
+ * Backup Pro - Drupal 8 Bridge
  *
- * Contains the Craft specific helpers for needed info
+ * Contains the Drupal 8 specific helpers for needed info
  *
  * @package BackupPro\Platforms
  * @author Eric Lamb <eric@mithra62.com>
