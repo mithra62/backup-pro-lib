@@ -10,9 +10,10 @@
 namespace mithra62\BackupPro\Platforms\Controllers;
 
 use Drupal\Core\Controller\ControllerBase;
+use \Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use mithra62\BackupPro\Platforms\Drupal8 as Platform;
 use mithra62\BackupPro\Traits\Controller;
-use mithra62\BackupPro\Platforms\View\Smarty;
+use mithra62\BackupPro\Platforms\View\m62TwigExtension;
 
 /**
  * Backup Pro - Drupal 8 Base Controller
@@ -22,7 +23,7 @@ use mithra62\BackupPro\Platforms\View\Smarty;
  * @package BackupPro\Controllers
  * @author Eric Lamb <eric@mithra62.com>
  */
-class Drupal8 extends ControllerBase
+class Drupal8 extends ControllerBase implements ContainerAwareInterface
 {
     use Controller;
 
@@ -72,8 +73,14 @@ class Drupal8 extends ControllerBase
         }
         
         $this->bp_errors = $errors->getErrors();
+    }
+    
+    public function setContainer(\Symfony\Component\DependencyInjection\ContainerInterface $container = NULL)
+    {
+        $this->twig = $container->get('twig');
+        $this->view_helper = new m62TwigExtension($this->services['lang'], $this->services['files'], $this->services['settings'], $this->services['encrypt'], $this->platform);
         
-        $this->view_helper = new Smarty($this->services['lang'], $this->services['files'], $this->services['settings'], $this->services['encrypt'], $this->platform);
+        //register with Jaeger
         $this->m62->setService('view_helpers', function ($c) {
             return $this->view_helper;
         });
